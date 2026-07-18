@@ -6,6 +6,7 @@ import StatsSection from './components/StatsSection';
 import DeyeAndLegal from './components/DeyeAndLegal';
 import StepProcess from './components/StepProcess';
 import ConsultationForm from './components/ConsultationForm';
+import CalculatorModal from './components/CalculatorModal';
 import ContactsPage from './pages/ContactsPage';
 import Footer from './components/Footer';
 import { X } from 'lucide-react';
@@ -13,10 +14,15 @@ import { X } from 'lucide-react';
 export default function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [consultationModalOpen, setConsultationModalOpen] = useState(false);
+  const [calculatorModalOpen, setCalculatorModalOpen] = useState(false);
   const [prefilledService, setPrefilledService] = useState('');
   
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('chedryk_theme') || 'dark';
+  });
+
+  const [scheme, setScheme] = useState(() => {
+    return localStorage.getItem('chedryk_scheme') || 'default';
   });
 
   useEffect(() => {
@@ -30,6 +36,11 @@ export default function App() {
     }
   }, [theme]);
 
+  useEffect(() => {
+    localStorage.setItem('chedryk_scheme', scheme);
+    document.documentElement.setAttribute('data-scheme', scheme);
+  }, [scheme]);
+
   const toggleTheme = () => {
     setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
   };
@@ -42,9 +53,7 @@ export default function App() {
   const isDark = theme === 'dark';
 
   return (
-    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 ${theme} ${
-      isDark ? 'bg-slate-950 text-slate-100 selection:bg-amber-500 selection:text-slate-950' : 'bg-slate-50 text-slate-900 selection:bg-sky-500 selection:text-white'
-    }`}>
+    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 ${theme} theme-bg-main theme-text-primary`}>
       
       {/* Navigation Header */}
       <Header 
@@ -53,22 +62,26 @@ export default function App() {
         onOpenConsultation={() => handleOpenConsultation()} 
         theme={theme}
         toggleTheme={toggleTheme}
+        scheme={scheme}
+        setScheme={setScheme}
       />
 
       {/* Main Content Body */}
       <main className="flex-grow">
         {activeTab === 'home' ? (
           <>
-            <Hero onOpenConsultation={() => handleOpenConsultation()} theme={theme} />
+            <Hero 
+              onOpenConsultation={() => handleOpenConsultation()} 
+              onOpenCalculator={() => setCalculatorModalOpen(true)}
+              theme={theme} 
+            />
             <Services onSelectService={(serviceTitle) => handleOpenConsultation(serviceTitle)} theme={theme} />
             <StatsSection theme={theme} />
             <DeyeAndLegal onOpenConsultation={() => handleOpenConsultation()} theme={theme} />
             <StepProcess onOpenConsultation={() => handleOpenConsultation()} theme={theme} />
             
             {/* Consultation Section on Home Page */}
-            <section id="consultation" className={`py-16 sm:py-20 transition-colors duration-300 border-t ${
-              isDark ? 'bg-slate-950 border-slate-900' : 'bg-slate-100/80 border-sky-100'
-            }`}>
+            <section id="consultation" className="py-16 sm:py-20 transition-colors duration-300 border-t theme-bg-section theme-border-subtle">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <ConsultationForm selectedServicePrefill={prefilledService} theme={theme} />
               </div>
@@ -88,15 +101,17 @@ export default function App() {
 
       {/* Global Consultation Modal */}
       {consultationModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
-          <div className="relative w-full max-w-xl my-6">
+        <div 
+          onClick={(e) => { if (e.target === e.currentTarget) setConsultationModalOpen(false); }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto"
+        >
+          <div className="relative w-[95%] sm:w-full max-w-xl my-auto max-h-[92vh] overflow-y-auto rounded-2xl sm:rounded-3xl">
             <button
               onClick={() => setConsultationModalOpen(false)}
-              className={`absolute top-4 right-4 z-10 p-2 rounded-full border transition-colors ${
-                isDark ? 'text-slate-400 hover:text-white bg-slate-900 border-slate-800' : 'text-slate-500 hover:text-slate-900 bg-white border-sky-200 shadow-md'
-              }`}
+              aria-label="Закрити консультацію"
+              className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-20 p-2 rounded-full border transition-all theme-badge shadow-xs hover:scale-105"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5 theme-icon-accent" />
             </button>
             <ConsultationForm 
               selectedServicePrefill={prefilledService}
@@ -105,6 +120,14 @@ export default function App() {
             />
           </div>
         </div>
+      )}
+
+      {/* Calculator Modal */}
+      {calculatorModalOpen && (
+        <CalculatorModal 
+          onClose={() => setCalculatorModalOpen(false)}
+          theme={theme}
+        />
       )}
 
     </div>

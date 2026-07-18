@@ -51,16 +51,14 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
     const d = phoneDigits.slice(0, 9);
     const len = d.length;
 
-    const typedClass = isDark ? 'text-white font-bold' : 'text-slate-900 font-bold';
-    const greyClass = isDark ? 'text-slate-500 font-normal' : 'text-slate-400 font-normal';
+    const typedClass = 'theme-text-primary font-bold';
+    const greyClass = 'theme-text-muted font-normal';
 
     const getChar = (idx) => (idx < len ? d[idx] : '0');
     const getDigitColor = (idx) => (idx < len ? typedClass : greyClass);
 
     const caret = isPhoneFocused && (
-      <span className={`inline-block w-[1.5px] h-4 animate-pulse mx-[0.5px] ${
-        isDark ? 'bg-white' : 'bg-slate-900'
-      }`} />
+      <span className="inline-block w-[1.5px] h-4 animate-pulse mx-[0.5px] bg-current theme-text-primary" />
     );
 
     return (
@@ -183,28 +181,22 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
   };
 
   return (
-    <div className={`glass-panel p-5 sm:p-8 rounded-3xl border shadow-2xl max-w-xl mx-auto transition-colors ${
-      isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-sky-200 text-slate-900 shadow-sky-500/10'
-    }`}>
-      <div className="text-center mb-6 sm:mb-8">
-        <h3 className="text-xl sm:text-2xl font-bold mb-2">
+    <div className="glass-panel p-4 sm:p-8 rounded-2xl sm:rounded-3xl border shadow-2xl w-full max-w-xl mx-auto transition-colors theme-bg-modal theme-border-card theme-text-primary">
+      <div className="text-center mb-5 sm:mb-8">
+        <h3 className="text-lg sm:text-2xl font-bold mb-1.5 sm:mb-2">
           Замовити Безкоштовну Консультацію
         </h3>
-        <p className={`text-xs sm:text-sm ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+        <p className="text-xs sm:text-sm theme-text-muted">
           Залиште контакти та зручний час — Чедрик Іван зателефонує вам для узгодження деталей.
         </p>
       </div>
 
       {status?.type === 'success' ? (
-        <div className={`p-6 rounded-2xl border text-center space-y-4 ${
-          isDark ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-sky-50 border-sky-200'
-        }`}>
-          <div className={`w-14 h-14 rounded-full flex items-center justify-center mx-auto ${
-            isDark ? 'bg-emerald-500/20 text-emerald-400' : 'bg-sky-500/20 text-sky-600'
-          }`}>
-            <CheckCircle2 className="w-8 h-8" />
+        <div className="p-5 sm:p-6 rounded-2xl border text-center space-y-4 theme-badge">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mx-auto theme-badge">
+            <CheckCircle2 className="w-7 h-7 sm:w-8 sm:h-8 theme-icon-accent" />
           </div>
-          <h4 className="text-lg font-bold">Заявку Прийнято!</h4>
+          <h4 className="text-base sm:text-lg font-bold">Заявку Прийнято!</h4>
           <p className="text-xs sm:text-sm leading-relaxed">{status.message}</p>
           <div className="pt-2">
             <button
@@ -212,16 +204,14 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
                 setStatus(null);
                 if (onCloseModal) onCloseModal();
               }}
-              className={`font-bold text-xs px-6 py-2.5 rounded-xl transition-colors shadow-md ${
-                isDark ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-950' : 'bg-sky-500 hover:bg-sky-600 text-white'
-              }`}
+              className="font-bold text-xs sm:text-sm min-h-[48px] px-6 py-3 rounded-xl transition-colors shadow-md theme-btn-primary flex items-center justify-center mx-auto"
             >
               Зрозуміло
             </button>
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4">
           
           {status?.type === 'error' && (
             <div className="p-3.5 bg-rose-500/10 rounded-xl border border-rose-500/30 text-rose-600 dark:text-rose-300 text-xs flex items-center gap-2">
@@ -231,35 +221,29 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
           )}
 
           <div>
-            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+            <label className="block text-xs font-semibold mb-1 theme-text-secondary">
               Ваше Ім'я *
             </label>
-            <div className="relative">
-              <User className={`w-4 h-4 absolute left-3.5 top-3.5 ${isDark ? 'text-slate-500' : 'text-sky-500'}`} />
+            <div className="relative flex items-center">
+              <User className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 theme-icon-accent pointer-events-none" />
               <input
                 type="text"
                 required
                 placeholder="наприклад, Олександр"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none transition-colors ${
-                  isDark 
-                    ? 'bg-slate-950/90 border-slate-700 text-white placeholder-slate-500 focus:border-amber-400' 
-                    : 'bg-sky-50/50 border-sky-200 text-slate-900 placeholder-slate-400 focus:border-sky-500'
-                }`}
+                className="w-full min-h-[48px] border rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none transition-colors theme-bg-input theme-border-subtle theme-border-focus theme-text-primary placeholder:text-slate-500"
               />
             </div>
           </div>
 
           <div>
-            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+            <label className="block text-xs font-semibold mb-1 theme-text-secondary">
               Номер Телефону *
             </label>
             <div className="relative flex items-center">
-              <Phone className={`w-4 h-4 absolute left-3 top-3.5 ${isDark ? 'text-slate-500' : 'text-sky-500'}`} />
-              <span className={`absolute left-9 font-extrabold text-sm select-none pointer-events-none font-mono ${
-                isDark ? 'text-white' : 'text-slate-900'
-              }`}>
+              <Phone className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 theme-icon-accent pointer-events-none" />
+              <span className="absolute left-9 font-extrabold text-sm select-none pointer-events-none font-mono theme-text-primary">
                 +380
               </span>
 
@@ -273,32 +257,24 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
                 onKeyDown={handlePhoneKeyDown}
                 onFocus={() => setIsPhoneFocused(true)}
                 onBlur={() => setIsPhoneFocused(false)}
-                className={`w-full border rounded-xl pl-[4.8rem] pr-4 py-2.5 text-sm font-mono focus:outline-none transition-colors text-transparent bg-transparent caret-transparent ${
-                  isDark 
-                    ? 'border-slate-700 focus:border-amber-400 bg-slate-950/90' 
-                    : 'border-sky-200 focus:border-sky-500 bg-sky-50/50'
-                }`}
+                className="w-full min-h-[48px] border rounded-xl pl-[4.8rem] pr-4 py-3 text-sm font-mono focus:outline-none transition-colors text-transparent bg-transparent caret-transparent theme-border-subtle theme-border-focus theme-bg-input"
               />
             </div>
           </div>
 
           <div>
-            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+            <label className="block text-xs font-semibold mb-1 theme-text-secondary">
               Послуга, яка вас цікавить
             </label>
-            <div className="relative">
-              <Wrench className={`w-4 h-4 absolute left-3.5 top-3.5 ${isDark ? 'text-slate-500' : 'text-sky-500'}`} />
+            <div className="relative flex items-center">
+              <Wrench className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 theme-icon-accent pointer-events-none z-10" />
               <select
                 value={formData.service}
                 onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none transition-colors ${
-                  isDark 
-                    ? 'bg-slate-950/90 border-slate-700 text-white focus:border-amber-400' 
-                    : 'bg-sky-50/50 border-sky-200 text-slate-900 focus:border-sky-500'
-                }`}
+                className="w-full max-w-full min-h-[48px] border rounded-xl pl-10 pr-8 py-3 text-xs sm:text-sm focus:outline-none transition-colors theme-bg-input theme-border-subtle theme-border-focus theme-text-primary truncate cursor-pointer"
               >
                 {servicesList.map((srv, idx) => (
-                  <option key={idx} value={srv} className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                  <option key={idx} value={srv} className="theme-bg-modal theme-text-primary text-xs sm:text-sm py-2">
                     {srv}
                   </option>
                 ))}
@@ -309,42 +285,34 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
           {/* Date & Time Booking Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+              <label className="block text-xs font-semibold mb-1 theme-text-secondary">
                 Зручний день
               </label>
-              <div className="relative">
-                <Calendar className={`w-4 h-4 absolute left-3.5 top-3.5 ${isDark ? 'text-slate-500' : 'text-sky-500'}`} />
+              <div className="relative flex items-center">
+                <Calendar className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 theme-icon-accent pointer-events-none z-10" />
                 <input
                   type="date"
                   min={todayStr}
                   value={formData.preferred_date}
                   onChange={(e) => setFormData({ ...formData, preferred_date: e.target.value })}
-                  className={`w-full border rounded-xl pl-10 pr-3 py-2.5 text-sm focus:outline-none transition-colors ${
-                    isDark 
-                      ? 'bg-slate-950/90 border-slate-700 text-white focus:border-amber-400' 
-                      : 'bg-sky-50/50 border-sky-200 text-slate-900 focus:border-sky-500'
-                  }`}
+                  className="w-full max-w-full min-h-[48px] border rounded-xl pl-10 pr-3 py-3 text-xs sm:text-sm focus:outline-none transition-colors theme-bg-input theme-border-subtle theme-border-focus theme-text-primary"
                 />
               </div>
             </div>
 
             <div>
-              <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+              <label className="block text-xs font-semibold mb-1 theme-text-secondary">
                 Час
               </label>
-              <div className="relative">
-                <Clock className={`w-4 h-4 absolute left-3.5 top-3.5 ${isDark ? 'text-slate-500' : 'text-sky-500'}`} />
+              <div className="relative flex items-center">
+                <Clock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 theme-icon-accent pointer-events-none z-10" />
                 <select
                   value={formData.preferred_time}
                   onChange={(e) => setFormData({ ...formData, preferred_time: e.target.value })}
-                  className={`w-full border rounded-xl pl-10 pr-3 py-2.5 text-sm focus:outline-none transition-colors ${
-                    isDark 
-                      ? 'bg-slate-950/90 border-slate-700 text-white focus:border-amber-400' 
-                      : 'bg-sky-50/50 border-sky-200 text-slate-900 focus:border-sky-500'
-                  }`}
+                  className="w-full max-w-full min-h-[48px] border rounded-xl pl-10 pr-8 py-3 text-xs sm:text-sm focus:outline-none transition-colors theme-bg-input theme-border-subtle theme-border-focus theme-text-primary truncate cursor-pointer"
                 >
                   {timeOptions.map((tOpt, idx) => (
-                    <option key={idx} value={tOpt} className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                    <option key={idx} value={tOpt} className="theme-bg-modal theme-text-primary text-xs sm:text-sm py-2">
                       {tOpt}
                     </option>
                   ))}
@@ -354,21 +322,17 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
           </div>
 
           <div>
-            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+            <label className="block text-xs font-semibold mb-1 theme-text-secondary">
               Коментар
             </label>
             <div className="relative">
-              <MessageSquare className={`w-4 h-4 absolute left-3.5 top-3.5 ${isDark ? 'text-slate-500' : 'text-sky-500'}`} />
+              <MessageSquare className="w-4 h-4 absolute left-3.5 top-3.5 theme-icon-accent pointer-events-none" />
               <textarea
                 rows={2}
                 placeholder="Ваші побажання чи запитання..."
                 value={formData.comment}
                 onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
-                className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none transition-colors ${
-                  isDark 
-                    ? 'bg-slate-950/90 border-slate-700 text-white placeholder-slate-500 focus:border-amber-400' 
-                    : 'bg-sky-50/50 border-sky-200 text-slate-900 placeholder-slate-400 focus:border-sky-500'
-                }`}
+                className="w-full border rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none transition-colors theme-bg-input theme-border-subtle theme-border-focus theme-text-primary placeholder:text-slate-500"
               />
             </div>
           </div>
@@ -376,20 +340,16 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
           <button
             type="submit"
             disabled={loading}
-            className={`w-full font-bold text-sm py-3.5 rounded-xl shadow-lg hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-50 ${
-              isDark 
-                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 glow-amber' 
-                : 'bg-gradient-to-r from-sky-500 to-blue-600 text-white glow-sky'
-            }`}
+            className="w-full min-h-[48px] font-bold text-sm sm:text-base py-3.5 rounded-xl shadow-lg hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-50 theme-btn-primary"
           >
             {loading ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="w-5 h-5 animate-spin" />
                 <span>Відправка запиту...</span>
               </>
             ) : (
               <>
-                <Send className="w-4 h-4" />
+                <Send className="w-5 h-5 fill-current" />
                 <span>Надіслати Заявку Мастеру</span>
               </>
             )}

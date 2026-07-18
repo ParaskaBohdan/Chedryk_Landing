@@ -90,22 +90,18 @@ export default function Services({ onSelectService, theme }) {
   ];
 
   return (
-    <section id="services" className={`py-16 sm:py-20 transition-colors duration-300 relative ${
-      isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900 border-y border-sky-100'
-    }`}>
+    <section id="services" className="py-16 sm:py-20 transition-colors duration-300 relative theme-bg-section border-y theme-border-subtle">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
-          <span className={`font-semibold text-xs sm:text-sm uppercase tracking-widest px-3 py-1 rounded-full border ${
-            isDark ? 'text-amber-400 bg-amber-500/10 border-amber-500/20' : 'text-sky-700 bg-sky-100 border-sky-200'
-          }`}>
+          <span className="font-semibold text-xs sm:text-sm uppercase tracking-widest px-3 py-1 rounded-full border theme-badge">
             Послуги Чедрика Івана
           </span>
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            Спеціалізовані Рішення з <span className={isDark ? 'text-amber-400' : 'text-sky-600'}>Енергозабезпечення</span>
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-normal theme-text-primary">
+            Спеціалізовані Рішення з <span className="theme-text-accent">Енергозабезпечення</span>
           </h2>
-          <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+          <p className="text-sm sm:text-lg theme-text-secondary">
             Повний спектр робіт від монтажу дахових батарей та систем Deye до супроводу документів в Обленерго по всій Закарпатській області.
           </p>
         </div>
@@ -114,7 +110,6 @@ export default function Services({ onSelectService, theme }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {services.map((service, index) => {
             const Icon = service.icon;
-            const cardGradient = isDark ? service.darkColor : service.lightColor;
             return (
               <motion.div
                 key={service.id}
@@ -122,60 +117,40 @@ export default function Services({ onSelectService, theme }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.08 }}
-                className={`glass-card rounded-3xl p-5 sm:p-7 border transition-all flex flex-col justify-between group ${
-                  isDark 
-                    ? 'border-slate-800 hover:border-slate-700' 
-                    : 'border-sky-100 hover:border-sky-300 bg-sky-50/30 hover:shadow-xl hover:shadow-sky-500/5'
-                }`}
+                className="glass-card rounded-3xl p-5 sm:p-7 border transition-all flex flex-col justify-between group theme-bg-card theme-border-card"
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
-                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${cardGradient} p-0.5 flex items-center justify-center shadow-md`}>
-                      <div className={`w-full h-full rounded-[14px] flex items-center justify-center ${
-                        isDark ? 'bg-slate-950' : 'bg-white'
-                      }`}>
-                        <Icon className={`w-6 h-6 ${isDark ? 'text-amber-400' : 'text-sky-600'}`} />
-                      </div>
+                    <div className="w-12 h-12 rounded-2xl p-0.5 flex items-center justify-center shadow-md theme-badge">
+                      <Icon className="w-6 h-6 theme-icon-accent" />
                     </div>
-                    <span className={`text-[11px] font-semibold px-3 py-1 rounded-full border ${
-                      isDark ? 'text-slate-400 bg-slate-800/80 border-slate-700' : 'text-sky-800 bg-sky-100/80 border-sky-200'
-                    }`}>
+                    <span className="text-[11px] font-semibold px-3 py-1 rounded-full border theme-badge">
                       {service.category}
                     </span>
                   </div>
 
-                  <h3 className={`text-lg sm:text-xl font-bold mb-2 transition-colors ${
-                    isDark ? 'text-white group-hover:text-amber-400' : 'text-slate-900 group-hover:text-sky-600'
-                  }`}>
+                  <h3 className="text-lg sm:text-xl font-bold mb-2 transition-colors theme-text-primary group-hover:theme-text-accent">
                     {service.title}
                   </h3>
 
-                  <p className={`text-xs leading-relaxed mb-5 ${
-                    isDark ? 'text-slate-300' : 'text-slate-600'
-                  }`}>
+                  <p className="text-xs leading-relaxed mb-5 theme-text-secondary">
                     {service.shortDesc}
                   </p>
 
                   <ul className="space-y-2 mb-6">
                     {service.features.map((feat, i) => (
-                      <li key={i} className={`flex items-start gap-2 text-xs ${
-                        isDark ? 'text-slate-300' : 'text-slate-700'
-                      }`}>
-                        <CheckCircle2 className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${isDark ? 'text-amber-400' : 'text-sky-500'}`} />
+                      <li key={i} className="flex items-start gap-2 text-xs theme-text-secondary">
+                        <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 theme-icon-accent" />
                         <span>{feat}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className={`pt-4 border-t flex items-center justify-between gap-3 ${
-                  isDark ? 'border-slate-800' : 'border-sky-100'
-                }`}>
+                <div className="pt-4 border-t theme-border-subtle flex items-center justify-between gap-3">
                   <button
                     onClick={() => setSelectedModalService(service)}
-                    className={`text-xs font-semibold flex items-center gap-1 transition-colors ${
-                      isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-sky-600'
-                    }`}
+                    className="text-xs font-semibold flex items-center gap-1 transition-colors theme-text-secondary hover:theme-text-accent"
                   >
                     <span>Детальніше</span>
                     <ChevronRight className="w-4 h-4" />
@@ -183,11 +158,7 @@ export default function Services({ onSelectService, theme }) {
 
                   <button
                     onClick={() => onSelectService(service.title)}
-                    className={`text-xs font-bold px-4 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-sm ${
-                      isDark 
-                        ? 'bg-amber-500 hover:bg-amber-400 text-slate-950' 
-                        : 'bg-sky-500 hover:bg-sky-600 text-white shadow-sky-500/20'
-                    }`}
+                    className="text-xs font-bold px-4 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-sm theme-btn-primary"
                   >
                     <span>Замовити</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -203,47 +174,41 @@ export default function Services({ onSelectService, theme }) {
       {/* Service Detail Modal */}
       {selectedModalService && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
-          <div className={`max-w-xl w-full p-6 sm:p-8 rounded-3xl border relative shadow-2xl my-8 space-y-5 transition-colors ${
-            isDark ? 'glass-panel border-slate-700 bg-slate-900 text-white' : 'bg-white border-sky-200 text-slate-900 shadow-sky-500/10'
-          }`}>
+          <div className="max-w-xl w-full p-6 sm:p-8 rounded-3xl border relative shadow-2xl my-8 space-y-5 transition-colors theme-bg-modal theme-border-card theme-text-primary">
             <div className="flex justify-between items-start">
               <h3 className="text-xl sm:text-2xl font-bold pr-6">
                 {selectedModalService.title}
               </h3>
               <button
                 onClick={() => setSelectedModalService(null)}
-                className={`p-1.5 rounded-full ${
-                  isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-500 hover:text-slate-900 hover:bg-sky-50'
-                }`}
+                className="p-1.5 rounded-full theme-text-muted hover:theme-text-primary"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <p className={`text-xs sm:text-sm leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+            <p className="text-xs sm:text-sm leading-relaxed theme-text-secondary">
               {selectedModalService.details}
             </p>
 
             <div className="space-y-2">
-              <h4 className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-amber-400' : 'text-sky-600'}`}>
+              <h4 className="text-xs font-bold uppercase tracking-wider theme-text-accent">
                 Що входить у вартість:
               </h4>
               <ul className="space-y-2">
                 {selectedModalService.features.map((f, idx) => (
-                  <li key={idx} className={`flex items-center gap-2 text-xs sm:text-sm ${
-                    isDark ? 'text-slate-200' : 'text-slate-800'
-                  }`}>
-                    <CheckCircle2 className={`w-4 h-4 flex-shrink-0 ${isDark ? 'text-emerald-400' : 'text-sky-500'}`} />
+                  <li key={idx} className="flex items-center gap-2 text-xs sm:text-sm theme-text-primary">
+                    <CheckCircle2 className="w-4 h-4 flex-shrink-0 theme-icon-accent" />
                     <span>{f}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className={`pt-4 border-t flex justify-end gap-3 ${isDark ? 'border-slate-800' : 'border-sky-100'}`}>
+            <div className="pt-4 border-t theme-border-subtle flex justify-end gap-3">
               <button
                 onClick={() => setSelectedModalService(null)}
-                className={`px-4 py-2 text-xs font-semibold ${isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'}`}
+                className="px-4 py-2 text-xs font-semibold theme-text-secondary hover:theme-text-primary"
               >
                 Закрити
               </button>
@@ -253,9 +218,7 @@ export default function Services({ onSelectService, theme }) {
                   setSelectedModalService(null);
                   onSelectService(title);
                 }}
-                className={`font-bold text-xs px-5 py-2.5 rounded-xl shadow-lg ${
-                  isDark ? 'bg-amber-500 hover:bg-amber-400 text-slate-950' : 'bg-sky-500 hover:bg-sky-600 text-white'
-                }`}
+                className="font-bold text-xs px-5 py-2.5 rounded-xl shadow-lg theme-btn-primary"
               >
                 Замовити для цього об'єкта
               </button>

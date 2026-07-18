@@ -1,48 +1,332 @@
 @import "tailwindcss";
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-kerning: normal;
+  font-feature-settings: "kern" 1;
 }
 
-/* Custom Utilities & Theme Panels */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: 0.012em;
+}
+
+/* BASE LIGHT THEME (Default) */
+:root, html.light {
+  --bg-main: #f8fafc;
+  --bg-section: linear-gradient(180deg, #f0f9ff 0%, #ffffff 50%, #f0f9ff 100%);
+  --bg-card: #ffffff;
+  --bg-card-subtle: rgba(240, 249, 255, 0.7);
+  --bg-modal: #ffffff;
+  --bg-input: #f0f9ff;
+
+  --border-subtle: #e0f2fe;
+  --border-card: #e0f2fe;
+  --border-focus: #0284c7;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-accent: #0284c7;
+
+  --btn-primary-bg: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-glow: 0 0 25px -5px rgba(14, 165, 233, 0.35);
+
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #0f172a;
+  --btn-secondary-border: #bae6fd;
+  --btn-secondary-hover-bg: #f0f9ff;
+
+  --badge-bg: #e0f2fe;
+  --badge-border: #bae6fd;
+  --badge-text: #0369a1;
+
+  --icon-accent: #0284c7;
+  --icon-muted: #64748b;
+
+  --progress-bg: #e2e8f0;
+  --progress-fill: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%);
+  --progress-text: #0284c7;
+
+  --timeline-line: linear-gradient(180deg, #38bdf8 0%, #2563eb 50%, #7dd3fc 100%);
+  --hero-glow: rgba(56, 189, 248, 0.25);
+}
+
+/* LIGHT SCHEME OVERRIDES */
+html:not(.dark)[data-scheme="default"], html.light[data-scheme="default"] {
+  --text-accent: #0284c7;
+  --border-focus: #0284c7;
+  --btn-primary-bg: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-glow: 0 0 25px -5px rgba(14, 165, 233, 0.35);
+  --badge-bg: #e0f2fe;
+  --badge-border: #bae6fd;
+  --badge-text: #0369a1;
+  --icon-accent: #0284c7;
+  --progress-fill: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%);
+  --progress-text: #0284c7;
+  --timeline-line: linear-gradient(180deg, #38bdf8 0%, #2563eb 50%, #7dd3fc 100%);
+  --hero-glow: rgba(56, 189, 248, 0.25);
+}
+
+html:not(.dark)[data-scheme="emerald"], html.light[data-scheme="emerald"] {
+  --text-accent: #059669;
+  --border-focus: #10b981;
+  --btn-primary-bg: linear-gradient(135deg, #10b981 0%, #047857 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-glow: 0 0 25px -5px rgba(16, 185, 129, 0.35);
+  --badge-bg: #d1fae5;
+  --badge-border: #a7f3d0;
+  --badge-text: #065f46;
+  --icon-accent: #059669;
+  --progress-fill: linear-gradient(90deg, #34d399 0%, #059669 100%);
+  --progress-text: #047857;
+  --timeline-line: linear-gradient(180deg, #34d399 0%, #059669 50%, #a7f3d0 100%);
+  --hero-glow: rgba(16, 185, 129, 0.22);
+}
+
+html:not(.dark)[data-scheme="violet"], html.light[data-scheme="violet"] {
+  --text-accent: #7c3aed;
+  --border-focus: #8b5cf6;
+  --btn-primary-bg: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-glow: 0 0 25px -5px rgba(139, 92, 246, 0.35);
+  --badge-bg: #ede9fe;
+  --badge-border: #ddd6fe;
+  --badge-text: #5b21b6;
+  --icon-accent: #7c3aed;
+  --progress-fill: linear-gradient(90deg, #a78bfa 0%, #6d28d9 100%);
+  --progress-text: #6d28d9;
+  --timeline-line: linear-gradient(180deg, #a78bfa 0%, #6d28d9 50%, #ddd6fe 100%);
+  --hero-glow: rgba(139, 92, 246, 0.22);
+}
+
+html:not(.dark)[data-scheme="amber"], html.light[data-scheme="amber"] {
+  --text-accent: #d97706;
+  --border-focus: #f59e0b;
+  --btn-primary-bg: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-glow: 0 0 25px -5px rgba(245, 158, 11, 0.35);
+  --badge-bg: #fef3c7;
+  --badge-border: #fde68a;
+  --badge-text: #92400e;
+  --icon-accent: #d97706;
+  --progress-fill: linear-gradient(90deg, #fbbf24 0%, #d97706 100%);
+  --progress-text: #b45309;
+  --timeline-line: linear-gradient(180deg, #fbbf24 0%, #d97706 50%, #fde68a 100%);
+  --hero-glow: rgba(245, 158, 11, 0.22);
+}
+
+html:not(.dark)[data-scheme="red"], html.light[data-scheme="red"] {
+  --text-accent: #dc2626;
+  --border-focus: #ef4444;
+  --btn-primary-bg: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-glow: 0 0 25px -5px rgba(239, 68, 68, 0.35);
+  --badge-bg: #fee2e2;
+  --badge-border: #fca5a5;
+  --badge-text: #991b1b;
+  --icon-accent: #dc2626;
+  --progress-fill: linear-gradient(90deg, #f87171 0%, #dc2626 100%);
+  --progress-text: #b91c1c;
+  --timeline-line: linear-gradient(180deg, #f87171 0%, #b91c1c 50%, #fca5a5 100%);
+  --hero-glow: rgba(239, 68, 68, 0.22);
+}
+
+/* BASE DARK THEME */
+html.dark {
+  --bg-main: #020617;
+  --bg-section: #020617;
+  --bg-card: rgba(15, 23, 42, 0.75);
+  --bg-card-subtle: rgba(30, 41, 59, 0.6);
+  --bg-modal: #0f172a;
+  --bg-input: rgba(2, 6, 23, 0.85);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-card: rgba(255, 255, 255, 0.1);
+  --border-focus: #fbbf24;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+  --text-accent: #fbbf24;
+
+  --btn-primary-bg: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+  --btn-primary-text: #020617;
+  --btn-primary-glow: 0 0 25px -5px rgba(245, 158, 11, 0.4);
+
+  --btn-secondary-bg: #1e293b;
+  --btn-secondary-text: #f8fafc;
+  --btn-secondary-border: rgba(255, 255, 255, 0.15);
+  --btn-secondary-hover-bg: #334155;
+
+  --badge-bg: rgba(245, 158, 11, 0.15);
+  --badge-border: rgba(245, 158, 11, 0.3);
+  --badge-text: #fbbf24;
+
+  --icon-accent: #fbbf24;
+  --icon-muted: #64748b;
+
+  --progress-bg: #1e293b;
+  --progress-fill: linear-gradient(90deg, #10b981 0%, #059669 100%);
+  --progress-text: #34d399;
+
+  --timeline-line: linear-gradient(180deg, #f59e0b 0%, #ea580c 50%, rgba(245, 158, 11, 0.2) 100%);
+  --hero-glow: rgba(245, 158, 11, 0.18);
+}
+
+/* DARK SCHEME OVERRIDES */
+html.dark[data-scheme="default"] {
+  --text-accent: #fbbf24;
+  --border-focus: #fbbf24;
+  --btn-primary-bg: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+  --btn-primary-text: #020617;
+  --btn-primary-glow: 0 0 25px -5px rgba(245, 158, 11, 0.4);
+  --badge-bg: rgba(245, 158, 11, 0.15);
+  --badge-border: rgba(245, 158, 11, 0.3);
+  --badge-text: #fbbf24;
+  --icon-accent: #fbbf24;
+  --progress-fill: linear-gradient(90deg, #10b981 0%, #059669 100%);
+  --progress-text: #34d399;
+  --timeline-line: linear-gradient(180deg, #f59e0b 0%, #ea580c 50%, rgba(245, 158, 11, 0.2) 100%);
+  --hero-glow: rgba(245, 158, 11, 0.18);
+}
+
+html.dark[data-scheme="emerald"] {
+  --text-accent: #34d399;
+  --border-focus: #10b981;
+  --btn-primary-bg: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --btn-primary-text: #020617;
+  --btn-primary-glow: 0 0 25px -5px rgba(16, 185, 129, 0.4);
+  --badge-bg: rgba(16, 185, 129, 0.15);
+  --badge-border: rgba(16, 185, 129, 0.3);
+  --badge-text: #34d399;
+  --icon-accent: #34d399;
+  --progress-fill: linear-gradient(90deg, #34d399 0%, #059669 100%);
+  --progress-text: #34d399;
+  --timeline-line: linear-gradient(180deg, #10b981 0%, #059669 50%, rgba(16, 185, 129, 0.2) 100%);
+  --hero-glow: rgba(16, 185, 129, 0.18);
+}
+
+html.dark[data-scheme="violet"] {
+  --text-accent: #c084fc;
+  --border-focus: #a855f7;
+  --btn-primary-bg: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  --btn-primary-text: #020617;
+  --btn-primary-glow: 0 0 25px -5px rgba(168, 85, 247, 0.4);
+  --badge-bg: rgba(168, 85, 247, 0.15);
+  --badge-border: rgba(168, 85, 247, 0.3);
+  --badge-text: #c084fc;
+  --icon-accent: #c084fc;
+  --progress-fill: linear-gradient(90deg, #c084fc 0%, #9333ea 100%);
+  --progress-text: #e9d5ff;
+  --timeline-line: linear-gradient(180deg, #a855f7 0%, #ec4899 50%, rgba(168, 85, 247, 0.2) 100%);
+  --hero-glow: rgba(168, 85, 247, 0.18);
+}
+
+html.dark[data-scheme="amber"] {
+  --text-accent: #fb923c;
+  --border-focus: #f97316;
+  --btn-primary-bg: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+  --btn-primary-text: #020617;
+  --btn-primary-glow: 0 0 25px -5px rgba(249, 115, 22, 0.4);
+  --badge-bg: rgba(249, 115, 22, 0.15);
+  --badge-border: rgba(249, 115, 22, 0.3);
+  --badge-text: #fb923c;
+  --icon-accent: #fb923c;
+  --progress-fill: linear-gradient(90deg, #fb923c 0%, #ea580c 100%);
+  --progress-text: #fdba74;
+  --timeline-line: linear-gradient(180deg, #f97316 0%, #dc2626 50%, rgba(249, 115, 22, 0.2) 100%);
+  --hero-glow: rgba(249, 115, 22, 0.18);
+}
+
+html.dark[data-scheme="red"] {
+  --text-accent: #f87171;
+  --border-focus: #ef4444;
+  --btn-primary-bg: linear-gradient(135deg, #ef4444 0%, #991b1b 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-glow: 0 0 25px -5px rgba(239, 68, 68, 0.4);
+  --badge-bg: rgba(239, 68, 68, 0.15);
+  --badge-border: rgba(239, 68, 68, 0.3);
+  --badge-text: #f87171;
+  --icon-accent: #f87171;
+  --progress-fill: linear-gradient(90deg, #f87171 0%, #dc2626 100%);
+  --progress-text: #fca5a5;
+  --timeline-line: linear-gradient(180deg, #ef4444 0%, #991b1b 50%, rgba(239, 68, 68, 0.2) 100%);
+  --hero-glow: rgba(239, 68, 68, 0.18);
+}
+
+/* Custom CSS Utility Classes for Variables */
+.theme-bg-main { background-color: var(--bg-main); }
+.theme-bg-section { background: var(--bg-section); }
+.theme-bg-card { background: var(--bg-card); }
+.theme-bg-card-subtle { background: var(--bg-card-subtle); }
+.theme-bg-modal { background-color: var(--bg-modal); }
+.theme-bg-input { background-color: var(--bg-input); }
+
+.theme-text-primary { color: var(--text-primary); }
+.theme-text-secondary { color: var(--text-secondary); }
+.theme-text-muted { color: var(--text-muted); }
+.theme-text-accent { color: var(--text-accent); }
+
+.theme-btn-primary {
+  background: var(--btn-primary-bg) !important;
+  color: var(--btn-primary-text) !important;
+  box-shadow: var(--btn-primary-glow) !important;
+}
+
+.theme-btn-secondary {
+  background-color: var(--btn-secondary-bg) !important;
+  color: var(--btn-secondary-text) !important;
+  border-color: var(--btn-secondary-border) !important;
+}
+.theme-btn-secondary:hover {
+  background-color: var(--btn-secondary-hover-bg) !important;
+}
+
+.theme-badge {
+  background-color: var(--badge-bg) !important;
+  border-color: var(--badge-border) !important;
+  color: var(--badge-text) !important;
+}
+
+.theme-border-subtle { border-color: var(--border-subtle) !important; }
+.theme-border-card { border-color: var(--border-card) !important; }
+.theme-border-focus:focus { border-color: var(--border-focus) !important; }
+
+.theme-icon-accent { color: var(--icon-accent) !important; }
+.theme-icon-muted { color: var(--icon-muted) !important; }
+
+.theme-progress-bg { background-color: var(--progress-bg) !important; }
+.theme-progress-fill { background: var(--progress-fill) !important; }
+.theme-progress-text { color: var(--progress-text) !important; }
+.theme-timeline-line { background: var(--timeline-line) !important; }
+
+/* Custom Panels */
 .dark .glass-panel {
-  background: rgba(15, 23, 42, 0.85);
+  background: var(--bg-card);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-card);
 }
 
 .light .glass-panel {
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--bg-card);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(224, 242, 254, 0.9);
+  border: 1px solid var(--border-card);
 }
 
 .dark .glass-card {
-  background: rgba(30, 41, 59, 0.65);
+  background: var(--bg-card);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-card);
 }
 
 .light .glass-card {
-  background: #ffffff;
+  background: var(--bg-card);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(224, 242, 254, 0.9);
+  border: 1px solid var(--border-card);
   box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.08);
-}
-
-.glow-amber {
-  box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.35);
-}
-
-.glow-sky {
-  box-shadow: 0 0 25px -5px rgba(14, 165, 233, 0.35);
-}
-
-.glow-blue {
-  box-shadow: 0 0 25px -5px rgba(14, 165, 233, 0.35);
 }
 
 /* Touch Friendly Utilities */
@@ -68,6 +352,11 @@ button, a {
   background: #bae6fd;
   border-radius: 4px;
 }
-.light ::-webkit-scrollbar-thumb:hover {
-  background: #0284c7;
+
+/* Select option theme styling */
+select option {
+  background-color: var(--bg-modal);
+  color: var(--text-primary);
+  max-width: 100%;
+  padding: 8px 12px;
 }
