@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle2, AlertCircle, Loader2, Phone, User, MessageSquare, Wrench, Calendar, Clock } from 'lucide-react';
+import CustomSelect from './CustomSelect';
 
 export default function ConsultationForm({ selectedServicePrefill, onCloseModal, theme }) {
   const isDark = theme === 'dark';
@@ -12,7 +13,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
     name: '',
     service: selectedServicePrefill || 'Побудова сонячних станцій (28–60 кВт)',
     preferred_date: todayStr,
-    preferred_time: '10:00',
+    preferred_time: 'Якомога швидше',
     comment: ''
   });
 
@@ -187,6 +188,22 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
     }
   };
 
+  const dateInputRef = React.useRef(null);
+
+  const handleDateContainerClick = () => {
+    if (dateInputRef.current) {
+      if ('showPicker' in HTMLInputElement.prototype) {
+        try {
+          dateInputRef.current.showPicker();
+        } catch {
+          dateInputRef.current.focus();
+        }
+      } else {
+        dateInputRef.current.focus();
+      }
+    }
+  };
+
   return (
     <div className="glass-panel p-4 sm:p-8 rounded-2xl sm:rounded-3xl border shadow-2xl w-full max-w-xl mx-auto transition-colors theme-bg-modal theme-border-card theme-text-primary">
       <div className="text-center mb-5 sm:mb-8">
@@ -273,20 +290,12 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
             <label className="block text-xs font-semibold mb-1 theme-text-secondary">
               Послуга, яка вас цікавить
             </label>
-            <div className="relative flex items-center">
-              <Wrench className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 theme-icon-accent pointer-events-none z-10" />
-              <select
-                value={formData.service}
-                onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                className="w-full max-w-full min-h-[48px] border rounded-xl pl-10 pr-8 py-3 text-xs sm:text-sm focus:outline-none transition-colors theme-bg-input theme-border-subtle theme-border-focus theme-text-primary truncate cursor-pointer"
-              >
-                {servicesList.map((srv, idx) => (
-                  <option key={idx} value={srv} className="theme-bg-modal theme-text-primary text-xs sm:text-sm py-2">
-                    {srv}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <CustomSelect
+              value={formData.service}
+              onChange={(val) => setFormData({ ...formData, service: val })}
+              options={servicesList}
+              icon={Wrench}
+            />
           </div>
 
           {/* Date & Time Booking Fields */}
@@ -295,14 +304,23 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
               <label className="block text-xs font-semibold mb-1 theme-text-secondary">
                 Зручний день
               </label>
-              <div className="relative flex items-center">
+              <div 
+                onClick={handleDateContainerClick}
+                className="relative flex items-center cursor-pointer"
+              >
                 <Calendar className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 theme-icon-accent pointer-events-none z-10" />
                 <input
+                  ref={dateInputRef}
                   type="date"
                   min={todayStr}
                   value={formData.preferred_date}
-                  onChange={(e) => setFormData({ ...formData, preferred_date: e.target.value })}
-                  className="w-full max-w-full min-h-[48px] border rounded-xl pl-10 pr-3 py-3 text-xs sm:text-sm focus:outline-none transition-colors theme-bg-input theme-border-subtle theme-border-focus theme-text-primary"
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      setFormData({ ...formData, preferred_date: e.target.value });
+                    }
+                  }}
+                  onKeyDown={(e) => e.preventDefault()}
+                  className="w-full max-w-full min-h-[48px] border rounded-xl pl-10 pr-3 py-3 text-xs sm:text-sm focus:outline-none transition-colors theme-bg-input theme-border-subtle theme-border-focus theme-text-primary cursor-pointer select-none"
                 />
               </div>
             </div>
@@ -311,20 +329,12 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
               <label className="block text-xs font-semibold mb-1 theme-text-secondary">
                 Час
               </label>
-              <div className="relative flex items-center">
-                <Clock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 theme-icon-accent pointer-events-none z-10" />
-                <select
-                  value={formData.preferred_time}
-                  onChange={(e) => setFormData({ ...formData, preferred_time: e.target.value })}
-                  className="w-full max-w-full min-h-[48px] border rounded-xl pl-10 pr-8 py-3 text-xs sm:text-sm focus:outline-none transition-colors theme-bg-input theme-border-subtle theme-border-focus theme-text-primary truncate cursor-pointer"
-                >
-                  {timeOptions.map((tOpt, idx) => (
-                    <option key={idx} value={tOpt} className="theme-bg-modal theme-text-primary text-xs sm:text-sm py-2">
-                      {tOpt}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <CustomSelect
+                value={formData.preferred_time}
+                onChange={(val) => setFormData({ ...formData, preferred_time: val })}
+                options={timeOptions}
+                icon={Clock}
+              />
             </div>
           </div>
 

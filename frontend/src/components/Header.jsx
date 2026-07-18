@@ -1,5 +1,71 @@
-import React, { useState } from 'react';
-import { Phone, Menu, X, Sun, Moon, Palette } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Phone, Menu, X, Sun, Moon, Palette, ChevronDown, Check } from 'lucide-react';
+
+function HeaderSchemePicker({ scheme, setScheme, colorSchemes }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  const currentSchemeObj = colorSchemes.find(s => s.id === (scheme || 'default'));
+
+  return (
+    <div ref={containerRef} className="relative flex-shrink-0">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Вибрати палітру кольорів"
+        title={`Палітра: ${currentSchemeObj?.label || 'Колір'}`}
+        className="h-9 w-9 sm:w-36 px-2 sm:px-2.5 rounded-xl border transition-all flex items-center justify-center sm:justify-between gap-1 theme-badge shadow-xs hover:scale-105 cursor-pointer select-none"
+      >
+        <Palette className="w-4 h-4 flex-shrink-0 theme-icon-accent" />
+        <span className="text-xs font-bold hidden sm:inline-block truncate flex-grow text-center">
+          {currentSchemeObj?.label}
+        </span>
+        <ChevronDown className={`w-3.5 h-3.5 flex-shrink-0 theme-icon-accent transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      {isOpen && (
+        <div className="absolute right-0 top-[calc(100%+8px)] z-50 min-w-[160px] p-1.5 rounded-2xl border shadow-2xl theme-bg-modal theme-border-card backdrop-blur-xl space-y-1">
+          {colorSchemes.map((s) => {
+            const isSelected = (scheme || 'default') === s.id;
+            return (
+              <div
+                key={s.id}
+                onClick={() => {
+                  setScheme(s.id);
+                  setIsOpen(false);
+                }}
+                className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
+                  isSelected
+                    ? 'theme-badge font-bold shadow-xs'
+                    : 'theme-text-primary hover:theme-bg-input/80'
+                }`}
+              >
+                <span>{s.label}</span>
+                {isSelected && <Check className="w-3.5 h-3.5 theme-icon-accent" />}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Header({ activeTab, setActiveTab, onOpenConsultation, theme, toggleTheme, scheme, setScheme }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -95,21 +161,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           
           {/* Color Scheme Selector Dropdown */}
-          <div className="relative flex items-center">
-            <Palette className="w-3.5 h-3.5 absolute left-2.5 pointer-events-none theme-icon-accent" />
-            <select
-              value={scheme || 'default'}
-              onChange={(e) => setScheme(e.target.value)}
-              title="Виберіть палітру кольорів"
-              className="pl-7 pr-2.5 py-2 text-xs font-semibold rounded-xl border appearance-none cursor-pointer focus:outline-none transition-all theme-badge shadow-xs hover:scale-105"
-            >
-              {colorSchemes.map((s) => (
-                <option key={s.id} value={s.id} className="theme-bg-modal theme-text-primary">
-                  {s.label}
-                </option>
-              ))}
-            </select>
-          </div>
+          <HeaderSchemePicker scheme={scheme} setScheme={setScheme} colorSchemes={colorSchemes} />
 
           {/* Theme Toggle Button */}
           <button
