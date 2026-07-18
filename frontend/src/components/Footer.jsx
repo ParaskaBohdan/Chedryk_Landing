@@ -21,10 +21,8 @@ export default function Footer({ setActiveTab, onOpenConsultation, theme }) {
           {/* Brand Col */}
           <div className="md:col-span-2 space-y-3 sm:space-y-4">
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-xl overflow-hidden border p-0.5 ${
-                isDark ? 'border-amber-500/30 bg-slate-900' : 'border-sky-300 bg-sky-50'
-              }`}>
-                <img src="/logo.png" alt="Логотип" className="w-full h-full object-cover rounded-lg" />
+              <div className="w-10 h-10 flex items-center justify-center">
+                <img src="/logo.svg" alt="Логотип" className="w-full h-full object-contain" />
               </div>
               <div>
                 <h3 className={`font-bold text-base sm:text-lg flex items-center gap-1.5 ${
@@ -57,6 +55,11 @@ export default function Footer({ setActiveTab, onOpenConsultation, theme }) {
               <li>
                 <button onClick={() => { setActiveTab('home'); setTimeout(() => document.getElementById('stats')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className={`transition-colors ${isDark ? 'hover:text-amber-400' : 'hover:text-sky-600'}`}>
                   Офіційні Дані
+                </button>
+              </li>
+              <li>
+                <button onClick={() => { setActiveTab('home'); setTimeout(() => document.getElementById('deye-legal')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className={`transition-colors ${isDark ? 'hover:text-amber-400' : 'hover:text-sky-600'}`}>
+                  Deye & Зелений Тариф
                 </button>
               </li>
               <li>

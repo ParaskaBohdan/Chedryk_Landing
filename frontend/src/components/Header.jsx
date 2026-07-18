@@ -23,18 +23,16 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         
-        {/* Brand Logo */}
+        {/* Brand Logo - Clean SVG without background */}
         <div 
           onClick={() => handleNavClick('home', 'hero')}
           className="flex items-center gap-3 cursor-pointer group"
         >
-          <div className={`relative w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden border p-0.5 transition-all duration-300 shadow-sm ${
-            isDark ? 'border-amber-500/30 bg-slate-900 group-hover:border-amber-400' : 'border-sky-400/50 bg-sky-50 group-hover:border-sky-500'
-          }`}>
+          <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 filter drop-shadow-sm">
             <img 
-              src="/logo.png" 
+              src="/logo.svg" 
               alt="Чедрик Іван Лого" 
-              className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
+              className="w-full h-full object-contain"
             />
           </div>
           <div>
@@ -67,6 +65,14 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
             }`}
           >
             Офіційні Дані
+          </button>
+          <button
+            onClick={() => handleNavClick('home', 'deye-legal')}
+            className={`text-sm font-semibold transition-colors ${
+              isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-600 hover:text-sky-600'
+            }`}
+          >
+            Deye & Зелений Тариф
           </button>
           <button
             onClick={() => handleNavClick('home', 'process')}
@@ -160,6 +166,14 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
             }`}
           >
             📊 Офіційні Дані СЕС
+          </button>
+          <button
+            onClick={() => handleNavClick('home', 'deye-legal')}
+            className={`block w-full text-left text-base font-semibold py-2.5 px-3 rounded-xl ${
+              isDark ? 'hover:bg-slate-900 text-slate-200' : 'hover:bg-sky-50 text-slate-800'
+            }`}
+          >
+            ⚡ Deye & Зелений Тариф
           </button>
           <button
             onClick={() => handleNavClick('home', 'process')}
