@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Menu, X, Sun, Moon, ShieldCheck } from 'lucide-react';
+import { Phone, Menu, X, Sun, Moon } from 'lucide-react';
 
 export default function Header({ activeTab, setActiveTab, onOpenConsultation, theme, toggleTheme }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -18,41 +18,42 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
   const isDark = theme === 'dark';
 
   return (
-    <header className={`sticky top-0 z-50 glass-panel border-b transition-colors duration-300 ${
-      isDark ? 'border-slate-800/80 bg-slate-950/80 text-white' : 'border-sky-100 bg-white/95 text-slate-900 shadow-sm'
+    <header className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
+      isDark ? 'border-slate-800/80 bg-slate-950/90 text-white backdrop-blur-md' : 'border-sky-100/90 bg-white/95 text-slate-900 shadow-xs backdrop-blur-md'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
         
-        {/* Brand Logo - Clean SVG without background */}
+        {/* Clean Brand Logo & Name */}
         <div 
           onClick={() => handleNavClick('home', 'hero')}
-          className="flex items-center gap-3 cursor-pointer group"
+          className="flex items-center gap-3 cursor-pointer group flex-shrink-0"
         >
-          <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 filter drop-shadow-sm">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
             <img 
               src="/logo.svg" 
               alt="Чедрик Іван Лого" 
               className="w-full h-full object-contain"
             />
           </div>
-          <div>
-            <div className="flex items-center gap-1.5 font-bold text-base sm:text-xl tracking-wide">
-              <span className={isDark ? 'text-white' : 'text-slate-900'}>Чедрик Іван</span>
-              <Sun className={`w-4 h-4 sm:w-5 sm:h-5 animate-spin-slow inline-block ${isDark ? 'text-amber-400' : 'text-sky-500'}`} />
-            </div>
-            <p className={`text-[10px] sm:text-xs font-semibold flex items-center gap-1 ${
+          <div className="flex flex-col justify-center">
+            <span className={`font-extrabold text-base sm:text-lg tracking-tight leading-tight whitespace-nowrap ${
+              isDark ? 'text-white' : 'text-slate-900'
+            }`}>
+              Чедрик Іван
+            </span>
+            <span className={`text-[10px] sm:text-xs font-semibold whitespace-nowrap ${
               isDark ? 'text-amber-400' : 'text-sky-600'
             }`}>
-              <ShieldCheck className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${isDark ? 'text-emerald-400' : 'text-sky-500'}`} /> Сонячні Станції & Електромонтаж
-            </p>
+              Сонячні Станції & Електромонтаж
+            </span>
           </div>
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+        {/* Desktop Navigation - Clean Spacing & Whitespace No-wrap */}
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-7 flex-shrink-0">
           <button
             onClick={() => handleNavClick('home', 'services')}
-            className={`text-sm font-semibold transition-colors ${
+            className={`text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
               isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-600 hover:text-sky-600'
             }`}
           >
@@ -60,7 +61,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
           </button>
           <button
             onClick={() => handleNavClick('home', 'stats')}
-            className={`text-sm font-semibold transition-colors ${
+            className={`text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
               isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-600 hover:text-sky-600'
             }`}
           >
@@ -68,7 +69,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
           </button>
           <button
             onClick={() => handleNavClick('home', 'deye-legal')}
-            className={`text-sm font-semibold transition-colors ${
+            className={`text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
               isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-600 hover:text-sky-600'
             }`}
           >
@@ -76,7 +77,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
           </button>
           <button
             onClick={() => handleNavClick('home', 'process')}
-            className={`text-sm font-semibold transition-colors ${
+            className={`text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
               isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-600 hover:text-sky-600'
             }`}
           >
@@ -84,7 +85,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
           </button>
           <button
             onClick={() => handleNavClick('contacts')}
-            className={`text-sm font-semibold transition-colors ${
+            className={`text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
               activeTab === 'contacts' 
                 ? isDark ? 'text-amber-400 border-b-2 border-amber-400 pb-0.5' : 'text-sky-600 border-b-2 border-sky-600 pb-0.5'
                 : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-600 hover:text-sky-600'
@@ -94,41 +95,43 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
           </button>
         </nav>
 
-        {/* Action Buttons & Theme Switcher */}
-        <div className="flex items-center gap-2 sm:gap-4">
+        {/* Right Action Bar */}
+        <div className="flex items-center gap-2.5 sm:gap-3.5 flex-shrink-0">
           
           {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
             aria-label="Змінити тему"
-            title={isDark ? "Увімкнути світлу небесну тему" : "Увімкнути темну тему"}
-            className={`p-2 sm:p-2.5 rounded-xl border transition-all ${
+            title={isDark ? "Увімкнути світлу тему" : "Увімкнути темну тему"}
+            className={`p-2 rounded-xl border transition-all flex-shrink-0 ${
               isDark 
                 ? 'bg-slate-900 border-slate-800 text-amber-400 hover:bg-slate-800 hover:border-amber-400/40' 
-                : 'bg-sky-50 border-sky-200 text-sky-600 hover:bg-sky-100 hover:border-sky-300 shadow-sm'
+                : 'bg-sky-50 border-sky-200 text-sky-600 hover:bg-sky-100 hover:border-sky-300 shadow-xs'
             }`}
           >
-            {isDark ? <Sun className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" /> : <Moon className="w-4 h-4 sm:w-5 sm:h-5 text-sky-600" />}
+            {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-sky-600" />}
           </button>
 
+          {/* Direct Phone Number - visible on 2XL screens to prevent layout crowding */}
           <a 
             href="tel:+380970000000" 
-            className={`hidden lg:flex items-center gap-2 text-xs font-semibold px-3 py-2 rounded-xl border transition-all ${
+            className={`hidden 2xl:flex items-center gap-2 text-xs font-semibold px-3 py-2 rounded-xl border transition-all whitespace-nowrap ${
               isDark 
-                ? 'text-slate-300 hover:text-white bg-slate-900 border-slate-800 hover:border-slate-700' 
-                : 'text-slate-700 hover:text-slate-900 bg-sky-50/70 border-sky-200 hover:border-sky-300 shadow-sm'
+                ? 'text-slate-300 hover:text-white bg-slate-900 border-slate-800' 
+                : 'text-slate-700 hover:text-slate-900 bg-sky-50/70 border-sky-200 shadow-xs'
             }`}
           >
             <Phone className={`w-3.5 h-3.5 ${isDark ? 'text-amber-400' : 'text-sky-500'}`} />
             <span>+380 (97) 000-00-00</span>
           </a>
 
+          {/* Main CTA Button */}
           <button
             onClick={onOpenConsultation}
-            className={`hidden sm:inline-flex font-bold text-xs uppercase tracking-wider px-4 sm:px-5 py-2.5 rounded-xl shadow-lg hover:scale-105 transition-all duration-200 ${
+            className={`hidden sm:inline-flex font-bold text-xs uppercase tracking-wider px-4 sm:px-5 py-2.5 rounded-xl shadow-md hover:scale-105 transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
               isDark 
-                ? 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 glow-amber' 
-                : 'bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white glow-sky'
+                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 glow-amber' 
+                : 'bg-gradient-to-r from-sky-500 to-blue-600 text-white glow-sky'
             }`}
           >
             Консультація
@@ -137,7 +140,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`md:hidden p-2 rounded-xl border ${
+            className={`lg:hidden p-2 rounded-xl border flex-shrink-0 ${
               isDark ? 'text-slate-300 border-slate-800 bg-slate-900' : 'text-slate-700 border-sky-200 bg-sky-50'
             }`}
           >
@@ -148,12 +151,12 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
 
       {/* Mobile Dropdown Drawer */}
       {mobileMenuOpen && (
-        <div className={`md:hidden border-t px-4 py-6 space-y-3 transition-colors ${
-          isDark ? 'bg-slate-950/95 border-slate-800 text-slate-100' : 'bg-white/98 border-sky-100 text-slate-900 shadow-xl'
+        <div className={`lg:hidden border-t px-4 py-5 space-y-2.5 transition-colors ${
+          isDark ? 'bg-slate-950/98 border-slate-800 text-slate-100' : 'bg-white/98 border-sky-100 text-slate-900 shadow-xl'
         }`}>
           <button
             onClick={() => handleNavClick('home', 'services')}
-            className={`block w-full text-left text-base font-semibold py-2.5 px-3 rounded-xl ${
+            className={`block w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl ${
               isDark ? 'hover:bg-slate-900 text-slate-200' : 'hover:bg-sky-50 text-slate-800'
             }`}
           >
@@ -161,7 +164,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
           </button>
           <button
             onClick={() => handleNavClick('home', 'stats')}
-            className={`block w-full text-left text-base font-semibold py-2.5 px-3 rounded-xl ${
+            className={`block w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl ${
               isDark ? 'hover:bg-slate-900 text-slate-200' : 'hover:bg-sky-50 text-slate-800'
             }`}
           >
@@ -169,7 +172,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
           </button>
           <button
             onClick={() => handleNavClick('home', 'deye-legal')}
-            className={`block w-full text-left text-base font-semibold py-2.5 px-3 rounded-xl ${
+            className={`block w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl ${
               isDark ? 'hover:bg-slate-900 text-slate-200' : 'hover:bg-sky-50 text-slate-800'
             }`}
           >
@@ -177,7 +180,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
           </button>
           <button
             onClick={() => handleNavClick('home', 'process')}
-            className={`block w-full text-left text-base font-semibold py-2.5 px-3 rounded-xl ${
+            className={`block w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl ${
               isDark ? 'hover:bg-slate-900 text-slate-200' : 'hover:bg-sky-50 text-slate-800'
             }`}
           >
@@ -185,7 +188,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
           </button>
           <button
             onClick={() => handleNavClick('contacts')}
-            className={`block w-full text-left text-base font-semibold py-2.5 px-3 rounded-xl ${
+            className={`block w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl ${
               isDark ? 'hover:bg-slate-900 text-amber-400' : 'hover:bg-sky-50 text-sky-600'
             }`}
           >
