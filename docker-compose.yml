@@ -16,6 +16,8 @@ services:
       context: .
       dockerfile: docker/Dockerfile.backend
     restart: always
+    volumes:
+      - ./backend:/var/www/html
     environment:
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-YOUR_TELEGRAM_BOT_TOKEN}
       - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-YOUR_TELEGRAM_CHAT_ID}

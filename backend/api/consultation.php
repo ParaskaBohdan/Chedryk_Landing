@@ -25,7 +25,29 @@ if (!$data) {
 $name = trim($data['name'] ?? '');
 $phone = trim($data['phone'] ?? '');
 $service = trim($data['service'] ?? 'Не вказано');
-$comment = trim($data['comment'] ?? 'Без коментаря');
+$comment = trim($data['comment'] ?? '');
+
+$preferredDateRaw = trim($data['preferred_date'] ?? '');
+$preferredTime = trim($data['preferred_time'] ?? '');
+
+$preferredDate = '';
+if (!empty($preferredDateRaw)) {
+    $timestamp = strtotime($preferredDateRaw);
+    if ($timestamp) {
+        $preferredDate = date('d.m.Y', $timestamp);
+    } else {
+        $preferredDate = $preferredDateRaw;
+    }
+}
+
+$convenientInfo = 'Якомога швидше';
+if (!empty($preferredDate) && !empty($preferredTime)) {
+    $convenientInfo = "{$preferredDate} ({$preferredTime})";
+} elseif (!empty($preferredDate)) {
+    $convenientInfo = $preferredDate;
+} elseif (!empty($preferredTime)) {
+    $convenientInfo = $preferredTime;
+}
 
 if (empty($name) || empty($phone)) {
     http_response_code(400);
@@ -44,8 +66,11 @@ $textMessage = "⚡ *Нова заявка на консультацію (Chedry
 $textMessage .= "👤 *Ім'я:* " . htmlspecialchars($name) . "\n";
 $textMessage .= "📞 *Телефон:* " . htmlspecialchars($phone) . "\n";
 $textMessage .= "🛠️ *Вибрана послуга:* " . htmlspecialchars($service) . "\n";
-$textMessage .= "📝 *Коментар:* " . htmlspecialchars($comment) . "\n";
-$textMessage .= "⏰ *Час відправки:* " . date('Y-m-d H:i:s') . "\n";
+$textMessage .= "📅 *Зручний час для зв'язку:* " . htmlspecialchars($convenientInfo) . "\n";
+if (!empty($comment)) {
+    $textMessage .= "📝 *Коментар:* " . htmlspecialchars($comment) . "\n";
+}
+$textMessage .= "\n_🕒 Відправлено: " . date('d.m.Y H:i') . "_";
 
 $telegramSent = false;
 $telegramError = null;

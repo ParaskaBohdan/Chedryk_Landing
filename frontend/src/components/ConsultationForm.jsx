@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle2, AlertCircle, Loader2, Phone, User, MessageSquare, Wrench } from 'lucide-react';
+import { Send, CheckCircle2, AlertCircle, Loader2, Phone, User, MessageSquare, Wrench, Calendar, Clock } from 'lucide-react';
 
 export default function ConsultationForm({ selectedServicePrefill, onCloseModal, theme }) {
   const isDark = theme === 'dark';
 
+  const todayStr = new Date().toISOString().split('T')[0];
+
+  const [phoneDigits, setPhoneDigits] = useState('');
+  const [isPhoneFocused, setIsPhoneFocused] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    phone: '',
     service: selectedServicePrefill || 'Побудова сонячних станцій (28–60 кВт)',
+    preferred_date: todayStr,
+    preferred_time: '10:00',
     comment: ''
   });
 
@@ -22,10 +27,104 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
     'Інше (Загальне запитання)'
   ];
 
+  const timeOptions = [
+    'Якомога швидше',
+    '09:00 - 12:00',
+    '12:00 - 15:00',
+    '15:00 - 18:00',
+    '18:00 - 20:00'
+  ];
+
+  const formatInputSpaces = (digits) => {
+    const d = (digits || '').slice(0, 9);
+    const pad = (str, len) => str.padEnd(len, ' ');
+
+    const code = pad(d.slice(0, 2), 2);
+    const p1 = pad(d.slice(2, 5), 3);
+    const p2 = pad(d.slice(5, 7), 2);
+    const p3 = pad(d.slice(7, 9), 2);
+
+    return `(${code}) ${p1}-${p2}-${p3}`;
+  };
+
+  const renderPhoneOverlay = () => {
+    const d = phoneDigits.slice(0, 9);
+    const len = d.length;
+
+    const typedClass = isDark ? 'text-white font-bold' : 'text-slate-900 font-bold';
+    const greyClass = isDark ? 'text-slate-500 font-normal' : 'text-slate-400 font-normal';
+
+    const getChar = (idx) => (idx < len ? d[idx] : '0');
+    const getDigitColor = (idx) => (idx < len ? typedClass : greyClass);
+
+    const caret = isPhoneFocused && (
+      <span className={`inline-block w-[1.5px] h-4 animate-pulse mx-[0.5px] ${
+        isDark ? 'bg-white' : 'bg-slate-900'
+      }`} />
+    );
+
+    return (
+      <div className="absolute left-[4.8rem] pointer-events-none text-sm tracking-wide flex items-center select-none font-mono">
+        <span className={typedClass}>(</span>
+        {len === 0 && caret}
+
+        <span className={getDigitColor(0)}>{getChar(0)}</span>
+        {len === 1 && caret}
+
+        <span className={getDigitColor(1)}>{getChar(1)}</span>
+        <span className={typedClass}>)&nbsp;</span>
+
+        {len === 2 && caret}
+        <span className={getDigitColor(2)}>{getChar(2)}</span>
+
+        {len === 3 && caret}
+        <span className={getDigitColor(3)}>{getChar(3)}</span>
+
+        {len === 4 && caret}
+        <span className={getDigitColor(4)}>{getChar(4)}</span>
+
+        <span className={typedClass}>-</span>
+
+        {len === 5 && caret}
+        <span className={getDigitColor(5)}>{getChar(5)}</span>
+
+        {len === 6 && caret}
+        <span className={getDigitColor(6)}>{getChar(6)}</span>
+
+        <span className={typedClass}>-</span>
+
+        {len === 7 && caret}
+        <span className={getDigitColor(7)}>{getChar(7)}</span>
+
+        {len === 8 && caret}
+        <span className={getDigitColor(8)}>{getChar(8)}</span>
+
+        {len === 9 && caret}
+      </div>
+    );
+  };
+
+  const handlePhoneKeyDown = (e) => {
+    if (e.key === 'Backspace') {
+      e.preventDefault();
+      setPhoneDigits((prev) => prev.slice(0, -1));
+    }
+  };
+
+  const handlePhoneChange = (e) => {
+    let digits = e.target.value.replace(/\D/g, '');
+    if (digits.startsWith('380') && digits.length > 9) {
+      digits = digits.slice(3);
+    } else if (digits.startsWith('0') && digits.length >= 10) {
+      digits = digits.slice(1);
+    }
+    setPhoneDigits(digits.slice(0, 9));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.phone) {
-      setStatus({ type: 'error', message: 'Будь ласка, заповніть ім\'я та номер телефону.' });
+    if (!formData.name || phoneDigits.length < 9) {
+      setStatus({ type: 'error', message: 'Будь ласка, заповніть ім\'я та повний номер телефону (9 цифр після +380).' });
       return;
     }
 
@@ -34,13 +133,21 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
 
     const apiUrl = import.meta.env.VITE_API_URL || '/api/consultation.php';
 
+    const formattedMask = `(${phoneDigits.slice(0, 2)}) ${phoneDigits.slice(2, 5)}-${phoneDigits.slice(5, 7)}-${phoneDigits.slice(7, 9)}`;
+    const fullPhone = `+380 ${formattedMask}`;
+
+    const payload = {
+      ...formData,
+      phone: fullPhone
+    };
+
     try {
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       });
 
       const result = await response.json();
@@ -50,7 +157,14 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
           type: 'success',
           message: result.message || 'Дякуємо! Вашу заявку успішно відправлено.'
         });
-        setFormData({ name: '', phone: '', service: servicesList[0], comment: '' });
+        setPhoneDigits('');
+        setFormData({
+          name: '',
+          service: servicesList[0],
+          preferred_date: todayStr,
+          preferred_time: 'Якомога швидше',
+          comment: ''
+        });
       } else {
         setStatus({
           type: 'error',
@@ -77,7 +191,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
           Замовити Безкоштовну Консультацію
         </h3>
         <p className={`text-xs sm:text-sm ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-          Залиште контакти — Чедрик Іван зателефонує вам для узгодження деталей та розрахунку.
+          Залиште контакти та зручний час — Чедрик Іван зателефонує вам для узгодження деталей.
         </p>
       </div>
 
@@ -141,18 +255,28 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
             <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
               Номер Телефону *
             </label>
-            <div className="relative">
-              <Phone className={`w-4 h-4 absolute left-3.5 top-3.5 ${isDark ? 'text-slate-500' : 'text-sky-500'}`} />
+            <div className="relative flex items-center">
+              <Phone className={`w-4 h-4 absolute left-3 top-3.5 ${isDark ? 'text-slate-500' : 'text-sky-500'}`} />
+              <span className={`absolute left-9 font-extrabold text-sm select-none pointer-events-none font-mono ${
+                isDark ? 'text-white' : 'text-slate-900'
+              }`}>
+                +380
+              </span>
+
+              {renderPhoneOverlay()}
+
               <input
                 type="tel"
                 required
-                placeholder="+380 (97) 000-00-00"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none transition-colors ${
+                value={formatInputSpaces(phoneDigits)}
+                onChange={handlePhoneChange}
+                onKeyDown={handlePhoneKeyDown}
+                onFocus={() => setIsPhoneFocused(true)}
+                onBlur={() => setIsPhoneFocused(false)}
+                className={`w-full border rounded-xl pl-[4.8rem] pr-4 py-2.5 text-sm font-mono focus:outline-none transition-colors text-transparent bg-transparent caret-transparent ${
                   isDark 
-                    ? 'bg-slate-950/90 border-slate-700 text-white placeholder-slate-500 focus:border-amber-400' 
-                    : 'bg-sky-50/50 border-sky-200 text-slate-900 placeholder-slate-400 focus:border-sky-500'
+                    ? 'border-slate-700 focus:border-amber-400 bg-slate-950/90' 
+                    : 'border-sky-200 focus:border-sky-500 bg-sky-50/50'
                 }`}
               />
             </div>
@@ -182,15 +306,62 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
             </div>
           </div>
 
+          {/* Date & Time Booking Fields */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                Зручний день
+              </label>
+              <div className="relative">
+                <Calendar className={`w-4 h-4 absolute left-3.5 top-3.5 ${isDark ? 'text-slate-500' : 'text-sky-500'}`} />
+                <input
+                  type="date"
+                  min={todayStr}
+                  value={formData.preferred_date}
+                  onChange={(e) => setFormData({ ...formData, preferred_date: e.target.value })}
+                  className={`w-full border rounded-xl pl-10 pr-3 py-2.5 text-sm focus:outline-none transition-colors ${
+                    isDark 
+                      ? 'bg-slate-950/90 border-slate-700 text-white focus:border-amber-400' 
+                      : 'bg-sky-50/50 border-sky-200 text-slate-900 focus:border-sky-500'
+                  }`}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                Час
+              </label>
+              <div className="relative">
+                <Clock className={`w-4 h-4 absolute left-3.5 top-3.5 ${isDark ? 'text-slate-500' : 'text-sky-500'}`} />
+                <select
+                  value={formData.preferred_time}
+                  onChange={(e) => setFormData({ ...formData, preferred_time: e.target.value })}
+                  className={`w-full border rounded-xl pl-10 pr-3 py-2.5 text-sm focus:outline-none transition-colors ${
+                    isDark 
+                      ? 'bg-slate-950/90 border-slate-700 text-white focus:border-amber-400' 
+                      : 'bg-sky-50/50 border-sky-200 text-slate-900 focus:border-sky-500'
+                  }`}
+                >
+                  {timeOptions.map((tOpt, idx) => (
+                    <option key={idx} value={tOpt} className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                      {tOpt}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+
           <div>
             <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-              Коментар або опис об'єкта (необов'язково)
+              Коментар
             </label>
             <div className="relative">
               <MessageSquare className={`w-4 h-4 absolute left-3.5 top-3.5 ${isDark ? 'text-slate-500' : 'text-sky-500'}`} />
               <textarea
-                rows={3}
-                placeholder="Потужність, тип даху або площа будівлі..."
+                rows={2}
+                placeholder="Ваші побажання чи запитання..."
                 value={formData.comment}
                 onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
                 className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none transition-colors ${
@@ -228,3 +399,4 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
     </div>
   );
 }
+
