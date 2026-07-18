@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Sun, Home, BatteryCharging, Zap, ArrowRight, CheckCircle2, ChevronRight, X } from 'lucide-react';
+import { Sun, Home, BatteryCharging, Zap, ArrowRight, CheckCircle2, ChevronRight, X, FileText } from 'lucide-react';
 
 export default function Services({ onSelectService, theme }) {
   const [selectedModalService, setSelectedModalService] = useState(null);
@@ -14,14 +14,30 @@ export default function Services({ onSelectService, theme }) {
       icon: Sun,
       darkColor: 'from-amber-500 to-orange-500',
       lightColor: 'from-sky-500 to-blue-600',
-      shortDesc: 'Комплексне проектирування, поставка інверторів, сонячних панелей та розгортання мережевих чи гібридних СЕС потужністю 28–60 кВт.',
+      shortDesc: 'Комплексне проектування, поставка інверторів, сонячних панелей, отримання дозволів Обленерго та підключення Зеленого тарифу.',
       features: [
-        'Розрахунок кута нахилу та інсоляції ділянки',
-        'Підбір мережевих або автономних інверторів',
-        'Монтаж металоконструкцій та симетричне навантаження',
+        'Розрахунок інсоляції та проектування СЕС 28–60 кВт',
+        'Супровід документації та отримання дозволів Обленерго',
+        'Підключення Зеленого тарифу для продажу надлишків',
         'Пусконалагодження та інтеграція в енергосистему'
       ],
-      details: 'Повний цикл будівництва сонячних станцій середньої та високої потужності (28–60 кВт). Підходить для приватних домогосподарств, фермерських господарств та об’єктів бізнесу на Закарпатті. Допомагаємо оптимізувати власне споживання та забезпечити безперебійне живлення.'
+      details: 'Повний цикл будівництва сонячних станцій середньої та високої потужності (28–60 кВт). Підходить для приватних домогосподарств, фермерських господарств та об’єктів бізнесу на Закарпатті. Беремо на себе повне оформлення Зеленого тарифу та узгодження з Обленерго.'
+    },
+    {
+      id: 'deye_batteries',
+      title: 'Гібридні системи Deye та акумулятори',
+      category: 'Автономне живлення під ключ',
+      icon: BatteryCharging,
+      darkColor: 'from-emerald-500 to-teal-600',
+      lightColor: 'from-teal-500 to-sky-600',
+      shortDesc: 'Монтаж під ключ інверторів Deye (1-фазних та 3-фазних 5–50 кВт), портативних станцій EcoFlow та стаціонарних акумуляторів LiFePO4.',
+      features: [
+        'Професійний монтаж гібридних інверторів Deye під ключ',
+        'Підключення автоматичного вводу резерву (АВР 4 мс)',
+        'Інтеграція EcoFlow, Bluetti та LiFePO4 акумуляторів',
+        'Налаштування мобільного моніторингу та захисту'
+      ],
+      details: 'Забезпечуємо безперебійну роботу вашого будинку чи бізнесу під час відключень світла. Монтаж гібридних інверторів Deye дозволяє розумно керувати енергією від сонця, акумуляторів, генератора та мережі.'
     },
     {
       id: 'roof_panels',
@@ -40,20 +56,20 @@ export default function Services({ onSelectService, theme }) {
       details: 'Монтаж сонячних панелей проводиться з суворим дотриманням технологічних норм та герметизації покрівлі. Використовуємо спецінструмент для надійної фіксації навіть при сильних вітрових навантаженнях на Закарпатті.'
     },
     {
-      id: 'ecoflow_batteries',
-      title: 'Установка систем EcoFlow та акумуляторів',
-      category: 'Автономне живлення',
-      icon: BatteryCharging,
-      darkColor: 'from-emerald-500 to-teal-600',
-      lightColor: 'from-teal-500 to-sky-600',
-      shortDesc: 'Інтеграція портативних зарядних станцій EcoFlow, Bluetti та стаціонарних акумуляторів LiFePO4 в електромережу будинку чи офісу.',
+      id: 'legal_tariff',
+      title: 'Супровід документації & Зелений Тариф',
+      category: 'Юридичні послуги',
+      icon: FileText,
+      darkColor: 'from-orange-500 to-amber-500',
+      lightColor: 'from-blue-500 to-cyan-500',
+      shortDesc: 'Оформлення дозволів в Обленерго, ТУ, збільшення вхідної потужності та офіційне підключення Зеленого Тарифу без черг.',
       features: [
-        'Підключення автоматичного вводу резерву (АВР)',
-        'Налаштування захисту від перезаряду та глибокого розряду',
-        'Інтеграція з існуючим щитком без ризику зустрічного струму',
-        'Оптимізація автономного часу роботи критичних приладів'
+        'Подача заяви та отримання ТУ від Обленерго',
+        'Збільшення дозволеної потужності електромережі',
+        'Встановлення двонаправленого лічильника',
+        'Підписання договору про продаж електроенергії'
       ],
-      details: 'Забезпечуємо безперебійну роботу газових котлів, насосів, роутерів, освітлення та побутової техніки під час відключень світла. Використовуємо надійні акумуляторні блоки з ресурсом від 3000+ циклів.'
+      details: 'Чедрик Іван бере на себе весь бюрократичний процеси. Вам не потрібно самостійно стояти в чергах Обленерго — ми підготуємо повний пакет документів під ключ.'
     },
     {
       id: 'electrical_grids',
@@ -65,7 +81,7 @@ export default function Services({ onSelectService, theme }) {
       shortDesc: 'Проектування, розведення проводки, збірка розподільчих щитів, заземлення та автоматика для приватних будинків і коммерційних приміщень.',
       features: [
         'Розрахунок навантаження на кожну фазу',
-        'Збірка щитів із ПЗВ, реле напруги та автоматографією',
+        'Збірка щитів із ПЗВ, реле напруги та автоматикою',
         'Прокладання вогнестійкого кабелю ГОСТ',
         'Вимірювання опору заземлення та усунення несправностей'
       ],
@@ -90,12 +106,12 @@ export default function Services({ onSelectService, theme }) {
             Спеціалізовані Рішення з <span className={isDark ? 'text-amber-400' : 'text-sky-600'}>Енергозабезпечення</span>
           </h2>
           <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-            Повний спектр робіт від монтажу дахових сонячних батарей до збірки складних електрощитів по всій Закарпатській області.
+            Повний спектр робіт від монтажу дахових батарей та систем Deye до супроводу документів в Обленерго по всій Закарпатській області.
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {services.map((service, index) => {
             const Icon = service.icon;
             const cardGradient = isDark ? service.darkColor : service.lightColor;
@@ -106,7 +122,7 @@ export default function Services({ onSelectService, theme }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.08 }}
-                className={`glass-card rounded-3xl p-5 sm:p-8 border transition-all flex flex-col justify-between group ${
+                className={`glass-card rounded-3xl p-5 sm:p-7 border transition-all flex flex-col justify-between group ${
                   isDark 
                     ? 'border-slate-800 hover:border-slate-700' 
                     : 'border-sky-100 hover:border-sky-300 bg-sky-50/30 hover:shadow-xl hover:shadow-sky-500/5'
@@ -114,45 +130,45 @@ export default function Services({ onSelectService, theme }) {
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
-                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br ${cardGradient} p-0.5 flex items-center justify-center shadow-md`}>
+                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${cardGradient} p-0.5 flex items-center justify-center shadow-md`}>
                       <div className={`w-full h-full rounded-[14px] flex items-center justify-center ${
                         isDark ? 'bg-slate-950' : 'bg-white'
                       }`}>
-                        <Icon className={`w-6 h-6 sm:w-7 sm:h-7 ${isDark ? 'text-amber-400' : 'text-sky-600'}`} />
+                        <Icon className={`w-6 h-6 ${isDark ? 'text-amber-400' : 'text-sky-600'}`} />
                       </div>
                     </div>
-                    <span className={`text-[11px] sm:text-xs font-semibold px-3 py-1 rounded-full border ${
+                    <span className={`text-[11px] font-semibold px-3 py-1 rounded-full border ${
                       isDark ? 'text-slate-400 bg-slate-800/80 border-slate-700' : 'text-sky-800 bg-sky-100/80 border-sky-200'
                     }`}>
                       {service.category}
                     </span>
                   </div>
 
-                  <h3 className={`text-lg sm:text-2xl font-bold mb-2 sm:mb-3 transition-colors ${
+                  <h3 className={`text-lg sm:text-xl font-bold mb-2 transition-colors ${
                     isDark ? 'text-white group-hover:text-amber-400' : 'text-slate-900 group-hover:text-sky-600'
                   }`}>
                     {service.title}
                   </h3>
 
-                  <p className={`text-xs sm:text-sm leading-relaxed mb-6 ${
+                  <p className={`text-xs leading-relaxed mb-5 ${
                     isDark ? 'text-slate-300' : 'text-slate-600'
                   }`}>
                     {service.shortDesc}
                   </p>
 
-                  <ul className="space-y-2 mb-6 sm:mb-8">
+                  <ul className="space-y-2 mb-6">
                     {service.features.map((feat, i) => (
-                      <li key={i} className={`flex items-start gap-2 text-xs sm:text-sm ${
+                      <li key={i} className={`flex items-start gap-2 text-xs ${
                         isDark ? 'text-slate-300' : 'text-slate-700'
                       }`}>
-                        <CheckCircle2 className={`w-4 h-4 mt-0.5 flex-shrink-0 ${isDark ? 'text-amber-400' : 'text-sky-500'}`} />
+                        <CheckCircle2 className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${isDark ? 'text-amber-400' : 'text-sky-500'}`} />
                         <span>{feat}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className={`pt-4 border-t flex flex-wrap items-center justify-between gap-3 ${
+                <div className={`pt-4 border-t flex items-center justify-between gap-3 ${
                   isDark ? 'border-slate-800' : 'border-sky-100'
                 }`}>
                   <button
@@ -161,13 +177,13 @@ export default function Services({ onSelectService, theme }) {
                       isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-sky-600'
                     }`}
                   >
-                    <span>Детальніше про послугу</span>
+                    <span>Детальніше</span>
                     <ChevronRight className="w-4 h-4" />
                   </button>
 
                   <button
                     onClick={() => onSelectService(service.title)}
-                    className={`text-xs font-bold px-4 py-2.5 rounded-xl transition-all flex items-center gap-1.5 shadow-sm ${
+                    className={`text-xs font-bold px-4 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-sm ${
                       isDark 
                         ? 'bg-amber-500 hover:bg-amber-400 text-slate-950' 
                         : 'bg-sky-500 hover:bg-sky-600 text-white shadow-sky-500/20'
