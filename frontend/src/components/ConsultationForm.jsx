@@ -21,11 +21,18 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
 
   const servicesList = [
     'Побудова сонячних станцій (28–60 кВт)',
-    'Установка панелей на дах',
-    'Установлення систем EcoFlow та акумуляторів',
-    'Проектування та налагодження електромереж в будівлях',
+    'Гібридні системи Deye та акумулятори (EcoFlow)',
+    'Установка сонячних панелей на дах',
+    'Супровід документації & Зелений Тариф',
+    'Налагодження електромереж в будівлях',
     'Інше (Загальне запитання)'
   ];
+
+  React.useEffect(() => {
+    if (selectedServicePrefill) {
+      setFormData(prev => ({ ...prev, service: selectedServicePrefill }));
+    }
+  }, [selectedServicePrefill]);
 
   const timeOptions = [
     'Якомога швидше',
