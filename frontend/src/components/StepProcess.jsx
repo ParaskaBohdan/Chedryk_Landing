@@ -46,12 +46,12 @@ export default function StepProcess({ onOpenConsultation, theme }) {
         
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
           <span className={`font-semibold text-xs sm:text-sm uppercase tracking-widest px-3 py-1 rounded-full border ${
-            isDark ? 'text-amber-400 bg-amber-500/10 border-amber-500/20' : 'text-amber-700 bg-amber-100 border-amber-200'
+            isDark ? 'text-amber-400 bg-amber-500/10 border-amber-500/20' : 'text-sky-700 bg-sky-100 border-sky-200'
           }`}>
             Прозорий Процес
           </span>
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            5 Кроків До Вашої <span className="text-amber-500">Енергонезалежності</span>
+            5 Кроків До Вашої <span className={isDark ? 'text-amber-400' : 'text-sky-600'}>Енергонезалежності</span>
           </h2>
           <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
             Як відбувається співпраця від першого дзвінка до повного запуску системи.
@@ -62,7 +62,7 @@ export default function StepProcess({ onOpenConsultation, theme }) {
         <div className="relative max-w-4xl mx-auto">
           {/* Central Line for desktop */}
           <div className={`hidden md:block absolute left-1/2 top-4 bottom-4 w-0.5 -translate-x-1/2 ${
-            isDark ? 'bg-gradient-to-b from-amber-500 via-orange-500 to-amber-500/20' : 'bg-gradient-to-b from-amber-400 via-amber-500 to-amber-300'
+            isDark ? 'bg-gradient-to-b from-amber-500 via-orange-500 to-amber-500/20' : 'bg-gradient-to-b from-sky-400 via-blue-500 to-sky-300'
           }`} />
 
           <div className="space-y-8 sm:space-y-12">
@@ -85,18 +85,22 @@ export default function StepProcess({ onOpenConsultation, theme }) {
                     <div className={`glass-card p-5 sm:p-8 rounded-3xl border transition-all group ${
                       isDark 
                         ? 'border-slate-800 hover:border-amber-500/40 bg-slate-950/80' 
-                        : 'border-slate-200 hover:border-amber-400 bg-slate-50/70 shadow-sm'
+                        : 'border-sky-100 hover:border-sky-300 bg-sky-50/40 shadow-xs'
                     }`}>
                       <div className="flex items-center justify-between mb-3 sm:mb-4">
-                        <span className="text-2xl sm:text-3xl font-extrabold text-amber-500 tracking-wider">
+                        <span className={`text-2xl sm:text-3xl font-extrabold tracking-wider ${
+                          isDark ? 'text-amber-400' : 'text-sky-600'
+                        }`}>
                           КРОК {item.step}
                         </span>
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-500/10 flex items-center justify-center border border-amber-500/30">
-                          <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500" />
+                        <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center border ${
+                          isDark ? 'bg-amber-500/10 border-amber-500/30 text-amber-400' : 'bg-sky-100 border-sky-300 text-sky-600'
+                        }`}>
+                          <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
                       </div>
-                      <h3 className={`text-base sm:text-xl font-bold mb-2 group-hover:text-amber-500 transition-colors ${
-                        isDark ? 'text-white' : 'text-slate-900'
+                      <h3 className={`text-base sm:text-xl font-bold mb-2 transition-colors ${
+                        isDark ? 'text-white group-hover:text-amber-400' : 'text-slate-900 group-hover:text-sky-600'
                       }`}>
                         {item.title}
                       </h3>
@@ -109,8 +113,10 @@ export default function StepProcess({ onOpenConsultation, theme }) {
                   </div>
 
                   {/* Circle Badge in Center (Desktop) */}
-                  <div className={`hidden md:flex relative z-10 w-11 h-11 rounded-full border-2 border-amber-500 items-center justify-center shadow-lg flex-shrink-0 ${
-                    isDark ? 'bg-slate-950 text-amber-400 shadow-amber-500/20' : 'bg-white text-amber-600 shadow-amber-500/10'
+                  <div className={`hidden md:flex relative z-10 w-11 h-11 rounded-full border-2 items-center justify-center shadow-lg flex-shrink-0 ${
+                    isDark 
+                      ? 'bg-slate-950 border-amber-400 text-amber-400 shadow-amber-500/20' 
+                      : 'bg-white border-sky-500 text-sky-600 shadow-sky-500/10'
                   }`}>
                     <span className="text-xs font-bold">{item.step}</span>
                   </div>
@@ -126,7 +132,11 @@ export default function StepProcess({ onOpenConsultation, theme }) {
         <div className="mt-12 sm:mt-16 text-center">
           <button
             onClick={onOpenConsultation}
-            className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-xl glow-amber hover:scale-105 transition-all"
+            className={`inline-flex items-center gap-2.5 font-bold text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-xl hover:scale-105 transition-all ${
+              isDark 
+                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 glow-amber' 
+                : 'bg-gradient-to-r from-sky-500 to-blue-600 text-white glow-sky'
+            }`}
           >
             <span>Почати з Кроку 1 — Консультація</span>
             <ArrowDown className="w-4 h-4 sm:w-5 sm:h-5" />

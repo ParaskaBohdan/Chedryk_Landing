@@ -10,19 +10,19 @@ export default function Footer({ setActiveTab, onOpenConsultation, theme }) {
 
   return (
     <footer className={`border-t transition-colors duration-300 py-10 sm:py-12 ${
-      isDark ? 'bg-slate-950 border-slate-800 text-slate-400' : 'bg-white border-slate-200 text-slate-600'
+      isDark ? 'bg-slate-950 border-slate-800 text-slate-400' : 'bg-white border-sky-100 text-slate-600'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className={`grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b ${
-          isDark ? 'border-slate-800/80' : 'border-slate-200'
+          isDark ? 'border-slate-800/80' : 'border-sky-100'
         }`}>
           
           {/* Brand Col */}
           <div className="md:col-span-2 space-y-3 sm:space-y-4">
             <div className="flex items-center gap-3">
               <div className={`w-10 h-10 rounded-xl overflow-hidden border p-0.5 ${
-                isDark ? 'border-amber-500/30 bg-slate-900' : 'border-amber-500/40 bg-slate-100'
+                isDark ? 'border-amber-500/30 bg-slate-900' : 'border-sky-300 bg-sky-50'
               }`}>
                 <img src="/logo.png" alt="Логотип" className="w-full h-full object-cover rounded-lg" />
               </div>
@@ -30,9 +30,11 @@ export default function Footer({ setActiveTab, onOpenConsultation, theme }) {
                 <h3 className={`font-bold text-base sm:text-lg flex items-center gap-1.5 ${
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}>
-                  Чедрик Іван <Sun className="w-4 h-4 text-amber-500" />
+                  Чедрик Іван <Sun className={`w-4 h-4 ${isDark ? 'text-amber-400' : 'text-sky-500'}`} />
                 </h3>
-                <p className="text-xs text-amber-500 font-semibold">Сонячна Енергетика & Електромонтаж</p>
+                <p className={`text-xs font-semibold ${isDark ? 'text-amber-400' : 'text-sky-600'}`}>
+                  Сонячна Енергетика & Електромонтаж
+                </p>
               </div>
             </div>
 
@@ -48,22 +50,22 @@ export default function Footer({ setActiveTab, onOpenConsultation, theme }) {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => { setActiveTab('home'); setTimeout(() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="hover:text-amber-500 transition-colors">
+                <button onClick={() => { setActiveTab('home'); setTimeout(() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className={`transition-colors ${isDark ? 'hover:text-amber-400' : 'hover:text-sky-600'}`}>
                   Послуги
                 </button>
               </li>
               <li>
-                <button onClick={() => { setActiveTab('home'); setTimeout(() => document.getElementById('stats')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="hover:text-amber-500 transition-colors">
+                <button onClick={() => { setActiveTab('home'); setTimeout(() => document.getElementById('stats')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className={`transition-colors ${isDark ? 'hover:text-amber-400' : 'hover:text-sky-600'}`}>
                   Офіційні Дані
                 </button>
               </li>
               <li>
-                <button onClick={() => { setActiveTab('home'); setTimeout(() => document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="hover:text-amber-500 transition-colors">
+                <button onClick={() => { setActiveTab('home'); setTimeout(() => document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className={`transition-colors ${isDark ? 'hover:text-amber-400' : 'hover:text-sky-600'}`}>
                   Етапи Роботи
                 </button>
               </li>
               <li>
-                <button onClick={() => setActiveTab('contacts')} className="hover:text-amber-500 transition-colors">
+                <button onClick={() => setActiveTab('contacts')} className={`transition-colors ${isDark ? 'hover:text-amber-400' : 'hover:text-sky-600'}`}>
                   Контакти
                 </button>
               </li>
@@ -76,17 +78,17 @@ export default function Footer({ setActiveTab, onOpenConsultation, theme }) {
               Контакти
             </h4>
             <div className="space-y-2 text-xs">
-              <a href="tel:+380970000000" className="flex items-center gap-2 hover:text-amber-500 transition-colors">
-                <Phone className="w-3.5 h-3.5 text-amber-500" />
+              <a href="tel:+380970000000" className={`flex items-center gap-2 transition-colors ${isDark ? 'hover:text-amber-400' : 'hover:text-sky-600'}`}>
+                <Phone className={`w-3.5 h-3.5 ${isDark ? 'text-amber-400' : 'text-sky-500'}`} />
                 <span>+380 (97) 000-00-00</span>
               </a>
               <div className="flex items-center gap-2">
-                <MapPin className="w-3.5 h-3.5 text-emerald-500" />
+                <MapPin className={`w-3.5 h-3.5 ${isDark ? 'text-emerald-400' : 'text-sky-600'}`} />
                 <span>Закарпатська область</span>
               </div>
               <button
                 onClick={onOpenConsultation}
-                className="mt-2 text-xs font-bold text-amber-500 hover:underline block"
+                className={`mt-2 text-xs font-bold hover:underline block ${isDark ? 'text-amber-400' : 'text-sky-600'}`}
               >
                 → Замовити виїзд майстра
               </button>
@@ -100,7 +102,7 @@ export default function Footer({ setActiveTab, onOpenConsultation, theme }) {
           <p>© {new Date().getFullYear()} Чедрик Іван. Усі права захищено. Закарпатська область.</p>
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 hover:text-amber-500 transition-colors"
+            className={`flex items-center gap-1.5 transition-colors ${isDark ? 'hover:text-amber-400' : 'hover:text-sky-600'}`}
           >
             <span>Нагору</span>
             <ArrowUp className="w-3.5 h-3.5" />

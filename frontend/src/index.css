@@ -15,9 +15,9 @@
 }
 
 .light .glass-panel {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(224, 242, 254, 0.9);
 }
 
 .dark .glass-card {
@@ -29,12 +29,16 @@
 .light .glass-card {
   background: #ffffff;
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(224, 242, 254, 0.9);
+  box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.08);
 }
 
 .glow-amber {
   box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.35);
+}
+
+.glow-sky {
+  box-shadow: 0 0 25px -5px rgba(14, 165, 233, 0.35);
 }
 
 .glow-blue {
@@ -54,13 +58,16 @@ button, a {
   background: #0f172a;
 }
 .light ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #f0f9ff;
 }
 .dark ::-webkit-scrollbar-thumb {
   background: #334155;
   border-radius: 4px;
 }
 .light ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #bae6fd;
   border-radius: 4px;
+}
+.light ::-webkit-scrollbar-thumb:hover {
+  background: #0284c7;
 }
