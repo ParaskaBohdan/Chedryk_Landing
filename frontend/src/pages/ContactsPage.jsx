@@ -1,111 +1,139 @@
 import React from 'react';
-import { Phone, MessageCircle, MapPin, Clock, ShieldCheck, Mail, Sun } from 'lucide-react';
+import { Phone, MessageCircle, MapPin, Clock, Sun } from 'lucide-react';
 import ConsultationForm from '../components/ConsultationForm';
 
-export default function ContactsPage() {
+export default function ContactsPage({ theme }) {
+  const isDark = theme === 'dark';
+
   const cities = [
     'Ужгород', 'Мукачево', 'Хуст', 'Берегове', 
     'Виноградів', 'Свалява', 'Тячів', 'Рахів', 'Перечин'
   ];
 
   return (
-    <div className="py-16 lg:py-24 bg-slate-950 min-h-screen">
+    <div className={`py-12 sm:py-20 min-h-screen transition-colors duration-300 ${
+      isDark ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-900'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <span className="text-amber-400 font-semibold text-xs sm:text-sm uppercase tracking-widest px-3 py-1 bg-amber-500/10 rounded-full border border-amber-500/20">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
+          <span className={`font-semibold text-xs sm:text-sm uppercase tracking-widest px-3 py-1 rounded-full border ${
+            isDark ? 'text-amber-400 bg-amber-500/10 border-amber-500/20' : 'text-amber-700 bg-amber-100 border-amber-200'
+          }`}>
             Прямий Зв'язок
           </span>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white">
-            Контакти Майстра <span className="text-amber-400">Чедрика Івана</span>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold">
+            Контакти Майстра <span className="text-amber-500">Чедрика Івана</span>
           </h1>
-          <p className="text-slate-300 text-base sm:text-lg">
+          <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
             Працюємо по всій території Закарпатської області. Зв'яжіться зручним для вас способом для консультації чи виїзду на об'єкт.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-start">
           
           {/* Left Column: Direct Contacts */}
-          <div className="lg:col-span-6 space-y-8">
-            <div className="glass-panel p-8 rounded-3xl border border-slate-800 space-y-6">
+          <div className="lg:col-span-6 space-y-6 sm:space-y-8">
+            <div className={`glass-panel p-6 sm:p-8 rounded-3xl border space-y-6 transition-colors ${
+              isDark ? 'border-slate-800 bg-slate-900' : 'border-slate-200 bg-white shadow-sm'
+            }`}>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
-                  <Sun className="w-6 h-6 text-amber-400" />
+                  <Sun className="w-6 h-6 text-amber-500" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">Чедрик Іван</h3>
-                  <p className="text-xs text-amber-400 font-semibold">Сертифікований Електромонтажник & СЕС Спеціаліст</p>
+                  <h3 className="text-xl font-bold">Чедрик Іван</h3>
+                  <p className="text-xs text-amber-500 font-semibold">Сертифікований Електромонтажник & СЕС Спеціаліст</p>
                 </div>
               </div>
 
-              <div className="space-y-4 pt-4 border-t border-slate-800">
-                <div className="flex items-center gap-4 text-slate-200">
-                  <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-5 h-5 text-amber-400" />
+              <div className={`space-y-4 pt-4 border-t ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
+                <div className="flex items-center gap-4">
+                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 ${
+                    isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-200'
+                  }`}>
+                    <Phone className="w-5 h-5 text-amber-500" />
                   </div>
                   <div>
-                    <p className="text-xs text-slate-400 font-medium">Телефон для консультацій</p>
-                    <a href="tel:+380970000000" className="text-lg font-bold text-white hover:text-amber-400 transition-colors">
+                    <p className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                      Телефон для консультацій
+                    </p>
+                    <a href="tel:+380970000000" className="text-lg font-bold hover:text-amber-500 transition-colors">
                       +380 (97) 000-00-00
                     </a>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 text-slate-200">
-                  <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center flex-shrink-0">
-                    <MessageCircle className="w-5 h-5 text-sky-400" />
+                <div className="flex items-center gap-4">
+                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 ${
+                    isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-200'
+                  }`}>
+                    <MessageCircle className="w-5 h-5 text-sky-500" />
                   </div>
                   <div>
-                    <p className="text-xs text-slate-400 font-medium">Месенджери (Telegram / WhatsApp / Viber)</p>
+                    <p className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                      Месенджери (Telegram / WhatsApp / Viber)
+                    </p>
                     <div className="flex gap-3 mt-1">
-                      <a href="https://t.me/" target="_blank" rel="noreferrer" className="text-xs font-bold text-sky-400 hover:underline">
+                      <a href="https://t.me/" target="_blank" rel="noreferrer" className="text-xs font-bold text-sky-500 hover:underline">
                         Telegram
                       </a>
-                      <span className="text-slate-600">•</span>
-                      <a href="https://wa.me/" target="_blank" rel="noreferrer" className="text-xs font-bold text-emerald-400 hover:underline">
+                      <span className="text-slate-400">•</span>
+                      <a href="https://wa.me/" target="_blank" rel="noreferrer" className="text-xs font-bold text-emerald-500 hover:underline">
                         WhatsApp
                       </a>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 text-slate-200">
-                  <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-5 h-5 text-emerald-400" />
+                <div className="flex items-center gap-4">
+                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 ${
+                    isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-200'
+                  }`}>
+                    <MapPin className="w-5 h-5 text-emerald-500" />
                   </div>
                   <div>
-                    <p className="text-xs text-slate-400 font-medium">Регіон виїзду</p>
-                    <p className="text-sm font-semibold text-white">Всі райони Закарпатської області</p>
+                    <p className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                      Регіон виїзду
+                    </p>
+                    <p className="text-sm font-semibold">Всі райони Закарпатської області</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 text-slate-200">
-                  <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-5 h-5 text-purple-400" />
+                <div className="flex items-center gap-4">
+                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 ${
+                    isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-200'
+                  }`}>
+                    <Clock className="w-5 h-5 text-purple-500" />
                   </div>
                   <div>
-                    <p className="text-xs text-slate-400 font-medium">Графік прийому дзвінків</p>
-                    <p className="text-sm font-semibold text-white">Пн – Нд: 08:00 – 20:00</p>
+                    <p className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                      Графік прийому дзвінків
+                    </p>
+                    <p className="text-sm font-semibold">Пн – Нд: 08:00 – 20:00</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Coverage Cities */}
-            <div className="glass-card p-6 rounded-3xl border border-slate-800 space-y-4">
-              <h4 className="text-white font-bold text-sm flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-amber-400" />
+            <div className={`glass-card p-5 sm:p-6 rounded-3xl border space-y-4 ${
+              isDark ? 'border-slate-800 bg-slate-900' : 'border-slate-200 bg-white shadow-sm'
+            }`}>
+              <h4 className="font-bold text-sm flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-amber-500" />
                 Міста та райони виїзду на Закарпатті:
               </h4>
               <div className="flex flex-wrap gap-2">
                 {cities.map((city, idx) => (
-                  <span key={idx} className="px-3 py-1 bg-slate-900 border border-slate-800 text-slate-300 text-xs rounded-lg">
+                  <span key={idx} className={`px-3 py-1 border text-xs rounded-lg ${
+                    isDark ? 'bg-slate-950 border-slate-800 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700'
+                  }`}>
                     {city}
                   </span>
                 ))}
-                <span className="px-3 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold rounded-lg">
+                <span className="px-3 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-semibold rounded-lg">
                   + Усі села та ОТГ області
                 </span>
               </div>
@@ -114,7 +142,7 @@ export default function ContactsPage() {
 
           {/* Right Column: Form */}
           <div className="lg:col-span-6">
-            <ConsultationForm />
+            <ConsultationForm theme={theme} />
           </div>
 
         </div>

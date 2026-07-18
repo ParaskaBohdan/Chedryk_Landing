@@ -2,7 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { PhoneCall, FileText, Truck, Wrench, Headphones, ArrowDown } from 'lucide-react';
 
-export default function StepProcess({ onOpenConsultation }) {
+export default function StepProcess({ onOpenConsultation, theme }) {
+  const isDark = theme === 'dark';
+
   const steps = [
     {
       step: '01',
@@ -37,67 +39,82 @@ export default function StepProcess({ onOpenConsultation }) {
   ];
 
   return (
-    <section id="process" className="py-20 bg-slate-900 relative">
+    <section id="process" className={`py-16 sm:py-20 transition-colors duration-300 relative ${
+      isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <span className="text-amber-400 font-semibold text-xs sm:text-sm uppercase tracking-widest px-3 py-1 bg-amber-500/10 rounded-full border border-amber-500/20">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
+          <span className={`font-semibold text-xs sm:text-sm uppercase tracking-widest px-3 py-1 rounded-full border ${
+            isDark ? 'text-amber-400 bg-amber-500/10 border-amber-500/20' : 'text-amber-700 bg-amber-100 border-amber-200'
+          }`}>
             Прозорий Процес
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
-            5 Кроків До Вашої <span className="text-amber-400">Енергонезалежності</span>
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
+            5 Кроків До Вашої <span className="text-amber-500">Енергонезалежності</span>
           </h2>
-          <p className="text-slate-300 text-base sm:text-lg">
+          <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
             Як відбувається співпраця від першого дзвінка до повного запуску системи.
           </p>
         </div>
 
-        {/* Vertical Animated Process Timeline */}
+        {/* Timeline */}
         <div className="relative max-w-4xl mx-auto">
-          {/* Central Line */}
-          <div className="hidden md:block absolute left-1/2 top-4 bottom-4 w-0.5 bg-gradient-to-b from-amber-500 via-orange-500 to-amber-500/20 -translate-x-1/2" />
+          {/* Central Line for desktop */}
+          <div className={`hidden md:block absolute left-1/2 top-4 bottom-4 w-0.5 -translate-x-1/2 ${
+            isDark ? 'bg-gradient-to-b from-amber-500 via-orange-500 to-amber-500/20' : 'bg-gradient-to-b from-amber-400 via-amber-500 to-amber-300'
+          }`} />
 
-          <div className="space-y-12">
+          <div className="space-y-8 sm:space-y-12">
             {steps.map((item, index) => {
               const Icon = item.icon;
               const isEven = index % 2 === 0;
               return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 40 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className={`flex flex-col md:flex-row items-center gap-8 ${
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.4, delay: index * 0.08 }}
+                  className={`flex flex-col md:flex-row items-center gap-6 sm:gap-8 ${
                     isEven ? 'md:flex-row-reverse' : ''
                   }`}
                 >
                   {/* Step Card */}
                   <div className="w-full md:w-1/2">
-                    <div className="glass-card p-6 sm:p-8 rounded-3xl border border-slate-800 hover:border-amber-500/40 transition-all group shadow-xl">
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-3xl font-extrabold text-amber-400/90 tracking-wider">
+                    <div className={`glass-card p-5 sm:p-8 rounded-3xl border transition-all group ${
+                      isDark 
+                        ? 'border-slate-800 hover:border-amber-500/40 bg-slate-950/80' 
+                        : 'border-slate-200 hover:border-amber-400 bg-slate-50/70 shadow-sm'
+                    }`}>
+                      <div className="flex items-center justify-between mb-3 sm:mb-4">
+                        <span className="text-2xl sm:text-3xl font-extrabold text-amber-500 tracking-wider">
                           КРОК {item.step}
                         </span>
-                        <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center border border-amber-500/30">
-                          <Icon className="w-5 h-5 text-amber-400" />
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-500/10 flex items-center justify-center border border-amber-500/30">
+                          <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500" />
                         </div>
                       </div>
-                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
+                      <h3 className={`text-base sm:text-xl font-bold mb-2 group-hover:text-amber-500 transition-colors ${
+                        isDark ? 'text-white' : 'text-slate-900'
+                      }`}>
                         {item.title}
                       </h3>
-                      <p className="text-slate-300 text-sm leading-relaxed">
+                      <p className={`text-xs sm:text-sm leading-relaxed ${
+                        isDark ? 'text-slate-300' : 'text-slate-600'
+                      }`}>
                         {item.desc}
                       </p>
                     </div>
                   </div>
 
-                  {/* Circle Badge in Center */}
-                  <div className="hidden md:flex relative z-10 w-12 h-12 rounded-full bg-slate-950 border-2 border-amber-400 items-center justify-center shadow-lg shadow-amber-500/20 flex-shrink-0">
-                    <span className="text-xs font-bold text-amber-400">{item.step}</span>
+                  {/* Circle Badge in Center (Desktop) */}
+                  <div className={`hidden md:flex relative z-10 w-11 h-11 rounded-full border-2 border-amber-500 items-center justify-center shadow-lg flex-shrink-0 ${
+                    isDark ? 'bg-slate-950 text-amber-400 shadow-amber-500/20' : 'bg-white text-amber-600 shadow-amber-500/10'
+                  }`}>
+                    <span className="text-xs font-bold">{item.step}</span>
                   </div>
 
-                  {/* Empty Spacer for alternating layout */}
                   <div className="hidden md:block w-1/2" />
                 </motion.div>
               );
@@ -105,14 +122,14 @@ export default function StepProcess({ onOpenConsultation }) {
           </div>
         </div>
 
-        {/* Process Bottom Call to Action */}
-        <div className="mt-16 text-center">
+        {/* Process Bottom CTA */}
+        <div className="mt-12 sm:mt-16 text-center">
           <button
             onClick={onOpenConsultation}
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold text-base px-8 py-4 rounded-xl shadow-xl glow-amber hover:scale-105 transition-all"
+            className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-xl glow-amber hover:scale-105 transition-all"
           >
             <span>Почати з Кроку 1 — Консультація</span>
-            <ArrowDown className="w-5 h-5" />
+            <ArrowDown className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 
