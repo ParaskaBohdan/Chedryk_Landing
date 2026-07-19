@@ -2,19 +2,21 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { PhoneCall, FileText, Truck, Wrench, Headphones, ArrowDown } from 'lucide-react';
 
-export default function StepProcess({ onOpenConsultation }) {
+export default function StepProcess({ onOpenConsultation, theme }) {
+  const isDark = theme === 'dark';
+
   const steps = [
     {
       step: '01',
       title: 'Консультація та виїзд на об\'єкт',
       icon: PhoneCall,
-      desc: 'Первинна розмова, аналіз енергетичних потреб вашого будинку чи бізнесу. Виїзд майстра (Чедрик Іван) для огляду покрівлі, електрощита та умов монтажу по Закарпаттю.'
+      desc: 'Первинна розмова, аналіз потреб будинку чи бізнесу. Виїзд майстра (Чедрик Іван) для огляду покрівлі, електрощита та замір по Закарпаттю й Франківщині.'
     },
     {
       step: '02',
       title: 'Проектування & Дозволи Обленерго',
       icon: FileText,
-      desc: 'Розрахунок потужності (28–60 кВт для СЕС або гібридів Deye). Подача документів, отримання ТУ та офіційних дозволів від Обленерго на збільшення потужності.'
+      desc: 'Розрахунок потужності (від 5 кВт до 1 МВт для СЕС або гібридів Deye). Подача документів, ТУ та дозволів від Обленерго на збільшення потужності.'
     },
     {
       step: '03',
@@ -32,22 +34,26 @@ export default function StepProcess({ onOpenConsultation }) {
       step: '05',
       title: 'Підключення Зеленого Тарифу & Сервіс',
       icon: Headphones,
-      desc: 'Встановлення двонаправленого лічильника, підключення Зеленого Тарифу для продажу надлишків, інструктаж та постійний технічний супровід.'
+      desc: 'Встановлення двонаправленого лічильника, підключення Зеленого Тарифу для продажу надлишків, інструктаж та технічний супровід.'
     }
   ];
 
   return (
-    <section id="process" className="py-16 sm:py-20 relative bg-slate-900 text-white border-t border-slate-800">
+    <section id="process" className={`py-16 sm:py-20 relative transition-colors duration-300 border-t ${
+      isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-amber-50/40 text-slate-900 border-amber-100'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
-          <span className="font-semibold text-xs sm:text-sm uppercase tracking-widest px-3 py-1 rounded-full border border-amber-400/40 bg-amber-500/15 text-amber-300">
+          <span className={`font-semibold text-xs sm:text-sm uppercase tracking-widest px-3 py-1 rounded-full border ${
+            isDark ? 'border-amber-400/40 bg-amber-500/15 text-amber-300' : 'border-amber-300 bg-amber-100 text-amber-800'
+          }`}>
             Прозорий Процес
           </span>
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            5 Кроків До Вашої <span className="text-amber-400">Енергонезалежності</span>
+            5 Кроків До Вашої <span className="text-amber-500">Енергонезалежності</span>
           </h2>
-          <p className="text-sm sm:text-lg text-slate-300">
+          <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
             Як відбувається співпраця від першого дзвінка до виходу на виплати за Зеленим тарифом.
           </p>
         </div>
@@ -74,26 +80,34 @@ export default function StepProcess({ onOpenConsultation }) {
                 >
                   {/* Step Card */}
                   <div className="w-full md:w-1/2">
-                    <div className="glass-card p-5 sm:p-8 rounded-3xl border border-slate-700/80 bg-slate-800/80 hover:border-amber-400/60 transition-all group shadow-xl">
+                    <div className={`glass-card p-5 sm:p-8 rounded-3xl border transition-all group shadow-lg ${
+                      isDark ? 'border-slate-700/80 bg-slate-800/80 hover:border-amber-400/60' : 'border-amber-200 bg-white hover:border-amber-400 shadow-xs'
+                    }`}>
                       <div className="flex items-center justify-between mb-3 sm:mb-4">
-                        <span className="text-2xl sm:text-3xl font-extrabold tracking-wider text-amber-400">
+                        <span className="text-2xl sm:text-3xl font-extrabold tracking-wider text-amber-500">
                           КРОК {item.step}
                         </span>
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center border border-amber-400/40 bg-amber-500/15 text-amber-400">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center border border-amber-400/40 bg-amber-500/15 text-amber-500">
                           <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
                       </div>
-                      <h3 className="text-base sm:text-xl font-bold mb-2 text-white group-hover:text-amber-400 transition-colors">
+                      <h3 className={`text-base sm:text-xl font-bold mb-2 transition-colors ${
+                        isDark ? 'text-white group-hover:text-amber-400' : 'text-slate-900 group-hover:text-amber-600'
+                      }`}>
                         {item.title}
                       </h3>
-                      <p className="text-xs sm:text-sm leading-relaxed text-slate-300">
+                      <p className={`text-xs sm:text-sm leading-relaxed ${
+                        isDark ? 'text-slate-300' : 'text-slate-600'
+                      }`}>
                         {item.desc}
                       </p>
                     </div>
                   </div>
 
                   {/* Circle Badge in Center (Desktop) */}
-                  <div className="hidden md:flex relative z-10 w-11 h-11 rounded-full border-2 border-amber-400 bg-slate-900 text-amber-400 items-center justify-center shadow-lg shadow-amber-500/20 flex-shrink-0">
+                  <div className={`hidden md:flex relative z-10 w-11 h-11 rounded-full border-2 border-amber-500 text-amber-500 items-center justify-center shadow-lg flex-shrink-0 ${
+                    isDark ? 'bg-slate-900 shadow-amber-500/20' : 'bg-white shadow-amber-500/10'
+                  }`}>
                     <span className="text-xs font-bold">{item.step}</span>
                   </div>
 
@@ -108,7 +122,7 @@ export default function StepProcess({ onOpenConsultation }) {
         <div className="mt-12 sm:mt-16 text-center">
           <button
             onClick={onOpenConsultation}
-            className="inline-flex items-center gap-2.5 btn-orange-bright font-bold text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-xl hover:scale-105 transition-all text-slate-950 glow-amber"
+            className="inline-flex items-center gap-2.5 btn-orange-bright font-bold text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-xl hover:scale-105 transition-all glow-amber"
           >
             <span>Почати з Кроку 1 — Консультація</span>
             <ArrowDown className="w-4 h-4 sm:w-5 sm:h-5" />

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle2, AlertCircle, Loader2, Phone, User, MessageSquare, Wrench } from 'lucide-react';
 
-export default function ConsultationForm({ selectedServicePrefill, onCloseModal }) {
+export default function ConsultationForm({ selectedServicePrefill, onCloseModal, theme }) {
+  const isDark = theme === 'dark';
+
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    service: selectedServicePrefill || 'Побудова сонячних станцій (28–60 кВт)',
+    service: selectedServicePrefill || 'Побудова сонячних станцій (5 кВт – 1 МВт)',
     comment: ''
   });
 
@@ -13,11 +15,12 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal 
   const [status, setStatus] = useState(null);
 
   const servicesList = [
-    'Побудова сонячних станцій (28–60 кВт)',
+    'Побудова сонячних станцій (5 кВт – 1 МВт)',
     'Гібридні системи Deye та акумулятори',
     'Установка панелей на дах',
     'Супровід документації & Зелений Тариф',
     'Проектування та налагодження електромереж в будівлях',
+    'Розрахунок з Калькулятора СЕС',
     'Інше (Загальне запитання)'
   ];
 
@@ -68,23 +71,25 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal 
   };
 
   return (
-    <div className="glass-panel p-5 sm:p-8 rounded-3xl border border-slate-700 bg-slate-800/90 shadow-2xl max-w-xl mx-auto text-white">
+    <div className={`glass-panel p-5 sm:p-8 rounded-3xl border shadow-2xl max-w-xl mx-auto transition-colors ${
+      isDark ? 'border-slate-700 bg-slate-800/90 text-white' : 'border-amber-200 bg-white text-slate-900 shadow-amber-500/10'
+    }`}>
       <div className="text-center mb-6 sm:mb-8">
         <h3 className="text-xl sm:text-2xl font-bold mb-2">
           Замовити Безкоштовну Консультацію
         </h3>
-        <p className="text-xs sm:text-sm text-slate-300">
-          Залиште контакти — Чедрик Іван зателефонує вам для узгодження деталей та розрахунку.
+        <p className={`text-xs sm:text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+          Залиште контакти — Чедрик Іван зателефонує вам для узгодження деталей та виїзду.
         </p>
       </div>
 
       {status?.type === 'success' ? (
         <div className="p-6 rounded-2xl border border-emerald-400/40 bg-emerald-500/15 text-center space-y-4">
-          <div className="w-14 h-14 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto">
+          <div className="w-14 h-14 bg-emerald-500/20 text-emerald-500 rounded-full flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-8 h-8" />
           </div>
-          <h4 className="text-lg font-bold text-white">Заявку Прийнято!</h4>
-          <p className="text-xs sm:text-sm leading-relaxed text-slate-200">{status.message}</p>
+          <h4 className="text-lg font-bold">Заявку Прийнято!</h4>
+          <p className="text-xs sm:text-sm leading-relaxed opacity-90">{status.message}</p>
           <div className="pt-2">
             <button
               onClick={() => {
@@ -101,59 +106,65 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal 
         <form onSubmit={handleSubmit} className="space-y-4">
           
           {status?.type === 'error' && (
-            <div className="p-3.5 bg-rose-500/15 rounded-xl border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2">
+            <div className="p-3.5 bg-rose-500/15 rounded-xl border border-rose-500/40 text-rose-500 text-xs flex items-center gap-2">
               <AlertCircle className="w-4 h-4 flex-shrink-0" />
               <span>{status.message}</span>
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-semibold mb-1.5 text-slate-200">
+            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
               Ваше Ім'я *
             </label>
             <div className="relative">
-              <User className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-400" />
+              <User className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-500" />
               <input
                 type="text"
                 required
                 placeholder="наприклад, Олександр"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full border border-slate-700 bg-slate-900/90 text-white placeholder-slate-400 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-400 transition-colors"
+                className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors ${
+                  isDark ? 'border-slate-700 bg-slate-900/90 text-white placeholder-slate-400' : 'border-amber-200 bg-amber-50/50 text-slate-900 placeholder-slate-400'
+                }`}
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold mb-1.5 text-slate-200">
+            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
               Номер Телефону *
             </label>
             <div className="relative">
-              <Phone className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-400" />
+              <Phone className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-500" />
               <input
                 type="tel"
                 required
                 placeholder="+380 (97) 000-00-00"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full border border-slate-700 bg-slate-900/90 text-white placeholder-slate-400 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-400 transition-colors"
+                className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors ${
+                  isDark ? 'border-slate-700 bg-slate-900/90 text-white placeholder-slate-400' : 'border-amber-200 bg-amber-50/50 text-slate-900 placeholder-slate-400'
+                }`}
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold mb-1.5 text-slate-200">
+            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
               Послуга, яка вас цікавить
             </label>
             <div className="relative">
-              <Wrench className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-400" />
+              <Wrench className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-500" />
               <select
                 value={formData.service}
                 onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                className="w-full border border-slate-700 bg-slate-900/90 text-white rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-400 transition-colors"
+                className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors ${
+                  isDark ? 'border-slate-700 bg-slate-900/90 text-white' : 'border-amber-200 bg-amber-50/50 text-slate-900'
+                }`}
               >
                 {servicesList.map((srv, idx) => (
-                  <option key={idx} value={srv} className="bg-slate-900 text-white">
+                  <option key={idx} value={srv} className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
                     {srv}
                   </option>
                 ))}
@@ -162,17 +173,19 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal 
           </div>
 
           <div>
-            <label className="block text-xs font-semibold mb-1.5 text-slate-200">
+            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
               Коментар або опис об'єкта (необов'язково)
             </label>
             <div className="relative">
-              <MessageSquare className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-400" />
+              <MessageSquare className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-500" />
               <textarea
                 rows={3}
-                placeholder="Потужність, тип даху або площа будівлі..."
+                placeholder="Потужність, типом даху чи місто..."
                 value={formData.comment}
                 onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
-                className="w-full border border-slate-700 bg-slate-900/90 text-white placeholder-slate-400 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-400 transition-colors"
+                className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors ${
+                  isDark ? 'border-slate-700 bg-slate-900/90 text-white placeholder-slate-400' : 'border-amber-200 bg-amber-50/50 text-slate-900 placeholder-slate-400'
+                }`}
               />
             </div>
           </div>
@@ -180,7 +193,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal 
           <button
             type="submit"
             disabled={loading}
-            className="w-full btn-orange-bright text-slate-950 font-bold text-sm py-3.5 rounded-xl shadow-lg hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-50 glow-amber"
+            className="w-full btn-orange-bright font-bold text-sm py-3.5 rounded-xl shadow-lg hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-50 glow-amber"
           >
             {loading ? (
               <>
