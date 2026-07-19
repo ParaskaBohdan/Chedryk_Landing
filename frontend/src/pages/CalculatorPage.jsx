@@ -59,7 +59,7 @@ export default function CalculatorPage({ theme, onOpenConsultation }) {
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Title */}
+        {/* Page Title */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-400/40 bg-amber-500/15 text-amber-500 text-xs sm:text-sm font-semibold">
             <Calculator className="w-4 h-4 text-amber-500" />
@@ -70,7 +70,7 @@ export default function CalculatorPage({ theme, onOpenConsultation }) {
             Конструктор & Схема <span className="text-amber-500">Сонячної Станції</span>
           </h1>
           <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-            Вкажіть параметри даху — наша система підбере тип каркасу, варіанти наповнення панелей та побудує архітектурну схему в режимі реального часу.
+            Вкажіть параметри даху — наша система підбере тип каркасу, варіанти наповнення панелей та побудує візуалізацію об'єкта в режимі реального часу.
           </p>
         </div>
 
@@ -107,9 +107,9 @@ export default function CalculatorPage({ theme, onOpenConsultation }) {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
           
-          {/* Controls Column */}
+          {/* LEFT COLUMN: STEPS 1-3 & COST CALCULATION SUMMARY */}
           <div className="lg:col-span-6 space-y-6">
             
             {/* STEP 1: ROOF PARAMETERS */}
@@ -370,40 +370,41 @@ export default function CalculatorPage({ theme, onOpenConsultation }) {
               </div>
             )}
 
-            {/* Live Config Summary Card */}
-            <div className={`glass-card p-5 rounded-2xl border space-y-3 ${
-              isDark ? 'border-slate-700 bg-slate-800/80' : 'border-slate-200 bg-white shadow-xs'
+            {/* COST CALCULATION SUMMARY CARD (Positioned under Steps 1-3 on Left Column) */}
+            <div className={`glass-card p-6 sm:p-7 rounded-3xl border space-y-4 shadow-xl ${
+              isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-200 bg-white shadow-md'
             }`}>
-              <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-amber-500">
-                <span>Калькуляція по об'єкту</span>
-                <span>{totalKw} кВт СЕС</span>
+              <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-amber-500 border-b border-slate-700/60 pb-3">
+                <span className="flex items-center gap-2">
+                  <Zap className="w-4 h-4" /> КАЛЬКУЛЯЦІЯ ПО ОБ'ЄКТУ
+                </span>
+                <span className="text-sm font-black text-amber-500">{totalKw} КВТ СЕС</span>
               </div>
-              <div className="grid grid-cols-2 gap-2 text-xs">
+
+              <div className="grid grid-cols-2 gap-4 text-xs">
                 <div>
-                  <span className="opacity-70 block">Кількість панелей:</span>
-                  <span className="font-bold">{activePanelCount} шт. ({selectedPanelWattage}W)</span>
+                  <span className="opacity-70 block font-medium">Кількість панелей:</span>
+                  <span className="font-bold text-sm text-white">{activePanelCount} шт. ({selectedPanelWattage}W)</span>
                 </div>
                 <div>
-                  <span className="opacity-70 block">Річна генерація:</span>
-                  <span className="font-bold text-emerald-500">~{annualGenKwh.toLocaleString()} кВт·год</span>
+                  <span className="opacity-70 block font-medium">Річна генерація:</span>
+                  <span className="font-bold text-sm text-emerald-400">~{annualGenKwh.toLocaleString()} кВт·год</span>
                 </div>
                 <div>
-                  <span className="opacity-70 block">Інвертор Deye:</span>
-                  <span className="font-bold">{inverterPowerKw} кВт (3-фази)</span>
+                  <span className="opacity-70 block font-medium">Інвертор Deye:</span>
+                  <span className="font-bold text-sm text-sky-400">{inverterPowerKw} кВт (3-фази)</span>
                 </div>
                 <div>
-                  <span className="opacity-70 block">Орієнтовний кошторис:</span>
-                  <span className="font-bold text-amber-500 text-sm">~${totalEstimateUsd.toLocaleString()}</span>
+                  <span className="opacity-70 block font-medium">Орієнтовний кошторис:</span>
+                  <span className="font-extrabold text-base text-amber-400">~${totalEstimateUsd.toLocaleString()}</span>
                 </div>
               </div>
             </div>
 
           </div>
 
-          {/* Scheme & Preview Column */}
+          {/* RIGHT COLUMN: ENLARGED VISUAL SCHEMA AT TOP RIGHT */}
           <div className="lg:col-span-6 space-y-6">
-            
-            {/* Dynamic Vector SVG Blueprint Scheme */}
             <InteractiveSolarSchema
               roofType={roofType}
               roofMaterial={roofMaterial}
@@ -416,17 +417,16 @@ export default function CalculatorPage({ theme, onOpenConsultation }) {
               batteryCapacityKwh={batteryCapacityKwh}
               theme={theme}
             />
-
-            {/* Direct Send Order Form */}
-            <div className="pt-2">
-              <ConsultationForm 
-                selectedServicePrefill={getConfigSummaryText()} 
-                theme={theme} 
-              />
-            </div>
-
           </div>
 
+        </div>
+
+        {/* FULL WIDTH BOTTOM CONSULTATION FORM */}
+        <div id="calculator-consultation" className="pt-8 border-t border-slate-800">
+          <ConsultationForm 
+            selectedServicePrefill={getConfigSummaryText()} 
+            theme={theme} 
+          />
         </div>
 
       </div>

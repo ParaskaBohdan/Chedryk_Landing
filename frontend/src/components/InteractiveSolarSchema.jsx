@@ -1,11 +1,12 @@
 import React from 'react';
-import { Cpu, BatteryCharging, ShieldCheck, Sun } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sun, ShieldCheck, Cpu, BatteryCharging } from 'lucide-react';
 
 export default function InteractiveSolarSchema({
   roofType = 'pitched', // 'pitched' | 'flat'
-  roofMaterial = 'metal_tile', // 'metal_tile' | 'tile' | 'corrugated' | 'seam' | 'flat_concrete'
+  roofMaterial = 'metal_tile',
   rowsCount = 2, // 1 | 2 | 3 | 4
-  panelBrand = 'jinko', // 'risen' | 'jinko' | 'longi'
+  panelBrand = 'jinko',
   panelCount = 24,
   totalKw = 14,
   inverterPowerKw = 15,
@@ -18,206 +19,238 @@ export default function InteractiveSolarSchema({
   const brandNames = {
     risen: 'Risen 550W',
     jinko: 'Jinko 585W',
-    longi: 'Longi 600W'
+    longi: 'Longi Solar 600W'
   };
 
   const materialNames = {
-    metal_tile: 'Металочерепиця (Кронштейни-гачки)',
-    tile: 'Натуральна черепиця (Шпильки M10)',
-    corrugated: 'Профнастил (Міні-рейки)',
-    seam: 'Фальцева покрівля (Безпрокольні затискачі)',
-    flat_concrete: 'Плоский бетон (Баластна конструкція 15°)'
+    metal_tile: 'Металочерепиця',
+    tile: 'Натуральна черепиця',
+    corrugated: 'Профнастил',
+    seam: 'Фальцева покрівля',
+    flat_concrete: 'Плоский бетон'
   };
 
-  // Colors for Blueprint SVG
-  const strokeColor = isDark ? '#f59e0b' : '#d97706'; // Amber / Orange
-  const lineMuted = isDark ? '#475569' : '#cbd5e1';
-  const bgGrid = isDark ? '#1e293b' : '#ffffff';
-  const textColor = isDark ? '#f8fafc' : '#0f172a';
+  const textColor = isDark ? 'text-white' : 'text-slate-900';
 
   return (
-    <div className={`rounded-3xl border p-4 sm:p-6 transition-all shadow-xl relative overflow-hidden ${
-      isDark ? 'border-slate-700 bg-slate-800/90' : 'border-amber-200 bg-white'
+    <div className={`rounded-3xl border p-5 sm:p-7 transition-all shadow-2xl relative overflow-hidden ${
+      isDark ? 'border-slate-700/80 bg-slate-800/90' : 'border-amber-200 bg-white shadow-amber-500/10'
     }`}>
       
       {/* Header Info Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-slate-700/60">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-400/40 text-amber-500 flex items-center justify-center font-bold text-xs">
-            SVG
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-700/60">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="font-extrabold text-xs uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-amber-400/40 bg-amber-500/15 text-amber-500">
+              3D/2D Візуалізація
+            </span>
+            <span className={`text-xs font-bold ${textColor}`}>
+              {roofType === 'pitched' ? 'Скатий дах' : 'Плоский дах'} • {materialNames[roofMaterial]}
+            </span>
           </div>
-          <div>
-            <h4 className={`text-xs sm:text-sm font-bold ${textColor}`}>
-              Арх-Схема Монтажу Панелей
-            </h4>
-            <p className="text-[11px] text-amber-500 font-semibold">
-              {materialNames[roofMaterial] || 'Стандартне кріплення'}
-            </p>
-          </div>
+          <p className="text-xs text-slate-400 mt-1">
+            Масштабована схема розташування обладнання на об'єкті
+          </p>
         </div>
 
-        <div className="flex items-center gap-2 text-xs font-bold px-3 py-1 rounded-full border border-amber-400/40 bg-amber-500/15 text-amber-500">
-          <Sun className="w-3.5 h-3.5" />
-          <span>Загалом: {totalKw} кВт ({panelCount} шт. {brandNames[panelBrand]})</span>
+        <div className="flex items-center gap-2 text-xs font-bold px-3.5 py-1.5 rounded-xl border border-amber-400/40 bg-amber-500/15 text-amber-500 shadow-xs">
+          <Sun className="w-4 h-4" />
+          <span>{totalKw} кВт ({panelCount} шт. {brandNames[panelBrand]})</span>
         </div>
       </div>
 
-      {/* SVG Canvas Drawing */}
-      <div className="w-full aspect-[16/10] sm:aspect-[16/9] relative rounded-2xl border border-slate-700/70 overflow-hidden bg-slate-900/95 flex items-center justify-center">
+      {/* Main Illustration Canvas with Animated Transitions */}
+      <div className="w-full aspect-[16/10] sm:aspect-[16/9] relative rounded-2xl border border-slate-700/60 overflow-hidden bg-gradient-to-b from-slate-900 via-slate-900/95 to-slate-950 flex items-center justify-center p-2 sm:p-4">
         
-        {/* Background Grid Lines */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
-          <defs>
-            <pattern id="gridPattern" width="30" height="30" patternUnits="userSpaceOnUse">
-              <path d="M 30 0 L 0 0 0 30" fill="none" stroke={lineMuted} strokeWidth="0.5" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#gridPattern)" />
-        </svg>
+        {/* Background Sun Rays Effect */}
+        <div className="absolute top-4 left-6 w-24 h-24 bg-amber-400/15 rounded-full blur-2xl pointer-events-none" />
 
-        {/* Dynamic Vector Drawing */}
-        <svg viewBox="0 0 800 480" className="w-full h-full p-2 relative z-10">
-          
-          {/* Defs / Gradients */}
-          <defs>
-            <linearGradient id="panelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#1e3a8a" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="#0284c7" stopOpacity="0.85" />
-            </linearGradient>
-            <linearGradient id="frameGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#f59e0b" />
-              <stop offset="100%" stopColor="#f97316" />
-            </linearGradient>
-          </defs>
+        <AnimatePresence mode="wait">
+          <motion.svg
+            key={`${roofType}-${rowsCount}-${hasBattery}`}
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.04 }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+            viewBox="0 0 900 500" 
+            className="w-full h-full relative z-10"
+          >
+            <defs>
+              {/* Solar Panel Glossy Gradient */}
+              <linearGradient id="pvPanelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#1d4ed8" />
+                <stop offset="50%" stopColor="#0284c7" />
+                <stop offset="100%" stopColor="#0369a1" />
+              </linearGradient>
 
-          {/* 1. ROOF STRUCTURE DRAWING */}
-          {roofType === 'pitched' ? (
-            /* Pitched Roof (Angle 25 deg) */
-            <g>
-              {/* House Facade Base */}
-              <rect x="120" y="280" width="400" height="150" fill="#0f172a" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
-              <text x="320" y="360" fill="#64748b" fontSize="13" textAnchor="middle" fontFamily="monospace">БУДІНОК / СКАНИЙ ДАХ (~30°)</text>
+              {/* Inverter Box Gradient */}
+              <linearGradient id="inverterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#334155" />
+                <stop offset="100%" stopColor="#0f172a" />
+              </linearGradient>
 
-              {/* Roof Slope Line */}
-              <polygon points="100,280 320,130 540,280" fill="#1e293b" stroke="#f59e0b" strokeWidth="3" />
-              
-              {/* Roof Cover Texture Indicator */}
-              <path d="M 120,270 L 320,140 L 520,270" stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.6" />
+              {/* Shadow filter */}
+              <filter id="softDropShadow" x="-10%" y="-10%" width="130%" height="130%">
+                <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#000000" floodOpacity="0.4" />
+              </filter>
+            </defs>
 
-              {/* Mounting Rail Brackets */}
-              <line x1="160" y1="240" x2="480" y2="240" stroke="#fbbf24" strokeWidth="4" />
-              <line x1="180" y1="200" x2="460" y2="200" stroke="#fbbf24" strokeWidth="4" />
-              {rowsCount >= 3 && <line x1="200" y1="160" x2="440" y2="160" stroke="#fbbf24" strokeWidth="4" />}
+            {/* SKY BACKGROUND ELEMENTS */}
+            <circle cx="90" cy="80" r="35" fill="#f59e0b" opacity="0.85" />
+            <g stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" opacity="0.6">
+              <line x1="90" y1="30" x2="90" y2="40" />
+              <line x1="90" y1="120" x2="90" y2="130" />
+              <line x1="40" y1="80" x2="50" y2="80" />
+              <line x1="130" y1="80" x2="140" y2="80" />
+              <line x1="55" y1="45" x2="62" y2="52" />
+              <line x1="118" y1="108" x2="125" y2="115" />
             </g>
-          ) : (
-            /* Flat Roof (Ballast Triangle Frames) */
-            <g>
-              {/* House Facade Base */}
-              <rect x="100" y="270" width="450" height="160" fill="#0f172a" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
-              <text x="325" y="360" fill="#64748b" fontSize="13" textAnchor="middle" fontFamily="monospace">ПЛОСКИЙ БЕТОННИЙ ДАХ (0°–5°)</text>
-              <line x1="80" y1="270" x2="470" y2="270" stroke="#cbd5e1" strokeWidth="4" />
 
-              {/* Triangular Ballast Frames for Flat Roof */}
-              {Array.from({ length: Math.min(rowsCount, 3) }).map((_, rIdx) => {
-                const rx = 140 + rIdx * 110;
-                return (
-                  <g key={rIdx}>
-                    {/* Triangular Steel Structure */}
-                    <polygon points={`${rx},270 ${rx + 70},270 ${rx + 70},210`} fill="#334155" stroke="#f59e0b" strokeWidth="2" />
-                    {/* Concrete Weight Ballast */}
-                    <rect x={rx + 10} y="260" width="40" height="10" fill="#64748b" stroke="#94a3b8" strokeWidth="1" />
-                    <text x={rx + 30} y="258" fill="#cbd5e1" fontSize="9" textAnchor="middle">Баласт</text>
-                  </g>
-                );
-              })}
-            </g>
-          )}
+            {/* --- SCENARIO A: PITCHED ROOF MODERN HOUSE (Side 3/4 Angle) --- */}
+            {roofType === 'pitched' ? (
+              <g filter="url(#softDropShadow)">
+                {/* Main House Wall / Side Facade */}
+                <polygon points="180,260 520,260 520,420 180,420" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="3" />
+                
+                {/* Front Side Wall Segment */}
+                <polygon points="520,260 620,210 620,370 520,420" fill="#e2e8f0" stroke="#cbd5e1" strokeWidth="3" />
 
-          {/* 2. SOLAR PANELS LAYOUT DRAWING */}
-          {Array.from({ length: Math.min(rowsCount, 4) }).map((_, rIndex) => {
-            const yOffset = roofType === 'pitched' ? 220 - rIndex * 35 : 190 - rIndex * 15;
-            const xOffset = roofType === 'pitched' ? 170 + rIndex * 15 : 140 + rIndex * 110;
-            const rowPanelsCount = Math.ceil(panelCount / rowsCount);
+                {/* Windows & Doors */}
+                <rect x="220" y="290" width="60" height="80" rx="4" fill="#1e293b" stroke="#94a3b8" strokeWidth="2" />
+                <rect x="330" y="290" width="60" height="80" rx="4" fill="#1e293b" stroke="#94a3b8" strokeWidth="2" />
+                <rect x="440" y="310" width="50" height="110" rx="4" fill="#0f172a" stroke="#f59e0b" strokeWidth="2" />
 
-            return (
-              <g key={rIndex} className="transition-all duration-300">
-                {/* Panel Frame Container */}
-                <rect 
-                  x={xOffset} 
-                  y={yOffset} 
-                  width={roofType === 'pitched' ? 280 - rIndex * 30 : 90} 
-                  height={roofType === 'pitched' ? 22 : 45} 
-                  fill="url(#panelGrad)" 
-                  stroke="#fbbf24" 
-                  strokeWidth="2" 
-                  rx="3" 
-                />
+                {/* Pitched Roof Mass (Side Angle Perspective) */}
+                <polygon points="140,260 500,260 420,130 140,130" fill="#334155" stroke="#475569" strokeWidth="4" />
+                <polygon points="500,260 630,210 520,110 420,130" fill="#1e293b" stroke="#475569" strokeWidth="4" />
 
-                {/* Solar Cell Grid Lines */}
-                <line x1={xOffset + 20} y1={yOffset} x2={xOffset + 20} y2={yOffset + (roofType === 'pitched' ? 22 : 45)} stroke="#38bdf8" strokeWidth="0.8" opacity="0.7" />
-                <line x1={xOffset + 60} y1={yOffset} x2={xOffset + 60} y2={yOffset + (roofType === 'pitched' ? 22 : 45)} stroke="#38bdf8" strokeWidth="0.8" opacity="0.7" />
-                {roofType === 'pitched' && (
-                  <>
-                    <line x1={xOffset + 120} y1={yOffset} x2={xOffset + 120} y2={yOffset + 22} stroke="#38bdf8" strokeWidth="0.8" opacity="0.7" />
-                    <line x1={xOffset + 180} y1={yOffset} x2={xOffset + 180} y2={yOffset + 22} stroke="#38bdf8" strokeWidth="0.8" opacity="0.7" />
-                    <line x1={xOffset + 220} y1={yOffset} x2={xOffset + 220} y2={yOffset + 22} stroke="#38bdf8" strokeWidth="0.8" opacity="0.7" />
-                  </>
-                )}
+                {/* Roof Texture Lines */}
+                <line x1="140" y1="130" x2="500" y2="260" stroke="#f59e0b" strokeWidth="3" opacity="0.8" />
+                <line x1="210" y1="130" x2="535" y2="235" stroke="#475569" strokeWidth="1.5" opacity="0.5" />
+                <line x1="280" y1="130" x2="570" y2="210" stroke="#475569" strokeWidth="1.5" opacity="0.5" />
 
-                {/* Label on Row */}
-                <text 
-                  x={xOffset + (roofType === 'pitched' ? 130 : 45)} 
-                  y={yOffset + (roofType === 'pitched' ? 14 : 26)} 
-                  fill="#ffffff" 
-                  fontSize="10" 
-                  fontWeight="bold" 
-                  textAnchor="middle"
-                >
-                  Ряд {rIndex + 1}: ~{rowPanelsCount} шт ({brandNames[panelBrand]})
-                </text>
+                {/* Mounting Aluminum Rails on Roof */}
+                <line x1="170" y1="230" x2="470" y2="230" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round" />
+                <line x1="190" y1="190" x2="450" y2="190" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round" />
+                {rowsCount >= 3 && <line x1="210" y1="150" x2="430" y2="150" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round" />}
+
+                {/* DYNAMIC SOLAR PANEL ROWS ON PITCHED ROOF */}
+                {Array.from({ length: Math.min(rowsCount, 3) }).map((_, rIdx) => {
+                  const py = 210 - rIdx * 38;
+                  const px = 180 + rIdx * 15;
+                  const pWidth = 270 - rIdx * 25;
+                  const rowPanels = Math.ceil(panelCount / rowsCount);
+
+                  return (
+                    <g key={rIdx}>
+                      {/* Solar Panel Row Panel Box */}
+                      <polygon 
+                        points={`${px},${py} ${px + pWidth},${py + 25} ${px + pWidth - 30},${py + 5} ${px - 30},${py - 15}`} 
+                        fill="url(#pvPanelGrad)" 
+                        stroke="#fbbf24" 
+                        strokeWidth="2.5" 
+                      />
+
+                      {/* Cell Division Lines */}
+                      <line x1={px + pWidth * 0.25} y1={py + 5} x2={px + pWidth * 0.25 - 20} y2={py - 10} stroke="#38bdf8" strokeWidth="1" />
+                      <line x1={px + pWidth * 0.5} y1={py + 12} x2={px + pWidth * 0.5 - 20} y2={py - 5} stroke="#38bdf8" strokeWidth="1" />
+                      <line x1={px + pWidth * 0.75} y1={py + 18} x2={px + pWidth * 0.75 - 20} y2={py} stroke="#38bdf8" strokeWidth="1" />
+
+                      {/* Row Badge */}
+                      <text x={px + pWidth * 0.4} y={py + 12} fill="#ffffff" fontSize="11" fontWeight="bold">
+                        Ряд {rIdx + 1}: {rowPanels} шт
+                      </text>
+                    </g>
+                  );
+                })}
               </g>
-            );
-          })}
+            ) : (
+              /* --- SCENARIO B: FLAT ROOF MODERN HOUSE WITH ANGLED BALLAST RACKS --- */
+              <g filter="url(#softDropShadow)">
+                {/* Modern Cube Building Base */}
+                <rect x="180" y="220" width="380" height="200" rx="6" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="3" />
+                <polygon points="560,220 660,180 660,370 560,420" fill="#e2e8f0" stroke="#cbd5e1" strokeWidth="3" />
 
-          {/* 3. DC POWER CABLE & INVERTER / BATTERY DIAGRAM */}
-          {/* Cable Line Down to Inverter */}
-          <path d="M 450,220 L 580,220 L 580,310 L 640,310" fill="none" stroke="#f59e0b" strokeWidth="3" strokeDasharray="5 3" />
-          <text x="560" y="210" fill="#f59e0b" fontSize="10" fontWeight="bold">Кабель DC</text>
+                {/* Architectural Features */}
+                <rect x="220" y="260" width="70" height="100" rx="4" fill="#1e293b" stroke="#94a3b8" strokeWidth="2" />
+                <rect x="330" y="260" width="70" height="100" rx="4" fill="#1e293b" stroke="#94a3b8" strokeWidth="2" />
+                <rect x="450" y="280" width="60" height="140" rx="4" fill="#0f172a" stroke="#f59e0b" strokeWidth="2.5" />
 
-          {/* Inverter Box */}
-          <g>
-            <rect x="640" y="270" width="120" height="70" rx="10" fill="#1e293b" stroke="#38bdf8" strokeWidth="2.5" />
-            <circle cx="660" cy="290" r="6" fill="#38bdf8" />
-            <text x="675" y="293" fill="#ffffff" fontSize="11" fontWeight="bold">Інвертор Deye</text>
-            <text x="700" y="320" fill="#38bdf8" fontSize="12" fontWeight="bold" textAnchor="middle">{inverterPowerKw} кВт (3-фазний)</text>
-          </g>
+                {/* Flat Roof Parapet Line */}
+                <line x1="160" y1="220" x2="570" y2="220" stroke="#f59e0b" strokeWidth="5" strokeLinecap="round" />
 
-          {/* Optional Battery Storage Rack Drawing */}
-          {hasBattery && (
-            <g>
-              {/* Cable from Inverter to Battery */}
-              <line x1="700" y1="340" x2="700" y2="380" stroke="#10b981" strokeWidth="3" />
+                {/* ELEVATED ANGLED BALLAST FRAME RACKS FOR FLAT ROOF */}
+                {Array.from({ length: Math.min(rowsCount, 3) }).map((_, rIdx) => {
+                  const rx = 200 + rIdx * 115;
+                  const rowPanels = Math.ceil(panelCount / rowsCount);
 
-              {/* Battery Cabinet */}
-              <rect x="650" y="380" width="100" height="70" rx="8" fill="#064e3b" stroke="#10b981" strokeWidth="2.5" />
-              <rect x="660" y="390" width="80" height="12" fill="#022c22" stroke="#10b981" strokeWidth="1" />
-              <rect x="660" y="406" width="80" height="12" fill="#022c22" stroke="#10b981" strokeWidth="1" />
-              <rect x="660" y="422" width="80" height="12" fill="#022c22" stroke="#10b981" strokeWidth="1" />
-              
-              <text x="700" y="443" fill="#a7f3d0" fontSize="10" fontStyle="bold" textAnchor="middle">
-                АКБ LiFePO4 {batteryCapacityKwh} кВт·год
+                  return (
+                    <g key={rIdx}>
+                      {/* Triangular Metal Ballast Support (15 deg angle) */}
+                      <polygon points={`${rx},220 ${rx + 85},220 ${rx + 85},160`} fill="#334155" stroke="#f59e0b" strokeWidth="2.5" />
+                      {/* Concrete Weight */}
+                      <rect x={rx + 10} y="210" width="55" height="10" fill="#64748b" stroke="#94a3b8" strokeWidth="1" />
+
+                      {/* Angled Solar Panel Module Mounted on Top */}
+                      <polygon 
+                        points={`${rx - 5},225 ${rx + 95},165 ${rx + 85},150 ${rx - 15},210`} 
+                        fill="url(#pvPanelGrad)" 
+                        stroke="#fbbf24" 
+                        strokeWidth="2.5" 
+                      />
+
+                      {/* Text Label */}
+                      <text x={rx + 35} y="180" fill="#ffffff" fontSize="10" fontWeight="bold" textAnchor="middle">
+                        Ряд {rIdx + 1}
+                      </text>
+                      <text x={rx + 35} y="195" fill="#fcd34d" fontSize="9" fontWeight="bold" textAnchor="middle">
+                        {rowPanels} шт
+                      </text>
+                    </g>
+                  );
+                })}
+              </g>
+            )}
+
+            {/* --- POWER EQUIPMENT (INVERTER & BATTERY RACK ON SIDE WALL) --- */}
+            {/* Cable Line Down */}
+            <path d="M 520,260 L 700,260 L 700,310" fill="none" stroke="#f59e0b" strokeWidth="3.5" strokeDasharray="6 3" />
+
+            {/* Deye Inverter Box Mounted on Wall */}
+            <g filter="url(#softDropShadow)">
+              <rect x="650" y="270" width="130" height="75" rx="10" fill="url(#inverterGrad)" stroke="#38bdf8" strokeWidth="3" />
+              <circle cx="675" cy="292" r="6" fill="#10b981" />
+              <text x="690" y="296" fill="#ffffff" fontSize="11" fontWeight="bold">Deye Inverter</text>
+              <text x="715" y="325" fill="#38bdf8" fontSize="13" fontWeight="bold" textAnchor="middle">
+                {inverterPowerKw} кВт (3-фазний)
               </text>
             </g>
-          )}
 
-        </svg>
+            {/* Battery Storage Stand */}
+            {hasBattery && (
+              <g filter="url(#softDropShadow)">
+                <line x1="715" y1="345" x2="715" y2="375" stroke="#10b981" strokeWidth="3.5" />
+                
+                <rect x="660" y="375" width="110" height="85" rx="10" fill="#022c22" stroke="#10b981" strokeWidth="3" />
+                <rect x="670" y="388" width="90" height="13" rx="2" fill="#064e3b" stroke="#10b981" strokeWidth="1" />
+                <rect x="670" y="407" width="90" height="13" rx="2" fill="#064e3b" stroke="#10b981" strokeWidth="1" />
+                <rect x="670" y="426" width="90" height="13" rx="2" fill="#064e3b" stroke="#10b981" strokeWidth="1" />
+
+                <text x="715" y="448" fill="#a7f3d0" fontSize="10" fontWeight="bold" textAnchor="middle">
+                  АКБ LiFePO4 {batteryCapacityKwh} кВт·год
+                </text>
+              </g>
+            )}
+          </motion.svg>
+        </AnimatePresence>
+
       </div>
 
       {/* Footer Schema Legend */}
       <div className="mt-4 pt-3 border-t border-slate-700/60 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-semibold text-slate-300">
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded-xs bg-amber-500 border border-amber-300" />
-          <span>Каркас & Рейки</span>
+          <span>Каркас {materialNames[roofMaterial]}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded-xs bg-blue-600 border border-sky-400" />
