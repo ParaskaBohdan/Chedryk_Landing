@@ -31,6 +31,8 @@ export default function InteractiveSolarSchema({
     flat_concrete: 'Плоский бетон (Баластні трикутні опори 15°)'
   };
 
+  const currentRowsKey = Math.min(rowsCount, 3);
+  const current3DImage = `/images/${roofType}_${currentRowsKey}.png`;
   const textColor = isDark ? 'text-white' : 'text-slate-900';
 
   return (
@@ -66,7 +68,7 @@ export default function InteractiveSolarSchema({
             }`}
           >
             <Image className="w-3.5 h-3.5" />
-            <span>3D Фото-Реальність</span>
+            <span>3D Реальні Фото</span>
           </button>
 
           <button
@@ -79,7 +81,7 @@ export default function InteractiveSolarSchema({
             }`}
           >
             <PenTool className="w-3.5 h-3.5" />
-            <span>2D Креслення / Схема</span>
+            <span>2D Інженерне Креслення</span>
           </button>
         </div>
       </div>
@@ -88,110 +90,86 @@ export default function InteractiveSolarSchema({
       <div className="w-full aspect-[16/10] sm:aspect-[16/9] relative rounded-2xl border border-slate-700/60 overflow-hidden bg-slate-950 flex items-center justify-center shadow-inner">
         
         <AnimatePresence mode="wait">
-          {/* VIEW MODE 1: 3D PHOTOREALISTIC RENDER WITH DYNAMIC PANEL OVERLAYS */}
+          {/* VIEW MODE 1: DEDICATED PHOTOREALISTIC 3D ARCHITECTURAL RENDER PER CONFIGURATION */}
           {viewMode === '3d' ? (
             <motion.div
-              key={`3d-${roofType}`}
-              initial={{ opacity: 0, scale: 0.96 }}
+              key={`3d-${roofType}-${rowsCount}`}
+              initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.04 }}
-              transition={{ duration: 0.35 }}
+              exit={{ opacity: 0, scale: 1.03 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
               className="w-full h-full relative"
             >
-              {/* House Photo Base */}
+              {/* Dedicated 3D Render Image */}
               <img 
-                src={roofType === 'pitched' ? '/images/solar_pitched.png' : '/images/solar_flat.png'}
-                alt={roofType === 'pitched' ? 'Будинок зі скатним дахом' : 'Будинок з плоским дахом'}
+                src={current3DImage}
+                alt={`Будинок ${roofType === 'pitched' ? 'зі скатним дахом' : 'з плоским дахом'}, ${rowsCount} ряди панелей`}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/20 pointer-events-none" />
 
-              {/* DYNAMIC SVG OVERLAY OF SOLAR PANEL ROWS DIRECTLY ON THE 3D ROOF */}
-              <svg viewBox="0 0 800 500" className="absolute inset-0 w-full h-full pointer-events-none z-10">
-                <defs>
-                  <linearGradient id="pvOverlayGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#2563eb" stopOpacity="0.95" />
-                    <stop offset="100%" stopColor="#0284c7" stopOpacity="0.9" />
-                  </linearGradient>
-                </defs>
-
-                {/* Draw Dynamic Rows on Roof depending on Pitched vs Flat */}
-                {roofType === 'pitched' ? (
-                  /* Rows on Pitched Roof Slope */
-                  Array.from({ length: Math.min(rowsCount, 3) }).map((_, rIdx) => {
-                    const py = 210 - rIdx * 35;
-                    const px = 220 + rIdx * 15;
-                    const rowWidth = 260 - rIdx * 25;
-                    const rowPanels = Math.ceil(panelCount / rowsCount);
-
-                    return (
-                      <g key={rIdx}>
-                        {/* Panel Array polygon aligned to roof slope angle */}
-                        <polygon 
-                          points={`${px},${py} ${px + rowWidth},${py + 25} ${px + rowWidth - 30},${py + 5} ${px - 30},${py - 15}`} 
-                          fill="url(#pvOverlayGrad)" 
-                          stroke="#fbbf24" 
-                          strokeWidth="2.5" 
-                        />
-                        {/* Grid lines */}
-                        <line x1={px + rowWidth * 0.33} y1={py + 8} x2={px + rowWidth * 0.33 - 20} y2={py - 8} stroke="#7dd3fc" strokeWidth="1" />
-                        <line x1={px + rowWidth * 0.66} y1={py + 16} x2={px + rowWidth * 0.66 - 20} y2={py} stroke="#7dd3fc" strokeWidth="1" />
-                        
-                        {/* Label Badge */}
-                        <text x={px + rowWidth * 0.4} y={py + 10} fill="#ffffff" fontSize="10" fontWeight="bold" textAnchor="middle">
-                          Ряд {rIdx + 1}: {rowPanels} шт ({brandNames[panelBrand]})
-                        </text>
-                      </g>
-                    );
-                  })
-                ) : (
-                  /* Rows on Flat Roof Racks */
-                  Array.from({ length: Math.min(rowsCount, 3) }).map((_, rIdx) => {
-                    const rx = 240 + rIdx * 110;
-                    const rowPanels = Math.ceil(panelCount / rowsCount);
-
-                    return (
-                      <g key={rIdx}>
-                        {/* Angled Metal Support Bracket */}
-                        <polygon points={`${rx},230 ${rx + 75},230 ${rx + 75},175`} fill="#334155" stroke="#f59e0b" strokeWidth="2" />
-                        {/* Angled Solar Panel Module */}
-                        <polygon 
-                          points={`${rx - 5},235 ${rx + 85},180 ${rx + 75},165 ${rx - 15},220`} 
-                          fill="url(#pvOverlayGrad)" 
-                          stroke="#fbbf24" 
-                          strokeWidth="2.5" 
-                        />
-                        <text x={rx + 35} y="195" fill="#ffffff" fontSize="9" fontWeight="bold" textAnchor="middle">
-                          Ряд {rIdx + 1} ({rowPanels} шт)
-                        </text>
-                      </g>
-                    );
-                  })
-                )}
-              </svg>
-
-              {/* Floating Badge Overlay Cards */}
-              <div className="absolute top-3 left-3 backdrop-blur-md bg-slate-950/85 border border-amber-400/50 p-2.5 rounded-2xl shadow-xl text-white space-y-0.5 max-w-[250px]">
+              {/* Floating Badge Overlay 1: Solar Panels Specs */}
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute top-3 left-3 sm:top-4 sm:left-4 backdrop-blur-md bg-slate-950/85 border border-amber-400/50 p-2.5 sm:p-3 rounded-2xl shadow-xl text-white space-y-1 max-w-[250px] sm:max-w-[290px]"
+              >
                 <div className="flex items-center gap-1.5 text-amber-400 text-xs font-bold">
                   <Sun className="w-3.5 h-3.5" />
                   <span>{panelCount} шт. {brandNames[panelBrand]}</span>
                 </div>
                 <p className="text-[11px] text-slate-300">
-                  Розміщення у <strong className="text-amber-400">{rowsCount} {rowsCount === 1 ? 'ряд' : 'ряди'}</strong> = <strong>{totalKw} кВт</strong>
+                  Розміщення на даху: <strong className="text-amber-400">{rowsCount} {rowsCount === 1 ? 'ряд' : 'ряди'}</strong> = <strong>{totalKw} кВт</strong>
                 </p>
-              </div>
+              </motion.div>
 
-              <div className="absolute bottom-3 right-3 backdrop-blur-md bg-slate-950/90 border border-sky-400/50 p-2.5 rounded-2xl shadow-xl text-white space-y-1 max-w-[240px]">
-                <div className="flex items-center justify-between">
+              {/* Floating Badge Overlay 2: Mounting Frame Hardware */}
+              <motion.div 
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 backdrop-blur-md bg-slate-950/85 border border-slate-700 p-2.5 sm:p-3 rounded-2xl shadow-xl text-white space-y-1 max-w-[240px] sm:max-w-[280px]"
+              >
+                <div className="flex items-center gap-1.5 text-emerald-400 text-xs font-bold">
+                  <Layers className="w-3.5 h-3.5" />
+                  <span>Тип Кріплення</span>
+                </div>
+                <p className="text-[11px] text-slate-300 leading-tight">
+                  {materialNames[roofMaterial]}
+                </p>
+              </motion.div>
+
+              {/* Floating Badge Overlay 3: Inverter & Battery Equipment Box */}
+              <motion.div 
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 backdrop-blur-md bg-slate-950/90 border border-sky-400/50 p-3 sm:p-3.5 rounded-2xl shadow-xl text-white space-y-2 max-w-[220px] sm:max-w-[260px]"
+              >
+                <div className="flex items-center justify-between border-b border-slate-800 pb-1.5">
                   <span className="text-sky-400 text-xs font-bold flex items-center gap-1">
                     <Cpu className="w-3.5 h-3.5" />
-                    <span>Deye {inverterPowerKw} кВт</span>
+                    <span>Deye Inverter</span>
                   </span>
-                  <span className="text-[10px] font-bold text-emerald-400">
-                    {hasBattery ? `АКБ ${batteryCapacityKwh}кВт·г` : 'Мережа'}
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-500/20 text-sky-300">
+                    {inverterPowerKw} кВт
                   </span>
                 </div>
-              </div>
+
+                {hasBattery ? (
+                  <div className="flex items-center justify-between pt-0.5">
+                    <span className="flex items-center gap-1.5 text-emerald-400 text-xs font-semibold">
+                      <BatteryCharging className="w-3.5 h-3.5" />
+                      <span>АКБ LiFePO4</span>
+                    </span>
+                    <span className="text-xs font-bold text-emerald-300">
+                      {batteryCapacityKwh} кВт·год
+                    </span>
+                  </div>
+                ) : (
+                  <p className="text-[11px] text-slate-400 font-medium">
+                    Мережевий режим (Без АКБ)
+                  </p>
+                )}
+              </motion.div>
             </motion.div>
           ) : (
             /* VIEW MODE 2: 2D ARCHITECTURAL BLUEPRINT BLUEPRINT DIAGRAM */
