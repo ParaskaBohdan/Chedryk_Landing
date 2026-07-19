@@ -34,8 +34,8 @@ export default function Solar3DCanvas({
     sceneRef.current = scene;
     scene.background = new THREE.Color(isDark ? 0x090d16 : 0xf8fafc);
 
-    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
-    camera.position.set(13, 8.5, 14);
+    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 1000);
+    camera.position.set(13.5, 9.5, 14.5);
 
     // 2. RENDERER
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -53,15 +53,15 @@ export default function Solar3DCanvas({
     controls.maxPolarAngle = Math.PI / 2 - 0.04;
     controls.minDistance = 6;
     controls.maxDistance = 35;
-    controls.target.set(0, 2.2, 0);
+    controls.target.set(0, 2.3, 0);
     controlsRef.current = controls;
 
-    // 4. LIGHTS & SUNSHINE
-    const ambientLight = new THREE.AmbientLight(0xffffff, isDark ? 0.65 : 0.85);
+    // 4. LIGHTS
+    const ambientLight = new THREE.AmbientLight(0xffffff, isDark ? 0.7 : 0.9);
     scene.add(ambientLight);
 
-    const sunLight = new THREE.DirectionalLight(0xfff5ea, 2.0);
-    sunLight.position.set(16, 26, 14);
+    const sunLight = new THREE.DirectionalLight(0xfff8ee, 2.2);
+    sunLight.position.set(16, 28, 14);
     sunLight.castShadow = true;
     sunLight.shadow.mapSize.width = 2048;
     sunLight.shadow.mapSize.height = 2048;
@@ -70,91 +70,128 @@ export default function Solar3DCanvas({
     sunLight.shadow.bias = -0.0005;
     scene.add(sunLight);
 
-    const skyLight = new THREE.HemisphereLight(0x38bdf8, 0x0f172a, 0.5);
+    const skyLight = new THREE.HemisphereLight(0x38bdf8, 0x0f172a, 0.45);
     scene.add(skyLight);
 
-    // 5. HOUSE MESH GROUP GENERATION
+    // 5. HOUSE MESH GROUP (REPLICATING PINTEREST REFERENCE HOUSE)
     const houseGroup = new THREE.Group();
     houseGroupRef.current = houseGroup;
     scene.add(houseGroup);
 
-    // Base Circular Lawn Ground
-    const lawnGeo = new THREE.CylinderGeometry(13, 13, 0.3, 48);
-    const lawnMat = new THREE.MeshStandardMaterial({
-      color: isDark ? 0x064e3b : 0x4ade80,
-      roughness: 0.85
-    });
+    // Square Isometric Pedestal Base (White rim + Green lawn top)
+    const pedestalBaseGeo = new THREE.BoxGeometry(11.4, 0.35, 11.4);
+    const pedestalBaseMat = new THREE.MeshStandardMaterial({ color: isDark ? 0x1e293b : 0xe2e8f0, roughness: 0.6 });
+    const pedestalBase = new THREE.Mesh(pedestalBaseGeo, pedestalBaseMat);
+    pedestalBase.position.y = -0.18;
+    pedestalBase.receiveShadow = true;
+    houseGroup.add(pedestalBase);
+
+    const lawnGeo = new THREE.BoxGeometry(10.8, 0.05, 10.8);
+    const lawnMat = new THREE.MeshStandardMaterial({ color: isDark ? 0x064e3b : 0x4ade80, roughness: 0.85 });
     const lawn = new THREE.Mesh(lawnGeo, lawnMat);
-    lawn.position.y = -0.15;
+    lawn.position.y = 0.02;
     lawn.receiveShadow = true;
     houseGroup.add(lawn);
 
-    // Wooden Patio Terrace Deck in front of House
-    const patioGeo = new THREE.BoxGeometry(8.0, 0.1, 3.0);
-    const patioMat = new THREE.MeshStandardMaterial({ color: 0x78350f, roughness: 0.4 });
-    const patio = new THREE.Mesh(patioGeo, patioMat);
-    patio.position.set(0, 0.05, 3.8);
-    patio.receiveShadow = true;
-    houseGroup.add(patio);
-
-    // Concrete House Plinth / Base
-    const plinthGeo = new THREE.BoxGeometry(6.8, 0.4, 5.4);
-    const plinthMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.7 });
-    const plinth = new THREE.Mesh(plinthGeo, plinthMat);
-    plinth.position.set(0, 0.2, 0);
-    plinth.castShadow = true;
-    plinth.receiveShadow = true;
-    houseGroup.add(plinth);
-
-    // Main Architectural House Body Walls
-    const wallGeo = new THREE.BoxGeometry(6.6, 3.4, 5.2);
-    const wallMat = new THREE.MeshStandardMaterial({
-      color: isDark ? 0xf1f5f9 : 0xffffff,
-      roughness: 0.25
-    });
-    const walls = new THREE.Mesh(wallGeo, wallMat);
-    walls.position.set(0, 2.1, 0);
-    walls.castShadow = true;
-    walls.receiveShadow = true;
-    houseGroup.add(walls);
-
-    // Warm Wood Accent Wall Panel (Front Facade)
-    const woodAccentGeo = new THREE.BoxGeometry(3.0, 3.4, 0.1);
-    const woodAccentMat = new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.4 });
-    const woodAccent = new THREE.Mesh(woodAccentGeo, woodAccentMat);
-    woodAccent.position.set(-1.6, 2.1, 2.62);
-    houseGroup.add(woodAccent);
-
-    // Modern Glass Windows & Entrance Sliding Door
-    const glassMat = new THREE.MeshStandardMaterial({
-      color: 0x0284c7,
-      roughness: 0.1,
-      metalness: 0.9
-    });
-    const frameMat = new THREE.MeshStandardMaterial({ color: 0x0f172a });
-
-    // Panoramic Living Room Window
-    const panWin = new THREE.Mesh(new THREE.BoxGeometry(2.4, 2.2, 0.1), glassMat);
-    panWin.position.set(-1.6, 1.8, 2.66);
-    const panFrame = new THREE.Mesh(new THREE.BoxGeometry(2.5, 2.3, 0.05), frameMat);
-    panFrame.position.set(-1.6, 1.8, 2.64);
-    houseGroup.add(panWin, panFrame);
-
-    // Upper Floor Windows
-    [1.5, 2.4].forEach((x) => {
-      const win = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.3, 0.1), glassMat);
-      win.position.set(x, 2.4, 2.66);
-      const frame = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.4, 0.05), frameMat);
-      frame.position.set(x, 2.4, 2.64);
-      houseGroup.add(win, frame);
+    // Landscaping Shrubs & Small Trees around the base
+    const treeMat = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.8 });
+    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x78350f });
+    
+    [
+      { x: -4.2, z: 3.8, r: 0.6 },
+      { x: -3.8, z: -3.6, r: 0.5 },
+      { x: 4.2, z: -3.8, r: 0.55 },
+      { x: -1.2, z: 4.2, r: 0.4 },
+      { x: 1.8, z: 4.2, r: 0.45 }
+    ].forEach((t) => {
+      const foliage = new THREE.Mesh(new THREE.DodecahedronGeometry(t.r, 1), treeMat);
+      foliage.position.set(t.x, 0.6 + t.r, t.z);
+      foliage.castShadow = true;
+      
+      const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 0.6), trunkMat);
+      trunk.position.set(t.x, 0.3, t.z);
+      
+      houseGroup.add(foliage, trunk);
     });
 
-    // Entrance Porch Canopy
-    const door = new THREE.Mesh(new THREE.BoxGeometry(1.1, 2.1, 0.1), new THREE.MeshStandardMaterial({ color: 0x1e293b }));
-    door.position.set(0.6, 1.45, 2.66);
-    houseGroup.add(door);
+    // 1st Floor Body (Pure White Walls)
+    const wallMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.25 });
+    const firstFloor = new THREE.Mesh(new THREE.BoxGeometry(5.6, 2.2, 4.8), wallMat);
+    firstFloor.position.set(0, 1.1, 0);
+    firstFloor.castShadow = true;
+    firstFloor.receiveShadow = true;
+    houseGroup.add(firstFloor);
 
-    // 6. BUILD PERFECTLY ALIGNED ROOF & SOLAR PANELS
+    // Side Garage / Porch Extension Body (Right side)
+    const sideExtension = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.8, 4.0), wallMat);
+    sideExtension.position.set(3.4, 0.9, -0.4);
+    sideExtension.castShadow = true;
+    sideExtension.receiveShadow = true;
+    houseGroup.add(sideExtension);
+
+    // Side Extension Sloped Roof
+    const sideRoofGeo = new THREE.BufferGeometry();
+    const sVertices = new Float32Array([
+      2.4, 1.8,  1.6,
+      4.4, 1.8,  1.6,
+      2.4, 2.7, -2.4,
+      2.4, 1.8,  1.6,
+      2.4, 2.7, -2.4,
+      4.4, 1.8, -2.4,
+    ]);
+    sideRoofGeo.setAttribute('position', new THREE.BufferAttribute(sVertices, 3));
+    sideRoofGeo.computeVertexNormals();
+    const darkRoofMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.3 });
+    const sideRoof = new THREE.Mesh(sideRoofGeo, darkRoofMat);
+    sideRoof.castShadow = true;
+    houseGroup.add(sideRoof);
+
+    // 2nd Floor Body (White Walls)
+    const secondFloor = new THREE.Mesh(new THREE.BoxGeometry(5.6, 2.0, 4.2), wallMat);
+    secondFloor.position.set(0, 3.2, -0.3);
+    secondFloor.castShadow = true;
+    secondFloor.receiveShadow = true;
+    houseGroup.add(secondFloor);
+
+    // Second Floor Front Balcony Deck & Metal Railing
+    const balconyDeck = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.12, 1.2), new THREE.MeshStandardMaterial({ color: 0x334155 }));
+    balconyDeck.position.set(-0.7, 2.2, 2.1);
+    balconyDeck.castShadow = true;
+    houseGroup.add(balconyDeck);
+
+    // Railing Frame
+    const railLineMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.8 });
+    const topRail = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.05, 0.05), railLineMat);
+    topRail.position.set(-0.7, 2.8, 2.68);
+    houseGroup.add(topRail);
+
+    [-2.7, -0.7, 1.3].forEach((rx) => {
+      const post = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.6, 0.04), railLineMat);
+      post.position.set(rx, 2.5, 2.68);
+      houseGroup.add(post);
+    });
+
+    // Dark Panoramic Glass Windows
+    const glassMat = new THREE.MeshStandardMaterial({ color: 0x0369a1, roughness: 0.1, metalness: 0.9 });
+    const frameMat = new THREE.MeshStandardMaterial({ color: 0x1e293b });
+
+    // 1st Floor Sliding Glass Doors
+    [-1.2, 1.0].forEach((wx) => {
+      const gWin = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.6, 0.08), glassMat);
+      gWin.position.set(wx, 1.0, 2.42);
+      const gFrame = new THREE.Mesh(new THREE.BoxGeometry(1.7, 1.7, 0.04), frameMat);
+      gFrame.position.set(wx, 1.0, 2.4);
+      houseGroup.add(gWin, gFrame);
+    });
+
+    // 2nd Floor Balcony Glass Doors
+    const bWin = new THREE.Mesh(new THREE.BoxGeometry(1.4, 1.4, 0.08), glassMat);
+    bWin.position.set(-0.7, 3.0, 1.82);
+    const bFrame = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.5, 0.04), frameMat);
+    bFrame.position.set(-0.7, 3.0, 1.8);
+    houseGroup.add(bWin, bFrame);
+
+    // 6. BUILD PERFECTLY MATCHED PITCHED / FLAT ROOF WITH SOLAR PANELS
     buildRoofAndPanels(houseGroup, roofType, rowsCount, panelBrand, hasBattery, batteryCapacityKwh, isDark);
 
     // 7. ANIMATION LOOP
@@ -194,8 +231,8 @@ export default function Solar3DCanvas({
   // Reset Camera View
   const handleResetCamera = () => {
     if (controlsRef.current) {
-      controlsRef.current.target.set(0, 2.2, 0);
-      controlsRef.current.object.position.set(13, 8.5, 14);
+      controlsRef.current.target.set(0, 2.3, 0);
+      controlsRef.current.object.position.set(13.5, 9.5, 14.5);
       controlsRef.current.update();
     }
   };
@@ -239,115 +276,79 @@ export default function Solar3DCanvas({
   );
 }
 
-// Helper: Perfectly Centered & Aligned Roof & Solar Panels 3D Generator
+// Helper: Procedural Roof & Solar Panel Builder
 function buildRoofAndPanels(parentGroup, roofType, rowsCount, panelBrand, hasBattery, batteryCapacityKwh, isDark) {
-  const panelMat = new THREE.MeshStandardMaterial({
-    color: 0x0a2540,
-    roughness: 0.1,
-    metalness: 0.9
-  });
-
-  const panelFrameMat = new THREE.MeshStandardMaterial({
-    color: 0xcbd5e1,
-    metalness: 0.95,
-    roughness: 0.15
-  });
-
-  const railMat = new THREE.MeshStandardMaterial({
-    color: 0xf59e0b,
-    metalness: 0.85,
-    roughness: 0.2
-  });
+  const panelMat = new THREE.MeshStandardMaterial({ color: 0x0f2b5c, roughness: 0.12, metalness: 0.88 });
+  const panelFrameMat = new THREE.MeshStandardMaterial({ color: 0xcbd5e1, metalness: 0.95, roughness: 0.15 });
+  const railMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.85, roughness: 0.2 });
+  const darkRoofMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.35 });
 
   if (roofType === 'pitched') {
-    // 1. PERFECTLY SYMMETRIC PITCHED GABLE ROOF GEOMETRY
-    // Base dimensions: Width X = 7.2 (overhang 0.3 left/right), Depth Z = 5.8 (overhang 0.3 front/back), Height Y = 2.0 (apex at Y=5.8)
+    // SYMMETRIC DARK SEAM PITCHED ROOF ON 2ND FLOOR
     const roofGeo = new THREE.BufferGeometry();
-    const halfW = 3.6;
-    const halfD = 2.9;
-    const yBase = 3.8;
-    const yApex = 5.7;
+    const halfW = 3.2;
+    const frontZ = 2.0;
+    const backZ = -2.6;
+    const yBase = 4.2;
+    const yApex = 5.9;
 
-    // Centered vertices for symmetric pitched gable roof
     const vertices = new Float32Array([
-      // Front Roof Slope (Facing Z = +2.9)
-      -halfW, yBase,  halfD, // 0: Front-Left
-       halfW, yBase,  halfD, // 1: Front-Right
-       halfW, yApex,  0.0,   // 2: Apex-Right
-      -halfW, yBase,  halfD, // 0
-       halfW, yApex,  0.0,   // 2
-      -halfW, yApex,  0.0,   // 3: Apex-Left
+      // Front Slope
+      -halfW, yBase,  frontZ,
+       halfW, yBase,  frontZ,
+       halfW, yApex, -0.3,
+      -halfW, yBase,  frontZ,
+       halfW, yApex, -0.3,
+      -halfW, yApex, -0.3,
 
-      // Back Roof Slope (Facing Z = -2.9)
-      -halfW, yBase, -halfD, // 4: Back-Left
-      -halfW, yApex,  0.0,   // 3: Apex-Left
-       halfW, yApex,  0.0,   // 2: Apex-Right
-      -halfW, yBase, -halfD, // 4
-       halfW, yApex,  0.0,   // 2
-       halfW, yBase, -halfD, // 5: Back-Right
-
-      // Left Gable Triangle
-      -halfW, yBase,  halfD,
-      -halfW, yApex,  0.0,
-      -halfW, yBase, -halfD,
-
-      // Right Gable Triangle
-       halfW, yBase,  halfD,
-       halfW, yBase, -halfD,
-       halfW, yApex,  0.0,
+      // Back Slope
+      -halfW, yBase,  backZ,
+      -halfW, yApex, -0.3,
+       halfW, yApex, -0.3,
+      -halfW, yBase,  backZ,
+       halfW, yApex, -0.3,
+       halfW, yBase,  backZ,
     ]);
 
     roofGeo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     roofGeo.computeVertexNormals();
 
-    const roofMat = new THREE.MeshStandardMaterial({
-      color: isDark ? 0x1e293b : 0x334155,
-      roughness: 0.45
-    });
-
-    const roof = new THREE.Mesh(roofGeo, roofMat);
+    const roof = new THREE.Mesh(roofGeo, darkRoofMat);
     roof.castShadow = true;
     roof.receiveShadow = true;
     parentGroup.add(roof);
 
-    // Dark Eaves Trim Bar along Apex Ridge
-    const ridgeTrim = new THREE.Mesh(new THREE.BoxGeometry(7.24, 0.1, 0.1), new THREE.MeshStandardMaterial({ color: 0x0f172a }));
-    ridgeTrim.position.set(0, yApex + 0.05, 0);
-    parentGroup.add(ridgeTrim);
-
-    // 2. MOUNTING RAILS & SOLAR PANELS ON FRONT SLOPE
-    // Front Slope Angle = Math.atan2(1.9, 2.9) = ~33.2 deg
-    const slopeAngle = Math.atan2(1.9, 2.9);
+    // Front Roof Slope Angle = Math.atan2(1.7, 2.3) = ~36 deg
+    const slopeAngle = Math.atan2(1.7, 2.3);
     const activeRows = Math.min(rowsCount, 3);
 
     for (let r = 0; r < activeRows; r++) {
-      // Position along Z-slope from eaves to ridge
-      const slopeDist = 0.6 + r * 0.95; // distance up slope
+      const slopeDist = 0.5 + r * 0.9;
       const py = yBase + Math.sin(slopeAngle) * slopeDist + 0.08;
-      const pz = halfD - Math.cos(slopeAngle) * slopeDist;
+      const pz = frontZ - Math.cos(slopeAngle) * slopeDist;
 
       // Rails
-      const rail1 = new THREE.Mesh(new THREE.BoxGeometry(6.0, 0.06, 0.06), railMat);
+      const rail1 = new THREE.Mesh(new THREE.BoxGeometry(5.4, 0.06, 0.06), railMat);
       rail1.rotation.x = slopeAngle;
       rail1.position.set(0, py - 0.03, pz + 0.05);
 
-      const rail2 = new THREE.Mesh(new THREE.BoxGeometry(6.0, 0.06, 0.06), railMat);
+      const rail2 = new THREE.Mesh(new THREE.BoxGeometry(5.4, 0.06, 0.06), railMat);
       rail2.rotation.x = slopeAngle;
       rail2.position.set(0, py + 0.15, pz - 0.2);
 
       parentGroup.add(rail1, rail2);
 
       // Solar Panels
-      const panelCols = 6;
+      const panelCols = 5;
       for (let c = 0; c < panelCols; c++) {
-        const px = -2.5 + c * 1.0;
+        const px = -2.0 + c * 1.0;
 
-        const panelBox = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.04, 0.85), panelMat);
+        const panelBox = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.04, 0.8), panelMat);
         panelBox.rotation.x = slopeAngle;
         panelBox.position.set(px, py + 0.06, pz);
         panelBox.castShadow = true;
 
-        const borderBox = new THREE.Mesh(new THREE.BoxGeometry(0.94, 0.03, 0.89), panelFrameMat);
+        const borderBox = new THREE.Mesh(new THREE.BoxGeometry(0.94, 0.03, 0.84), panelFrameMat);
         borderBox.rotation.x = slopeAngle;
         borderBox.position.set(px, py + 0.04, pz);
 
@@ -356,82 +357,66 @@ function buildRoofAndPanels(parentGroup, roofType, rowsCount, panelBrand, hasBat
     }
 
   } else {
-    // 1. FLAT ROOF DECK WITH PARAPET BORDER
+    // FLAT ROOF DECK WITH PARAPET BORDER
     const flatRoofDeck = new THREE.Mesh(
-      new THREE.BoxGeometry(6.8, 0.3, 5.4),
+      new THREE.BoxGeometry(6.0, 0.3, 4.8),
       new THREE.MeshStandardMaterial({ color: isDark ? 0x1e293b : 0x64748b, roughness: 0.6 })
     );
-    flatRoofDeck.position.set(0, 3.95, 0);
+    flatRoofDeck.position.set(0, 4.35, -0.3);
     flatRoofDeck.castShadow = true;
     flatRoofDeck.receiveShadow = true;
     parentGroup.add(flatRoofDeck);
 
-    // Parapet Rim Border
-    const parapetMat = new THREE.MeshStandardMaterial({ color: 0x334155 });
-    const pFront = new THREE.Mesh(new THREE.BoxGeometry(6.8, 0.3, 0.2), parapetMat);
-    pFront.position.set(0, 4.25, 2.6);
-    const pBack = new THREE.Mesh(new THREE.BoxGeometry(6.8, 0.3, 0.2), parapetMat);
-    pBack.position.set(0, 4.25, -2.6);
-    const pLeft = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.3, 5.4), parapetMat);
-    pLeft.position.set(-3.3, 4.25, 0);
-    const pRight = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.3, 5.4), parapetMat);
-    pRight.position.set(3.3, 4.25, 0);
-
-    parentGroup.add(pFront, pBack, pLeft, pRight);
-
-    // 2. ANGLED BALLAST FRAME RACKS FOR FLAT ROOF (Tilted 15 deg)
     const activeRows = Math.min(rowsCount, 3);
     const tiltAngle = Math.PI / 12; // 15 deg
 
     for (let r = 0; r < activeRows; r++) {
-      const rackZ = 1.4 - r * 1.4;
+      const rackZ = 1.0 - r * 1.2;
       const panelCols = 5;
 
       for (let c = 0; c < panelCols; c++) {
         const px = -2.0 + c * 1.0;
         
-        // Aluminum Support Bracket
         const standMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.8, roughness: 0.2 });
         const stand = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.35, 0.7), standMat);
-        stand.position.set(px, 4.25, rackZ);
+        stand.position.set(px, 4.65, rackZ);
         parentGroup.add(stand);
 
-        // Angled Solar Panel
-        const panelBox = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.04, 1.1), panelMat);
+        const panelBox = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.04, 1.0), panelMat);
         panelBox.rotation.x = -tiltAngle;
-        panelBox.position.set(px, 4.45, rackZ);
+        panelBox.position.set(px, 4.85, rackZ);
         panelBox.castShadow = true;
 
-        const borderBox = new THREE.Mesh(new THREE.BoxGeometry(0.94, 0.03, 1.14), panelFrameMat);
+        const borderBox = new THREE.Mesh(new THREE.BoxGeometry(0.94, 0.03, 1.04), panelFrameMat);
         borderBox.rotation.x = -tiltAngle;
-        borderBox.position.set(px, 4.43, rackZ);
+        borderBox.position.set(px, 4.83, rackZ);
 
         parentGroup.add(panelBox, borderBox);
       }
     }
   }
 
-  // 4. WALL-MOUNTED DEYE INVERTER & LIFEPO4 BATTERY STAND (Right Wall)
+  // WALL-MOUNTED DEYE INVERTER & LIFEPO4 BATTERY STAND
   const inverterGeo = new THREE.BoxGeometry(0.3, 1.1, 0.75);
   const inverterMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.9, roughness: 0.2 });
   const inverter = new THREE.Mesh(inverterGeo, inverterMat);
-  inverter.position.set(3.45, 2.5, 0.5);
+  inverter.position.set(2.95, 1.8, 0.5);
   inverter.castShadow = true;
 
   const ledLight = new THREE.Mesh(new THREE.SphereGeometry(0.04, 16, 16), new THREE.MeshBasicMaterial({ color: 0x10b981 }));
-  ledLight.position.set(3.62, 2.8, 0.7);
+  ledLight.position.set(3.12, 2.1, 0.7);
 
   parentGroup.add(inverter, ledLight);
 
   if (hasBattery) {
-    const batGeo = new THREE.BoxGeometry(0.45, 1.4, 0.85);
+    const batGeo = new THREE.BoxGeometry(0.45, 1.3, 0.85);
     const batMat = new THREE.MeshStandardMaterial({ color: 0x022c22, metalness: 0.8 });
     const battery = new THREE.Mesh(batGeo, batMat);
-    battery.position.set(3.52, 0.7, 0.5);
+    battery.position.set(3.02, 0.65, 0.5);
     battery.castShadow = true;
 
     const batLed = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.08, 0.3), new THREE.MeshBasicMaterial({ color: 0xa7f3d0 }));
-    batLed.position.set(3.76, 1.1, 0.5);
+    batLed.position.set(3.26, 1.0, 0.5);
 
     parentGroup.add(battery, batLed);
   }
