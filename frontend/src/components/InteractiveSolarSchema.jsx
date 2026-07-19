@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, Cpu, BatteryCharging, CheckCircle2, Layers, Image, PenTool } from 'lucide-react';
+import { Sun, Cpu, BatteryCharging, CheckCircle2, Layers, Image, PenTool, Box } from 'lucide-react';
+import Solar3DCanvas from './Solar3DCanvas';
 
 export default function InteractiveSolarSchema({
   roofType = 'pitched', // 'pitched' | 'flat'
@@ -15,7 +16,7 @@ export default function InteractiveSolarSchema({
   theme = 'dark'
 }) {
   const isDark = theme === 'dark';
-  const [viewMode, setViewMode] = useState('3d'); // '3d' | '2d'
+  const [viewMode, setViewMode] = useState('interactive_3d'); // 'interactive_3d' | '3d' | '2d'
 
   const brandNames = {
     risen: 'Risen 550W',
@@ -40,7 +41,7 @@ export default function InteractiveSolarSchema({
       isDark ? 'border-slate-700/80 bg-slate-800/90' : 'border-amber-200 bg-white shadow-amber-500/10'
     }`}>
       
-      {/* Header Info Bar with 2D / 3D Mode Switcher */}
+      {/* Header Info Bar with 3-Way Mode Switcher */}
       <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-700/60">
         <div>
           <div className="flex items-center gap-2">
@@ -56,8 +57,21 @@ export default function InteractiveSolarSchema({
           </p>
         </div>
 
-        {/* 2D / 3D View Switcher Buttons */}
-        <div className="flex items-center gap-1.5 p-1 rounded-xl border border-slate-700 bg-slate-900">
+        {/* 3-Way View Switcher Bar */}
+        <div className="flex flex-wrap items-center gap-1 p-1 rounded-xl border border-slate-700 bg-slate-900">
+          <button
+            type="button"
+            onClick={() => setViewMode('interactive_3d')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              viewMode === 'interactive_3d'
+                ? 'btn-orange-bright text-slate-950 shadow-md'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <Box className="w-3.5 h-3.5 text-amber-400" />
+            <span>🎮 3D Інтерактив (360°)</span>
+          </button>
+
           <button
             type="button"
             onClick={() => setViewMode('3d')}
@@ -68,7 +82,7 @@ export default function InteractiveSolarSchema({
             }`}
           >
             <Image className="w-3.5 h-3.5" />
-            <span>3D Реальні Фото</span>
+            <span>📸 3D Рендер</span>
           </button>
 
           <button
@@ -81,7 +95,7 @@ export default function InteractiveSolarSchema({
             }`}
           >
             <PenTool className="w-3.5 h-3.5" />
-            <span>2D Інженерне Креслення</span>
+            <span>📐 2D Схема</span>
           </button>
         </div>
       </div>
@@ -90,8 +104,31 @@ export default function InteractiveSolarSchema({
       <div className="w-full aspect-[16/10] sm:aspect-[16/9] relative rounded-2xl border border-slate-700/60 overflow-hidden bg-slate-950 flex items-center justify-center shadow-inner">
         
         <AnimatePresence mode="wait">
-          {/* VIEW MODE 1: DEDICATED PHOTOREALISTIC 3D ARCHITECTURAL RENDER PER CONFIGURATION */}
-          {viewMode === '3d' ? (
+          {/* VIEW MODE 1: THREE.JS REAL-TIME 3D WEBGL INTERACTIVE CANVAS */}
+          {viewMode === 'interactive_3d' ? (
+            <motion.div
+              key="three-3d-canvas"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="w-full h-full relative"
+            >
+              <Solar3DCanvas
+                roofType={roofType}
+                roofMaterial={roofMaterial}
+                rowsCount={rowsCount}
+                panelBrand={panelBrand}
+                panelCount={panelCount}
+                totalKw={totalKw}
+                inverterPowerKw={inverterPowerKw}
+                hasBattery={hasBattery}
+                batteryCapacityKwh={batteryCapacityKwh}
+                theme={theme}
+              />
+            </motion.div>
+          ) : viewMode === '3d' ? (
+            /* VIEW MODE 2: PHOTOREALISTIC STATIC 3D ARCHITECTURAL RENDERS */
             <motion.div
               key={`3d-${roofType}-${rowsCount}`}
               initial={{ opacity: 0, scale: 0.97 }}
@@ -100,7 +137,6 @@ export default function InteractiveSolarSchema({
               transition={{ duration: 0.35, ease: 'easeOut' }}
               className="w-full h-full relative"
             >
-              {/* Dedicated 3D Render Image */}
               <img 
                 src={current3DImage}
                 alt={`Будинок ${roofType === 'pitched' ? 'зі скатним дахом' : 'з плоским дахом'}, ${rowsCount} ряди панелей`}
@@ -108,71 +144,32 @@ export default function InteractiveSolarSchema({
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/20 pointer-events-none" />
 
-              {/* Floating Badge Overlay 1: Solar Panels Specs */}
-              <motion.div 
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="absolute top-3 left-3 sm:top-4 sm:left-4 backdrop-blur-md bg-slate-950/85 border border-amber-400/50 p-2.5 sm:p-3 rounded-2xl shadow-xl text-white space-y-1 max-w-[250px] sm:max-w-[290px]"
-              >
+              {/* Floating Badge Overlay 1 */}
+              <div className="absolute top-3 left-3 sm:top-4 sm:left-4 backdrop-blur-md bg-slate-950/85 border border-amber-400/50 p-2.5 sm:p-3 rounded-2xl shadow-xl text-white space-y-1 max-w-[250px] sm:max-w-[290px]">
                 <div className="flex items-center gap-1.5 text-amber-400 text-xs font-bold">
                   <Sun className="w-3.5 h-3.5" />
                   <span>{panelCount} шт. {brandNames[panelBrand]}</span>
                 </div>
                 <p className="text-[11px] text-slate-300">
-                  Розміщення на даху: <strong className="text-amber-400">{rowsCount} {rowsCount === 1 ? 'ряд' : 'ряди'}</strong> = <strong>{totalKw} кВт</strong>
+                  Розміщення: <strong className="text-amber-400">{rowsCount} {rowsCount === 1 ? 'ряд' : 'ряди'}</strong> = <strong>{totalKw} кВт</strong>
                 </p>
-              </motion.div>
+              </div>
 
-              {/* Floating Badge Overlay 2: Mounting Frame Hardware */}
-              <motion.div 
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 backdrop-blur-md bg-slate-950/85 border border-slate-700 p-2.5 sm:p-3 rounded-2xl shadow-xl text-white space-y-1 max-w-[240px] sm:max-w-[280px]"
-              >
-                <div className="flex items-center gap-1.5 text-emerald-400 text-xs font-bold">
-                  <Layers className="w-3.5 h-3.5" />
-                  <span>Тип Кріплення</span>
-                </div>
-                <p className="text-[11px] text-slate-300 leading-tight">
-                  {materialNames[roofMaterial]}
-                </p>
-              </motion.div>
-
-              {/* Floating Badge Overlay 3: Inverter & Battery Equipment Box */}
-              <motion.div 
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 backdrop-blur-md bg-slate-950/90 border border-sky-400/50 p-3 sm:p-3.5 rounded-2xl shadow-xl text-white space-y-2 max-w-[220px] sm:max-w-[260px]"
-              >
+              {/* Floating Badge Overlay 2 */}
+              <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 backdrop-blur-md bg-slate-950/90 border border-sky-400/50 p-3 rounded-2xl shadow-xl text-white space-y-2 max-w-[220px]">
                 <div className="flex items-center justify-between border-b border-slate-800 pb-1.5">
                   <span className="text-sky-400 text-xs font-bold flex items-center gap-1">
                     <Cpu className="w-3.5 h-3.5" />
-                    <span>Deye Inverter</span>
+                    <span>Deye {inverterPowerKw} кВт</span>
                   </span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-500/20 text-sky-300">
-                    {inverterPowerKw} кВт
+                  <span className="text-[10px] font-bold text-emerald-400">
+                    {hasBattery ? `АКБ ${batteryCapacityKwh}кВт·г` : 'Мережа'}
                   </span>
                 </div>
-
-                {hasBattery ? (
-                  <div className="flex items-center justify-between pt-0.5">
-                    <span className="flex items-center gap-1.5 text-emerald-400 text-xs font-semibold">
-                      <BatteryCharging className="w-3.5 h-3.5" />
-                      <span>АКБ LiFePO4</span>
-                    </span>
-                    <span className="text-xs font-bold text-emerald-300">
-                      {batteryCapacityKwh} кВт·год
-                    </span>
-                  </div>
-                ) : (
-                  <p className="text-[11px] text-slate-400 font-medium">
-                    Мережевий режим (Без АКБ)
-                  </p>
-                )}
-              </motion.div>
+              </div>
             </motion.div>
           ) : (
-            /* VIEW MODE 2: 2D ARCHITECTURAL BLUEPRINT BLUEPRINT DIAGRAM */
+            /* VIEW MODE 3: 2D ARCHITECTURAL BLUEPRINT SCHEMATIC DIAGRAM */
             <motion.div
               key="2d-blueprint"
               initial={{ opacity: 0, scale: 0.96 }}
@@ -194,19 +191,16 @@ export default function InteractiveSolarSchema({
 
                 <rect width="100%" height="100%" fill="url(#bpGrid)" />
 
-                {/* 2D ARCHITECTURAL ROOF PROFILE */}
                 {roofType === 'pitched' ? (
                   <g>
                     <polygon points="120,280 520,280 520,420 120,420" fill="#0f172a" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
                     <text x="320" y="360" fill="#64748b" fontSize="13" textAnchor="middle" fontFamily="monospace">АРХІТЕКТУРНИЙ ПРОФІЛЬ САКТНОГО ДАХУ (~30°)</text>
                     <polygon points="100,280 320,130 540,280" fill="#1e293b" stroke="#f59e0b" strokeWidth="3" />
 
-                    {/* Rails */}
                     <line x1="160" y1="240" x2="480" y2="240" stroke="#fbbf24" strokeWidth="4" />
                     <line x1="180" y1="200" x2="460" y2="200" stroke="#fbbf24" strokeWidth="4" />
                     {rowsCount >= 3 && <line x1="200" y1="160" x2="440" y2="160" stroke="#fbbf24" strokeWidth="4" />}
 
-                    {/* Panels */}
                     {Array.from({ length: Math.min(rowsCount, 3) }).map((_, rIdx) => {
                       const py = 220 - rIdx * 35;
                       const px = 170 + rIdx * 15;
@@ -245,7 +239,6 @@ export default function InteractiveSolarSchema({
                   </g>
                 )}
 
-                {/* DC Cable & Inverter / Battery */}
                 <path d="M 450,220 L 580,220 L 580,310 L 640,310" fill="none" stroke="#f59e0b" strokeWidth="3" strokeDasharray="5 3" />
                 <rect x="640" y="270" width="120" height="70" rx="10" fill="#1e293b" stroke="#38bdf8" strokeWidth="2.5" />
                 <text x="700" y="310" fill="#38bdf8" fontSize="12" fontWeight="bold" textAnchor="middle">Deye {inverterPowerKw} кВт</text>
