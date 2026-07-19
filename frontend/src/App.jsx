@@ -5,6 +5,7 @@ import Services from './components/Services';
 import StatsSection from './components/StatsSection';
 import DeyeAndLegal from './components/DeyeAndLegal';
 import StepProcess from './components/StepProcess';
+import Testimonials from './components/Testimonials';
 import ConsultationForm from './components/ConsultationForm';
 import CalculatorModal from './components/CalculatorModal';
 import ContactsPage from './pages/ContactsPage';
@@ -79,6 +80,7 @@ export default function App() {
             <StatsSection theme={theme} />
             <DeyeAndLegal onOpenConsultation={() => handleOpenConsultation()} theme={theme} />
             <StepProcess onOpenConsultation={() => handleOpenConsultation()} theme={theme} />
+            <Testimonials theme={theme} />
             
             {/* Consultation Section on Home Page */}
             <section id="consultation" className="py-16 sm:py-20 transition-colors duration-300 border-t theme-bg-section theme-border-subtle">
