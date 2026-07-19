@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calculator, Sun, DollarSign, Zap, ArrowRight, ShieldCheck, CheckCircle2, Home, Layers, Cpu, BatteryCharging } from 'lucide-react';
 import InteractiveSolarSchema from '../components/InteractiveSolarSchema';
 import ConsultationForm from '../components/ConsultationForm';
 
 export default function CalculatorPage({ theme, onOpenConsultation }) {
   const isDark = theme === 'dark';
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, []);
 
   // Configurator State - "Установка панелей на дах"
   const [step, setStep] = useState(1);
@@ -61,7 +65,9 @@ export default function CalculatorPage({ theme, onOpenConsultation }) {
         
         {/* Page Title */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-400/40 bg-amber-500/15 text-amber-500 text-xs sm:text-sm font-semibold">
+          <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full border ${
+            isDark ? 'border-amber-400/40 bg-amber-500/15 text-amber-300' : 'border-amber-300 bg-amber-100 text-amber-800'
+          }`}>
             <Calculator className="w-4 h-4 text-amber-500" />
             <span>Інтерактивний Конфігуратор Панелей на Дах</span>
           </div>

@@ -104,7 +104,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
             target="_blank" 
             rel="noreferrer"
             title="Переглянути TikTok Чедрика Івана"
-            className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all ${
+            className={`hidden sm:flex items-center gap-1.5 h-[34px] px-3 rounded-xl border text-xs font-semibold transition-all flex-shrink-0 ${
               isDark ? 'bg-slate-900 border-slate-800 text-slate-300 hover:text-amber-400 hover:border-amber-400/40' : 'bg-slate-200/70 border-slate-300 text-slate-700 hover:text-amber-600'
             }`}
           >

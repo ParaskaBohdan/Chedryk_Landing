@@ -7,12 +7,14 @@ export default function CustomSelect({
   options = [], 
   icon: Icon, 
   placeholder = 'Оберіть значення',
-  className = '' 
+  className = '',
+  theme = 'dark'
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
-
   const [openUpward, setOpenUpward] = useState(false);
+
+  const isDark = theme === 'dark';
 
   // Close dropdown on click outside or ESC key & check vertical position
   useEffect(() => {
@@ -66,19 +68,23 @@ export default function CustomSelect({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full min-h-[48px] border rounded-xl pl-10 pr-10 py-3 text-xs sm:text-sm font-medium flex items-center justify-between text-left transition-all duration-200 cursor-pointer select-none theme-bg-input theme-border-subtle theme-text-primary ${
-          isOpen ? 'theme-border-focus ring-2 ring-amber-500/20 shadow-md' : 'hover:theme-border-card'
+        className={`w-full min-h-[44px] sm:min-h-[48px] border rounded-xl pl-10 pr-10 py-2.5 sm:py-3 text-xs sm:text-sm font-medium flex items-center justify-between text-left transition-all duration-200 cursor-pointer select-none ${
+          isDark 
+            ? 'border-slate-700 bg-slate-900/90 text-white hover:border-slate-600' 
+            : 'border-amber-200 bg-amber-50/50 text-slate-900 hover:border-amber-300'
+        } ${
+          isOpen ? 'border-amber-500 ring-2 ring-amber-500/20 shadow-md' : ''
         }`}
       >
         {Icon && (
-          <Icon className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 theme-icon-accent pointer-events-none" />
+          <Icon className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-amber-500 pointer-events-none" />
         )}
         
         <span className="truncate pr-2">{selectedLabel}</span>
 
         <ChevronDown 
-          className={`w-4 h-4 absolute right-3.5 top-1/2 -translate-y-1/2 theme-icon-muted transition-transform duration-200 pointer-events-none ${
-            isOpen ? 'rotate-180 theme-icon-accent' : ''
+          className={`w-4 h-4 absolute right-3.5 top-1/2 -translate-y-1/2 transition-transform duration-200 pointer-events-none ${
+            isOpen ? 'rotate-180 text-amber-500' : 'text-slate-400'
           }`} 
         />
       </button>
@@ -86,7 +92,11 @@ export default function CustomSelect({
       {/* Floating Options Menu */}
       {isOpen && (
         <div 
-          className={`absolute left-0 right-0 z-50 rounded-2xl border shadow-2xl p-1.5 space-y-1 max-h-48 overflow-y-auto animate-in fade-in duration-150 theme-bg-modal theme-border-card backdrop-blur-xl ${
+          className={`absolute left-0 right-0 z-50 rounded-2xl border shadow-2xl p-1.5 space-y-1 max-h-48 overflow-y-auto animate-in fade-in duration-150 backdrop-blur-xl ${
+            isDark 
+              ? 'bg-slate-900/98 border-slate-700 text-white shadow-slate-950/80' 
+              : 'bg-white/98 border-amber-200 text-slate-900 shadow-xl'
+          } ${
             openUpward ? 'bottom-[calc(100%+6px)]' : 'top-[calc(100%+6px)]'
           }`}
         >
@@ -101,13 +111,17 @@ export default function CustomSelect({
                 onClick={() => handleSelect(optValue)}
                 className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium cursor-pointer transition-all duration-150 ${
                   isSelected
-                    ? 'theme-badge font-bold shadow-xs'
-                    : 'theme-text-primary hover:theme-bg-input/80 hover:translate-x-0.5'
+                    ? isDark 
+                      ? 'bg-amber-500/20 text-amber-300 font-bold border border-amber-500/40 shadow-xs' 
+                      : 'bg-amber-100 text-amber-900 font-bold border border-amber-300 shadow-xs'
+                    : isDark 
+                      ? 'text-slate-200 hover:bg-slate-800 hover:translate-x-0.5' 
+                      : 'text-slate-700 hover:bg-amber-50 hover:translate-x-0.5'
                 }`}
               >
                 <span className="truncate pr-2">{optLabel}</span>
                 {isSelected && (
-                  <Check className="w-4 h-4 flex-shrink-0 theme-icon-accent" />
+                  <Check className="w-4 h-4 flex-shrink-0 text-amber-500" />
                 )}
               </div>
             );

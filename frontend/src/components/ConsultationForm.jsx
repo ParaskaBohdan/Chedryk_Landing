@@ -1,13 +1,33 @@
-import React, { useState } from 'react';
-import { Send, CheckCircle2, AlertCircle, Loader2, Phone, User, MessageSquare, Wrench } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Send, CheckCircle2, AlertCircle, Loader2, Phone, User, MessageSquare, Wrench, Calendar, Clock } from 'lucide-react';
+import CustomSelect from './CustomSelect';
 
 export default function ConsultationForm({ selectedServicePrefill, onCloseModal, theme }) {
   const isDark = theme === 'dark';
 
+  const todayStr = new Date().toISOString().split('T')[0];
+  const dateInputRef = useRef(null);
+
+  const handleDateContainerClick = () => {
+    if (dateInputRef.current) {
+      if ('showPicker' in HTMLInputElement.prototype) {
+        try {
+          dateInputRef.current.showPicker();
+        } catch {
+          dateInputRef.current.focus();
+        }
+      } else {
+        dateInputRef.current.focus();
+      }
+    }
+  };
+
   const [formData, setFormData] = useState({
     name: '',
-    phone: '',
+    phone: '+380 (',
     service: selectedServicePrefill || 'Побудова сонячних станцій (5 кВт – 1 МВт)',
+    preferred_date: todayStr,
+    preferred_time: 'Якомога швидше',
     comment: ''
   });
 
@@ -24,10 +44,135 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
     'Інше (Загальне запитання)'
   ];
 
+  const timeOptions = [
+    'Якомога швидше',
+    '09:00 - 12:00',
+    '12:00 - 15:00',
+    '15:00 - 18:00',
+    'Після 18:00'
+  ];
+
+  const [phoneDigits, setPhoneDigits] = useState('');
+  const phoneInputRef = useRef(null);
+
+  const formatPhoneMask = (digits) => {
+    const d = digits.slice(0, 9);
+    let result = '+380 (';
+    
+    if (d.length > 0) {
+      result += d.slice(0, 2);
+    }
+    if (d.length >= 2) {
+      result += ') ';
+    }
+    if (d.length > 2) {
+      result += d.slice(2, 5);
+    }
+    if (d.length >= 5) {
+      result += '-';
+    }
+    if (d.length > 5) {
+      result += d.slice(5, 7);
+    }
+    if (d.length >= 7) {
+      result += '-';
+    }
+    if (d.length > 7) {
+      result += d.slice(7, 9);
+    }
+    
+    return result;
+  };
+
+  const getCursorPos = (digitsLen) => {
+    if (digitsLen === 0) return 6; // right after +380 (
+    if (digitsLen <= 2) return 6 + digitsLen; // inside (XX
+    if (digitsLen <= 5) return 6 + digitsLen + 2; // after ) XXX
+    if (digitsLen <= 7) return 6 + digitsLen + 3; // after - XX
+    return 6 + digitsLen + 4; // after - XX
+  };
+
+  const setCursorPosition = (digitsLen) => {
+    setTimeout(() => {
+      if (phoneInputRef.current) {
+        const pos = getCursorPos(digitsLen);
+        phoneInputRef.current.setSelectionRange(pos, pos);
+      }
+    }, 0);
+  };
+
+  const handlePhoneChange = (e) => {
+    const inputVal = e.target.value;
+    let rawDigits = inputVal.replace(/\D/g, '');
+    
+    if (rawDigits.startsWith('380')) {
+      rawDigits = rawDigits.slice(3);
+    }
+
+    const cleanDigits = rawDigits.slice(0, 9);
+    setPhoneDigits(cleanDigits);
+    
+    const formatted = formatPhoneMask(cleanDigits);
+    setFormData((prev) => ({ ...prev, phone: formatted }));
+    
+    setCursorPosition(cleanDigits.length);
+  };
+
+  const handlePhoneFocus = () => {
+    if (!formData.phone || formData.phone === '') {
+      setFormData((prev) => ({ ...prev, phone: '+380 (' }));
+    }
+    setCursorPosition(phoneDigits.length);
+  };
+
+  const handlePhoneBlur = () => {
+    if (phoneDigits.length === 0) {
+      setFormData((prev) => ({ ...prev, phone: '+380 (' }));
+    }
+  };
+
+  const handlePhoneKeyDown = (e) => {
+    if (e.key === 'Backspace') {
+      e.preventDefault();
+      if (phoneDigits.length > 0) {
+        const nextDigits = phoneDigits.slice(0, -1);
+        setPhoneDigits(nextDigits);
+        const formatted = formatPhoneMask(nextDigits);
+        setFormData((prev) => ({ ...prev, phone: formatted }));
+        setCursorPosition(nextDigits.length);
+      }
+    } else if (e.key === 'Delete') {
+      e.preventDefault();
+    }
+  };
+
+  const handlePhonePaste = (e) => {
+    e.preventDefault();
+    const pastedText = e.clipboardData.getData('text');
+    let rawDigits = pastedText.replace(/\D/g, '');
+    
+    if (rawDigits.startsWith('380')) {
+      rawDigits = rawDigits.slice(3);
+    } else if (rawDigits.startsWith('0') && rawDigits.length === 10) {
+      rawDigits = rawDigits.slice(1);
+    }
+
+    const cleanDigits = rawDigits.slice(0, 9);
+    setPhoneDigits(cleanDigits);
+    
+    const formatted = formatPhoneMask(cleanDigits);
+    setFormData((prev) => ({ ...prev, phone: formatted }));
+    
+    setCursorPosition(cleanDigits.length);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.phone) {
-      setStatus({ type: 'error', message: 'Будь ласка, заповніть ім\'я та номер телефону.' });
+    if (!formData.name || phoneDigits.length !== 9) {
+      setStatus({ 
+        type: 'error', 
+        message: 'Будь ласка, вкажіть ваше ім\'я та заповніть номер телефону повністю (9 цифр після +380).' 
+      });
       return;
     }
 
@@ -52,7 +197,15 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
           type: 'success',
           message: result.message || 'Дякуємо! Вашу заявку успішно відправлено.'
         });
-        setFormData({ name: '', phone: '', service: servicesList[0], comment: '' });
+        setPhoneDigits('');
+        setFormData({
+          name: '',
+          phone: '+380 (',
+          service: servicesList[0],
+          preferred_date: todayStr,
+          preferred_time: 'Якомога швидше',
+          comment: ''
+        });
       } else {
         setStatus({
           type: 'error',
@@ -79,7 +232,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
           Замовити Безкоштовну Консультацію
         </h3>
         <p className={`text-xs sm:text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-          Залиште контакти — Чедрик Іван зателефонує вам для узгодження деталей та виїзду.
+          Залиште контакти та зручний час — Чедрик Іван зателефонує вам для узгодження деталей.
         </p>
       </div>
 
@@ -135,17 +288,66 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
             <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
               Номер Телефону *
             </label>
-            <div className="relative">
-              <Phone className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-500" />
+            <div className="relative flex items-center">
+              <Phone className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-500 pointer-events-none z-30" />
+              
+              {/* Visual Mask Overlay */}
+              <div className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm font-mono flex items-center select-none z-10 ${
+                isDark ? 'border-slate-700 bg-slate-900/90' : 'border-amber-200 bg-amber-50/50'
+              }`}>
+                <span className={isDark ? 'text-white font-bold' : 'text-slate-900 font-bold'}>+380 (</span>
+                
+                <span className={phoneDigits.length > 0 ? (isDark ? 'text-white font-bold' : 'text-slate-900 font-bold') : (isDark ? 'text-slate-500' : 'text-slate-400')}>
+                  {phoneDigits[0] || 'X'}
+                </span>
+                <span className={phoneDigits.length > 1 ? (isDark ? 'text-white font-bold' : 'text-slate-900 font-bold') : (isDark ? 'text-slate-500' : 'text-slate-400')}>
+                  {phoneDigits[1] || 'X'}
+                </span>
+                
+                <span className={`whitespace-pre ${isDark ? 'text-white font-bold' : 'text-slate-900 font-bold'}`}>{') '}</span>
+
+                <span className={phoneDigits.length > 2 ? (isDark ? 'text-white font-bold' : 'text-slate-900 font-bold') : (isDark ? 'text-slate-500' : 'text-slate-400')}>
+                  {phoneDigits[2] || 'X'}
+                </span>
+                <span className={phoneDigits.length > 3 ? (isDark ? 'text-white font-bold' : 'text-slate-900 font-bold') : (isDark ? 'text-slate-500' : 'text-slate-400')}>
+                  {phoneDigits[3] || 'X'}
+                </span>
+                <span className={phoneDigits.length > 4 ? (isDark ? 'text-white font-bold' : 'text-slate-900 font-bold') : (isDark ? 'text-slate-500' : 'text-slate-400')}>
+                  {phoneDigits[4] || 'X'}
+                </span>
+
+                <span className={isDark ? 'text-white font-bold' : 'text-slate-900 font-bold'}>-</span>
+
+                <span className={phoneDigits.length > 5 ? (isDark ? 'text-white font-bold' : 'text-slate-900 font-bold') : (isDark ? 'text-slate-500' : 'text-slate-400')}>
+                  {phoneDigits[5] || 'X'}
+                </span>
+                <span className={phoneDigits.length > 6 ? (isDark ? 'text-white font-bold' : 'text-slate-900 font-bold') : (isDark ? 'text-slate-500' : 'text-slate-400')}>
+                  {phoneDigits[6] || 'X'}
+                </span>
+
+                <span className={isDark ? 'text-white font-bold' : 'text-slate-900 font-bold'}>-</span>
+
+                <span className={phoneDigits.length > 7 ? (isDark ? 'text-white font-bold' : 'text-slate-900 font-bold') : (isDark ? 'text-slate-500' : 'text-slate-400')}>
+                  {phoneDigits[7] || 'X'}
+                </span>
+                <span className={phoneDigits.length > 8 ? (isDark ? 'text-white font-bold' : 'text-slate-900 font-bold') : (isDark ? 'text-slate-500' : 'text-slate-400')}>
+                  {phoneDigits[8] || 'X'}
+                </span>
+              </div>
+
+              {/* Transparent Input Layer */}
               <input
+                ref={phoneInputRef}
                 type="tel"
                 required
-                placeholder="+380 (97) 000-00-00"
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors ${
-                  isDark ? 'border-slate-700 bg-slate-900/90 text-white placeholder-slate-400' : 'border-amber-200 bg-amber-50/50 text-slate-900 placeholder-slate-400'
-                }`}
+                onChange={handlePhoneChange}
+                onFocus={handlePhoneFocus}
+                onBlur={handlePhoneBlur}
+                onClick={handlePhoneFocus}
+                onKeyDown={handlePhoneKeyDown}
+                onPaste={handlePhonePaste}
+                className="absolute inset-0 w-full pl-10 pr-4 py-2.5 text-sm font-mono text-transparent caret-amber-500 bg-transparent rounded-xl border border-transparent focus:border-amber-500 focus:outline-none transition-colors z-20"
               />
             </div>
           </div>
@@ -154,21 +356,54 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
             <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
               Послуга, яка вас цікавить
             </label>
-            <div className="relative">
-              <Wrench className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-500" />
-              <select
-                value={formData.service}
-                onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors ${
-                  isDark ? 'border-slate-700 bg-slate-900/90 text-white' : 'border-amber-200 bg-amber-50/50 text-slate-900'
-                }`}
+            <CustomSelect
+              value={formData.service}
+              onChange={(val) => setFormData({ ...formData, service: val })}
+              options={servicesList}
+              icon={Wrench}
+              theme={theme}
+            />
+          </div>
+
+          {/* Date & Time Booking Fields */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
+                Зручний день
+              </label>
+              <div 
+                onClick={handleDateContainerClick}
+                className="relative flex items-center cursor-pointer"
               >
-                {servicesList.map((srv, idx) => (
-                  <option key={idx} value={srv} className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
-                    {srv}
-                  </option>
-                ))}
-              </select>
+                <Calendar className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-amber-500 pointer-events-none z-10" />
+                <input
+                  ref={dateInputRef}
+                  type="date"
+                  min={todayStr}
+                  value={formData.preferred_date}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      setFormData({ ...formData, preferred_date: e.target.value });
+                    }
+                  }}
+                  className={`w-full border rounded-xl pl-10 pr-3 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors cursor-pointer select-none ${
+                    isDark ? 'border-slate-700 bg-slate-900/90 text-white' : 'border-amber-200 bg-amber-50/50 text-slate-900'
+                  }`}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
+                Час
+              </label>
+              <CustomSelect
+                value={formData.preferred_time}
+                onChange={(val) => setFormData({ ...formData, preferred_time: val })}
+                options={timeOptions}
+                icon={Clock}
+                theme={theme}
+              />
             </div>
           </div>
 

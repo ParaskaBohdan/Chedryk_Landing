@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Phone, MessageCircle, MapPin, Clock, Sun, Video } from 'lucide-react';
 import ConsultationForm from '../components/ConsultationForm';
 
 export default function ContactsPage({ theme }) {
   const isDark = theme === 'dark';
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, []);
 
   const zakarpattyaCities = [
     'Ужгород', 'Мукачево', 'Хуст', 'Берегове', 
@@ -21,12 +25,13 @@ export default function ContactsPage({ theme }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
-          <span className={`font-semibold text-xs sm:text-sm uppercase tracking-widest px-3 py-1 rounded-full border ${
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
+          <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full border ${
             isDark ? 'border-amber-400/40 bg-amber-500/15 text-amber-300' : 'border-amber-300 bg-amber-100 text-amber-800'
           }`}>
-            Прямий Зв'язок & Соцмережі
-          </span>
+            <MessageCircle className="w-4 h-4 text-amber-500" />
+            <span>Прямий Зв'язок & Соцмережі</span>
+          </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold">
             Контакти Майстра <span className="text-amber-500">Чедрика Івана</span>
           </h1>
