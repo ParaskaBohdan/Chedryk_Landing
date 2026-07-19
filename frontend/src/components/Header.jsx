@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Menu, X, Sun, Moon, ShieldCheck, Calculator, Video } from 'lucide-react';
+import { Phone, Menu, X, Sun, Moon, ShieldCheck, Video } from 'lucide-react';
 
 export default function Header({ activeTab, setActiveTab, onOpenConsultation, theme, toggleTheme }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -19,7 +19,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
 
   return (
     <header className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
-      isDark ? 'border-slate-800/80 bg-slate-950/90 text-white backdrop-blur-md' : 'border-amber-200/80 bg-white/95 text-slate-900 shadow-xs backdrop-blur-md'
+      isDark ? 'border-slate-800/80 bg-slate-950/90 text-white backdrop-blur-md' : 'border-slate-200 bg-slate-100/95 text-slate-800 shadow-xs backdrop-blur-md'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
         
@@ -105,7 +105,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
             rel="noreferrer"
             title="Переглянути TikTok Чедрика Івана"
             className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all ${
-              isDark ? 'bg-slate-900 border-slate-800 text-slate-300 hover:text-amber-400 hover:border-amber-400/40' : 'bg-amber-50 border-amber-200 text-slate-700 hover:text-amber-600'
+              isDark ? 'bg-slate-900 border-slate-800 text-slate-300 hover:text-amber-400 hover:border-amber-400/40' : 'bg-slate-200/70 border-slate-300 text-slate-700 hover:text-amber-600'
             }`}
           >
             <Video className="w-3.5 h-3.5 text-amber-500" />
@@ -120,7 +120,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
             className={`p-2 rounded-xl border transition-all flex-shrink-0 ${
               isDark 
                 ? 'bg-slate-900 border-slate-800 text-amber-400 hover:bg-slate-800' 
-                : 'bg-amber-50 border-amber-200 text-slate-800 hover:bg-amber-100'
+                : 'bg-slate-200/80 border-slate-300 text-amber-600 hover:bg-slate-300/80'
             }`}
           >
             {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-amber-600" />}
@@ -130,7 +130,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
           <a 
             href="tel:+380970000000" 
             className={`hidden 2xl:flex items-center gap-2 text-xs font-semibold px-3 py-2 rounded-xl border transition-all whitespace-nowrap ${
-              isDark ? 'text-slate-300 hover:text-white bg-slate-900 border-slate-800' : 'text-slate-700 bg-amber-50/50 border-amber-200'
+              isDark ? 'text-slate-300 hover:text-white bg-slate-900 border-slate-800' : 'text-slate-700 bg-slate-200/60 border-slate-300'
             }`}
           >
             <Phone className="w-3.5 h-3.5 text-amber-500" />
@@ -149,7 +149,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className={`lg:hidden p-2 rounded-xl border flex-shrink-0 ${
-              isDark ? 'text-slate-300 border-slate-800 bg-slate-900' : 'text-slate-700 border-amber-200 bg-amber-50'
+              isDark ? 'text-slate-300 border-slate-800 bg-slate-900' : 'text-slate-700 border-slate-300 bg-slate-200/80'
             }`}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -160,7 +160,7 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className={`lg:hidden border-t px-4 py-5 space-y-2.5 transition-colors ${
-          isDark ? 'bg-slate-950/98 border-slate-800 text-slate-100' : 'bg-white/98 border-amber-100 text-slate-900 shadow-xl'
+          isDark ? 'bg-slate-950/98 border-slate-800 text-slate-100' : 'bg-slate-100/98 border-slate-200 text-slate-900 shadow-xl'
         }`}>
           <button
             onClick={() => handleNavClick('home', 'services')}
@@ -196,7 +196,9 @@ export default function Header({ activeTab, setActiveTab, onOpenConsultation, th
             </button>
             <a 
               href="tel:+380970000000" 
-              className="flex items-center justify-center gap-2 py-3 rounded-xl border border-amber-400/30 text-sm font-semibold"
+              className={`flex items-center justify-center gap-2 py-3 rounded-xl border text-sm font-semibold ${
+                isDark ? 'border-slate-800 bg-slate-900 text-slate-200' : 'border-slate-300 bg-slate-200/80 text-slate-800'
+              }`}
             >
               <Phone className="w-4 h-4 text-amber-500" />
               <span>Зателефонувати +380 (97) 000-00-00</span>
