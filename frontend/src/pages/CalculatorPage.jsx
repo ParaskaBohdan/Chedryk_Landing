@@ -1,187 +1,430 @@
 import React, { useState } from 'react';
-import { Calculator, Sun, DollarSign, Zap, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Calculator, Sun, DollarSign, Zap, ArrowRight, ShieldCheck, CheckCircle2, Home, Layers, Cpu, BatteryCharging } from 'lucide-react';
+import InteractiveSolarSchema from '../components/InteractiveSolarSchema';
 import ConsultationForm from '../components/ConsultationForm';
 
 export default function CalculatorPage({ theme, onOpenConsultation }) {
   const isDark = theme === 'dark';
-  
-  const [powerKw, setPowerKw] = useState(30); // Default 30 kW
-  const [stationType, setStationType] = useState('hybrid'); // 'grid' | 'hybrid' | 'autonomous'
-  const [showConsultationModal, setShowConsultationModal] = useState(false);
 
-  // Estimation Formulas
-  const annualGenKwh = Math.round(powerKw * 1150);
-  const estCostUsd = Math.round(
-    stationType === 'grid' 
-      ? powerKw * 580 
-      : stationType === 'hybrid' 
-      ? powerKw * 780 
-      : powerKw * 920
+  // Configurator State - "Установка панелей на дах"
+  const [step, setStep] = useState(1);
+
+  // Step 1: Roof Parameters
+  const [roofType, setRoofType] = useState('pitched'); // 'pitched' | 'flat'
+  const [roofMaterial, setRoofMaterial] = useState('metal_tile'); // 'metal_tile' | 'tile' | 'corrugated' | 'seam' | 'flat_concrete'
+  const [roofAreaSqM, setRoofAreaSqM] = useState(80); // m2
+
+  // Step 2: Panels & Layout
+  const [panelBrand, setPanelBrand] = useState('jinko'); // 'risen' | 'jinko' | 'longi'
+  const [rowsCount, setRowsCount] = useState(2); // 1 | 2 | 3 | 4
+
+  // Step 3: Inverter & Battery
+  const [hasBattery, setHasBattery] = useState(true);
+  const [batteryCapacityKwh, setBatteryCapacityKwh] = useState(10); // 5 | 10 | 15 | 20
+
+  // Calculations
+  const panelWattages = { risen: 550, jinko: 585, longi: 600 };
+  const panelPrices = { risen: 135, jinko: 155, longi: 165 };
+
+  // Calculate max panels based on roof area
+  const maxPossiblePanels = Math.floor(roofAreaSqM / 2.2);
+  const selectedPanelWattage = panelWattages[panelBrand];
+  
+  // Panels based on rows Selection
+  const activePanelCount = Math.min(
+    maxPossiblePanels,
+    rowsCount === 1 ? 12 : rowsCount === 2 ? 24 : rowsCount === 3 ? 36 : 48
   );
-  const estSavingsPerYear = Math.round(annualGenKwh * 0.16); // ~4.32 грн/кВт
-  const paybackYears = (estCostUsd / Math.max(1, estSavingsPerYear)).toFixed(1);
+
+  const totalKw = parseFloat(((activePanelCount * selectedPanelWattage) / 1000).toFixed(1));
+  const inverterPowerKw = totalKw <= 8 ? 8 : totalKw <= 15 ? 15 : totalKw <= 30 ? 30 : 50;
+
+  // Cost estimates
+  const panelsCost = activePanelCount * panelPrices[panelBrand];
+  const frameCost = Math.round(activePanelCount * (roofType === 'flat' ? 45 : 30));
+  const inverterCost = Math.round(inverterPowerKw * 180);
+  const batteryCost = hasBattery ? Math.round(batteryCapacityKwh * 320) : 0;
+  const installationCost = Math.round((panelsCost + frameCost + inverterCost + batteryCost) * 0.15);
+
+  const totalEstimateUsd = panelsCost + frameCost + inverterCost + batteryCost + installationCost;
+  const annualGenKwh = Math.round(totalKw * 1180);
+
+  const getConfigSummaryText = () => {
+    return `Специфікація Даху: ${roofType === 'pitched' ? 'Скатий' : 'Плоский'}, ${roofAreaSqM} м² | Панелі: ${activePanelCount} шт. ${panelBrand.toUpperCase()} (${totalKw} кВт) у ${rowsCount} ряди | Інвертор Deye ${inverterPowerKw} кВт ${hasBattery ? `+ АКБ ${batteryCapacityKwh} кВт·год` : ''} | Кошторис: ~$${totalEstimateUsd.toLocaleString()}`;
+  };
 
   return (
     <div className={`py-12 sm:py-20 min-h-screen transition-colors duration-300 ${
-      isDark ? 'bg-slate-900 text-white' : 'bg-amber-50/40 text-slate-900'
+      isDark ? 'bg-slate-900 text-white' : 'bg-slate-100/70 text-slate-900'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Page Title */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
+        {/* Title */}
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-400/40 bg-amber-500/15 text-amber-500 text-xs sm:text-sm font-semibold">
             <Calculator className="w-4 h-4 text-amber-500" />
-            <span>Калькулятор Сонячних Станцій</span>
+            <span>Інтерактивний Конфігуратор Панелей на Дах</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold">
-            Розрахунок Вартності СЕС <span className="text-amber-500">(5 кВт – 1 МВт)</span>
+            Конструктор & Схема <span className="text-amber-500">Сонячної Станції</span>
           </h1>
           <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-            Отримайте попередню оцінку потужності, генерації та окупності для вашого будинку чи бізнесу в Закарпатській та Івано-Франківській областях.
+            Вкажіть параметри даху — наша система підбере тип каркасу, варіанти наповнення панелей та побудує архітектурну схему в режимі реального часу.
           </p>
+        </div>
+
+        {/* Wizard Step Navigation */}
+        <div className="flex justify-center items-center gap-2 sm:gap-4 mb-10 overflow-x-auto pb-2">
+          <button
+            onClick={() => setStep(1)}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
+              step === 1 ? 'btn-orange-bright shadow-lg' : isDark ? 'bg-slate-800 text-slate-300 border border-slate-700' : 'bg-white text-slate-700 border border-slate-300'
+            }`}
+          >
+            <Home className="w-4 h-4" />
+            <span>1. Параметри даху</span>
+          </button>
+
+          <button
+            onClick={() => setStep(2)}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
+              step === 2 ? 'btn-orange-bright shadow-lg' : isDark ? 'bg-slate-800 text-slate-300 border border-slate-700' : 'bg-white text-slate-700 border border-slate-300'
+            }`}
+          >
+            <Layers className="w-4 h-4" />
+            <span>2. Наповнення панелями</span>
+          </button>
+
+          <button
+            onClick={() => setStep(3)}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
+              step === 3 ? 'btn-orange-bright shadow-lg' : isDark ? 'bg-slate-800 text-slate-300 border border-slate-700' : 'bg-white text-slate-700 border border-slate-300'
+            }`}
+          >
+            <Cpu className="w-4 h-4" />
+            <span>3. Інвертор & АКБ</span>
+          </button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Controls Column */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className={`glass-panel p-6 sm:p-8 rounded-3xl border space-y-6 ${
-              isDark ? 'border-slate-800 bg-slate-800/80' : 'border-amber-200 bg-white shadow-md'
-            }`}>
-              
-              {/* Station Type Select */}
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-amber-500 mb-3">
-                  1. Оберіть тип системи
-                </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setStationType('hybrid')}
-                    className={`p-4 rounded-2xl border text-left transition-all ${
-                      stationType === 'hybrid'
-                        ? 'border-amber-500 bg-amber-500/20 text-white shadow-md'
-                        : isDark ? 'border-slate-700 bg-slate-900 text-slate-300 hover:border-amber-400/50' : 'border-amber-200 bg-amber-50/50 text-slate-700 hover:border-amber-300'
-                    }`}
-                  >
-                    <p className="font-bold text-sm">Гібридна Deye</p>
-                    <p className="text-[11px] opacity-80 mt-1">Сонце + Акумулятори + Мережа</p>
-                  </button>
+          <div className="lg:col-span-6 space-y-6">
+            
+            {/* STEP 1: ROOF PARAMETERS */}
+            {step === 1 && (
+              <div className={`glass-panel p-6 sm:p-8 rounded-3xl border space-y-6 ${
+                isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-200 bg-white shadow-md'
+              }`}>
+                <h3 className="text-lg font-bold flex items-center gap-2 text-amber-500">
+                  <Home className="w-5 h-5" /> Крок 1: Оберіть тип та покриття даху
+                </h3>
 
-                  <button
-                    type="button"
-                    onClick={() => setStationType('grid')}
-                    className={`p-4 rounded-2xl border text-left transition-all ${
-                      stationType === 'grid'
-                        ? 'border-amber-500 bg-amber-500/20 text-white shadow-md'
-                        : isDark ? 'border-slate-700 bg-slate-900 text-slate-300 hover:border-amber-400/50' : 'border-amber-200 bg-amber-50/50 text-slate-700 hover:border-amber-300'
-                    }`}
-                  >
-                    <p className="font-bold text-sm">Мережева СЕС</p>
-                    <p className="text-[11px] opacity-80 mt-1">Зелений тариф та економія</p>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setStationType('autonomous')}
-                    className={`p-4 rounded-2xl border text-left transition-all ${
-                      stationType === 'autonomous'
-                        ? 'border-amber-500 bg-amber-500/20 text-white shadow-md'
-                        : isDark ? 'border-slate-700 bg-slate-900 text-slate-300 hover:border-amber-400/50' : 'border-amber-200 bg-amber-50/50 text-slate-700 hover:border-amber-300'
-                    }`}
-                  >
-                    <p className="font-bold text-sm">Автономна EcoFlow</p>
-                    <p className="text-[11px] opacity-80 mt-1">100% захист від блек-аутів</p>
-                  </button>
-                </div>
-              </div>
-
-              {/* Power Slider */}
-              <div className="space-y-3 pt-4 border-t border-slate-700/60">
-                <div className="flex justify-between items-center">
-                  <label className="text-xs font-bold uppercase tracking-wider text-amber-500">
-                    2. Потужність станції
+                {/* Roof Shape */}
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                    Форма та нахил даху:
                   </label>
-                  <span className="text-xl font-extrabold text-amber-500">
-                    {powerKw >= 1000 ? `${(powerKw / 1000).toFixed(1)} МВт` : `${powerKw} кВт`}
-                  </span>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setRoofType('pitched')}
+                      className={`p-4 rounded-2xl border text-left transition-all ${
+                        roofType === 'pitched'
+                          ? 'border-amber-500 bg-amber-500/20 text-amber-500 font-bold shadow-md'
+                          : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
+                      }`}
+                    >
+                      <p className="font-bold text-sm">Скатий / Нахилений (~30°)</p>
+                      <p className="text-[11px] opacity-75 mt-1">Класичний дах будинку</p>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setRoofType('flat');
+                        setRoofMaterial('flat_concrete');
+                      }}
+                      className={`p-4 rounded-2xl border text-left transition-all ${
+                        roofType === 'flat'
+                          ? 'border-amber-500 bg-amber-500/20 text-amber-500 font-bold shadow-md'
+                          : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
+                      }`}
+                    >
+                      <p className="font-bold text-sm">Плоский дах (0°–5°)</p>
+                      <p className="text-[11px] opacity-75 mt-1">Потребує баластних ферм 15°</p>
+                    </button>
+                  </div>
                 </div>
 
-                <input
-                  type="range"
-                  min="5"
-                  max="1000"
-                  step="5"
-                  value={powerKw}
-                  onChange={(e) => setPowerKw(Number(e.target.value))}
-                  className="w-full accent-amber-500 h-2 bg-slate-700 rounded-lg cursor-pointer"
-                />
+                {/* Roof Material */}
+                {roofType === 'pitched' && (
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                      Матеріал покриття (Визначає тип кріплення):
+                    </label>
+                    <select
+                      value={roofMaterial}
+                      onChange={(e) => setRoofMaterial(e.target.value)}
+                      className={`w-full border rounded-xl p-3 text-sm font-semibold focus:outline-none focus:border-amber-500 ${
+                        isDark ? 'border-slate-700 bg-slate-900 text-white' : 'border-slate-300 bg-slate-50 text-slate-900'
+                      }`}
+                    >
+                      <option value="metal_tile">Металочерепиця (Кронштейни-гачки)</option>
+                      <option value="tile">Натуральна керамічна черепиця (Шпильки M10)</option>
+                      <option value="corrugated">Профнастил (Міні-рейки з ЕПДМ)</option>
+                      <option value="seam">Фальцева покрівля (Безпрокольні затискачі)</option>
+                    </select>
+                  </div>
+                )}
 
-                <div className="flex justify-between text-xs text-slate-400">
-                  <span>5 кВт (Приватний будинок)</span>
-                  <span>30 кВт (Зелений тариф)</span>
-                  <span>1 МВт (Промислова СЕС)</span>
+                {/* Area Slider */}
+                <div className="space-y-3 pt-3 border-t border-slate-700/60">
+                  <div className="flex justify-between items-center">
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                      Корисна площа даху під панелі:
+                    </label>
+                    <span className="text-xl font-extrabold text-amber-500">{roofAreaSqM} м²</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="30"
+                    max="300"
+                    step="10"
+                    value={roofAreaSqM}
+                    onChange={(e) => setRoofAreaSqM(Number(e.target.value))}
+                    className="w-full accent-amber-500 h-2 bg-slate-700 rounded-lg cursor-pointer"
+                  />
+                  <p className="text-xs opacity-75">
+                    Максимально вміщує близько <strong className="text-amber-500">{maxPossiblePanels} шт.</strong> сонячних панелей.
+                  </p>
+                </div>
+
+                <div className="pt-4 flex justify-end">
+                  <button
+                    onClick={() => setStep(2)}
+                    className="btn-orange-bright px-6 py-3 rounded-xl font-bold text-xs flex items-center gap-2"
+                  >
+                    <span>Перейти до вибору панелей</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+              </div>
+            )}
+
+            {/* STEP 2: PANELS & ROWS CONFIGURATION */}
+            {step === 2 && (
+              <div className={`glass-panel p-6 sm:p-8 rounded-3xl border space-y-6 ${
+                isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-200 bg-white shadow-md'
+              }`}>
+                <h3 className="text-lg font-bold flex items-center gap-2 text-amber-500">
+                  <Layers className="w-5 h-5" /> Крок 2: Наповнення панелями & Кількість рядів
+                </h3>
+
+                {/* Panel Brand Selection */}
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                    Бренд сонячних фотомодулів (Tier-1):
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { id: 'jinko', name: 'Jinko Solar', watt: '585W', desc: 'N-Type ККД 22.6%' },
+                      { id: 'risen', name: 'Risen Energy', watt: '550W', desc: 'Titanium Перформанс' },
+                      { id: 'longi', name: 'Longi Solar', watt: '600W', desc: 'Hi-MO X6 Топ ККД' }
+                    ].map((b) => (
+                      <button
+                        key={b.id}
+                        type="button"
+                        onClick={() => setPanelBrand(b.id)}
+                        className={`p-3 sm:p-4 rounded-2xl border text-left transition-all ${
+                          panelBrand === b.id
+                            ? 'border-amber-500 bg-amber-500/20 text-amber-500 font-bold shadow-md'
+                            : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
+                        }`}
+                      >
+                        <p className="font-bold text-xs sm:text-sm">{b.name}</p>
+                        <p className="text-xs text-amber-500 font-extrabold mt-0.5">{b.watt}</p>
+                        <p className="text-[10px] opacity-75 mt-1">{b.desc}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Rows Layout Selection */}
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                    Варіанти розміщення на даху (Кількість рядів):
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { r: 1, title: '1 Ряд', desc: '~12 панелей (Компактно)' },
+                      { r: 2, title: '2 Ряди', desc: '~24 панелі (Стандарт)' },
+                      { r: 3, title: '3-4 Ряди', desc: '~36-48 панелей (Повне заповнення)' }
+                    ].map((rowOpt) => (
+                      <button
+                        key={rowOpt.r}
+                        type="button"
+                        onClick={() => setRowsCount(rowOpt.r)}
+                        className={`p-3.5 rounded-2xl border text-left transition-all ${
+                          rowsCount === rowOpt.r
+                            ? 'border-amber-500 bg-amber-500/20 text-amber-500 font-bold shadow-md'
+                            : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
+                        }`}
+                      >
+                        <p className="font-bold text-sm">{rowOpt.title}</p>
+                        <p className="text-[11px] opacity-75 mt-0.5">{rowOpt.desc}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-4 flex justify-between">
+                  <button
+                    onClick={() => setStep(1)}
+                    className="px-4 py-2 rounded-xl border border-slate-700 text-xs font-semibold"
+                  >
+                    Назад
+                  </button>
+                  <button
+                    onClick={() => setStep(3)}
+                    className="btn-orange-bright px-6 py-3 rounded-xl font-bold text-xs flex items-center gap-2"
+                  >
+                    <span>Перейти до інвертора та АКБ</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
+            )}
 
+            {/* STEP 3: INVERTER & BATTERY */}
+            {step === 3 && (
+              <div className={`glass-panel p-6 sm:p-8 rounded-3xl border space-y-6 ${
+                isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-200 bg-white shadow-md'
+              }`}>
+                <h3 className="text-lg font-bold flex items-center gap-2 text-amber-500">
+                  <Cpu className="w-5 h-5" /> Крок 3: Гібридний інвертор Deye & Акумулятори
+                </h3>
+
+                {/* Battery Toggle */}
+                <div className="p-4 rounded-2xl border border-slate-700 bg-slate-900/60 flex items-center justify-between">
+                  <div>
+                    <h4 className="font-bold text-sm">Додати акумуляторний блок резервного живлення?</h4>
+                    <p className="text-xs opacity-75">Автоматичний ввід резерву (АВР 4 мс) при відключеннях світла.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setHasBattery(!hasBattery)}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                      hasBattery ? 'bg-emerald-500 text-slate-950' : 'bg-slate-700 text-slate-300'
+                    }`}
+                  >
+                    {hasBattery ? 'Так, з АКБ' : 'Ні, лише СЕС'}
+                  </button>
+                </div>
+
+                {/* Battery Capacity Selection */}
+                {hasBattery && (
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                      Ємність накопичувачів LiFePO4 Deye / EcoFlow:
+                    </label>
+                    <div className="grid grid-cols-4 gap-2.5">
+                      {[5, 10, 15, 20].map((cap) => (
+                        <button
+                          key={cap}
+                          type="button"
+                          onClick={() => setBatteryCapacityKwh(cap)}
+                          className={`p-3 rounded-xl border text-center transition-all ${
+                            batteryCapacityKwh === cap
+                              ? 'border-amber-500 bg-amber-500/20 text-amber-500 font-bold'
+                              : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
+                          }`}
+                        >
+                          <p className="font-bold text-sm">{cap} кВт·год</p>
+                          <p className="text-[10px] opacity-75">{cap * 2} год резерву</p>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="pt-4 flex justify-between">
+                  <button
+                    onClick={() => setStep(2)}
+                    className="px-4 py-2 rounded-xl border border-slate-700 text-xs font-semibold"
+                  >
+                    Назад
+                  </button>
+                  <button
+                    onClick={() => {
+                      onOpenConsultation(getConfigSummaryText());
+                    }}
+                    className="btn-orange-bright px-6 py-3 rounded-xl font-bold text-xs flex items-center gap-2 glow-amber"
+                  >
+                    <span>Надіслати конфігурацію майстру</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Live Config Summary Card */}
+            <div className={`glass-card p-5 rounded-2xl border space-y-3 ${
+              isDark ? 'border-slate-700 bg-slate-800/80' : 'border-slate-200 bg-white shadow-xs'
+            }`}>
+              <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-amber-500">
+                <span>Калькуляція по об'єкту</span>
+                <span>{totalKw} кВт СЕС</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <span className="opacity-70 block">Кількість панелей:</span>
+                  <span className="font-bold">{activePanelCount} шт. ({selectedPanelWattage}W)</span>
+                </div>
+                <div>
+                  <span className="opacity-70 block">Річна генерація:</span>
+                  <span className="font-bold text-emerald-500">~{annualGenKwh.toLocaleString()} кВт·год</span>
+                </div>
+                <div>
+                  <span className="opacity-70 block">Інвертор Deye:</span>
+                  <span className="font-bold">{inverterPowerKw} кВт (3-фази)</span>
+                </div>
+                <div>
+                  <span className="opacity-70 block">Орієнтовний кошторис:</span>
+                  <span className="font-bold text-amber-500 text-sm">~${totalEstimateUsd.toLocaleString()}</span>
+                </div>
+              </div>
             </div>
+
           </div>
 
-          {/* Results Summary Column */}
-          <div className="lg:col-span-5">
-            <div className={`glass-card p-6 sm:p-8 rounded-3xl border space-y-6 ${
-              isDark ? 'border-slate-700 bg-slate-800/90' : 'border-amber-200 bg-white shadow-xl'
-            }`}>
-              <h3 className="text-xl font-bold flex items-center gap-2">
-                <Zap className="w-5 h-5 text-amber-500" />
-                Результат Розрахунку
-              </h3>
+          {/* Scheme & Preview Column */}
+          <div className="lg:col-span-6 space-y-6">
+            
+            {/* Dynamic Vector SVG Blueprint Scheme */}
+            <InteractiveSolarSchema
+              roofType={roofType}
+              roofMaterial={roofMaterial}
+              rowsCount={rowsCount}
+              panelBrand={panelBrand}
+              panelCount={activePanelCount}
+              totalKw={totalKw}
+              inverterPowerKw={inverterPowerKw}
+              hasBattery={hasBattery}
+              batteryCapacityKwh={batteryCapacityKwh}
+              theme={theme}
+            />
 
-              <div className="space-y-4">
-                <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-700/80 flex items-center justify-between">
-                  <div>
-                    <p className="text-xs text-slate-400">Річна генерація</p>
-                    <p className="text-lg font-bold text-amber-400">~{annualGenKwh.toLocaleString()} кВт·год</p>
-                  </div>
-                  <Sun className="w-8 h-8 text-amber-400/80" />
-                </div>
-
-                <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-700/80 flex items-center justify-between">
-                  <div>
-                    <p className="text-xs text-slate-400">Орієнтовна вартість обладнання</p>
-                    <p className="text-lg font-bold text-emerald-400">${estCostUsd.toLocaleString()}</p>
-                  </div>
-                  <DollarSign className="w-8 h-8 text-emerald-400/80" />
-                </div>
-
-                <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-700/80 flex items-center justify-between">
-                  <div>
-                    <p className="text-xs text-slate-400">Термін окупності</p>
-                    <p className="text-lg font-bold text-sky-400">~{paybackYears} років</p>
-                  </div>
-                  <ShieldCheck className="w-8 h-8 text-sky-400/80" />
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-slate-700/60 space-y-3">
-                <button
-                  onClick={() => {
-                    const pref = `Розрахунок СЕС ${powerKw} кВт (${stationType === 'hybrid' ? 'Гібридна Deye' : stationType === 'grid' ? 'Мережева' : 'Автономна'})`;
-                    onOpenConsultation(pref);
-                  }}
-                  className="w-full btn-orange-bright py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 glow-amber"
-                >
-                  <span>Замовити Точний Кошторис під ключ</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-                
-                <p className="text-[11px] text-center text-slate-400">
-                  Виїзд майстра (Чедрик Іван) для замірів у Закарпатській та Івано-Франківській областях.
-                </p>
-              </div>
-
+            {/* Direct Send Order Form */}
+            <div className="pt-2">
+              <ConsultationForm 
+                selectedServicePrefill={getConfigSummaryText()} 
+                theme={theme} 
+              />
             </div>
+
           </div>
 
         </div>
