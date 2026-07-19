@@ -56,7 +56,7 @@ export default function Testimonials({ theme }) {
   ];
 
   return (
-    <div id="reviews" className="py-12 sm:py-16 transition-colors duration-300 relative theme-bg-section border-t theme-border-subtle">
+    <section id="reviews" className="py-16 sm:py-20 transition-colors duration-300 relative theme-bg-section border-t theme-border-subtle">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -125,6 +125,6 @@ export default function Testimonials({ theme }) {
         </div>
 
       </div>
-    </div>
+    </section>
   );
 }
