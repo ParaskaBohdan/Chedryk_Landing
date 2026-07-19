@@ -2,9 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { PhoneCall, FileText, Truck, Wrench, Headphones, ArrowDown } from 'lucide-react';
 
-export default function StepProcess({ onOpenConsultation, theme }) {
-  const isDark = theme === 'dark';
-
+export default function StepProcess({ onOpenConsultation }) {
   const steps = [
     {
       step: '01',
@@ -39,17 +37,17 @@ export default function StepProcess({ onOpenConsultation, theme }) {
   ];
 
   return (
-    <section id="process" className="py-16 sm:py-20 transition-colors duration-300 relative theme-bg-section border-t theme-border-subtle">
+    <section id="process" className="py-16 sm:py-20 relative bg-slate-900 text-white border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
-          <span className="font-semibold text-xs sm:text-sm uppercase tracking-widest px-3 py-1 rounded-full border theme-badge">
+          <span className="font-semibold text-xs sm:text-sm uppercase tracking-widest px-3 py-1 rounded-full border border-amber-400/40 bg-amber-500/15 text-amber-300">
             Прозорий Процес
           </span>
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-normal theme-text-primary">
-            5 Кроків До Вашої <span className="theme-text-accent">Енергонезалежності</span>
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
+            5 Кроків До Вашої <span className="text-amber-400">Енергонезалежності</span>
           </h2>
-          <p className="text-sm sm:text-lg theme-text-secondary">
+          <p className="text-sm sm:text-lg text-slate-300">
             Як відбувається співпраця від першого дзвінка до виходу на виплати за Зеленим тарифом.
           </p>
         </div>
@@ -57,7 +55,7 @@ export default function StepProcess({ onOpenConsultation, theme }) {
         {/* Timeline */}
         <div className="relative max-w-4xl mx-auto">
           {/* Central Line for desktop */}
-          <div className="hidden md:block absolute left-1/2 top-4 bottom-4 w-0.5 -translate-x-1/2 theme-timeline-line" />
+          <div className="hidden md:block absolute left-1/2 top-4 bottom-4 w-0.5 -translate-x-1/2 bg-gradient-to-b from-amber-400 via-orange-400 to-amber-500/30" />
 
           <div className="space-y-8 sm:space-y-12">
             {steps.map((item, index) => {
@@ -76,26 +74,26 @@ export default function StepProcess({ onOpenConsultation, theme }) {
                 >
                   {/* Step Card */}
                   <div className="w-full md:w-1/2">
-                    <div className="glass-card p-5 sm:p-8 rounded-3xl border transition-all group theme-bg-card theme-border-card">
+                    <div className="glass-card p-5 sm:p-8 rounded-3xl border border-slate-700/80 bg-slate-800/80 hover:border-amber-400/60 transition-all group shadow-xl">
                       <div className="flex items-center justify-between mb-3 sm:mb-4">
-                        <span className="text-2xl sm:text-3xl font-extrabold tracking-wider theme-text-accent">
+                        <span className="text-2xl sm:text-3xl font-extrabold tracking-wider text-amber-400">
                           КРОК {item.step}
                         </span>
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center border theme-badge">
-                          <Icon className="w-4 h-4 sm:w-5 sm:h-5 theme-icon-accent" />
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center border border-amber-400/40 bg-amber-500/15 text-amber-400">
+                          <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
                       </div>
-                      <h3 className="text-base sm:text-xl font-bold mb-2 transition-colors theme-text-primary group-hover:theme-text-accent">
+                      <h3 className="text-base sm:text-xl font-bold mb-2 text-white group-hover:text-amber-400 transition-colors">
                         {item.title}
                       </h3>
-                      <p className="text-xs sm:text-sm leading-relaxed theme-text-secondary">
+                      <p className="text-xs sm:text-sm leading-relaxed text-slate-300">
                         {item.desc}
                       </p>
                     </div>
                   </div>
 
                   {/* Circle Badge in Center (Desktop) */}
-                  <div className="hidden md:flex relative z-10 w-11 h-11 rounded-full border-2 items-center justify-center shadow-lg flex-shrink-0 theme-badge">
+                  <div className="hidden md:flex relative z-10 w-11 h-11 rounded-full border-2 border-amber-400 bg-slate-900 text-amber-400 items-center justify-center shadow-lg shadow-amber-500/20 flex-shrink-0">
                     <span className="text-xs font-bold">{item.step}</span>
                   </div>
 
@@ -110,7 +108,7 @@ export default function StepProcess({ onOpenConsultation, theme }) {
         <div className="mt-12 sm:mt-16 text-center">
           <button
             onClick={onOpenConsultation}
-            className="inline-flex items-center gap-2.5 font-bold text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-xl hover:scale-105 transition-all theme-btn-primary"
+            className="inline-flex items-center gap-2.5 btn-orange-bright font-bold text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-xl hover:scale-105 transition-all text-slate-950 glow-amber"
           >
             <span>Почати з Кроку 1 — Консультація</span>
             <ArrowDown className="w-4 h-4 sm:w-5 sm:h-5" />
