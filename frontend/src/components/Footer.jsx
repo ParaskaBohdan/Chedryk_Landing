@@ -1,8 +1,37 @@
 import React from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Sun, Phone, MapPin, ArrowUp, Video } from 'lucide-react';
 
-export default function Footer({ setActiveTab, onOpenConsultation, theme }) {
+export default function Footer({ onOpenConsultation, theme }) {
   const isDark = theme === 'dark';
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const scrollToSection = (sectionId) => {
+    const elem = document.getElementById(sectionId);
+    if (elem) {
+      const headerOffset = 80;
+      const elementPosition = elem.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const handleNavClick = (targetPath, sectionId) => {
+    if (location.pathname !== targetPath) {
+      navigate(targetPath);
+      if (sectionId) {
+        setTimeout(() => {
+          scrollToSection(sectionId);
+        }, 150);
+      }
+    } else if (sectionId) {
+      scrollToSection(sectionId);
+    }
+  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -14,12 +43,12 @@ export default function Footer({ setActiveTab, onOpenConsultation, theme }) {
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className={`grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b ${
+        <div className={`grid grid-cols-1 min-[340px]:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 pb-10 border-b ${
           isDark ? 'border-slate-800' : 'border-amber-200'
         }`}>
           
           {/* Brand Col */}
-          <div className="md:col-span-2 space-y-3 sm:space-y-4">
+          <div className="col-span-1 min-[340px]:col-span-2 md:col-span-2 space-y-3 sm:space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 flex items-center justify-center">
                 <img src="/logo.svg" alt="Логотип" className="w-full h-full object-contain" />
@@ -50,24 +79,24 @@ export default function Footer({ setActiveTab, onOpenConsultation, theme }) {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => { setActiveTab('home'); setTimeout(() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="hover:text-amber-500 transition-colors">
+                <button onClick={() => handleNavClick('/', 'services')} className="hover:text-amber-500 transition-colors cursor-pointer">
                   Послуги
                 </button>
               </li>
               <li>
-                <button onClick={() => setActiveTab('calculator')} className="hover:text-amber-500 font-bold text-amber-500 transition-colors">
-                  🧮 Калькулятор Вартності СЕС
-                </button>
+                <Link to="/calculator" className="hover:text-amber-500 transition-colors">
+                  Калькулятор Вартності СЕС
+                </Link>
               </li>
               <li>
-                <button onClick={() => { setActiveTab('home'); setTimeout(() => document.getElementById('deye-legal')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="hover:text-amber-500 transition-colors">
+                <button onClick={() => handleNavClick('/', 'deye-legal')} className="hover:text-amber-500 transition-colors cursor-pointer">
                   Deye & Зелений Тариф
                 </button>
               </li>
               <li>
-                <button onClick={() => setActiveTab('contacts')} className="hover:text-amber-500 transition-colors">
+                <Link to="/contacts" className="hover:text-amber-500 transition-colors">
                   Контакти & TikTok
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -84,8 +113,8 @@ export default function Footer({ setActiveTab, onOpenConsultation, theme }) {
                 <Phone className="w-3.5 h-3.5 text-amber-500" />
                 <span>+380 (97) 000-00-00</span>
               </a>
-              <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-amber-500 hover:underline font-semibold">
-                <Video className="w-3.5 h-3.5" />
+              <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-amber-500 transition-colors">
+                <Video className="w-3.5 h-3.5 text-amber-500" />
                 <span>TikTok Чедрика Івана</span>
               </a>
               <div className="flex items-center gap-2 opacity-80">

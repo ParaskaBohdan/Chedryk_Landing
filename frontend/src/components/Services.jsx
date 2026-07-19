@@ -85,18 +85,18 @@ export default function Services({ onSelectService, theme }) {
   ];
 
   return (
-    <section id="services" className={`py-16 sm:py-20 transition-colors duration-300 relative border-y ${
+    <section id="services" className={`py-16 sm:py-20 transition-colors duration-300 relative border-y scroll-mt-20 ${
       isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-slate-100/70 text-slate-900 border-slate-200'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Heading */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
-          <span className={`font-semibold text-xs sm:text-sm uppercase tracking-widest px-3 py-1 rounded-full border ${
-            isDark ? 'text-amber-400 bg-amber-500/15 border-amber-400/40' : 'text-slate-800 bg-slate-200/80 border-slate-300'
+          <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-semibold uppercase tracking-widest ${
+            isDark ? 'bg-amber-500/15 border-amber-400/40 text-amber-300' : 'bg-amber-100 border-amber-300 text-amber-800'
           }`}>
-            Послуги Чедрика Івана
-          </span>
+            <Sun className="w-4 h-4 text-amber-500" />
+            <span>Послуги Чедрика Івана</span>
+          </div>
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
             Спеціалізовані Рішення з <span className="text-amber-500">Енергозабезпечення</span>
           </h2>

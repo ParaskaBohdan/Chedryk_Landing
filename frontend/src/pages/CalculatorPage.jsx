@@ -81,35 +81,50 @@ export default function CalculatorPage({ theme, onOpenConsultation }) {
         </div>
 
         {/* Wizard Step Navigation */}
-        <div className="flex justify-center items-center gap-2 sm:gap-4 mb-10 overflow-x-auto pb-2">
+        <div className="grid grid-cols-3 gap-1.5 sm:gap-4 max-w-3xl mx-auto mb-8 sm:mb-10">
           <button
             onClick={() => setStep(1)}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
-              step === 1 ? 'btn-orange-bright shadow-lg' : isDark ? 'bg-slate-800 text-slate-300 border border-slate-700' : 'bg-white text-slate-700 border border-slate-300'
+            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-bold transition-all text-center ${
+              step === 1 
+                ? 'btn-orange-bright shadow-lg scale-[1.02]' 
+                : isDark ? 'bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700' : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'
             }`}
           >
-            <Home className="w-4 h-4" />
-            <span>1. Параметри даху</span>
+            <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+            <span>
+              <span className="hidden sm:inline">1. Параметри даху</span>
+              <span className="sm:hidden">1. Дах</span>
+            </span>
           </button>
 
           <button
             onClick={() => setStep(2)}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
-              step === 2 ? 'btn-orange-bright shadow-lg' : isDark ? 'bg-slate-800 text-slate-300 border border-slate-700' : 'bg-white text-slate-700 border border-slate-300'
+            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-bold transition-all text-center ${
+              step === 2 
+                ? 'btn-orange-bright shadow-lg scale-[1.02]' 
+                : isDark ? 'bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700' : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'
             }`}
           >
-            <Layers className="w-4 h-4" />
-            <span>2. Наповнення панелями</span>
+            <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+            <span>
+              <span className="hidden sm:inline">2. Наповнення панелями</span>
+              <span className="sm:hidden">2. Панелі</span>
+            </span>
           </button>
 
           <button
             onClick={() => setStep(3)}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
-              step === 3 ? 'btn-orange-bright shadow-lg' : isDark ? 'bg-slate-800 text-slate-300 border border-slate-700' : 'bg-white text-slate-700 border border-slate-300'
+            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-bold transition-all text-center ${
+              step === 3 
+                ? 'btn-orange-bright shadow-lg scale-[1.02]' 
+                : isDark ? 'bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700' : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'
             }`}
           >
-            <Cpu className="w-4 h-4" />
-            <span>3. Інвертор & АКБ</span>
+            <Cpu className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+            <span>
+              <span className="hidden sm:inline">3. Інвертор & АКБ</span>
+              <span className="sm:hidden">3. АКБ/Deye</span>
+            </span>
           </button>
         </div>
 

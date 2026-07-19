@@ -2,7 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Sun, ShieldCheck, Zap, TrendingUp, Award, MapPin, Calculator } from 'lucide-react';
 
-export default function Hero({ onNavigateCalculator, theme }) {
+import { Link } from 'react-router-dom';
+
+export default function Hero({ theme }) {
   const isDark = theme === 'dark';
 
   const stats = [
@@ -58,13 +60,13 @@ export default function Hero({ onNavigateCalculator, theme }) {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2">
-              <button
-                onClick={onNavigateCalculator}
+              <Link
+                to="/calculator"
                 className="btn-orange-bright font-bold text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2.5 glow-amber"
               >
                 <Calculator className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
                 <span>Розрахувати Вартість СЕС</span>
-              </button>
+              </Link>
 
               <a
                 href="#services"

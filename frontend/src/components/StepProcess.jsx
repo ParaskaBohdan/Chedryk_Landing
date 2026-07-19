@@ -39,17 +39,17 @@ export default function StepProcess({ onOpenConsultation, theme }) {
   ];
 
   return (
-    <section id="process" className={`py-16 sm:py-20 relative transition-colors duration-300 border-t ${
+    <section id="process" className={`py-16 sm:py-20 relative transition-colors duration-300 border-t scroll-mt-20 ${
       isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-amber-50/40 text-slate-900 border-amber-100'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
-          <span className={`font-semibold text-xs sm:text-sm uppercase tracking-widest px-3 py-1 rounded-full border ${
+          <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-semibold uppercase tracking-widest ${
             isDark ? 'border-amber-400/40 bg-amber-500/15 text-amber-300' : 'border-amber-300 bg-amber-100 text-amber-800'
           }`}>
-            Прозорий Процес
-          </span>
+            <span>Прозорий Процес</span>
+          </div>
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
             5 Кроків До Вашої <span className="text-amber-500">Енергонезалежності</span>
           </h2>

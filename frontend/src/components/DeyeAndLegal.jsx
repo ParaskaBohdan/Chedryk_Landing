@@ -27,7 +27,7 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
   ];
 
   return (
-    <section id="deye-legal" className={`py-16 sm:py-20 relative overflow-hidden transition-colors duration-300 border-t ${
+    <section id="deye-legal" className={`py-16 sm:py-20 relative overflow-hidden transition-colors duration-300 border-t scroll-mt-20 ${
       isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-white text-slate-900 border-amber-100'
     }`}>
       {/* Background Decorative Blobs */}

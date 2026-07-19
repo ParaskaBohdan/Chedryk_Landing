@@ -33,7 +33,7 @@ export default function StatsSection({ theme }) {
   ];
 
   return (
-    <section id="stats" className={`py-16 sm:py-20 relative overflow-hidden transition-colors duration-300 border-y ${
+    <section id="stats" className={`py-16 sm:py-20 relative overflow-hidden transition-colors duration-300 border-y scroll-mt-20 ${
       isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-amber-50/40 text-slate-900 border-amber-100'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

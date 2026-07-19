@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -11,12 +12,21 @@ import CalculatorPage from './pages/CalculatorPage';
 import Footer from './components/Footer';
 import { X } from 'lucide-react';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [pathname]);
+
+  return null;
+}
+
 export default function App() {
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('chedryk_theme') || 'dark';
   });
 
-  const [activeTab, setActiveTab] = useState('home');
   const [consultationModalOpen, setConsultationModalOpen] = useState(false);
   const [prefilledService, setPrefilledService] = useState('');
 
@@ -31,10 +41,6 @@ export default function App() {
       root.classList.remove('dark');
     }
   }, [theme]);
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, [activeTab]);
 
   const toggleTheme = () => {
     setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
@@ -51,60 +57,63 @@ export default function App() {
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 selection:bg-amber-400 selection:text-slate-950 ${
       isDark ? 'bg-slate-900 text-slate-100 dark' : 'bg-amber-50/20 text-slate-900 light'
     }`}>
+      <ScrollToTop />
       
       {/* Navigation Header */}
       <Header 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab} 
         onOpenConsultation={() => handleOpenConsultation()} 
         theme={theme}
         toggleTheme={toggleTheme}
       />
 
-      {/* Main Content Body */}
+      {/* Main Content Body with React Router Routes */}
       <main className="flex-grow">
-        {activeTab === 'home' ? (
-          <>
-            <Hero 
-              onNavigateCalculator={() => setActiveTab('calculator')} 
+        <Routes>
+          <Route path="/" element={
+            <>
+              <Hero 
+                theme={theme} 
+              />
+              <Services 
+                onSelectService={(serviceTitle) => handleOpenConsultation(serviceTitle)} 
+                theme={theme} 
+              />
+              <StatsSection theme={theme} />
+              <DeyeAndLegal 
+                onOpenConsultation={() => handleOpenConsultation()} 
+                theme={theme} 
+              />
+              <StepProcess 
+                onOpenConsultation={() => handleOpenConsultation()} 
+                theme={theme} 
+              />
+              
+              {/* Consultation Section on Home Page */}
+              <section id="consultation" className={`py-16 sm:py-20 border-t scroll-mt-20 ${
+                isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-amber-100'
+              }`}>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                  <ConsultationForm selectedServicePrefill={prefilledService} theme={theme} />
+                </div>
+              </section>
+            </>
+          } />
+          
+          <Route path="/calculator" element={
+            <CalculatorPage 
               theme={theme} 
+              onOpenConsultation={(pref) => handleOpenConsultation(pref)} 
             />
-            <Services 
-              onSelectService={(serviceTitle) => handleOpenConsultation(serviceTitle)} 
-              theme={theme} 
-            />
-            <StatsSection theme={theme} />
-            <DeyeAndLegal 
-              onOpenConsultation={() => handleOpenConsultation()} 
-              theme={theme} 
-            />
-            <StepProcess 
-              onOpenConsultation={() => handleOpenConsultation()} 
-              theme={theme} 
-            />
-            
-            {/* Consultation Section on Home Page */}
-            <section id="consultation" className={`py-16 sm:py-20 border-t ${
-              isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-amber-100'
-            }`}>
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <ConsultationForm selectedServicePrefill={prefilledService} theme={theme} />
-              </div>
-            </section>
-          </>
-        ) : activeTab === 'calculator' ? (
-          <CalculatorPage 
-            theme={theme} 
-            onOpenConsultation={(pref) => handleOpenConsultation(pref)} 
-          />
-        ) : (
-          <ContactsPage theme={theme} />
-        )}
+          } />
+          
+          <Route path="/contacts" element={
+            <ContactsPage theme={theme} />
+          } />
+        </Routes>
       </main>
 
       {/* Footer */}
       <Footer 
-        setActiveTab={setActiveTab} 
         onOpenConsultation={() => handleOpenConsultation()} 
         theme={theme}
       />
