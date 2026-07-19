@@ -25,6 +25,7 @@ if (!$data) {
 $name = trim($data['name'] ?? '');
 $phone = trim($data['phone'] ?? '');
 $service = trim($data['service'] ?? 'Не вказано');
+$configuration = trim($data['configuration'] ?? '');
 $comment = trim($data['comment'] ?? '');
 
 $preferredDateRaw = trim($data['preferred_date'] ?? '');
@@ -67,6 +68,9 @@ $textMessage .= "👤 <b>Ім'я:</b> " . htmlspecialchars($name, ENT_QUOTES, 'U
 $textMessage .= "📞 <b>Телефон:</b> " . htmlspecialchars($phone, ENT_QUOTES, 'UTF-8') . "\n";
 $textMessage .= "🛠️ <b>Вибрана послуга:</b> " . htmlspecialchars($service, ENT_QUOTES, 'UTF-8') . "\n";
 $textMessage .= "📅 <b>Зручний час для зв'язку:</b> " . htmlspecialchars($convenientInfo, ENT_QUOTES, 'UTF-8') . "\n";
+if (!empty($configuration)) {
+    $textMessage .= "⚙️ <b>КОНФІГУРАЦІЯ:</b>\n" . htmlspecialchars($configuration, ENT_QUOTES, 'UTF-8') . "\n";
+}
 if (!empty($comment)) {
     $textMessage .= "📝 <b>Коментар:</b> " . htmlspecialchars($comment, ENT_QUOTES, 'UTF-8') . "\n";
 }

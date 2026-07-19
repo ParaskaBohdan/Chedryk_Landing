@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Calculator, Sun, DollarSign, Zap, ArrowRight, ShieldCheck, CheckCircle2, Home, Layers, Cpu, BatteryCharging } from 'lucide-react';
 import InteractiveSolarSchema from '../components/InteractiveSolarSchema';
-import ConsultationForm from '../components/ConsultationForm';
+import ConfigurationForm from '../components/ConfigurationForm';
 
-export default function CalculatorPage({ theme, onOpenConsultation }) {
+export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfiguration }) {
   const isDark = theme === 'dark';
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function CalculatorPage({ theme, onOpenConsultation }) {
   const annualGenKwh = Math.round(totalKw * 1180);
 
   const getConfigSummaryText = () => {
-    return `Специфікація Даху: ${roofType === 'pitched' ? 'Скатий' : 'Плоский'}, ${roofAreaSqM} м² | Панелі: ${activePanelCount} шт. ${panelBrand.toUpperCase()} (${totalKw} кВт) у ${rowsCount} ряди | Інвертор Deye ${inverterPowerKw} кВт ${hasBattery ? `+ АКБ ${batteryCapacityKwh} кВт·год` : ''} | Кошторис: ~$${totalEstimateUsd.toLocaleString()}`;
+    return `1) Специфікація Даху: ${roofType === 'pitched' ? 'Скатий' : 'Плоский'}, ${roofAreaSqM} м²\n2) Панелі: ${activePanelCount} шт. ${panelBrand.toUpperCase()} (${totalKw} кВт) у ${rowsCount} ряди\n3) Інвертор Deye ${inverterPowerKw} кВт ${hasBattery ? `+ АКБ ${batteryCapacityKwh} кВт·год` : ''}\n4) Кошторис: ~$${totalEstimateUsd.toLocaleString()}`;
   };
 
   return (
@@ -380,9 +380,13 @@ export default function CalculatorPage({ theme, onOpenConsultation }) {
                   </button>
                   <button
                     onClick={() => {
-                      onOpenConsultation(getConfigSummaryText());
+                      if (onOpenConfiguration) {
+                        onOpenConfiguration(getConfigSummaryText());
+                      } else if (onOpenConsultation) {
+                        onOpenConsultation(getConfigSummaryText());
+                      }
                     }}
-                    className="btn-orange-bright px-6 py-3 rounded-xl font-bold text-xs flex items-center gap-2 glow-amber"
+                    className="btn-orange-bright px-6 py-3 rounded-xl font-bold text-xs flex items-center gap-2 glow-amber cursor-pointer"
                   >
                     <span>Надіслати конфігурацію майстру</span>
                     <ArrowRight className="w-4 h-4" />
@@ -442,10 +446,10 @@ export default function CalculatorPage({ theme, onOpenConsultation }) {
 
         </div>
 
-        {/* FULL WIDTH BOTTOM CONSULTATION FORM */}
+        {/* FULL WIDTH BOTTOM CONFIGURATION FORM */}
         <div id="calculator-consultation" className="pt-8 border-t border-slate-800">
-          <ConsultationForm 
-            selectedServicePrefill={getConfigSummaryText()} 
+          <ConfigurationForm 
+            configurationSummary={getConfigSummaryText()} 
             theme={theme} 
           />
         </div>

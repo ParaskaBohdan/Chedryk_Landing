@@ -7,6 +7,7 @@ import StatsSection from './components/StatsSection';
 import DeyeAndLegal from './components/DeyeAndLegal';
 import StepProcess from './components/StepProcess';
 import ConsultationForm from './components/ConsultationForm';
+import ConfigurationForm from './components/ConfigurationForm';
 import ContactsPage from './pages/ContactsPage';
 import CalculatorPage from './pages/CalculatorPage';
 import Footer from './components/Footer';
@@ -28,7 +29,9 @@ export default function App() {
   });
 
   const [consultationModalOpen, setConsultationModalOpen] = useState(false);
+  const [modalType, setModalType] = useState('consultation'); // 'consultation' | 'configuration'
   const [prefilledService, setPrefilledService] = useState('');
+  const [configSummaryText, setConfigSummaryText] = useState('');
 
   useEffect(() => {
     localStorage.setItem('chedryk_theme', theme);
@@ -47,7 +50,14 @@ export default function App() {
   };
 
   const handleOpenConsultation = (serviceTitle = '') => {
+    setModalType('consultation');
     setPrefilledService(serviceTitle);
+    setConsultationModalOpen(true);
+  };
+
+  const handleOpenConfigurationModal = (summaryText = '') => {
+    setModalType('configuration');
+    setConfigSummaryText(summaryText);
     setConsultationModalOpen(true);
   };
 
@@ -103,6 +113,7 @@ export default function App() {
             <CalculatorPage 
               theme={theme} 
               onOpenConsultation={(pref) => handleOpenConsultation(pref)} 
+              onOpenConfiguration={(summaryText) => handleOpenConfigurationModal(summaryText)}
             />
           } />
           
@@ -118,21 +129,29 @@ export default function App() {
         theme={theme}
       />
 
-      {/* Global Consultation Modal */}
+      {/* Global Consultation / Configuration Modal */}
       {consultationModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
           <div className="relative w-full max-w-xl my-6">
             <button
               onClick={() => setConsultationModalOpen(false)}
-              className="absolute top-4 right-4 z-10 p-2 rounded-full border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition-colors"
+              className="absolute top-4 right-4 z-10 p-2 rounded-full border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
-            <ConsultationForm 
-              selectedServicePrefill={prefilledService}
-              onCloseModal={() => setConsultationModalOpen(false)}
-              theme={theme}
-            />
+            {modalType === 'configuration' ? (
+              <ConfigurationForm 
+                configurationSummary={configSummaryText}
+                onCloseModal={() => setConsultationModalOpen(false)}
+                theme={theme}
+              />
+            ) : (
+              <ConsultationForm 
+                selectedServicePrefill={prefilledService}
+                onCloseModal={() => setConsultationModalOpen(false)}
+                theme={theme}
+              />
+            )}
           </div>
         </div>
       )}
