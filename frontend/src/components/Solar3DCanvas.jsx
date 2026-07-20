@@ -180,7 +180,46 @@ export default function Solar3DCanvas({
       houseGroup.add(postFront);
     });
 
-    // WINDOWS & DOORS
+    // WINDOWS & DOORS WITH DETAILED FRAME MULLIONS & SILLS
+    const sillMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.3 });
+
+    const createWindow = (w, h, x, y, z, isWallRotated = false) => {
+      const winGroup = new THREE.Group();
+      
+      const outerFrame = new THREE.Mesh(
+        isWallRotated ? new THREE.BoxGeometry(0.04, h + 0.1, w + 0.1) : new THREE.BoxGeometry(w + 0.1, h + 0.1, 0.04),
+        frameMat
+      );
+      outerFrame.position.set(x, y, isWallRotated ? z : z - 0.01);
+      
+      const glass = new THREE.Mesh(
+        isWallRotated ? new THREE.BoxGeometry(0.06, h, w) : new THREE.BoxGeometry(w, h, 0.06),
+        glassMat
+      );
+      glass.position.set(x, y, z);
+      
+      const vMullion = new THREE.Mesh(
+        isWallRotated ? new THREE.BoxGeometry(0.08, h, 0.03) : new THREE.BoxGeometry(0.03, h, 0.08),
+        frameMat
+      );
+      vMullion.position.set(x, y, z);
+
+      const hMullion = new THREE.Mesh(
+        isWallRotated ? new THREE.BoxGeometry(0.08, 0.03, w) : new THREE.BoxGeometry(w, 0.03, 0.08),
+        frameMat
+      );
+      hMullion.position.set(x, y + h * 0.15, z);
+
+      const sill = new THREE.Mesh(
+        isWallRotated ? new THREE.BoxGeometry(0.12, 0.04, w + 0.14) : new THREE.BoxGeometry(w + 0.14, 0.04, 0.12),
+        sillMat
+      );
+      sill.position.set(x, y - h / 2 - 0.02, isWallRotated ? z : z + 0.03);
+
+      winGroup.add(outerFrame, glass, vMullion, hMullion, sill);
+      return winGroup;
+    };
+
     // 1st Floor Main Entrance Door
     const door = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.7, 0.06), new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.4 }));
     door.position.set(1.4, 0.85, 2.41);
@@ -188,33 +227,30 @@ export default function Solar3DCanvas({
     doorHandle.position.set(1.1, 0.85, 2.45);
     houseGroup.add(door, doorHandle);
 
-    // 1st Floor Large Sliding Glass Window
-    const gWin1 = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.4, 0.08), glassMat);
-    gWin1.position.set(-1.4, 1.1, 2.41);
-    const gFrame1 = new THREE.Mesh(new THREE.BoxGeometry(1.7, 1.5, 0.04), frameMat);
-    gFrame1.position.set(-1.4, 1.1, 2.4);
-    houseGroup.add(gWin1, gFrame1);
+    // 1st Floor Main Detailed Window (Left Side)
+    houseGroup.add(createWindow(1.6, 1.3, -1.4, 1.1, 2.41));
 
-    // 2nd Floor Balcony Glass Sliding Door
-    const bWin = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.5, 0.08), glassMat);
-    bWin.position.set(-0.7, 3.0, 2.21);
-    const bFrame = new THREE.Mesh(new THREE.BoxGeometry(1.7, 1.6, 0.04), frameMat);
-    bFrame.position.set(-0.7, 3.0, 2.2);
-    houseGroup.add(bWin, bFrame);
+    // 2nd Floor Balcony Glass Exit Door (Left Side of Balcony)
+    const bDoorGroup = new THREE.Group();
+    const bDoorFrame = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.8, 0.04), frameMat);
+    bDoorFrame.position.set(-1.6, 3.1, 2.2);
+    const bDoorGlass = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.7, 0.06), glassMat);
+    bDoorGlass.position.set(-1.6, 3.1, 2.21);
+    const bDoorMullion = new THREE.Mesh(new THREE.BoxGeometry(0.04, 1.7, 0.08), frameMat);
+    bDoorMullion.position.set(-1.6, 3.1, 2.21);
+    const bDoorHandle = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.2, 0.08), new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.9 }));
+    bDoorHandle.position.set(-1.18, 3.0, 2.25);
+    bDoorGroup.add(bDoorFrame, bDoorGlass, bDoorMullion, bDoorHandle);
+    houseGroup.add(bDoorGroup);
+
+    // 2nd Floor Balcony Window (Right Side of Balcony)
+    houseGroup.add(createWindow(1.3, 1.2, 0.3, 3.1, 2.21));
 
     // Extension Window (Front)
-    const extWin = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.9, 0.08), glassMat);
-    extWin.position.set(3.4, 1.0, 2.01);
-    const extFrame = new THREE.Mesh(new THREE.BoxGeometry(1.3, 1.0, 0.04), frameMat);
-    extFrame.position.set(3.4, 1.0, 2.0);
-    houseGroup.add(extWin, extFrame);
+    houseGroup.add(createWindow(1.2, 0.9, 3.4, 1.0, 2.01));
 
     // 2nd Floor Side Window (Right Wall)
-    const sideWin = new THREE.Mesh(new THREE.BoxGeometry(0.08, 1.0, 1.4), glassMat);
-    sideWin.position.set(2.81, 3.1, 0);
-    const sideFrame = new THREE.Mesh(new THREE.BoxGeometry(0.04, 1.1, 1.5), frameMat);
-    sideFrame.position.set(2.8, 3.1, 0);
-    houseGroup.add(sideWin, sideFrame);
+    houseGroup.add(createWindow(1.4, 1.0, 2.81, 3.1, 0, true));
 
     // 6. BUILD PERFECTLY MATCHED PITCHED / FLAT ROOF WITH SOLAR PANELS
     buildRoofAndPanels(houseGroup, roofType, rowsCount, panelBrand, hasBattery, batteryCapacityKwh, isDark);
