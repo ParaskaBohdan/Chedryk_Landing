@@ -6,6 +6,7 @@ import Services from './components/Services';
 import StatsSection from './components/StatsSection';
 import DeyeAndLegal from './components/DeyeAndLegal';
 import StepProcess from './components/StepProcess';
+import Testimonials from './components/Testimonials';
 import ConsultationForm from './components/ConsultationForm';
 import ConfigurationForm from './components/ConfigurationForm';
 import ContactsPage from './pages/ContactsPage';
@@ -97,6 +98,7 @@ export default function App() {
                 onOpenConsultation={() => handleOpenConsultation()} 
                 theme={theme} 
               />
+              <Testimonials theme={theme} />
               <StepProcess 
                 onOpenConsultation={() => handleOpenConsultation()} 
                 theme={theme} 

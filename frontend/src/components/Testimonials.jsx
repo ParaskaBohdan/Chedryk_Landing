@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, MessageSquareQuote, UserCheck, MapPin } from 'lucide-react';
+import { Star, MessageSquareQuote, MapPin } from 'lucide-react';
 
 export default function Testimonials({ theme }) {
   const isDark = theme === 'dark';
@@ -56,20 +56,24 @@ export default function Testimonials({ theme }) {
   ];
 
   return (
-    <section id="reviews" className="py-16 sm:py-20 transition-colors duration-300 relative theme-bg-section border-t theme-border-subtle">
+    <section id="reviews" className={`py-16 sm:py-20 transition-colors duration-300 relative ${
+      isDark ? 'bg-slate-900 text-white' : 'bg-amber-50/40 text-slate-900'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border text-xs sm:text-sm font-semibold theme-badge">
-            <MessageSquareQuote className="w-4 h-4 theme-icon-accent" />
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3 sm:space-y-4">
+          <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-semibold uppercase tracking-widest ${
+            isDark ? 'border-amber-400/40 bg-amber-500/15 text-amber-300' : 'border-amber-300 bg-amber-100 text-amber-800'
+          }`}>
+            <MessageSquareQuote className="w-4 h-4 text-amber-500" />
             <span>Відгуки Наших Клієнтів</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-normal theme-text-primary">
-            Що Кажуть Про Нашу <span className="theme-text-accent">Роботу На Закарпатті</span>
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
+            Що Кажуть Про Нашу <span className="text-amber-500">Роботу На Закарпатті</span>
           </h2>
-          <p className="text-xs sm:text-base theme-text-secondary leading-relaxed">
+          <p className={`text-xs sm:text-base ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
             Враження та реальний досвід власників збудованих нами сонячних електростанцій та гібридних систем.
           </p>
         </div>
@@ -79,43 +83,44 @@ export default function Testimonials({ theme }) {
           {reviews.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col justify-between p-5 sm:p-6 rounded-3xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl theme-bg-card theme-border-card"
+              className={`flex flex-col justify-between p-5 sm:p-6 rounded-3xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+                isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white border-slate-200 shadow-md'
+              }`}
             >
               <div className="space-y-3.5">
-                {/* Top Bar: Stars & Verified Badge */}
+                {/* Top Bar: Stars */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1">
                     {[...Array(item.rating)].map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                     ))}
                   </div>
-
-                  <div className="flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full border theme-badge opacity-90">
-                    <UserCheck className="w-3.5 h-3.5 theme-icon-accent" />
-                    <span>Клієнт</span>
-                  </div>
                 </div>
 
                 {/* Comment Body */}
-                <p className="text-xs sm:text-sm leading-relaxed theme-text-secondary italic">
+                <p className={`text-xs sm:text-sm leading-relaxed italic ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                   "{item.comment}"
                 </p>
               </div>
 
               {/* Author Footer */}
-              <div className="pt-4 mt-4 border-t theme-border-subtle flex items-center justify-between gap-3">
+              <div className={`pt-4 mt-4 border-t flex items-center justify-between gap-3 ${
+                isDark ? 'border-slate-800/80' : 'border-slate-100'
+              }`}>
                 <div>
-                  <h3 className="font-bold text-xs sm:text-sm theme-text-primary">
+                  <h3 className={`font-bold text-xs sm:text-sm ${isDark ? 'text-white' : 'text-slate-900'}`}>
                     {item.name}
                   </h3>
-                  <div className="flex items-center gap-1 text-[11px] theme-text-muted mt-0.5">
-                    <MapPin className="w-3 h-3 theme-icon-accent flex-shrink-0" />
+                  <div className={`flex items-center gap-1 text-[11px] mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                    <MapPin className="w-3 h-3 text-amber-500 flex-shrink-0" />
                     <span>{item.location}</span>
                   </div>
                 </div>
 
                 <div className="text-right">
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-lg theme-badge block whitespace-nowrap">
+                  <span className={`text-[10px] font-semibold px-2.5 py-1 rounded-lg block whitespace-nowrap border ${
+                    isDark ? 'border-amber-500/30 bg-amber-500/10 text-amber-400' : 'border-amber-300 bg-amber-50 text-amber-900'
+                  }`}>
                     {item.system}
                   </span>
                 </div>
