@@ -45,25 +45,46 @@
   box-shadow: 0 6px 20px -4px rgba(15, 23, 42, 0.06);
 }
 
-/* Light Semi-transparent Radiant Orange Button */
-.btn-orange-bright {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.9) 0%, rgba(249, 115, 22, 0.85) 50%, rgba(245, 158, 11, 0.9) 100%);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(253, 230, 138, 0.5);
-  color: #ffffff;
+/* Elegant Dual-State Soft Amber / Radiant Orange Button */
+.light .btn-orange-bright {
+  background-color: rgba(254, 243, 199, 0.95);
+  border: 1px solid rgba(245, 158, 11, 0.8);
+  color: #78350f;
   font-weight: 700;
-  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.25);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  transition: all 0.25s ease;
+  box-shadow: 0 1px 3px rgba(245, 158, 11, 0.15);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.dark .btn-orange-bright {
+  background-color: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.6);
+  color: #fde68a;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Fallback if body has no theme class yet */
+.btn-orange-bright {
+  background-color: rgba(254, 243, 199, 0.95);
+  border: 1px solid rgba(245, 158, 11, 0.8);
+  color: #78350f;
+  font-weight: 700;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-orange-active,
 .btn-orange-bright:hover {
-  background: linear-gradient(135deg, rgba(254, 240, 138, 0.95) 0%, rgba(251, 146, 60, 0.95) 50%, rgba(249, 115, 22, 0.95) 100%);
-  border-color: rgba(253, 230, 138, 0.8);
-  color: #0f172a;
-  text-shadow: none;
-  box-shadow: 0 6px 25px rgba(245, 158, 11, 0.4);
+  background: linear-gradient(135deg, #d97706 0%, #ea580c 100%) !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35) !important;
   transform: translateY(-1px);
+}
+
+.btn-orange-bright:active {
+  transform: scale(0.97);
 }
 
 .glow-amber {

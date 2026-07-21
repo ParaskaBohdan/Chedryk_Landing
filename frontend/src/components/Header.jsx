@@ -276,15 +276,6 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
             >
               Розрахувати Вартість СЕС
             </Link>
-            <a 
-              href="tel:+380970000000" 
-              className={`flex items-center justify-center gap-2 py-3 rounded-xl border text-sm font-semibold ${
-                isDark ? 'border-slate-800 bg-slate-900 text-slate-200' : 'border-slate-300 bg-slate-200/80 text-slate-800'
-              }`}
-            >
-              <Phone className="w-4 h-4 text-amber-500" />
-              <span>Зателефонувати +380 (97) 000-00-00</span>
-            </a>
           </div>
         </div>
       )}

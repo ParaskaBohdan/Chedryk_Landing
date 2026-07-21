@@ -85,9 +85,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
           <button
             onClick={() => setStep(1)}
             className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-bold transition-all text-center ${
-              step === 1 
-                ? 'btn-orange-bright shadow-lg scale-[1.02]' 
-                : isDark ? 'bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700' : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'
+              step === 1 ? 'btn-orange-active scale-[1.02]' : 'btn-orange-bright'
             }`}
           >
             <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
@@ -100,9 +98,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
           <button
             onClick={() => setStep(2)}
             className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-bold transition-all text-center ${
-              step === 2 
-                ? 'btn-orange-bright shadow-lg scale-[1.02]' 
-                : isDark ? 'bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700' : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'
+              step === 2 ? 'btn-orange-active scale-[1.02]' : 'btn-orange-bright'
             }`}
           >
             <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
@@ -115,9 +111,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
           <button
             onClick={() => setStep(3)}
             className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-bold transition-all text-center ${
-              step === 3 
-                ? 'btn-orange-bright shadow-lg scale-[1.02]' 
-                : isDark ? 'bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700' : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'
+              step === 3 ? 'btn-orange-active scale-[1.02]' : 'btn-orange-bright'
             }`}
           >
             <Cpu className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />

@@ -64,7 +64,7 @@ export default function InteractiveSolarSchema({
             onClick={() => setViewMode('interactive_3d')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               viewMode === 'interactive_3d'
-                ? 'btn-orange-bright text-slate-950 shadow-md'
+                ? 'btn-orange-active shadow-md'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
@@ -77,7 +77,7 @@ export default function InteractiveSolarSchema({
             onClick={() => setViewMode('3d')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               viewMode === '3d'
-                ? 'btn-orange-bright text-slate-950 shadow-md'
+                ? 'btn-orange-active shadow-md'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
@@ -90,7 +90,7 @@ export default function InteractiveSolarSchema({
             onClick={() => setViewMode('2d')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               viewMode === '2d'
-                ? 'btn-orange-bright text-slate-950 shadow-md'
+                ? 'btn-orange-active shadow-md'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
