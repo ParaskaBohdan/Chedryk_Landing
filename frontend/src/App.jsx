@@ -10,6 +10,10 @@ import ConsultationForm from './components/ConsultationForm';
 import ConfigurationForm from './components/ConfigurationForm';
 import ContactsPage from './pages/ContactsPage';
 import CalculatorPage from './pages/CalculatorPage';
+import ServicesPage from './pages/ServicesPage';
+import ServiceDetailPage from './pages/ServiceDetailPage';
+import EquipmentPage from './pages/EquipmentPage';
+import TariffsPage from './pages/TariffsPage';
 import Footer from './components/Footer';
 import { X } from 'lucide-react';
 
@@ -107,6 +111,34 @@ export default function App() {
                 </div>
               </section>
             </>
+          } />
+
+          <Route path="/services" element={
+            <ServicesPage 
+              theme={theme} 
+              onOpenConsultation={(title) => handleOpenConsultation(title)} 
+            />
+          } />
+
+          <Route path="/services/:serviceId" element={
+            <ServiceDetailPage 
+              theme={theme} 
+              onOpenConsultation={(title) => handleOpenConsultation(title)} 
+            />
+          } />
+
+          <Route path="/equipment" element={
+            <EquipmentPage 
+              theme={theme} 
+              onOpenConsultation={() => handleOpenConsultation()} 
+            />
+          } />
+
+          <Route path="/tariffs" element={
+            <TariffsPage 
+              theme={theme} 
+              onOpenConsultation={() => handleOpenConsultation()} 
+            />
           } />
           
           <Route path="/calculator" element={

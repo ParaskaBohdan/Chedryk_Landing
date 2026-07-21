@@ -50,18 +50,18 @@ export default function Footer({ onOpenConsultation, theme }) {
           {/* Brand Col */}
           <div className="col-span-1 min-[340px]:col-span-2 md:col-span-2 space-y-3 sm:space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 flex items-center justify-center">
-                <img src="/logo.svg" alt="Логотип" className="w-full h-full object-contain" />
+              <div className="h-10 sm:h-12 flex items-center justify-center">
+                <img src="/logo-icon.png" alt="NOVA ENERGY_UA" className="h-full w-auto object-contain" />
               </div>
-              <div>
-                <h3 className={`font-bold text-base sm:text-lg flex items-center gap-1.5 ${
+              <div className="flex flex-col justify-center select-none">
+                <span className="font-black text-2xl tracking-tight leading-none text-amber-500">
+                  NOVA
+                </span>
+                <span className={`font-extrabold text-xs tracking-[0.22em] leading-tight ${
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}>
-                  Чедрик Іван <Sun className="w-4 h-4 text-amber-500" />
-                </h3>
-                <p className="text-xs font-semibold text-amber-500">
-                  Сонячна Енергетика & Електромонтаж (5 кВт – 1 МВт)
-                </p>
+                  ENERGY_UA
+                </span>
               </div>
             </div>
 
@@ -79,19 +79,24 @@ export default function Footer({ onOpenConsultation, theme }) {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => handleNavClick('/', 'services')} className="hover:text-amber-500 transition-colors cursor-pointer">
+                <Link to="/services" className="hover:text-amber-500 transition-colors">
                   Послуги
-                </button>
+                </Link>
+              </li>
+              <li>
+                <Link to="/equipment" className="hover:text-amber-500 transition-colors">
+                  Обладнання
+                </Link>
+              </li>
+              <li>
+                <Link to="/tariffs" className="hover:text-amber-500 transition-colors">
+                  Тарифи & Зелений Тариф
+                </Link>
               </li>
               <li>
                 <Link to="/calculator" className="hover:text-amber-500 transition-colors">
                   Калькулятор Вартності СЕС
                 </Link>
-              </li>
-              <li>
-                <button onClick={() => handleNavClick('/', 'deye-legal')} className="hover:text-amber-500 transition-colors cursor-pointer">
-                  Deye & Зелений Тариф
-                </button>
               </li>
               <li>
                 <Link to="/contacts" className="hover:text-amber-500 transition-colors">
