@@ -90,12 +90,12 @@ export default function ContactsPage({ theme }) {
                       Наш TikTok (Відеозвіти монтажів)
                     </p>
                     <a 
-                      href="https://tiktok.com" 
+                      href="https://www.tiktok.com/@novaenergy.ua" 
                       target="_blank" 
                       rel="noreferrer" 
                       className="text-sm font-bold text-amber-500 hover:underline flex items-center gap-1"
                     >
-                      <span>@chedryk_solar (Дивитися TikTok)</span>
+                      <span>@novaenergy.ua (Дивитися TikTok)</span>
                     </a>
                   </div>
                 </div>

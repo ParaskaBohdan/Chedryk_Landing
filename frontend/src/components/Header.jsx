@@ -148,7 +148,7 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           
           <a
-            href="https://tiktok.com" 
+            href="https://www.tiktok.com/@novaenergy.ua" 
             target="_blank" 
             rel="noreferrer"
             title="Переглянути TikTok Чедрика Івана"

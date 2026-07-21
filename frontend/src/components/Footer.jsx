@@ -118,7 +118,7 @@ export default function Footer({ onOpenConsultation, theme }) {
                 <Phone className="w-3.5 h-3.5 text-amber-500" />
                 <span>+380 (97) 000-00-00</span>
               </a>
-              <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-amber-500 transition-colors">
+              <a href="https://www.tiktok.com/@novaenergy.ua" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-amber-500 transition-colors">
                 <Video className="w-3.5 h-3.5 text-amber-500" />
                 <span>TikTok Чедрика Івана</span>
               </a>
