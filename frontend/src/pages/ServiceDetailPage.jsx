@@ -340,23 +340,75 @@ export default function ServiceDetailPage({ theme, onOpenConsultation }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {service.workSteps.map((step) => (
-              <div
-                key={step.step}
-                className={`p-5.5 rounded-2xl border transition-all duration-300 relative flex flex-col justify-between ${
-                  isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white border-slate-200 shadow-md'
-                }`}
-              >
-                <div>
-                  <div className="w-9 h-9 rounded-full bg-amber-500 text-slate-950 font-extrabold flex items-center justify-center text-sm mb-4 shadow-sm">
-                    {step.step < 10 ? `0${step.step}` : step.step}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
+            {service.workSteps.map((step, idx) => (
+              <div key={step.step} className="relative">
+                {/* Step Card */}
+                <div
+                  className={`p-5.5 rounded-2xl border transition-all duration-300 relative flex flex-col justify-between h-full ${
+                    isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white border-slate-200 shadow-md'
+                  }`}
+                >
+                  <div>
+                    {/* Parallel Circle + Title */}
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-9 h-9 rounded-full bg-amber-500 text-slate-950 font-extrabold flex items-center justify-center text-sm shadow-sm flex-shrink-0">
+                        {step.step < 10 ? `0${step.step}` : step.step}
+                      </div>
+                      <h3 className="font-bold text-base leading-tight">{step.title}</h3>
+                    </div>
+                    <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                      {step.description}
+                    </p>
                   </div>
-                  <h3 className="font-bold text-base mb-2">{step.title}</h3>
-                  <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                    {step.description}
-                  </p>
                 </div>
+
+                {/* Connecting Line to the next step */}
+                {idx < service.workSteps.length - 1 && (
+                  <>
+                    {/* Mobile view: Downward arrow */}
+                    <div className="absolute -bottom-11 left-1/2 -translate-x-1/2 z-20 md:hidden flex flex-col items-center pointer-events-none">
+                      <div className="w-0.5 h-9 bg-gradient-to-b from-amber-400 via-orange-400 to-amber-500" />
+                      <div className="w-2 h-2 border-r-2 border-b-2 border-amber-500 rotate-45 -mt-1" />
+                    </div>
+
+                    {/* Tablet view (2 columns) */}
+                    {/* Point right for odd steps */}
+                    {(idx + 1) % 2 !== 0 && (
+                      <div className="hidden md:flex lg:hidden absolute top-1/2 -translate-y-1/2 -right-6 w-6 h-0.5 items-center justify-end pointer-events-none z-20">
+                        <div className="w-full h-0.5 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500" />
+                        <div className="w-2 h-2 border-r-2 border-t-2 border-amber-500 rotate-45 -ml-1 flex-shrink-0" />
+                      </div>
+                    )}
+                    {/* Loop back to next row for even steps */}
+                    {(idx + 1) % 2 === 0 && (
+                      <div className="hidden md:block lg:hidden absolute top-full right-1/2 pointer-events-none z-20" style={{ width: 'calc(100% + 1.5rem)', height: '1.5rem' }}>
+                        <div className="w-full h-full border-r-2 border-b-2 border-orange-400 rounded-br-xl" />
+                        <div className="absolute top-full left-0 w-0.5 h-[1.5rem] bg-gradient-to-b from-orange-400 to-amber-500">
+                          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 border-r-2 border-b-2 border-amber-500 rotate-45 translate-y-[2px]" />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Desktop view (3 columns) */}
+                    {/* Point right for col 1 & col 2 */}
+                    {(idx + 1) % 3 !== 0 && (
+                      <div className="hidden lg:flex absolute top-1/2 -translate-y-1/2 -right-6 w-6 h-0.5 items-center justify-end pointer-events-none z-20">
+                        <div className="w-full h-0.5 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500" />
+                        <div className="w-2 h-2 border-r-2 border-t-2 border-amber-500 rotate-45 -ml-1 flex-shrink-0" />
+                      </div>
+                    )}
+                    {/* Loop back to next row for col 3 */}
+                    {(idx + 1) % 3 === 0 && (
+                      <div className="hidden lg:block absolute top-full right-1/2 pointer-events-none z-20" style={{ width: 'calc(200% + 3rem)', height: '1.5rem' }}>
+                        <div className="w-full h-full border-r-2 border-b-2 border-orange-400 rounded-br-xl" />
+                        <div className="absolute top-full left-0 w-0.5 h-[1.5rem] bg-gradient-to-b from-orange-400 to-amber-500">
+                          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 border-r-2 border-b-2 border-amber-500 rotate-45 translate-y-[2px]" />
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
             ))}
           </div>
@@ -383,15 +435,15 @@ export default function ServiceDetailPage({ theme, onOpenConsultation }) {
               {service.powerCalculations.points.map((pt, idx) => (
                 <div
                   key={idx}
-                  className={`p-6 rounded-2xl border space-y-2 ${
+                  className={`p-4.5 rounded-2xl border space-y-1.5 ${
                     isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white border-slate-200 shadow-md'
                   }`}
                 >
-                  <h3 className="font-bold text-base text-amber-500 flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                  <h3 className="font-bold text-sm text-amber-500 flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" />
                     <span>{pt.name}</span>
                   </h3>
-                  <p className={`text-xs sm:text-sm leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                  <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                     {pt.desc}
                   </p>
                 </div>
@@ -421,15 +473,15 @@ export default function ServiceDetailPage({ theme, onOpenConsultation }) {
               {service.batterySetupDetails.points.map((pt, idx) => (
                 <div
                   key={idx}
-                  className={`p-6 rounded-2xl border space-y-2 ${
+                  className={`p-4.5 rounded-2xl border space-y-1.5 ${
                     isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white border-slate-200 shadow-md'
                   }`}
                 >
-                  <h3 className="font-bold text-base text-emerald-500 flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                  <h3 className="font-bold text-sm text-emerald-500 flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
                     <span>{pt.name}</span>
                   </h3>
-                  <p className={`text-xs sm:text-sm leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                  <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                     {pt.desc}
                   </p>
                 </div>
