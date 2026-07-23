@@ -43,7 +43,7 @@ export default function ThankYouPage({ theme }) {
           <p className={`text-base sm:text-xl max-w-2xl mx-auto leading-relaxed ${
             isDark ? 'text-slate-300' : 'text-slate-600'
           }`}>
-            Наш фахівець зв'яжеться з вами **протягом 15–30 хвилин** для детальної консультації та розрахунку сонячної станції.
+            Наш фахівець зв'яжеться з вами **у вибраний вами зручний день та час** для детальної консультації та розрахунку сонячної станції.
           </p>
         </div>
 
@@ -60,7 +60,7 @@ export default function ThankYouPage({ theme }) {
               <span className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-500 font-extrabold flex items-center justify-center flex-shrink-0 text-xs mt-0.5 border border-amber-400/40">1</span>
               <div>
                 <strong className="block font-bold">Узгодження деталей об'єкта</strong>
-                <span className="opacity-80">Ми зателефонуємо за вказаним номером та уточнимо тип даху, потужність та ваші побажання щодо обладнання Deye / LiFePO4.</span>
+                <span className="opacity-80">Ми зателефонуємо у заброньований вами час та уточнимо тип даху, потужність та ваші побажання щодо обладнання Deye / LiFePO4.</span>
               </div>
             </li>
             <li className="flex items-start gap-3">
@@ -85,27 +85,39 @@ export default function ThankYouPage({ theme }) {
               href="https://www.tiktok.com/@novaenergy.ua"
               target="_blank"
               rel="noreferrer"
-              className="p-4 rounded-2xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 transition-all flex items-center gap-3 text-left group"
+              className={`p-4 rounded-2xl border transition-all flex items-center gap-3 text-left group ${
+                isDark
+                  ? 'border-slate-700 bg-slate-900/60 hover:bg-slate-900 text-white'
+                  : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-900 shadow-sm'
+              }`}
             >
-              <div className="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center flex-shrink-0">
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                isDark ? 'bg-amber-500/20 text-amber-400 border border-amber-400/30' : 'bg-amber-50 text-amber-600 border border-amber-200'
+              }`}>
                 <Video className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-xs font-bold text-rose-400 group-hover:underline">Наш TikTok @novaenergy.ua</p>
-                <p className="text-[11px] opacity-75">Дивіться реальні відеозвіти з монтажів СЕС</p>
+                <p className={`text-xs font-bold group-hover:underline ${isDark ? 'text-amber-400' : 'text-amber-600'}`}>Наш TikTok @novaenergy.ua</p>
+                <p className={`text-[11px] ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>Дивіться реальні відеозвіти з монтажів СЕС</p>
               </div>
             </a>
 
             <a
               href="tel:+380970000000"
-              className="p-4 rounded-2xl border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 transition-all flex items-center gap-3 text-left group"
+              className={`p-4 rounded-2xl border transition-all flex items-center gap-3 text-left group ${
+                isDark
+                  ? 'border-slate-700 bg-slate-900/60 hover:bg-slate-900 text-white'
+                  : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-900 shadow-sm'
+              }`}
             >
-              <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center flex-shrink-0">
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                isDark ? 'bg-amber-500/20 text-amber-400 border border-amber-400/30' : 'bg-amber-50 text-amber-600 border border-amber-200'
+              }`}>
                 <Phone className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-xs font-bold text-amber-500 group-hover:underline">Термінове запитання?</p>
-                <p className="text-[11px] opacity-75">Телефонуйте прямо зараз: +380 (97) 000-00-00</p>
+                <p className={`text-xs font-bold group-hover:underline ${isDark ? 'text-amber-400' : 'text-amber-600'}`}>Термінове запитання?</p>
+                <p className={`text-[11px] ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>Телефонуйте прямо зараз: +380 (97) 000-00-00</p>
               </div>
             </a>
           </div>

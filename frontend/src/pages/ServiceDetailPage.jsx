@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getServiceById } from '../data/servicesData';
-import ConsultationForm from '../components/ConsultationForm';
 import { 
   Sun, BatteryCharging, FileCheck, Home, Zap, 
   ArrowLeft, CheckCircle2, ShieldCheck, Cpu, Layers, FileText 
@@ -554,9 +553,22 @@ export default function ServiceDetailPage({ theme, onOpenConsultation }) {
           </div>
         </div>
 
-        {/* SECTION 4: Order Form Container */}
-        <div className="pt-10 border-t border-slate-700/60">
-          <ConsultationForm selectedServicePrefill={service.title} theme={theme} />
+        {/* SECTION 4: Order CTA Banner */}
+        <div className={`p-8 sm:p-10 rounded-3xl border text-center space-y-4 shadow-xl ${
+          isDark ? 'border-slate-800 bg-slate-950/80' : 'border-amber-200 bg-white'
+        }`}>
+          <h3 className="text-xl sm:text-2xl font-extrabold">Цікавить послуга "{service.title}"?</h3>
+          <p className={`text-xs sm:text-sm max-w-xl mx-auto ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+            Отримайте безкоштовний розрахунок та виїзд інженера на об'єкт.
+          </p>
+          <div className="pt-2">
+            <button
+              onClick={() => onOpenConsultation && onOpenConsultation(service.title)}
+              className="btn-orange-bright px-8 py-3.5 rounded-2xl font-extrabold text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-lg"
+            >
+              <span>Замовити Консультацію</span>
+            </button>
+          </div>
         </div>
 
       </div>

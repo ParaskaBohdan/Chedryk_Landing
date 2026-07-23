@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import DeyeAndLegal from '../components/DeyeAndLegal';
 import StepProcess from '../components/StepProcess';
-import ConsultationForm from '../components/ConsultationForm';
 import { Zap, ShieldCheck } from 'lucide-react';
 
 export default function TariffsPage({ theme, onOpenConsultation }) {
@@ -40,9 +39,22 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
         {/* Step Process for Connection */}
         <StepProcess theme={theme} />
 
-        {/* Consultation Form Section */}
-        <div className="pt-12 border-t border-slate-700/60">
-          <ConsultationForm theme={theme} />
+        {/* Bottom CTA Banner */}
+        <div className={`p-8 sm:p-10 rounded-3xl border text-center space-y-4 shadow-xl ${
+          isDark ? 'border-slate-800 bg-slate-950/80' : 'border-amber-200 bg-white'
+        }`}>
+          <h3 className="text-xl sm:text-2xl font-extrabold">Потрібна допомога з Зеленим Тарифом чи ТУ?</h3>
+          <p className={`text-xs sm:text-sm max-w-xl mx-auto ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+            Юридичний супровід та подача документів в Обленерго Закарпаття та Франківщини.
+          </p>
+          <div className="pt-2">
+            <button
+              onClick={() => onOpenConsultation && onOpenConsultation('Оформлення Зеленого Тарифу')}
+              className="btn-orange-bright px-8 py-3.5 rounded-2xl font-extrabold text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-lg"
+            >
+              <span>Отримати Консультацію щодо Документів</span>
+            </button>
+          </div>
         </div>
 
       </div>

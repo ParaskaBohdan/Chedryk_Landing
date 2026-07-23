@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { servicesData } from '../data/servicesData';
-import ConsultationForm from '../components/ConsultationForm';
 import { Sun, BatteryCharging, FileCheck, Home, Zap, ArrowRight, CheckCircle2, Wrench } from 'lucide-react';
 
 const iconMap = {
@@ -131,9 +130,22 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
           })}
         </div>
 
-        {/* Bottom Consultation Banner */}
-        <div className="mt-16 pt-12 border-t border-slate-700/60">
-          <ConsultationForm theme={theme} />
+        {/* Bottom CTA Banner */}
+        <div className={`mt-16 p-8 sm:p-10 rounded-3xl border text-center space-y-4 shadow-xl ${
+          isDark ? 'border-slate-800 bg-slate-950/80' : 'border-amber-200 bg-white'
+        }`}>
+          <h3 className="text-xl sm:text-2xl font-extrabold">Бажаєте замовити інженерні послуги?</h3>
+          <p className={`text-xs sm:text-sm max-w-xl mx-auto ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+            Отримайте кваліфіковану відповідь інженера щодо монтажу СЕС, підключення Deye або Зеленого Тарифу.
+          </p>
+          <div className="pt-2">
+            <button
+              onClick={() => onOpenConsultation && onOpenConsultation('Замовлення послуг')}
+              className="btn-orange-bright px-8 py-3.5 rounded-2xl font-extrabold text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-lg"
+            >
+              <span>Замовити Консультацію</span>
+            </button>
+          </div>
         </div>
 
       </div>
