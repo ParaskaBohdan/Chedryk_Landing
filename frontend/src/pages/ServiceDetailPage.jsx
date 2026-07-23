@@ -41,7 +41,7 @@ function SolarSliderCalculator({ isDark }) {
 
   return (
     <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 ${
-      isDark ? 'bg-slate-950/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
+      isDark ? 'bg-slate-800/80 border-slate-700/80 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
     }`}>
       <div className="flex items-center justify-between flex-wrap gap-2">
         <h3 className="font-extrabold text-lg sm:text-xl text-amber-500">
@@ -153,7 +153,7 @@ function BatterySliderCalculator({ isDark }) {
 
   return (
     <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 ${
-      isDark ? 'bg-slate-950/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
+      isDark ? 'bg-slate-800/80 border-slate-700/80 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
     }`}>
       <div className="flex items-center justify-between flex-wrap gap-2">
         <h3 className="font-extrabold text-lg sm:text-xl text-emerald-500">
@@ -260,7 +260,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation }) {
 
         {/* Hero Section Banner */}
         <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-3xl border ${
-          isDark ? 'bg-slate-950/90 border-slate-800' : 'bg-white border-slate-200 shadow-xl'
+          isDark ? 'bg-slate-800/80 border-slate-700/80' : 'bg-white border-slate-200 shadow-xl'
         }`}>
           
           <div className="lg:col-span-7 space-y-5">
@@ -345,7 +345,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation }) {
                 {/* Step Card */}
                 <div
                   className={`p-5.5 rounded-2xl border transition-all duration-300 relative flex flex-col justify-between h-full ${
-                    isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white border-slate-200 shadow-md'
+                    isDark ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' : 'bg-white border-slate-200 shadow-md'
                   }`}
                 >
                   <div>
@@ -434,8 +434,8 @@ export default function ServiceDetailPage({ theme, onOpenConsultation }) {
               {service.powerCalculations.points.map((pt, idx) => (
                 <div
                   key={idx}
-                  className={`p-4.5 rounded-2xl border space-y-1.5 ${
-                    isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white border-slate-200 shadow-md'
+                  className={`p-4.5 rounded-2xl border space-y-1.5 transition-all duration-300 ${
+                    isDark ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' : 'bg-white border-slate-200 shadow-md'
                   }`}
                 >
                   <h3 className="font-bold text-sm text-amber-500 flex items-center gap-2">
@@ -472,8 +472,8 @@ export default function ServiceDetailPage({ theme, onOpenConsultation }) {
               {service.batterySetupDetails.points.map((pt, idx) => (
                 <div
                   key={idx}
-                  className={`p-4.5 rounded-2xl border space-y-1.5 ${
-                    isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white border-slate-200 shadow-md'
+                  className={`p-4.5 rounded-2xl border space-y-1.5 transition-all duration-300 ${
+                    isDark ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' : 'bg-white border-slate-200 shadow-md'
                   }`}
                 >
                   <h3 className="font-bold text-sm text-emerald-500 flex items-center gap-2">
@@ -505,8 +505,8 @@ export default function ServiceDetailPage({ theme, onOpenConsultation }) {
             {service.equipmentSelection.map((item, idx) => (
               <div
                 key={idx}
-                className={`p-5 rounded-2xl border space-y-3 ${
-                  isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white border-slate-200 shadow-md'
+                className={`p-5 rounded-2xl border space-y-3 transition-all duration-300 ${
+                  isDark ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' : 'bg-white border-slate-200 shadow-md'
                 }`}
               >
                 <span className="px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30 inline-block">
@@ -537,8 +537,8 @@ export default function ServiceDetailPage({ theme, onOpenConsultation }) {
             {service.documentationProcess.map((doc, idx) => (
               <div
                 key={idx}
-                className={`p-5 rounded-2xl border space-y-2 ${
-                  isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white border-slate-200 shadow-md'
+                className={`p-5 rounded-2xl border space-y-2 transition-all duration-300 ${
+                  isDark ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' : 'bg-white border-slate-200 shadow-md'
                 }`}
               >
                 <h3 className="font-bold text-base flex items-center gap-2">
@@ -555,7 +555,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation }) {
 
         {/* SECTION 4: Order CTA Banner */}
         <div className={`p-8 sm:p-10 rounded-3xl border text-center space-y-4 shadow-xl ${
-          isDark ? 'border-slate-800 bg-slate-950/80' : 'border-amber-200 bg-white'
+          isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-300 bg-white'
         }`}>
           <h3 className="text-xl sm:text-2xl font-extrabold">Цікавить послуга "{service.title}"?</h3>
           <p className={`text-xs sm:text-sm max-w-xl mx-auto ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
