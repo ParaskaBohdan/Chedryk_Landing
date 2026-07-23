@@ -190,14 +190,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
 
   return (
     <div className={`py-12 sm:py-20 min-h-screen transition-colors duration-300 ${
-      isDark ? 'bg-slate-900 text-white' : 'bg-slate-100/80 text-slate-950'
+      isDark ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-950'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-14">
         
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-black rounded-full border ${
-            isDark ? 'border-amber-400/40 bg-amber-500/15 text-amber-300' : 'border-amber-400 bg-amber-100 text-slate-950'
+            isDark ? 'border-amber-400/40 bg-amber-500/15 text-amber-300' : 'border-amber-500 bg-amber-100 text-black'
           }`}>
             <Cpu className="w-4 h-4 text-amber-500" />
             <span>Офіційні Комплектуючі Nova Energy</span>
@@ -206,7 +206,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
             Каталог Комплектуючих <span className="text-amber-500">Nova Energy</span>
           </h1>
-          <p className={`text-sm sm:text-lg font-bold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>
+          <p className="text-sm sm:text-lg font-bold" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
             Сертифіковані сонячні панелі, акумулятори, інвертори та монтажні системи від провідних світових брендів Tier-1 з гарантією до 25 років.
           </p>
         </div>
@@ -220,10 +220,10 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
               activeTab === 'panels'
                 ? isDark
                   ? 'bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
-                  : 'bg-amber-100 border-2 border-amber-500 text-slate-950 shadow-xs'
+                  : 'bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
-                  : 'bg-white border border-slate-300 text-slate-900 hover:border-amber-500 hover:bg-amber-50'
+                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
             }`}
           >
             <Sun className="w-4 h-4 text-amber-500" />
@@ -237,10 +237,10 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
               activeTab === 'batteries'
                 ? isDark
                   ? 'bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
-                  : 'bg-amber-100 border-2 border-amber-500 text-slate-950 shadow-xs'
+                  : 'bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
-                  : 'bg-white border border-slate-300 text-slate-900 hover:border-amber-500 hover:bg-amber-50'
+                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
             }`}
           >
             <BatteryCharging className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -254,10 +254,10 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
               activeTab === 'inverters'
                 ? isDark
                   ? 'bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
-                  : 'bg-amber-100 border-2 border-amber-500 text-slate-950 shadow-xs'
+                  : 'bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
-                  : 'bg-white border border-slate-300 text-slate-900 hover:border-amber-500 hover:bg-amber-50'
+                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
             }`}
           >
             <Cpu className="w-4 h-4 text-sky-600 dark:text-sky-400" />
@@ -271,10 +271,10 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
               activeTab === 'mounting'
                 ? isDark
                   ? 'bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
-                  : 'bg-amber-100 border-2 border-amber-500 text-slate-950 shadow-xs'
+                  : 'bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
-                  : 'bg-white border border-slate-300 text-slate-900 hover:border-amber-500 hover:bg-amber-50'
+                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
             }`}
           >
             <Wrench className="w-4 h-4 text-purple-600 dark:text-purple-400" />
@@ -287,11 +287,11 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
           <div className="space-y-8 animate-fadeIn">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h2 className="text-2xl font-black flex items-center gap-2 text-slate-950 dark:text-white">
+                <h2 className="text-2xl font-black flex items-center gap-2" style={{ color: isDark ? '#ffffff' : '#000000' }}>
                   <Sun className="w-6 h-6 text-amber-500" />
                   Монокристалічні Сонячні Фотомодулі Tier-1
                 </h2>
-                <p className={`text-xs sm:text-sm mt-1 font-bold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>
+                <p className="text-xs sm:text-sm mt-1 font-bold" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
                   Офіційні прямі поставки з заводів. Технології N-Type TOPCon, Half-Cell та Glass-Glass.
                 </p>
               </div>
@@ -302,7 +302,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                 <div
                   key={panel.id}
                   className={`glass-panel p-6 sm:p-7 rounded-3xl border space-y-5 transition-all hover:border-amber-400/50 ${
-                    isDark ? 'border-slate-700 bg-slate-800/90 text-white' : 'border-slate-300 bg-white text-slate-950 shadow-md'
+                    isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-300 bg-white shadow-md'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3 border-b border-slate-700/60 pb-4">
@@ -310,12 +310,16 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                       <span className="text-xs font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
                         {panel.brand}
                       </span>
-                      <h3 className="text-lg sm:text-xl font-black mt-0.5 text-slate-950 dark:text-white">{panel.model}</h3>
-                      <p className="text-xs font-extrabold text-slate-900 dark:text-slate-300 mt-1">{panel.tech}</p>
+                      <h3 className="text-lg sm:text-xl font-black mt-0.5" style={{ color: isDark ? '#ffffff' : '#000000' }}>
+                        {panel.model}
+                      </h3>
+                      <p className="text-xs font-extrabold mt-1" style={{ color: isDark ? '#94a3b8' : '#000000' }}>
+                        {panel.tech}
+                      </p>
                     </div>
 
                     <span className={`px-3 py-1 rounded-full text-[11px] font-black border whitespace-nowrap ${
-                      isDark ? 'border-amber-400/40 bg-amber-500/20 text-amber-300' : 'border-amber-400 bg-amber-100 text-slate-950'
+                      isDark ? 'border-amber-400/40 bg-amber-500/20 text-amber-300' : 'border-amber-500 bg-amber-100 text-black'
                     }`}>
                       {panel.badge}
                     </span>
@@ -323,43 +327,55 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
 
                   {/* Specs Grid */}
                   <div className="grid grid-cols-2 gap-3 text-xs">
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-amber-50/60'}`}>
-                      <span className="block font-black text-xs text-slate-900 dark:text-slate-300 mb-0.5">Потужність:</span>
-                      <span className="font-black text-base text-slate-950 dark:text-amber-400">{panel.power}</span>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                      <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
+                        Потужність:
+                      </span>
+                      <span className="font-black text-base text-amber-600 dark:text-amber-400">{panel.power}</span>
                     </div>
 
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-amber-50/60'}`}>
-                      <span className="block font-black text-xs text-slate-900 dark:text-slate-300 mb-0.5">ККД Модуля:</span>
-                      <span className="font-black text-base text-slate-950 dark:text-emerald-400">{panel.efficiency}</span>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                      <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
+                        ККД Модуля:
+                      </span>
+                      <span className="font-black text-base text-emerald-700 dark:text-emerald-400">{panel.efficiency}</span>
                     </div>
 
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-amber-50/60'}`}>
-                      <span className="block font-black text-xs text-slate-900 dark:text-slate-300 mb-0.5">Габарити (В×Ш×Т):</span>
-                      <span className="font-black text-xs text-slate-950 dark:text-white">{panel.dimensions}</span>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                      <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
+                        Габарити (В×Ш×Т):
+                      </span>
+                      <span className="font-black text-xs" style={{ color: isDark ? '#ffffff' : '#000000' }}>
+                        {panel.dimensions}
+                      </span>
                     </div>
 
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-amber-50/60'}`}>
-                      <span className="block font-black text-xs text-slate-900 dark:text-slate-300 mb-0.5">Вага 1 панелі:</span>
-                      <span className="font-black text-xs text-slate-950 dark:text-white">{panel.weight}</span>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                      <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
+                        Вага 1 панелі:
+                      </span>
+                      <span className="font-black text-xs" style={{ color: isDark ? '#ffffff' : '#000000' }}>
+                        {panel.weight}
+                      </span>
                     </div>
                   </div>
 
                   {/* Features List */}
                   <div className="space-y-2 pt-2 border-t border-slate-700/60">
-                    <span className="text-xs font-black uppercase tracking-wider text-slate-950 dark:text-slate-400 block mb-1">
+                    <span className="text-xs font-black uppercase tracking-wider block mb-1" style={{ color: isDark ? '#94a3b8' : '#000000' }}>
                       Ключові переваги:
                     </span>
                     {panel.features.map((feat, idx) => (
                       <div key={idx} className="flex items-start gap-2 text-xs">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                        <span className="font-bold text-slate-950 dark:text-slate-100">{feat}</span>
+                        <span className="font-bold" style={{ color: isDark ? '#f8fafc' : '#000000' }}>{feat}</span>
                       </div>
                     ))}
                   </div>
 
                   {/* Warranty & Application Footer */}
                   <div className="pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs">
-                    <span className="font-extrabold text-slate-950 dark:text-slate-200 flex items-center gap-1">
+                    <span className="font-black flex items-center gap-1" style={{ color: isDark ? '#e2e8f0' : '#000000' }}>
                       <ShieldCheck className="w-4 h-4 text-amber-500" />
                       {panel.warranty}
                     </span>
@@ -384,11 +400,11 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
           <div className="space-y-8 animate-fadeIn">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h2 className="text-2xl font-black flex items-center gap-2 text-slate-950 dark:text-white">
+                <h2 className="text-2xl font-black flex items-center gap-2" style={{ color: isDark ? '#ffffff' : '#000000' }}>
                   <BatteryCharging className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
                   Системи Накопичення Енергії LiFePO4 (Літій-Залізо-Фосфат)
                 </h2>
-                <p className={`text-xs sm:text-sm mt-1 font-bold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>
+                <p className="text-xs sm:text-sm mt-1 font-bold" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
                   Безпечні акумулятори без ризику займання. Термін служби 6000+ циклів (15+ років).
                 </p>
               </div>
@@ -399,7 +415,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                 <div
                   key={bat.id}
                   className={`glass-panel p-6 sm:p-7 rounded-3xl border space-y-5 transition-all hover:border-emerald-400/50 ${
-                    isDark ? 'border-slate-700 bg-slate-800/90 text-white' : 'border-slate-300 bg-white text-slate-950 shadow-md'
+                    isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-300 bg-white shadow-md'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3 border-b border-slate-700/60 pb-4">
@@ -407,12 +423,16 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                       <span className="text-xs font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
                         {bat.brand}
                       </span>
-                      <h3 className="text-lg sm:text-xl font-black mt-0.5 text-slate-950 dark:text-white">{bat.series}</h3>
-                      <p className="text-xs font-extrabold text-slate-900 dark:text-slate-300 mt-1">{bat.chemistry}</p>
+                      <h3 className="text-lg sm:text-xl font-black mt-0.5" style={{ color: isDark ? '#ffffff' : '#000000' }}>
+                        {bat.series}
+                      </h3>
+                      <p className="text-xs font-extrabold mt-1" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
+                        {bat.chemistry}
+                      </p>
                     </div>
 
                     <span className={`px-3 py-1 rounded-full text-[11px] font-black border whitespace-nowrap ${
-                      isDark ? 'border-emerald-400/40 bg-emerald-500/20 text-emerald-300' : 'border-emerald-400 bg-emerald-100 text-slate-950'
+                      isDark ? 'border-emerald-400/40 bg-emerald-500/20 text-emerald-300' : 'border-emerald-500 bg-emerald-100 text-black'
                     }`}>
                       {bat.badge}
                     </span>
@@ -420,7 +440,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
 
                   {/* Available Capacities Badges */}
                   <div>
-                    <span className="text-xs font-black uppercase tracking-wider text-slate-950 dark:text-slate-400 block mb-2">
+                    <span className="text-xs font-black uppercase tracking-wider block mb-2" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
                       Доступна ємність блоків:
                     </span>
                     <div className="flex flex-wrap gap-2">
@@ -428,7 +448,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                         <span
                           key={cIdx}
                           className={`px-3 py-1 rounded-xl text-xs font-black border ${
-                            isDark ? 'border-emerald-400/40 bg-emerald-500/20 text-emerald-300' : 'border-slate-300 bg-emerald-50 text-slate-950'
+                            isDark ? 'border-emerald-400/40 bg-emerald-500/20 text-emerald-300' : 'border-emerald-400 bg-emerald-50 text-black'
                           }`}
                         >
                           {cap}
@@ -439,33 +459,37 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
 
                   {/* Specs Grid */}
                   <div className="grid grid-cols-2 gap-3 text-xs">
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-amber-50/60'}`}>
-                      <span className="block font-black text-xs text-slate-900 dark:text-slate-300 mb-0.5">Ресурс циклів:</span>
-                      <span className="font-black text-base text-slate-950 dark:text-emerald-400">{bat.cycles}</span>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                      <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
+                        Ресурс циклів:
+                      </span>
+                      <span className="font-black text-base text-emerald-700 dark:text-emerald-400">{bat.cycles}</span>
                     </div>
 
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-amber-50/60'}`}>
-                      <span className="block font-black text-xs text-slate-900 dark:text-slate-300 mb-0.5">Термін служби:</span>
-                      <span className="font-black text-base text-slate-950 dark:text-amber-400">{bat.lifespan}</span>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                      <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
+                        Термін служби:
+                      </span>
+                      <span className="font-black text-base text-amber-600 dark:text-amber-400">{bat.lifespan}</span>
                     </div>
                   </div>
 
                   {/* Features List */}
                   <div className="space-y-2 pt-2 border-t border-slate-700/60">
-                    <span className="text-xs font-black uppercase tracking-wider text-slate-950 dark:text-slate-400 block mb-1">
+                    <span className="text-xs font-black uppercase tracking-wider block mb-1" style={{ color: isDark ? '#94a3b8' : '#000000' }}>
                       Особливості та захист:
                     </span>
                     {bat.features.map((feat, idx) => (
                       <div key={idx} className="flex items-start gap-2 text-xs">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                        <span className="font-bold text-slate-950 dark:text-slate-100">{feat}</span>
+                        <span className="font-bold" style={{ color: isDark ? '#f8fafc' : '#000000' }}>{feat}</span>
                       </div>
                     ))}
                   </div>
 
                   {/* CTA Footer */}
                   <div className="pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs">
-                    <span className="font-extrabold text-slate-950 dark:text-slate-200 flex items-center gap-1">
+                    <span className="font-black flex items-center gap-1" style={{ color: isDark ? '#e2e8f0' : '#000000' }}>
                       <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                       Гарантія 5–10 років
                     </span>
@@ -490,11 +514,11 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
           <div className="space-y-8 animate-fadeIn">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h2 className="text-2xl font-black flex items-center gap-2 text-slate-950 dark:text-white">
+                <h2 className="text-2xl font-black flex items-center gap-2" style={{ color: isDark ? '#ffffff' : '#000000' }}>
                   <Cpu className="w-6 h-6 text-sky-600 dark:text-sky-400" />
                   Гібридні Інвертори Deye (Сертифіковано під Обленерго)
                 </h2>
-                <p className={`text-xs sm:text-sm mt-1 font-bold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>
+                <p className="text-xs sm:text-sm mt-1 font-bold" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
                   Найкращі гібридні інвертори з підтримкою генератора, асиметричним виходом та АВР 4 мс.
                 </p>
               </div>
@@ -505,7 +529,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                 <div
                   key={idx}
                   className={`glass-panel p-6 sm:p-7 rounded-3xl border space-y-5 transition-all hover:border-sky-400/50 ${
-                    isDark ? 'border-slate-700 bg-slate-800/90 text-white' : 'border-slate-300 bg-white text-slate-950 shadow-md'
+                    isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-300 bg-white shadow-md'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3 border-b border-slate-700/60 pb-4">
@@ -513,46 +537,49 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                       <span className="text-xs font-black uppercase tracking-wider text-sky-700 dark:text-sky-400">
                         {inv.power}
                       </span>
-                      <h3 className="text-lg font-black mt-0.5 text-slate-950 dark:text-white">{inv.model}</h3>
-                      <p className="text-xs font-extrabold text-slate-900 dark:text-amber-400 mt-1">{inv.phases}</p>
+                      <h3 className="text-lg font-black mt-0.5" style={{ color: isDark ? '#ffffff' : '#000000' }}>{inv.model}</h3>
+                      <p className="text-xs font-extrabold text-amber-600 dark:text-amber-400 mt-1">{inv.phases}</p>
                     </div>
 
-                    {/* High-Contrast Pill Badge */}
                     <span className={`px-3.5 py-1.5 rounded-full text-xs font-black border whitespace-nowrap ${
                       isDark 
                         ? 'border-sky-400/50 bg-sky-500/20 text-sky-300' 
-                        : 'border-sky-400 bg-sky-100 text-slate-950'
+                        : 'border-sky-400 bg-sky-100 text-black'
                     }`}>
                       {inv.backupSpeed}
                     </span>
                   </div>
 
                   <div className="space-y-2 text-xs">
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-amber-50/60'}`}>
-                      <span className="block font-black text-xs text-slate-900 dark:text-slate-300 mb-0.5">MPPT Контролери:</span>
-                      <span className="font-black text-base text-slate-950 dark:text-sky-300">{inv.mppt}</span>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                      <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
+                        MPPT Контролери:
+                      </span>
+                      <span className="font-black text-base" style={{ color: isDark ? '#7dd3fc' : '#000000' }}>{inv.mppt}</span>
                     </div>
 
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-amber-50/60'}`}>
-                      <span className="block font-black text-xs text-slate-900 dark:text-slate-300 mb-0.5">Рекомендоване призначення:</span>
-                      <span className="font-black text-xs sm:text-sm text-slate-950 dark:text-emerald-400">{inv.idealFor}</span>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                      <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
+                        Рекомендоване призначення:
+                      </span>
+                      <span className="font-black text-xs sm:text-sm" style={{ color: isDark ? '#34d399' : '#000000' }}>{inv.idealFor}</span>
                     </div>
                   </div>
 
                   <div className="space-y-2 pt-2 border-t border-slate-700/60">
-                    <span className="text-xs font-black uppercase tracking-wider text-slate-950 dark:text-slate-400 block mb-1">
+                    <span className="text-xs font-black uppercase tracking-wider block mb-1" style={{ color: isDark ? '#94a3b8' : '#000000' }}>
                       Функціональні можливості Deye:
                     </span>
                     {inv.features.map((feat, fIdx) => (
                       <div key={fIdx} className="flex items-start gap-2 text-xs">
                         <CheckCircle2 className="w-4 h-4 text-sky-600 dark:text-sky-400 flex-shrink-0 mt-0.5" />
-                        <span className="font-bold text-slate-950 dark:text-slate-100">{feat}</span>
+                        <span className="font-bold" style={{ color: isDark ? '#f8fafc' : '#000000' }}>{feat}</span>
                       </div>
                     ))}
                   </div>
 
                   <div className="pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs">
-                    <span className="font-extrabold text-slate-950 dark:text-slate-200 flex items-center gap-1">
+                    <span className="font-black flex items-center gap-1" style={{ color: isDark ? '#e2e8f0' : '#000000' }}>
                       <ShieldCheck className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                       Офіційна гарантія 5 років
                     </span>
@@ -577,11 +604,11 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
           <div className="space-y-8 animate-fadeIn">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h2 className="text-2xl font-black flex items-center gap-2 text-slate-950 dark:text-white">
+                <h2 className="text-2xl font-black flex items-center gap-2" style={{ color: isDark ? '#ffffff' : '#000000' }}>
                   <Wrench className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                   Кріпильні Системи & Захисна Автоматика DC/AC
                 </h2>
-                <p className={`text-xs sm:text-sm mt-1 font-bold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>
+                <p className="text-xs sm:text-sm mt-1 font-bold" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
                   Німецькі та українські сертифіковані метал-конструкції, сонячні кабелі з подвійною ізоляцією та ПЗІП захист.
                 </p>
               </div>
@@ -590,37 +617,37 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               
               <div className={`glass-panel p-6 rounded-3xl border space-y-4 ${
-                isDark ? 'border-slate-700 bg-slate-800/90 text-white' : 'border-slate-300 bg-white text-slate-950 shadow-md'
+                isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-300 bg-white shadow-md'
               }`}>
                 <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center border border-amber-400/40">
                   <Layers className="w-5 h-5" />
                 </div>
-                <h3 className="font-black text-base text-slate-950 dark:text-white">Алюмінієві Профілі & Кронштейни</h3>
-                <p className="text-xs font-bold text-slate-950 dark:text-slate-300 leading-relaxed">
+                <h3 className="font-black text-base" style={{ color: isDark ? '#ffffff' : '#000000' }}>Алюмінієві Профілі & Кронштейни</h3>
+                <p className="text-xs font-bold leading-relaxed" style={{ color: isDark ? '#e2e8f0' : '#000000' }}>
                   Первинний алюмінієвий сплав АД31 Т5. Нержавіючі шпильки М10 з ЕПДМ-ущільнювачами AISI 304 для металочерепиці, черепиці, профнастилу та фальцу.
                 </p>
               </div>
 
               <div className={`glass-panel p-6 rounded-3xl border space-y-4 ${
-                isDark ? 'border-slate-700 bg-slate-800/90 text-white' : 'border-slate-300 bg-white text-slate-950 shadow-md'
+                isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-300 bg-white shadow-md'
               }`}>
                 <div className="w-10 h-10 rounded-2xl bg-sky-500/20 text-sky-600 dark:text-sky-400 flex items-center justify-center border border-sky-400/40">
                   <Zap className="w-5 h-5" />
                 </div>
-                <h3 className="font-black text-base text-slate-950 dark:text-white">Сонячний Кабель Solar 6 мм²</h3>
-                <p className="text-xs font-bold text-slate-950 dark:text-slate-300 leading-relaxed">
+                <h3 className="font-black text-base" style={{ color: isDark ? '#ffffff' : '#000000' }}>Сонячний Кабель Solar 6 мм²</h3>
+                <p className="text-xs font-bold leading-relaxed" style={{ color: isDark ? '#e2e8f0' : '#000000' }}>
                   Спеціалізований кабель H1Z2Z2-K з лудженою міддю та подвійною ізоляцією. Стійкий до озону, УФ-випромінювання та перепадів температур від -40°C до +90°C.
                 </p>
               </div>
 
               <div className={`glass-panel p-6 rounded-3xl border space-y-4 ${
-                isDark ? 'border-slate-700 bg-slate-800/90 text-white' : 'border-slate-300 bg-white text-slate-950 shadow-md'
+                isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-300 bg-white shadow-md'
               }`}>
                 <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-400/40">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
-                <h3 className="font-black text-base text-slate-950 dark:text-white">Щити Захисту DC / AC (ПЗІП)</h3>
-                <p className="text-xs font-bold text-slate-950 dark:text-slate-300 leading-relaxed">
+                <h3 className="font-black text-base" style={{ color: isDark ? '#ffffff' : '#000000' }}>Щити Захисту DC / AC (ПЗІП)</h3>
+                <p className="text-xs font-bold leading-relaxed" style={{ color: isDark ? '#e2e8f0' : '#000000' }}>
                   Окремі герметичні щити IP65 з обмежувачами перенапруги (ПЗІП клас II), постійнострумовими запобіжниками 1000V DC та автоматами Schneider/ETI.
                 </p>
               </div>
@@ -631,10 +658,10 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
 
         {/* Clean Banner CTA at bottom */}
         <div className={`p-8 sm:p-10 rounded-3xl border text-center space-y-4 shadow-xl ${
-          isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-300 bg-white text-slate-950'
+          isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-300 bg-white'
         }`}>
-          <h3 className="text-xl sm:text-2xl font-black text-slate-950 dark:text-white">Потрібна допомога з підбором комплектуючих?</h3>
-          <p className={`text-xs sm:text-sm font-bold max-w-xl mx-auto ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>
+          <h3 className="text-xl sm:text-2xl font-black" style={{ color: isDark ? '#ffffff' : '#000000' }}>Потрібна допомога з підбором комплектуючих?</h3>
+          <p className="text-xs sm:text-sm font-bold max-w-xl mx-auto" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
             Наші інженери підберуть оптимальні сонячні панелі, акумулятори та інвертори під ваші потреби та бюджет.
           </p>
           <div className="pt-2">
