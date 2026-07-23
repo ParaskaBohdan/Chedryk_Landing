@@ -3,8 +3,11 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getServiceById } from '../data/servicesData';
 import { 
   Sun, BatteryCharging, FileCheck, Home, Zap, 
-  ArrowLeft, CheckCircle2, ShieldCheck, Cpu, Layers, FileText 
+  ArrowLeft, CheckCircle2, ShieldCheck, Cpu, Layers, FileText,
+  ArrowRight, DollarSign, Calculator, Compass
 } from 'lucide-react';
+import InteractiveSolarSchema from '../components/InteractiveSolarSchema';
+import CustomSelect from '../components/CustomSelect';
 
 const iconMap = {
   Sun: Sun,
@@ -14,7 +17,8 @@ const iconMap = {
   Zap: Zap
 };
 
-function SolarSliderCalculator({ isDark }) {
+function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration, theme, serviceId }) {
+  // States for Simple Calculator (serviceId !== 'roof-installation')
   const [monthlyConsumption, setMonthlyConsumption] = useState(450); // kWh/month
   const [coveragePercent, setCoveragePercent] = useState(100); // %
   const [selectedPanel, setSelectedPanel] = useState({ brand: 'Jinko Solar', watt: 585 });
@@ -26,19 +30,604 @@ function SolarSliderCalculator({ isDark }) {
     { brand: 'Trina Solar', watt: 615 }
   ];
 
-  // Calculations
+  // States for Wizard Calculator (serviceId === 'roof-installation')
+  const [roofType, setRoofType] = useState('pitched'); // 'pitched' | 'flat'
+  const [roofMaterial, setRoofMaterial] = useState(serviceId === 'ses-building' ? 'screw' : 'metal_tile'); // 'metal_tile' | 'tile' | 'corrugated' | 'seam' | 'flat_concrete'
+  const [roofAreaSqM, setRoofAreaSqM] = useState(110);
+  const [panelBrand, setPanelBrand] = useState('jinko'); // 'jinko' | 'risen' | 'longi'
+  const [rowsCount, setRowsCount] = useState(2); // 1 | 2 | 3
+  const [hasBattery, setHasBattery] = useState(true);
+  const [batteryCapacityKwh, setBatteryCapacityKwh] = useState(10); // 5 | 10 | 15 | 20
+  const [step, setStep] = useState(1);
+
+  const panelsData = {
+    jinko: { name: 'Jinko Solar', watt: 585, costPerPanel: 125 },
+    risen: { name: 'Risen Energy', watt: 550, costPerPanel: 110 },
+    longi: { name: 'Longi Solar', watt: 600, costPerPanel: 140 }
+  };
+
+  const selectedWizardPanel = panelsData[panelBrand] || panelsData.jinko;
+  const selectedPanelWattage = selectedWizardPanel.watt;
+  const selectedPanelCost = selectedWizardPanel.costPerPanel;
+
+  // Maximum panels that fit on the specified roof area
+  const maxPossiblePanels = Math.max(4, Math.floor(roofAreaSqM / 2.3));
+
+  // Active panel count: determined by rowsCount * 12, but capped at maxPossiblePanels
+  const rawPanelCount = rowsCount * 12;
+  const activePanelCount = Math.max(4, Math.min(rawPanelCount, maxPossiblePanels));
+
+  const totalKw = ((activePanelCount * selectedPanelWattage) / 1000).toFixed(1);
+
+  // Pricing calculations
+  const panelsCost = activePanelCount * selectedPanelCost;
+  const frameCost = activePanelCount * 30; // mounting frame cost per panel
+  const inverterPowerKw = Math.ceil(totalKw);
+  const inverterCost = Math.round(inverterPowerKw * 180);
+  const batteryCost = hasBattery ? Math.round(batteryCapacityKwh * 320) : 0;
+  const installationCost = Math.round((panelsCost + frameCost + inverterCost + batteryCost) * 0.15);
+
+  const totalEstimateUsd = panelsCost + frameCost + inverterCost + batteryCost + installationCost;
+  const annualGenKwh = Math.round(totalKw * 1180);
+
+  // Shared Calculations based on consumption sliders
   const effectiveConsumption = (monthlyConsumption * (coveragePercent / 100));
   const recommendedKw = Math.max(3, Math.ceil((effectiveConsumption / 115) * 10) / 10);
   const annualGen = Math.round(recommendedKw * 1180);
   const roofArea = Math.round(recommendedKw * 4.8);
-  const annualSavingsUah = Math.round(annualGen * 4.32);
-  const panelCount = Math.ceil((recommendedKw * 1000) / selectedPanel.watt);
+  const recommendedPanelCount = Math.ceil((recommendedKw * 1000) / (serviceId === 'roof-installation' ? selectedPanelWattage : selectedPanel.watt));
+  const panelCount = recommendedPanelCount;
 
   // Slider Fill Percentages
   const pctCons = ((monthlyConsumption - 100) / (2500 - 100)) * 100;
   const pctCov = ((coveragePercent - 50) / (150 - 50)) * 100;
+  const pctArea = ((roofAreaSqM - 30) / (300 - 30)) * 100;
   const trackBg = isDark ? '#334155' : '#cbd5e1';
 
+  const mountType = serviceId === 'ses-building' ? 'ground' : 'roof';
+
+  const getConfigSummaryText = () => {
+    if (mountType === 'ground') {
+      return `1) Наземна СЕС: ${roofType === 'pitched' ? 'На схилі' : 'На рівній ділянці'}, ${roofAreaSqM} м²\n2) Панелі: ${activePanelCount} шт. ${panelBrand.toUpperCase()} (${totalKw} кВт) у ${rowsCount} ряди\n3) Інвертор Deye ${inverterPowerKw} кВт ${hasBattery ? `+ АКБ ${batteryCapacityKwh} кВт·год` : ''}\n4) Кошторис: ~$${totalEstimateUsd.toLocaleString()}`;
+    }
+    return `1) Специфікація Даху: ${roofType === 'pitched' ? 'Скатий' : 'Плоский'}, ${roofAreaSqM} м²\n2) Панелі: ${activePanelCount} шт. ${panelBrand.toUpperCase()} (${totalKw} кВт) у ${rowsCount} ряди\n3) Інвертор Deye ${inverterPowerKw} кВт ${hasBattery ? `+ АКБ ${batteryCapacityKwh} кВт·год` : ''}\n4) Кошторис: ~$${totalEstimateUsd.toLocaleString()}`;
+  };
+
+  // -------------------------------------------------------------
+  // RENDER PATH 1: Full Step-by-Step Wizard for roof-installation
+  // -------------------------------------------------------------
+  if (serviceId === 'roof-installation' || serviceId === 'ses-building') {
+    return (
+      <div className="space-y-6">
+        {/* Wizard Step Navigation */}
+        <div className="grid grid-cols-3 gap-1.5 sm:gap-4 max-w-3xl mx-auto mb-6">
+          <button
+            onClick={() => setStep(1)}
+            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-extrabold transition-all cursor-pointer text-center ${
+              step === 1
+                ? isDark
+                  ? 'bg-amber-500/25 border-2 border-amber-400 text-[#fde68a] shadow-md scale-[1.02]'
+                  : 'bg-amber-100 border-2 border-amber-500 text-[#78350f] shadow-xs scale-[1.02]'
+                : isDark
+                  ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
+                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
+            }`}
+          >
+            {mountType === 'ground' ? (
+              <Compass className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+            ) : (
+              <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+            )}
+            <span>
+              <span className="hidden sm:inline">
+                {mountType === 'ground' ? '1. Параметри ділянки' : '1. Параметри даху'}
+              </span>
+              <span className="sm:hidden">
+                {mountType === 'ground' ? '1. Ділянка' : '1. Дах'}
+              </span>
+            </span>
+          </button>
+
+          <button
+            onClick={() => setStep(2)}
+            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-extrabold transition-all cursor-pointer text-center ${
+              step === 2
+                ? isDark
+                  ? 'bg-amber-500/25 border-2 border-amber-400 text-[#fde68a] shadow-md scale-[1.02]'
+                  : 'bg-amber-100 border-2 border-amber-500 text-[#78350f] shadow-xs scale-[1.02]'
+                : isDark
+                  ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
+                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
+            }`}
+          >
+            <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+            <span>
+              <span className="hidden sm:inline">2. Наповнення панелями</span>
+              <span className="sm:hidden">2. Панелі</span>
+            </span>
+          </button>
+
+          <button
+            onClick={() => setStep(3)}
+            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-extrabold transition-all cursor-pointer text-center ${
+              step === 3
+                ? isDark
+                  ? 'bg-amber-500/25 border-2 border-amber-400 text-[#fde68a] shadow-md scale-[1.02]'
+                  : 'bg-amber-100 border-2 border-amber-500 text-[#78350f] shadow-xs scale-[1.02]'
+                : isDark
+                  ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
+                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
+            }`}
+          >
+            <Cpu className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+            <span>
+              <span className="hidden sm:inline">3. Інвертор & АКБ</span>
+              <span className="sm:hidden">3. АКБ/Deye</span>
+            </span>
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Column: Form Steps & Calculation Summary */}
+          <div className="lg:col-span-6 space-y-6">
+            
+            {/* STEP 1 */}
+            {step === 1 && (
+              <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 ${
+                isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-200 bg-white shadow-md'
+              }`}>
+                <h3 className="text-base sm:text-lg font-bold flex items-center gap-2 text-amber-500">
+                  <Home className="w-5 h-5" /> {mountType === 'ground' ? 'Крок 1: Оберіть тип конструкції, грунт та споживання' : 'Крок 1: Оберіть тип, покриття та споживання'}
+                </h3>
+
+                {/* Roof Shape / Ground Slope */}
+                {mountType === 'ground' ? (
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                      Тип ділянки та нахил:
+                    </label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setRoofType('pitched');
+                        }}
+                        className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
+                          roofType === 'pitched'
+                            ? 'btn-orange-bright shadow-md'
+                            : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
+                        }`}
+                      >
+                        <p className="font-bold text-sm">Південний схил (~15°)</p>
+                        <p className="text-[11px] opacity-75 mt-1">Природний кут нахилу конструкції</p>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setRoofType('flat');
+                        }}
+                        className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
+                          roofType === 'flat'
+                            ? 'btn-orange-bright shadow-md'
+                            : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
+                        }`}
+                      >
+                        <p className="font-bold text-sm">Рівна ділянка (0°–5°)</p>
+                        <p className="text-[11px] opacity-75 mt-1">Вимагає посилених опор стійки</p>
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                      Форма та нахил даху:
+                    </label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setRoofType('pitched');
+                          setRoofMaterial('metal_tile');
+                        }}
+                        className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
+                          roofType === 'pitched'
+                            ? 'btn-orange-bright shadow-md'
+                            : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
+                        }`}
+                      >
+                        <p className="font-bold text-sm">Скатий / Нахилений (~30°)</p>
+                        <p className="text-[11px] opacity-75 mt-1">Класичний дах будинку</p>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setRoofType('flat');
+                          setRoofMaterial('flat_concrete');
+                        }}
+                        className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
+                          roofType === 'flat'
+                            ? 'btn-orange-bright shadow-md'
+                            : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
+                        }`}
+                      >
+                        <p className="font-bold text-sm">Плоский дах (0°–5°)</p>
+                        <p className="text-[11px] opacity-75 mt-1">Потребує баластних ферм 15°</p>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Roof Material / Ground Foundation */}
+                {mountType === 'ground' ? (
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                      Тип грунту (Визначає спосіб монтажу):
+                    </label>
+                    <CustomSelect
+                      value={roofMaterial}
+                      onChange={(val) => setRoofMaterial(val)}
+                      options={[
+                        { value: 'screw', label: 'Геошурупи (Сталеві гвинтові палі)' },
+                        { value: 'concrete', label: 'Бетоновані палі (Для кам\'янистих грунтів)' },
+                        { value: 'hammered', label: 'Забивні палі (Гаряче цинкування)' }
+                      ]}
+                      icon={Layers}
+                      theme={theme}
+                    />
+                  </div>
+                ) : (
+                  roofType === 'pitched' && (
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                        Матеріал покриття (Визначає тип кріплення):
+                      </label>
+                      <CustomSelect
+                        value={roofMaterial}
+                        onChange={(val) => setRoofMaterial(val)}
+                        options={[
+                          { value: 'metal_tile', label: 'Металочерепиця (Кронштейни-гачки)' },
+                          { value: 'tile', label: 'Натуральна керамічна черепиця (Шпильки M10)' },
+                          { value: 'corrugated', label: 'Профнастил (Міні-рейки з ЕПДМ)' },
+                          { value: 'seam', label: 'Фальцева покрівля (Безпрокольні затискачі)' }
+                        ]}
+                        icon={Layers}
+                        theme={theme}
+                      />
+                    </div>
+                  )
+                )}
+
+                {/* Sliders Block */}
+                <div className="space-y-4 pt-3 border-t border-slate-700/40">
+                  {/* Monthly power consumption */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs sm:text-sm font-bold">
+                      <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>Місячне споживання електроенергії:</span>
+                      <span className="text-amber-500 font-extrabold text-base">{monthlyConsumption} кВт·год/міс</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="100"
+                      max="2500"
+                      step="25"
+                      value={monthlyConsumption}
+                      onChange={(e) => setMonthlyConsumption(Number(e.target.value))}
+                      style={{
+                        background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${pctCons}%, ${trackBg} ${pctCons}%, ${trackBg} 100%)`
+                      }}
+                      className="w-full h-2.5 rounded-lg appearance-none cursor-pointer accent-amber-500 transition-all"
+                    />
+                  </div>
+
+                  {/* Target grid compensation */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs sm:text-sm font-bold">
+                      <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>Цільовий рівень компенсації мережі:</span>
+                      <span className="text-amber-500 font-extrabold text-base">{coveragePercent}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="50"
+                      max="150"
+                      step="5"
+                      value={coveragePercent}
+                      onChange={(e) => setCoveragePercent(Number(e.target.value))}
+                      style={{
+                        background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${pctCov}%, ${trackBg} ${pctCov}%, ${trackBg} 100%)`
+                      }}
+                      className="w-full h-2.5 rounded-lg appearance-none cursor-pointer accent-amber-500 transition-all"
+                    />
+                  </div>
+
+                  {/* Roof Area slider */}
+                  <div className="space-y-3 pt-2">
+                    <div className="flex justify-between items-center">
+                      <label className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                        {mountType === 'ground' ? 'Корисна площа ділянки під панелі:' : 'Корисна площа даху під панелі:'}
+                      </label>
+                      <span className="text-xl font-extrabold text-amber-500">{roofAreaSqM} м²</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="30"
+                      max="300"
+                      step="10"
+                      value={roofAreaSqM}
+                      onChange={(e) => setRoofAreaSqM(Number(e.target.value))}
+                      style={{
+                        background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${pctArea}%, ${trackBg} ${pctArea}%, ${trackBg} 100%)`
+                      }}
+                      className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-amber-500 transition-all"
+                    />
+                    <p className="text-xs opacity-75">
+                      Максимально вміщує близько <strong className="text-amber-500">{maxPossiblePanels} шт.</strong> сонячних панелей.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-2 flex justify-end">
+                  <button
+                    onClick={() => setStep(2)}
+                    className="btn-orange-bright px-6 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 cursor-pointer"
+                  >
+                    <span>Перейти до вибору панелей</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* STEP 2 */}
+            {step === 2 && (
+              <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 ${
+                isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-200 bg-white shadow-md'
+              }`}>
+                <h3 className="text-base sm:text-lg font-bold flex items-center gap-2 text-amber-500">
+                  <Layers className="w-5 h-5" /> Крок 2: Наповнення панелями & Кількість рядів
+                </h3>
+
+                {/* Panel Brand */}
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                    Бренд сонячних фотомодулів (Tier-1):
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { id: 'jinko', name: 'Jinko Solar', watt: '585W', desc: 'N-Type ККД 22.6%' },
+                      { id: 'risen', name: 'Risen Energy', watt: '550W', desc: 'Titanium Перформанс' },
+                      { id: 'longi', name: 'Longi Solar', watt: '600W', desc: 'Hi-MO X6 Топ ККД' }
+                    ].map((b) => (
+                      <button
+                        key={b.id}
+                        type="button"
+                        onClick={() => setPanelBrand(b.id)}
+                        className={`p-3 rounded-2xl border text-left transition-all cursor-pointer ${
+                          panelBrand === b.id
+                            ? 'btn-orange-bright shadow-md'
+                            : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
+                        }`}
+                      >
+                        <p className="font-bold text-xs sm:text-sm">{b.name}</p>
+                        <p className="text-xs text-amber-500 font-extrabold mt-0.5">{b.watt}</p>
+                        <p className="text-[10px] opacity-75 mt-1">{b.desc}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Rows Layout */}
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                    Варіанти розміщення на даху (Кількість рядів):
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { r: 1, title: '1 Ряд', desc: '~12 панелей' },
+                      { r: 2, title: '2 Ряди', desc: '~24 панелі' },
+                      { r: 3, title: '3-4 Ряди', desc: '~36-48 панелей' }
+                    ].map((rowOpt) => (
+                      <button
+                        key={rowOpt.r}
+                        type="button"
+                        onClick={() => setRowsCount(rowOpt.r)}
+                        className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
+                          rowsCount === rowOpt.r
+                            ? 'btn-orange-bright shadow-md'
+                            : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
+                        }`}
+                      >
+                        <p className="font-bold text-sm">{rowOpt.title}</p>
+                        <p className="text-[11px] opacity-75 mt-0.5">{rowOpt.desc}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-2 flex justify-between">
+                  <button
+                    onClick={() => setStep(1)}
+                    className="px-4 py-2.5 rounded-xl border border-slate-700 text-xs font-semibold cursor-pointer"
+                  >
+                    Назад
+                  </button>
+                  <button
+                    onClick={() => setStep(3)}
+                    className="btn-orange-bright px-6 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 cursor-pointer"
+                  >
+                    <span>Перейти до інвертора та АКБ</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* STEP 3 */}
+            {step === 3 && (
+              <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 ${
+                isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-200 bg-white shadow-md'
+              }`}>
+                <h3 className="text-base sm:text-lg font-bold flex items-center gap-2 text-amber-500">
+                  <Cpu className="w-5 h-5" /> Крок 3: Гібридний інвертор Deye & Акумулятори
+                </h3>
+
+                {/* Battery Toggle */}
+                <div className={`p-4 rounded-2xl border flex items-center justify-between ${
+                  isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-200 bg-slate-50'
+                }`}>
+                  <div>
+                    <h4 className="font-bold text-sm">Додати акумуляторний блок резервного живлення?</h4>
+                    <p className="text-xs opacity-75">Автоматичний ввід резерву (АВР 4 мс) при відключеннях світла.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setHasBattery(!hasBattery)}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      hasBattery ? 'bg-emerald-500 text-slate-950' : 'bg-slate-700 text-slate-300'
+                    }`}
+                  >
+                    {hasBattery ? 'Так, з АКБ' : 'Ні, лише СЕС'}
+                  </button>
+                </div>
+
+                {/* Battery Capacity */}
+                {hasBattery && (
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                      Ємність накопичувачів LiFePO4 Deye / EcoFlow:
+                    </label>
+                    <div className="grid grid-cols-4 gap-2.5">
+                      {[5, 10, 15, 20].map((cap) => (
+                        <button
+                          key={cap}
+                          type="button"
+                          onClick={() => setBatteryCapacityKwh(cap)}
+                          className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${
+                            batteryCapacityKwh === cap
+                              ? 'btn-orange-bright shadow-md'
+                              : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
+                          }`}
+                        >
+                          <p className="font-bold text-sm">{cap} кВт·год</p>
+                          <p className="text-[10px] opacity-75">{cap * 2} год резерву</p>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="pt-2 flex justify-between">
+                  <button
+                    onClick={() => setStep(2)}
+                    className="px-4 py-2.5 rounded-xl border border-slate-700 text-xs font-semibold cursor-pointer"
+                  >
+                    Назад
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (onOpenConfiguration) {
+                        onOpenConfiguration(getConfigSummaryText());
+                      } else if (onOpenConsultation) {
+                        onOpenConsultation(getConfigSummaryText());
+                      }
+                    }}
+                    className="btn-orange-bright px-6 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 glow-amber cursor-pointer"
+                  >
+                    <span>Надіслати конфігурацію майстру</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* RESULTS SUMMARY CARD */}
+            <div className={`p-6 sm:p-7 rounded-3xl border space-y-4 shadow-xl ${
+              isDark ? 'border-slate-700 bg-slate-800/80' : 'border-slate-200 bg-white'
+            }`}>
+              <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-amber-500 border-b border-slate-700/60 pb-3">
+                <span className="flex items-center gap-2">
+                  <Zap className="w-4 h-4" /> КАЛЬКУЛЯЦІЯ ПО ОБ'ЄКТУ
+                </span>
+                <span className="text-sm font-black text-amber-500">{totalKw} КВТ СЕС</span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs leading-relaxed">
+                {/* Left: Recommended based on consumption */}
+                <div className="space-y-1.5 border-b sm:border-b-0 sm:border-r border-slate-700/40 pb-3 sm:pb-0 sm:pr-4">
+                  <h4 className="font-extrabold text-amber-500 uppercase text-[10px] tracking-wider mb-1">Рекомендовано за споживанням:</h4>
+                  <div>
+                    <span className="opacity-70 block">Необхідна потужність:</span>
+                    <span className="font-extrabold text-sm text-amber-300">{recommendedKw} кВт</span>
+                  </div>
+                  <div>
+                    <span className="opacity-70 block">Кількість панелей ({selectedPanelWattage}W):</span>
+                    <span className="font-extrabold text-sm">{recommendedPanelCount} шт.</span>
+                  </div>
+                  <div>
+                    <span className="opacity-70 block">{mountType === 'ground' ? 'Площа ділянки:' : 'Площа даху:'}</span>
+                    <span className="font-extrabold text-sm">{roofArea} м²</span>
+                  </div>
+                  <div>
+                    <span className="opacity-70 block">Річна генерація:</span>
+                    <span className="font-extrabold text-sm text-emerald-400">~{annualGen.toLocaleString()} кВт·год</span>
+                  </div>
+                </div>
+
+                {/* Right: Selected configuration in 3D */}
+                <div className="space-y-1.5 sm:pl-2">
+                  <div>
+                    <span className="opacity-70 block">Потужність СЕС:</span>
+                    <span className="font-extrabold text-sm text-amber-300">{totalKw} кВт</span>
+                  </div>
+                  <div>
+                    <span className="opacity-70 block">Кількість панелей ({selectedPanelWattage}W):</span>
+                    <span className="font-extrabold text-sm">{activePanelCount} шт.</span>
+                  </div>
+                  <div>
+                    <span className="opacity-70 block">Інвертор Deye:</span>
+                    <span className="font-extrabold text-sm text-sky-400">{inverterPowerKw} кВт (3-фази)</span>
+                  </div>
+                  {hasBattery && (
+                    <div>
+                      <span className="opacity-70 block">АКБ накопичувач:</span>
+                      <span className="font-extrabold text-sm text-purple-400">{batteryCapacityKwh} кВт·год</span>
+                    </div>
+                  )}
+                  <div className="pt-1.5 border-t border-slate-700/20">
+                    <span className="opacity-70 block">Орієнтовний кошторис:</span>
+                    <span className="font-black text-base text-amber-400">~${totalEstimateUsd.toLocaleString()}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Right Column: Visualizer */}
+          <div className="lg:col-span-6">
+            <InteractiveSolarSchema
+              roofType={roofType}
+              roofMaterial={roofMaterial}
+              rowsCount={rowsCount}
+              panelBrand={panelBrand}
+              panelCount={activePanelCount}
+              totalKw={totalKw}
+              inverterPowerKw={inverterPowerKw}
+              hasBattery={hasBattery}
+              batteryCapacityKwh={batteryCapacityKwh}
+              theme={theme}
+              mountType={mountType}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // -------------------------------------------------------------
+  // RENDER PATH 2: Simple Slider-based Calculator (other services)
+  // -------------------------------------------------------------
   return (
     <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 ${
       isDark ? 'bg-slate-800/80 border-slate-700/80 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
@@ -209,7 +798,7 @@ function BatterySliderCalculator({ isDark }) {
   );
 }
 
-export default function ServiceDetailPage({ theme, onOpenConsultation }) {
+export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenConfiguration }) {
   const { serviceId } = useParams();
   const navigate = useNavigate();
   const isDark = theme === 'dark';
@@ -427,7 +1016,13 @@ export default function ServiceDetailPage({ theme, onOpenConsultation }) {
             </div>
 
             {/* Interactive Solar Slider Widget */}
-            <SolarSliderCalculator isDark={isDark} />
+            <SolarSliderCalculator 
+              isDark={isDark} 
+              onOpenConsultation={onOpenConsultation} 
+              onOpenConfiguration={onOpenConfiguration} 
+              theme={theme} 
+              serviceId={service.id} 
+            />
 
             {/* Technical points below slider */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">

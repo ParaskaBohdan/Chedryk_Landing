@@ -13,7 +13,8 @@ export default function InteractiveSolarSchema({
   inverterPowerKw = 15,
   hasBattery = true,
   batteryCapacityKwh = 10,
-  theme = 'dark'
+  theme = 'dark',
+  mountType = 'roof'
 }) {
   const isDark = theme === 'dark';
   const [viewMode, setViewMode] = useState('interactive_3d'); // 'interactive_3d' | '3d' | '2d'
@@ -29,7 +30,11 @@ export default function InteractiveSolarSchema({
     tile: 'Натуральна черепиця (Шпильки M10)',
     corrugated: 'Профнастил (Міні-рейки з ЕПДМ)',
     seam: 'Фальцева покрівля (Затискачі без проколу)',
-    flat_concrete: 'Плоский бетон (Баластні трикутні опори 15°)'
+    flat_concrete: 'Плоский бетон (Баластні трикутні опори 15°)',
+    // ground mount types
+    screw: 'Геошурупи (Сталеві гвинтові палі)',
+    concrete: 'Бетоновані палі (Для кам\'янистих грунтів)',
+    hammered: 'Забивні палі (Стійкість до пучення)'
   };
 
   const currentRowsKey = Math.min(rowsCount, 3);
@@ -49,11 +54,11 @@ export default function InteractiveSolarSchema({
               Візуалізатор Об'єкта
             </span>
             <span className={`text-xs font-bold ${textColor}`}>
-              {roofType === 'pitched' ? 'Скатий дах' : 'Плоский дах'} • {totalKw} кВт
+              {mountType === 'ground' ? 'Наземна СЕС' : roofType === 'pitched' ? 'Скатий дах' : 'Плоский дах'} • {totalKw} кВт
             </span>
           </div>
           <p className="text-xs text-amber-500 font-semibold mt-1">
-            Кріплення: {materialNames[roofMaterial]}
+            {mountType === 'ground' ? 'Фундамент' : 'Кріплення'}: {materialNames[roofMaterial]}
           </p>
         </div>
 
@@ -72,18 +77,20 @@ export default function InteractiveSolarSchema({
             <span>🎮 3D Інтерактив (360°)</span>
           </button>
 
-          <button
-            type="button"
-            onClick={() => setViewMode('3d')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-              viewMode === '3d'
-                ? 'btn-orange-active shadow-md'
-                : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            <Image className="w-3.5 h-3.5" />
-            <span>📸 3D Рендер</span>
-          </button>
+          {mountType !== 'ground' && (
+            <button
+              type="button"
+              onClick={() => setViewMode('3d')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                viewMode === '3d'
+                  ? 'btn-orange-active shadow-md'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Image className="w-3.5 h-3.5" />
+              <span>📸 3D Рендер</span>
+            </button>
+          )}
 
           <button
             type="button"
@@ -125,6 +132,7 @@ export default function InteractiveSolarSchema({
                 hasBattery={hasBattery}
                 batteryCapacityKwh={batteryCapacityKwh}
                 theme={theme}
+                mountType={mountType}
               />
             </motion.div>
           ) : viewMode === '3d' ? (
@@ -191,7 +199,44 @@ export default function InteractiveSolarSchema({
 
                 <rect width="100%" height="100%" fill="url(#bpGrid)" />
 
-                {roofType === 'pitched' ? (
+                {mountType === 'ground' ? (
+                  <g>
+                    <rect x="100" y="270" width="450" height="160" fill="#0f172a" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
+                    <text x="325" y="375" fill="#64748b" fontSize="13" textAnchor="middle" fontFamily="monospace">НАЗЕМНА СТАЛЕВА КОНСТРУКЦІЯ (КУТ 30°)</text>
+                    <line x1="80" y1="270" x2="470" y2="270" stroke="#10b981" strokeWidth="4" />
+                    <text x="90" y="295" fill="#10b981" fontSize="11" fontWeight="bold">РІВЕНЬ ГРУНТУ</text>
+
+                    {Array.from({ length: Math.min(rowsCount, 3) }).map((_, rIdx) => {
+                      const rx = 130 + rIdx * 125;
+                      const rowPanels = Math.ceil(panelCount / rowsCount);
+
+                      return (
+                        <g key={rIdx}>
+                          {/* Back taller support leg */}
+                          <line x1={rx + 20} y1="270" x2={rx + 20} y2="190" stroke="#64748b" strokeWidth="3" />
+                          
+                          {/* Front shorter support leg */}
+                          <line x1={rx + 60} y1="270" x2={rx + 60} y2="220" stroke="#64748b" strokeWidth="3" />
+                          
+                          {/* Diagonal support beam */}
+                          <line x1={rx + 10} y1="182" x2={rx + 75} y2="225" stroke="#475569" strokeWidth="4" />
+
+                          {/* Solar panel (Tilted blue line) */}
+                          <line x1={rx + 5} y1="178" x2={rx + 80} y2="228" stroke="#38bdf8" strokeWidth="8" strokeLinecap="round" />
+                          <line x1={rx + 5} y1="178" x2={rx + 80} y2="228" stroke="#0284c7" strokeWidth="4" strokeLinecap="round" />
+
+                          {/* Horizontal Row Label Badge (Positioned above the rack) */}
+                          <g>
+                            <rect x={rx - 15} y="125" width="110" height="26" fill="#1e293b" stroke="#fbbf24" strokeWidth="2" rx="6" />
+                            <text x={rx + 40} y="142" fill="#ffffff" fontSize="11" fontWeight="bold" textAnchor="middle">
+                              Ряд {rIdx + 1} ({rowPanels} шт)
+                            </text>
+                          </g>
+                        </g>
+                      );
+                    })}
+                  </g>
+                ) : roofType === 'pitched' ? (
                   <g>
                     <polygon points="120,280 520,280 520,420 120,420" fill="#0f172a" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
                     <text x="320" y="360" fill="#64748b" fontSize="13" textAnchor="middle" fontFamily="monospace">АРХІТЕКТУРНИЙ ПРОФІЛЬ САКТНОГО ДАХУ (~30°)</text>
@@ -261,7 +306,7 @@ export default function InteractiveSolarSchema({
       <div className="mt-4 pt-3 border-t border-slate-700/60 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-semibold text-slate-300">
         <div className="flex items-center gap-1.5">
           <CheckCircle2 className="w-3.5 h-3.5 text-amber-500" />
-          <span>Кріплення {materialNames[roofMaterial]}</span>
+          <span>{mountType === 'ground' ? 'Фундамент' : 'Кріплення'} {materialNames[roofMaterial]}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <Sun className="w-3.5 h-3.5 text-amber-400" />

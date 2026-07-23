@@ -127,6 +127,7 @@ export default function App() {
             <ServiceDetailPage 
               theme={theme} 
               onOpenConsultation={(title) => handleOpenConsultation(title)} 
+              onOpenConfiguration={(summaryText) => handleOpenConfigurationModal(summaryText)}
             />
           } />
 
