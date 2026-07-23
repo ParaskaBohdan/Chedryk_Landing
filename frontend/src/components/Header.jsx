@@ -147,18 +147,7 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
         {/* Right Action Bar */}
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           
-          <a
-            href="https://www.tiktok.com/@novaenergy.ua" 
-            target="_blank" 
-            rel="noreferrer"
-            title="Переглянути TikTok Чедрика Івана"
-            className={`flex items-center gap-1.5 h-[38px] px-3 sm:px-3.5 rounded-xl border text-xs font-semibold transition-all flex-shrink-0 ${
-              isDark ? 'bg-slate-900 border-slate-800 text-slate-300 hover:text-amber-400 hover:border-amber-400/40' : 'bg-slate-200/70 border-slate-300 text-slate-700 hover:text-amber-600'
-            }`}
-          >
-            <TikTokIcon className="w-3.5 h-3.5 flex-shrink-0 fill-current" />
-            <span className="hidden sm:inline">TikTok</span>
-          </a>
+
 
           <button
             onClick={toggleTheme}
@@ -171,12 +160,12 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
           </button>
 
           {/* Light Radiant Orange Button -> Leads to Calculator */}
-          <Link
-            to="/calculator"
-            className="hidden sm:inline-flex btn-orange-bright font-extrabold text-xs uppercase tracking-wider px-4 sm:px-5 py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap flex-shrink-0 shadow-md hover:shadow-amber-500/20"
+          <button
+            onClick={() => onOpenConsultation && onOpenConsultation('Замовити безкоштовну консультацію')}
+            className="hidden sm:inline-flex btn-orange-bright font-extrabold text-xs uppercase tracking-wider px-4 sm:px-5 py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap flex-shrink-0 shadow-md hover:shadow-amber-500/20 cursor-pointer"
           >
-            Розрахувати Вартість
-          </Link>
+            Замовити послугу
+          </button>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -269,13 +258,15 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
           </NavLink>
           
           <div className="pt-3 flex flex-col gap-2 border-t border-slate-700/40">
-            <Link
-              to="/calculator"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full btn-orange-bright font-bold py-3 rounded-xl shadow-md text-sm text-center"
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenConsultation && onOpenConsultation('Замовити безкоштовну консультацію');
+              }}
+              className="w-full btn-orange-bright font-bold py-3 rounded-xl shadow-md text-sm text-center cursor-pointer"
             >
-              Розрахувати Вартість СЕС
-            </Link>
+              Замовити послугу
+            </button>
           </div>
         </div>
       )}

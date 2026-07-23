@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calculator, Sun, DollarSign, Zap, ArrowRight, ShieldCheck, CheckCircle2, Home, Layers, Cpu, BatteryCharging } from 'lucide-react';
 import InteractiveSolarSchema from '../components/InteractiveSolarSchema';
+import CustomSelect from '../components/CustomSelect';
 import ConfigurationForm from '../components/ConfigurationForm';
 
 export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfiguration }) {
@@ -84,8 +85,14 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
         <div className="grid grid-cols-3 gap-1.5 sm:gap-4 max-w-3xl mx-auto mb-8 sm:mb-10">
           <button
             onClick={() => setStep(1)}
-            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-bold transition-all text-center ${
-              step === 1 ? 'btn-orange-active scale-[1.02]' : 'btn-orange-bright'
+            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-extrabold transition-all cursor-pointer text-center ${
+              step === 1
+                ? isDark
+                  ? 'bg-amber-500/25 border-2 border-amber-400 text-[#fde68a] shadow-md scale-[1.02]'
+                  : 'bg-amber-100 border-2 border-amber-500 text-[#78350f] shadow-xs scale-[1.02]'
+                : isDark
+                  ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
+                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
             }`}
           >
             <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
@@ -97,8 +104,14 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
 
           <button
             onClick={() => setStep(2)}
-            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-bold transition-all text-center ${
-              step === 2 ? 'btn-orange-active scale-[1.02]' : 'btn-orange-bright'
+            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-extrabold transition-all cursor-pointer text-center ${
+              step === 2
+                ? isDark
+                  ? 'bg-amber-500/25 border-2 border-amber-400 text-[#fde68a] shadow-md scale-[1.02]'
+                  : 'bg-amber-100 border-2 border-amber-500 text-[#78350f] shadow-xs scale-[1.02]'
+                : isDark
+                  ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
+                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
             }`}
           >
             <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
@@ -110,8 +123,14 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
 
           <button
             onClick={() => setStep(3)}
-            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-bold transition-all text-center ${
-              step === 3 ? 'btn-orange-active scale-[1.02]' : 'btn-orange-bright'
+            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-extrabold transition-all cursor-pointer text-center ${
+              step === 3
+                ? isDark
+                  ? 'bg-amber-500/25 border-2 border-amber-400 text-[#fde68a] shadow-md scale-[1.02]'
+                  : 'bg-amber-100 border-2 border-amber-500 text-[#78350f] shadow-xs scale-[1.02]'
+                : isDark
+                  ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
+                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
             }`}
           >
             <Cpu className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
@@ -144,10 +163,13 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       type="button"
-                      onClick={() => setRoofType('pitched')}
+                      onClick={() => {
+                        setRoofType('pitched');
+                        setRoofMaterial('metal_tile');
+                      }}
                       className={`p-4 rounded-2xl border text-left transition-all ${
                         roofType === 'pitched'
-                          ? 'border-amber-500 bg-amber-500/20 text-amber-500 font-bold shadow-md'
+                          ? 'btn-orange-bright shadow-md'
                           : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
                       }`}
                     >
@@ -163,7 +185,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                       }}
                       className={`p-4 rounded-2xl border text-left transition-all ${
                         roofType === 'flat'
-                          ? 'border-amber-500 bg-amber-500/20 text-amber-500 font-bold shadow-md'
+                          ? 'btn-orange-bright shadow-md'
                           : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
                       }`}
                     >
@@ -179,18 +201,18 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
                       Матеріал покриття (Визначає тип кріплення):
                     </label>
-                    <select
+                    <CustomSelect
                       value={roofMaterial}
-                      onChange={(e) => setRoofMaterial(e.target.value)}
-                      className={`w-full border rounded-xl p-3 text-sm font-semibold focus:outline-none focus:border-amber-500 ${
-                        isDark ? 'border-slate-700 bg-slate-900 text-white' : 'border-slate-300 bg-slate-50 text-slate-900'
-                      }`}
-                    >
-                      <option value="metal_tile">Металочерепиця (Кронштейни-гачки)</option>
-                      <option value="tile">Натуральна керамічна черепиця (Шпильки M10)</option>
-                      <option value="corrugated">Профнастил (Міні-рейки з ЕПДМ)</option>
-                      <option value="seam">Фальцева покрівля (Безпрокольні затискачі)</option>
-                    </select>
+                      onChange={(val) => setRoofMaterial(val)}
+                      options={[
+                        { value: 'metal_tile', label: 'Металочерепиця (Кронштейни-гачки)' },
+                        { value: 'tile', label: 'Натуральна керамічна черепиця (Шпильки M10)' },
+                        { value: 'corrugated', label: 'Профнастил (Міні-рейки з ЕПДМ)' },
+                        { value: 'seam', label: 'Фальцева покрівля (Безпрокольні затискачі)' }
+                      ]}
+                      icon={Layers}
+                      theme={theme}
+                    />
                   </div>
                 )}
 
@@ -255,7 +277,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                         onClick={() => setPanelBrand(b.id)}
                         className={`p-3 sm:p-4 rounded-2xl border text-left transition-all ${
                           panelBrand === b.id
-                            ? 'border-amber-500 bg-amber-500/20 text-amber-500 font-bold shadow-md'
+                            ? 'btn-orange-bright shadow-md'
                             : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
                         }`}
                       >
@@ -284,7 +306,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                         onClick={() => setRowsCount(rowOpt.r)}
                         className={`p-3.5 rounded-2xl border text-left transition-all ${
                           rowsCount === rowOpt.r
-                            ? 'border-amber-500 bg-amber-500/20 text-amber-500 font-bold shadow-md'
+                            ? 'btn-orange-bright shadow-md'
                             : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
                         }`}
                       >
@@ -353,7 +375,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                           onClick={() => setBatteryCapacityKwh(cap)}
                           className={`p-3 rounded-xl border text-center transition-all ${
                             batteryCapacityKwh === cap
-                              ? 'border-amber-500 bg-amber-500/20 text-amber-500 font-bold'
+                              ? 'btn-orange-bright shadow-md'
                               : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
                           }`}
                         >

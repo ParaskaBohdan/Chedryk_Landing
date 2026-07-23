@@ -39,8 +39,7 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
     'Якомога швидше',
     '09:00 - 12:00',
     '12:00 - 15:00',
-    '15:00 - 18:00',
-    'Після 18:00'
+    '15:00 - 18:00'
   ];
 
   const [phoneDigits, setPhoneDigits] = useState('');

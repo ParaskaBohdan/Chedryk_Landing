@@ -148,7 +148,7 @@ export default function ContactsPage({ theme }) {
                     <p className="text-xs font-medium opacity-70">
                       Графік прийому дзвінків
                     </p>
-                    <p className="text-sm font-semibold">Пн – Нд: 08:00 – 20:00</p>
+                    <p className="text-sm font-semibold">Пн – Нд: 09:00 - 18:00</p>
                   </div>
                 </div>
               </div>
@@ -174,6 +174,9 @@ export default function ContactsPage({ theme }) {
                         {city}
                       </span>
                     ))}
+                    <span className="px-2.5 py-0.5 border border-amber-400/40 bg-amber-500/15 text-amber-500 text-xs font-bold rounded-lg">
+                      + Усі села та ОТГ
+                    </span>
                   </div>
                 </div>
 

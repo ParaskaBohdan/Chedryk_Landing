@@ -104,8 +104,8 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
                       to={`/services/${service.id}`}
                       className={`font-bold py-3 px-4 text-xs sm:text-sm rounded-xl border text-center transition-colors flex items-center justify-center gap-2 ${
                         isDark 
-                          ? 'border-slate-700 bg-slate-900 text-slate-200 hover:bg-slate-800 hover:border-amber-400/40 hover:text-amber-400' 
-                          : 'border-slate-300 bg-slate-100 text-slate-800 hover:bg-slate-200 hover:border-amber-500 hover:text-amber-600'
+                          ? 'border-slate-700 bg-slate-900 text-slate-200 hover:bg-slate-800 hover:border-amber-500' 
+                          : 'border-slate-300 bg-slate-100 text-slate-800 hover:bg-slate-200 hover:border-amber-700'
                       }`}
                     >
                       <span>Детальніше</span>
@@ -114,11 +114,7 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
 
                     <button
                       onClick={() => onOpenConsultation(service.title)}
-                      className={`font-bold py-3 px-4 text-xs sm:text-sm rounded-xl text-center border shadow-xs transition-all duration-200 active:scale-95 cursor-pointer ${
-                        isDark
-                          ? 'bg-amber-500/15 border-amber-400/60 text-amber-300 hover:bg-gradient-to-r hover:from-amber-600 hover:to-amber-500 hover:text-white hover:border-transparent hover:shadow-md hover:shadow-amber-500/25'
-                          : 'bg-amber-100/80 border-amber-400/80 text-amber-900 hover:bg-gradient-to-r hover:from-amber-600 hover:to-amber-500 hover:text-white hover:border-transparent hover:shadow-md hover:shadow-amber-500/25'
-                      }`}
+                      className="btn-orange-bright font-bold py-3 px-4 text-xs sm:text-sm rounded-xl text-center shadow-xs transition-all duration-200 active:scale-95 cursor-pointer"
                     >
                       Замовити
                     </button>

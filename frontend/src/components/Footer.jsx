@@ -90,17 +90,17 @@ export default function Footer({ onOpenConsultation, theme }) {
               </li>
               <li>
                 <Link to="/tariffs" className="hover:text-amber-500 transition-colors">
-                  Тарифи & Зелений Тариф
+                  Тарифи
                 </Link>
               </li>
               <li>
                 <Link to="/calculator" className="hover:text-amber-500 transition-colors">
-                  Калькулятор Вартності СЕС
+                  Калькулятор
                 </Link>
               </li>
               <li>
                 <Link to="/contacts" className="hover:text-amber-500 transition-colors">
-                  Контакти & TikTok
+                  Контакти
                 </Link>
               </li>
             </ul>
@@ -118,10 +118,7 @@ export default function Footer({ onOpenConsultation, theme }) {
                 <Phone className="w-3.5 h-3.5 text-amber-500" />
                 <span>+380 (97) 000-00-00</span>
               </a>
-              <a href="https://www.tiktok.com/@novaenergy.ua" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-amber-500 transition-colors">
-                <Video className="w-3.5 h-3.5 text-amber-500" />
-                <span>TikTok Чедрика Івана</span>
-              </a>
+
               <div className="flex items-center gap-2 opacity-80">
                 <MapPin className="w-3.5 h-3.5 text-emerald-500" />
                 <span>Закарпатська & Франківська обл.</span>
