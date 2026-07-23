@@ -15,6 +15,7 @@ import ServicesPage from './pages/ServicesPage';
 import ServiceDetailPage from './pages/ServiceDetailPage';
 import EquipmentPage from './pages/EquipmentPage';
 import TariffsPage from './pages/TariffsPage';
+import ThankYouPage from './pages/ThankYouPage';
 import Footer from './components/Footer';
 import { X } from 'lucide-react';
 
@@ -153,6 +154,10 @@ export default function App() {
           
           <Route path="/contacts" element={
             <ContactsPage theme={theme} />
+          } />
+
+          <Route path="/thank-you" element={
+            <ThankYouPage theme={theme} />
           } />
         </Routes>
       </main>

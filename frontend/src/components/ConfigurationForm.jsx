@@ -1,9 +1,11 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Send, CheckCircle2, AlertCircle, Loader2, Phone, User, MessageSquare, Cpu, Calendar, Clock } from 'lucide-react';
 import CustomSelect from './CustomSelect';
 
 export default function ConfigurationForm({ configurationSummary, onCloseModal, theme }) {
   const isDark = theme === 'dark';
+  const navigate = useNavigate();
 
   const todayStr = new Date().toISOString().split('T')[0];
   const dateInputRef = useRef(null);
@@ -192,18 +194,14 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
       const result = await response.json();
 
       if (response.ok && result.success) {
-        setStatus({
-          type: 'success',
-          message: result.message || 'Дякуємо! Вашу конфігурацію успішно надіслано майстру.'
-        });
-        setPhoneDigits('');
-        setFormData({
-          name: '',
-          phone: '+380 (',
-          preferred_date: todayStr,
-          preferred_time: 'Якомога швидше',
-          comment: ''
-        });
+        if (window.fbq) {
+          window.fbq('track', 'Lead');
+        }
+        if (onCloseModal) {
+          onCloseModal();
+        }
+        navigate('/thank-you');
+        return;
       } else {
         setStatus({
           type: 'error',
@@ -229,7 +227,7 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
           Надіслати Конфігурацію Майстру
         </h3>
         <p className={`text-xs sm:text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-          Залиште контакти та зручний час — Чедрик Іван зателефонує вам для узгодження деталей обраної конфігурації.
+          Залиште контакти та зручний час — фахівець Nova Energy зателефонує вам для узгодження деталей обраної конфігурації.
         </p>
       </div>
 
