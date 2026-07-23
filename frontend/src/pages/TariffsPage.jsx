@@ -41,10 +41,10 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
 
         {/* Bottom CTA Banner */}
         <div className={`p-8 sm:p-10 rounded-3xl border text-center space-y-4 shadow-xl ${
-          isDark ? 'border-slate-800 bg-slate-950/80' : 'border-amber-200 bg-white'
+          isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-300 bg-white'
         }`}>
-          <h3 className="text-xl sm:text-2xl font-extrabold">Потрібна допомога з Зеленим Тарифом чи ТУ?</h3>
-          <p className={`text-xs sm:text-sm max-w-xl mx-auto ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+          <h3 className="text-xl sm:text-2xl font-black" style={{ color: isDark ? '#ffffff' : '#000000' }}>Потрібна допомога з Зеленим Тарифом чи ТУ?</h3>
+          <p className="text-xs sm:text-sm font-bold max-w-xl mx-auto" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
             Юридичний супровід та подача документів в Обленерго Закарпаття та Франківщини.
           </p>
           <div className="pt-2">

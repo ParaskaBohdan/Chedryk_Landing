@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, MessageSquareQuote, MapPin } from 'lucide-react';
+import { MessageSquareQuote, MapPin } from 'lucide-react';
 
 export default function Testimonials({ theme }) {
   const isDark = theme === 'dark';
@@ -84,17 +84,17 @@ export default function Testimonials({ theme }) {
             <div
               key={item.id}
               className={`flex flex-col justify-between p-5 sm:p-6 rounded-3xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
-                isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white border-slate-200 shadow-md'
+                isDark ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' : 'bg-white border-slate-200 shadow-md'
               }`}
             >
-              <div className="space-y-3.5">
-                {/* Top Bar: Stars */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1">
-                    {[...Array(item.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
+              <div className="space-y-4">
+                {/* Photo of the installation */}
+                <div className="relative h-64 w-full overflow-hidden rounded-2xl shadow-xs border border-slate-700/20">
+                  <img
+                    src="/review-photo.jpg"
+                    alt="Чедрик Іван монтаж СЕС"
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
                 </div>
 
                 {/* Comment Body */}
@@ -105,7 +105,7 @@ export default function Testimonials({ theme }) {
 
               {/* Author Footer */}
               <div className={`pt-4 mt-4 border-t flex items-center justify-between gap-3 ${
-                isDark ? 'border-slate-800/80' : 'border-slate-100'
+                isDark ? 'border-slate-700/60' : 'border-slate-100'
               }`}>
                 <div>
                   <h3 className={`font-bold text-xs sm:text-sm ${isDark ? 'text-white' : 'text-slate-900'}`}>

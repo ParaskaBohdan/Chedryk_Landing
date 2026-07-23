@@ -51,7 +51,7 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
                 key={service.id}
                 className={`group flex flex-col rounded-2xl border transition-all duration-300 overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-1 ${
                   isDark 
-                    ? 'bg-slate-950/80 border-slate-800 hover:border-amber-500/50' 
+                    ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' 
                     : 'bg-white border-slate-200 hover:border-amber-500/50'
                 }`}
               >
@@ -128,10 +128,10 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
 
         {/* Bottom CTA Banner */}
         <div className={`mt-16 p-8 sm:p-10 rounded-3xl border text-center space-y-4 shadow-xl ${
-          isDark ? 'border-slate-800 bg-slate-950/80' : 'border-amber-200 bg-white'
+          isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-300 bg-white'
         }`}>
-          <h3 className="text-xl sm:text-2xl font-extrabold">Бажаєте замовити інженерні послуги?</h3>
-          <p className={`text-xs sm:text-sm max-w-xl mx-auto ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+          <h3 className="text-xl sm:text-2xl font-black" style={{ color: isDark ? '#ffffff' : '#000000' }}>Бажаєте замовити інженерні послуги?</h3>
+          <p className="text-xs sm:text-sm font-bold max-w-xl mx-auto" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
             Отримайте кваліфіковану відповідь інженера щодо монтажу СЕС, підключення Deye або Зеленого Тарифу.
           </p>
           <div className="pt-2">
