@@ -71,7 +71,7 @@ export default function Testimonials({ theme }) {
           </div>
 
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            Що Кажуть Про Нашу <span className="text-amber-500">Роботу На Закарпатті</span>
+            Що Кажуть Про Нашу <span className="text-amber-500">Роботу</span>
           </h2>
           <p className={`text-xs sm:text-base ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
             Враження та реальний досвід власників збудованих нами сонячних електростанцій та гібридних систем.

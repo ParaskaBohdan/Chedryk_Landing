@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { servicesData } from '../data/servicesData';
-import { Sun, BatteryCharging, FileCheck, Home, Zap, ArrowRight, CheckCircle2, Wrench } from 'lucide-react';
+import { Sun, BatteryCharging, FileCheck, Home, Zap, ArrowRight, CheckCircle2, Wrench, Calculator } from 'lucide-react';
 
 const iconMap = {
   Sun: Sun,
@@ -98,8 +98,18 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
                     ))}
                   </div>
 
+                  {/* Price Hint */}
+                  <div className="pt-2.5 border-t border-slate-700/30 text-center">
+                    <p className={`text-[11px] font-bold flex items-center justify-center gap-1.5 ${
+                      isDark ? 'text-amber-400/85' : 'text-amber-700'
+                    }`}>
+                      <Calculator className="w-3.5 h-3.5 flex-shrink-0" />
+                      <span>Для детального розрахунку ціни тисніть «Детальніше»</span>
+                    </p>
+                  </div>
+
                   {/* Dual Action Buttons: Детальніше (Left) + Замовити (Right) */}
-                  <div className="pt-4 grid grid-cols-2 gap-3">
+                  <div className="pt-2.5 grid grid-cols-2 gap-3">
                     <Link
                       to={`/services/${service.id}`}
                       className={`font-bold py-3 px-4 text-xs sm:text-sm rounded-xl border text-center transition-colors flex items-center justify-center gap-2 ${
