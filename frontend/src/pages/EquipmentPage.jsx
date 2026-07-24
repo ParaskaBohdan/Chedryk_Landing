@@ -212,11 +212,11 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
         </div>
 
         {/* Category Tabs */}
-        <div className="flex justify-center items-center gap-2 sm:gap-4 overflow-x-auto pb-2 border-b border-slate-700/40">
+        <div className="grid grid-cols-2 md:flex md:flex-row md:items-center gap-2 sm:gap-4 pb-3 border-b border-slate-700/40 w-full justify-center px-4 sm:px-0">
           <button
             type="button"
             onClick={() => setActiveTab('panels')}
-            className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-extrabold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'panels'
                 ? isDark
                   ? 'bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
@@ -226,14 +226,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                   : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
             }`}
           >
-            <Sun className="w-4 h-4 text-amber-500" />
+            <Sun className="w-4 h-4 text-amber-500 flex-shrink-0" />
             <span>Сонячні Панелі Tier-1</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('batteries')}
-            className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-extrabold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'batteries'
                 ? isDark
                   ? 'bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
@@ -243,14 +243,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                   : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
             }`}
           >
-            <BatteryCharging className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <BatteryCharging className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
             <span>Акумулятори LiFePO4</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('inverters')}
-            className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-extrabold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'inverters'
                 ? isDark
                   ? 'bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
@@ -260,14 +260,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                   : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
             }`}
           >
-            <Cpu className="w-4 h-4 text-sky-600 dark:text-sky-400" />
+            <Cpu className="w-4 h-4 text-sky-600 dark:text-sky-400 flex-shrink-0" />
             <span>Інвертори Deye</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('mounting')}
-            className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-extrabold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'mounting'
                 ? isDark
                   ? 'bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
@@ -277,7 +277,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                   : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
             }`}
           >
-            <Wrench className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+            <Wrench className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0" />
             <span>Кріплення & Захист</span>
           </button>
         </div>
