@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  deploy:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,30 +24,20 @@ jobs:
           npm install --no-audit --no-fund
           npm run build
 
-      - name: Set up SSH
+      - name: Assemble deploy payload
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p "${{ secrets.DEPLOY_PORT }}" -T 20 -v "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts || echo "ssh-keyscan exit code: $?"
-          cat ~/.ssh/known_hosts || true
+          rm -rf deploy_payload
+          mkdir -p deploy_payload/api
+          cp -r frontend/dist/. deploy_payload/
+          cp backend/api/*.php deploy_payload/api/
 
-      - name: Deploy frontend
+      - name: Publish to deploy branch
         run: |
-          rsync -az --delete \
-            -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.DEPLOY_PORT }}" \
-            --exclude 'api' \
-            frontend/dist/ \
-            "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/"
-
-      - name: Deploy backend
-        run: |
-          rsync -az \
-            -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.DEPLOY_PORT }}" \
-            --exclude 'config.local.php' \
-            backend/api/ \
-            "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/api/"
-
-      - name: Clean up
-        if: always()
-        run: rm -f ~/.ssh/deploy_key
+          cd deploy_payload
+          git init -q
+          git checkout -q -b deploy
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Deploy ${{ github.sha }}"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" deploy:deploy
