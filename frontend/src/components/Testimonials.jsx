@@ -94,17 +94,12 @@ export default function Testimonials({ theme }) {
               contentClassName="flex flex-col justify-between"
             >
               <div className="space-y-4">
-                {/* Photo of the installation with field telemetry overlay */}
                 <div className="relative h-64 w-full overflow-hidden rounded-2xl shadow-xs border border-slate-700/20">
                   <img
                     src="/review-photo.jpg"
                     alt="Чедрик Іван монтаж СЕС"
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
-                  <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950/85 to-transparent pointer-events-none" />
-                  <div className="absolute top-2.5 left-2.5">
-                    <LiveBadge theme="dark" label="Field Engineer Verified" />
-                  </div>
                 </div>
 
                 {/* Comment Body */}
