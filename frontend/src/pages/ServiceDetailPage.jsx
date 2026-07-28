@@ -53,29 +53,33 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
   // Maximum panels that fit on the specified roof area
   const maxPossiblePanels = Math.max(4, Math.floor(roofAreaSqM / 2.3));
 
-  // Active panel count: determined by rowsCount * 12, but capped at maxPossiblePanels
-  const rawPanelCount = rowsCount * 12;
-  const activePanelCount = Math.max(4, Math.min(rawPanelCount, maxPossiblePanels));
+  // Active panel count: now directly matches maxPossiblePanels so the slider isn't capped by rowsCount
+  const activePanelCount = maxPossiblePanels;
 
   const totalKw = ((activePanelCount * selectedPanelWattage) / 1000).toFixed(1);
 
-  // Pricing calculations
-  const panelsCost = activePanelCount * selectedPanelCost;
-  const frameCost = activePanelCount * 30; // mounting frame cost per panel
-  const inverterPowerKw = Math.ceil(totalKw);
-  const inverterCost = Math.round(inverterPowerKw * 180);
-  const batteryCost = hasBattery ? Math.round(batteryCapacityKwh * 320) : 0;
-  const installationCost = Math.round((panelsCost + frameCost + inverterCost + batteryCost) * 0.15);
+  // Helper function to calculate estimate cost for a given kw power and number of panels
+  const calculateCost = (kw, panels) => {
+    const panelsCost = panels * selectedPanelCost;
+    const frameCost = panels * 30;
+    const invPower = Math.ceil(kw);
+    const inverterCost = Math.round(invPower * 180);
+    const batteryCost = hasBattery ? Math.round(batteryCapacityKwh * 320) : 0;
+    const installationCost = Math.round((panelsCost + frameCost + inverterCost + batteryCost) * 0.15);
+    return panelsCost + frameCost + inverterCost + batteryCost + installationCost;
+  };
 
-  const totalEstimateUsd = panelsCost + frameCost + inverterCost + batteryCost + installationCost;
+  // Pricing calculations
+  const totalEstimateUsd = calculateCost(totalKw, activePanelCount);
   const annualGenKwh = Math.round(totalKw * 1180);
+  const inverterPowerKw = Math.ceil(totalKw);
 
   // Shared Calculations based on consumption sliders
   const effectiveConsumption = (monthlyConsumption * (coveragePercent / 100));
   const recommendedKw = Math.max(3, Math.ceil((effectiveConsumption / 115) * 10) / 10);
   const annualGen = Math.round(recommendedKw * 1180);
-  const roofArea = Math.round(recommendedKw * 4.8);
-  const recommendedPanelCount = Math.ceil((recommendedKw * 1000) / (serviceId === 'roof-installation' ? selectedPanelWattage : selectedPanel.watt));
+  const recommendedPanelCount = Math.ceil((recommendedKw * 1000) / ((serviceId === 'roof-installation' || serviceId === 'ses-building') ? selectedPanelWattage : selectedPanel.watt));
+  const roofArea = Math.round(recommendedPanelCount * 2.3);
   const panelCount = recommendedPanelCount;
 
   // Slider Fill Percentages
@@ -167,13 +171,13 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
           </button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column: Form Steps & Calculation Summary */}
-          <div className="lg:col-span-6 space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-8">
+          {/* Left Column: Form Steps */}
+          <div className="lg:col-span-6 flex flex-col h-full">
             
             {/* STEP 1 */}
             {step === 1 && (
-              <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 ${
+              <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 h-full flex flex-col justify-between ${
                 isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-200 bg-white shadow-md'
               }`}>
                 <h3 className="text-base sm:text-lg font-bold flex items-center gap-2 text-amber-500">
@@ -381,7 +385,7 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
 
             {/* STEP 2 */}
             {step === 2 && (
-              <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 ${
+              <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 h-full flex flex-col justify-between ${
                 isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-200 bg-white shadow-md'
               }`}>
                 <h3 className="text-base sm:text-lg font-bold flex items-center gap-2 text-amber-500">
@@ -465,7 +469,7 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
 
             {/* STEP 3 */}
             {step === 3 && (
-              <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 ${
+              <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 h-full flex flex-col justify-between ${
                 isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-200 bg-white shadow-md'
               }`}>
                 <h3 className="text-base sm:text-lg font-bold flex items-center gap-2 text-amber-500">
@@ -540,72 +544,10 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
                 </div>
               </div>
             )}
-
-            {/* RESULTS SUMMARY CARD */}
-            <div className={`p-6 sm:p-7 rounded-3xl border space-y-4 shadow-xl ${
-              isDark ? 'border-slate-700 bg-slate-800/80' : 'border-slate-200 bg-white'
-            }`}>
-              <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-amber-500 border-b border-slate-700/60 pb-3">
-                <span className="flex items-center gap-2">
-                  <Zap className="w-4 h-4" /> КАЛЬКУЛЯЦІЯ ПО ОБ'ЄКТУ
-                </span>
-                <span className="text-sm font-black text-amber-500">{totalKw} КВТ СЕС</span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs leading-relaxed">
-                {/* Left: Recommended based on consumption */}
-                <div className="space-y-1.5 border-b sm:border-b-0 sm:border-r border-slate-700/40 pb-3 sm:pb-0 sm:pr-4">
-                  <h4 className="font-extrabold text-amber-500 uppercase text-[10px] tracking-wider mb-1">Рекомендовано за споживанням:</h4>
-                  <div>
-                    <span className="opacity-70 block">Необхідна потужність:</span>
-                    <span className="font-extrabold text-sm text-amber-300">{recommendedKw} кВт</span>
-                  </div>
-                  <div>
-                    <span className="opacity-70 block">Кількість панелей ({selectedPanelWattage}W):</span>
-                    <span className="font-extrabold text-sm">{recommendedPanelCount} шт.</span>
-                  </div>
-                  <div>
-                    <span className="opacity-70 block">{mountType === 'ground' ? 'Площа ділянки:' : 'Площа даху:'}</span>
-                    <span className="font-extrabold text-sm">{roofArea} м²</span>
-                  </div>
-                  <div>
-                    <span className="opacity-70 block">Річна генерація:</span>
-                    <span className="font-extrabold text-sm text-emerald-400">~{annualGen.toLocaleString()} кВт·год</span>
-                  </div>
-                </div>
-
-                {/* Right: Selected configuration in 3D */}
-                <div className="space-y-1.5 sm:pl-2">
-                  <div>
-                    <span className="opacity-70 block">Потужність СЕС:</span>
-                    <span className="font-extrabold text-sm text-amber-300">{totalKw} кВт</span>
-                  </div>
-                  <div>
-                    <span className="opacity-70 block">Кількість панелей ({selectedPanelWattage}W):</span>
-                    <span className="font-extrabold text-sm">{activePanelCount} шт.</span>
-                  </div>
-                  <div>
-                    <span className="opacity-70 block">Інвертор Deye:</span>
-                    <span className="font-extrabold text-sm text-sky-400">{inverterPowerKw} кВт (3-фази)</span>
-                  </div>
-                  {hasBattery && (
-                    <div>
-                      <span className="opacity-70 block">АКБ накопичувач:</span>
-                      <span className="font-extrabold text-sm text-purple-400">{batteryCapacityKwh} кВт·год</span>
-                    </div>
-                  )}
-                  <div className="pt-1.5 border-t border-slate-700/20">
-                    <span className="opacity-70 block">Орієнтовний кошторис:</span>
-                    <span className="font-black text-base text-amber-400">~${totalEstimateUsd.toLocaleString()}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
 
           {/* Right Column: Visualizer */}
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-6 flex flex-col h-full">
             <InteractiveSolarSchema
               roofType={roofType}
               roofMaterial={roofMaterial}
@@ -618,7 +560,131 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
               batteryCapacityKwh={batteryCapacityKwh}
               theme={theme}
               mountType={mountType}
+              hideExtraViews={serviceId === 'roof-installation'}
             />
+          </div>
+        </div>
+
+        {/* RESULTS SUMMARY CARD */}
+        <div className={`p-6 sm:p-7 rounded-3xl border space-y-4 shadow-xl ${
+          isDark ? 'border-slate-700 bg-slate-800/80' : 'border-slate-200 bg-white'
+        }`}>
+          <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-amber-500 border-b border-slate-700/60 pb-3">
+            <span className="flex items-center gap-2">
+              <Zap className="w-4 h-4" /> КАЛЬКУЛЯЦІЯ ПО ОБ'ЄКТУ
+            </span>
+            <span className="text-sm font-black text-amber-500">{totalKw} КВТ СЕС</span>
+          </div>
+
+          {/* Desktop Comparative Table */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full text-xs text-left border-collapse">
+              <thead>
+                <tr className="border-b border-slate-700/40 text-amber-500 uppercase tracking-wider font-extrabold text-[10px]">
+                  <th className="py-2.5">Параметр системи</th>
+                  <th className="py-2.5">Рекомендовано за споживанням</th>
+                  <th className="py-2.5">{mountType === 'ground' ? 'Розрахунок за площею ділянки' : 'Розрахунок за площею даху'}</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-700/10 font-medium">
+                <tr className="hover:bg-slate-50/5 transition-colors">
+                  <td className="py-2.5 font-bold opacity-75">Потужність СЕС:</td>
+                  <td className="py-2.5 font-extrabold text-sm text-amber-300">{recommendedKw} кВт</td>
+                  <td className="py-2.5 font-extrabold text-sm text-amber-300">{totalKw} кВт</td>
+                </tr>
+                <tr className="hover:bg-slate-50/5 transition-colors">
+                  <td className="py-2.5 font-bold opacity-75">Кількість панелей ({selectedPanelWattage}W):</td>
+                  <td className="py-2.5 text-sm">{recommendedPanelCount} шт.</td>
+                  <td className="py-2.5 text-sm">{activePanelCount} шт.</td>
+                </tr>
+                <tr className="hover:bg-slate-50/5 transition-colors">
+                  <td className="py-2.5 font-bold opacity-75">{mountType === 'ground' ? 'Площа ділянки:' : 'Площа даху:'}</td>
+                  <td className="py-2.5 text-sm">{Math.round(recommendedPanelCount * 2.3)} м²</td>
+                  <td className="py-2.5 text-sm">{Math.round(activePanelCount * 2.3)} м²</td>
+                </tr>
+                <tr className="hover:bg-slate-50/5 transition-colors">
+                  <td className="py-2.5 font-bold opacity-75">Річна генерація:</td>
+                  <td className="py-2.5 text-sm text-emerald-400">~{annualGen.toLocaleString()} кВт·год</td>
+                  <td className="py-2.5 text-sm text-emerald-400">~{annualGenKwh.toLocaleString()} кВт·год</td>
+                </tr>
+                <tr className="hover:bg-slate-50/5 transition-colors">
+                  <td className="py-2.5 font-bold opacity-75">Орієнтовна вартість під ключ:</td>
+                  <td className="py-2.5 font-extrabold text-sm text-amber-400">~${calculateCost(recommendedKw, recommendedPanelCount).toLocaleString()}</td>
+                  <td className="py-2.5 font-extrabold text-sm text-amber-400">~${totalEstimateUsd.toLocaleString()}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Stacked Layout with inline parameters */}
+          <div className="md:hidden space-y-6 text-xs border-b border-slate-700/20 pb-4">
+            {/* Left: Recommended */}
+            <div className="space-y-2 border-b border-slate-700/20 pb-4">
+              <h4 className="font-extrabold text-amber-500 uppercase text-[10px] tracking-wider mb-2">Рекомендовано за споживанням:</h4>
+              <div className="flex justify-between items-center">
+                <span className="opacity-70">Необхідна потужність:</span>
+                <span className="font-extrabold text-amber-300">{recommendedKw} кВт</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="opacity-70">Кількість панелей ({selectedPanelWattage}W):</span>
+                <span className="font-extrabold">{recommendedPanelCount} шт.</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="opacity-70">{mountType === 'ground' ? 'Площа ділянки:' : 'Площа даху:'}</span>
+                <span className="font-extrabold">{Math.round(recommendedPanelCount * 2.3)} м²</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="opacity-70">Річна генерація:</span>
+                <span className="font-extrabold text-emerald-400">~{annualGen.toLocaleString()} кВт·год</span>
+              </div>
+              <div className="flex justify-between items-center pt-2 border-t border-slate-700/10">
+                <span className="opacity-70">Орієнтовна вартість:</span>
+                <span className="font-extrabold text-amber-400">~${calculateCost(recommendedKw, recommendedPanelCount).toLocaleString()}</span>
+              </div>
+            </div>
+
+            {/* Right: Calculated by Area */}
+            <div className="space-y-2">
+              <h4 className="font-extrabold text-amber-500 uppercase text-[10px] tracking-wider mb-2">
+                {mountType === 'ground' ? 'Розрахунок за площею ділянки:' : 'Розрахунок за площею даху:'}
+              </h4>
+              <div className="flex justify-between items-center">
+                <span className="opacity-70">Потужність СЕС:</span>
+                <span className="font-extrabold text-amber-300">{totalKw} кВт</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="opacity-70">Кількість панелей ({selectedPanelWattage}W):</span>
+                <span className="font-extrabold">{activePanelCount} шт.</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="opacity-70">{mountType === 'ground' ? 'Площа ділянки:' : 'Площа даху:'}</span>
+                <span className="font-extrabold">{Math.round(activePanelCount * 2.3)} м²</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="opacity-70">Річна генерація:</span>
+                <span className="font-extrabold text-emerald-400">~{annualGenKwh.toLocaleString()} кВт·год</span>
+              </div>
+              <div className="flex justify-between items-center pt-2 border-t border-slate-700/10">
+                <span className="opacity-70">Орієнтовна вартість:</span>
+                <span className="font-extrabold text-amber-400">~${totalEstimateUsd.toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Row: Selected Equipment */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs leading-relaxed border-t border-slate-700/10">
+            <div>
+              <span className="opacity-70 block">Інвертор Deye:</span>
+              <span className="font-extrabold text-sm text-sky-400">
+                {inverterPowerKw} кВт (3-фази)
+              </span>
+            </div>
+            <div>
+              <span className="opacity-70 block">АКБ накопичувач:</span>
+              <span className="font-extrabold text-sm text-purple-400">
+                {hasBattery ? `${batteryCapacityKwh} кВт·год` : 'Без АКБ'}
+              </span>
+            </div>
           </div>
         </div>
       </div>

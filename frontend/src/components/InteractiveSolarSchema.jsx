@@ -14,7 +14,8 @@ export default function InteractiveSolarSchema({
   hasBattery = true,
   batteryCapacityKwh = 10,
   theme = 'dark',
-  mountType = 'roof'
+  mountType = 'roof',
+  hideExtraViews = false
 }) {
   const isDark = theme === 'dark';
   const [viewMode, setViewMode] = useState('interactive_3d'); // 'interactive_3d' | '3d' | '2d'
@@ -42,12 +43,12 @@ export default function InteractiveSolarSchema({
   const textColor = isDark ? 'text-white' : 'text-slate-900';
 
   return (
-    <div className={`rounded-3xl border p-4 sm:p-6 transition-all shadow-2xl relative overflow-hidden ${
+    <div className={`rounded-3xl border p-4 sm:p-6 transition-all shadow-2xl relative overflow-hidden h-full flex flex-col justify-between ${
       isDark ? 'border-slate-700/80 bg-slate-800/90' : 'border-amber-200 bg-white shadow-amber-500/10'
     }`}>
       
       {/* Header Info Bar with 3-Way Mode Switcher */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-700/60">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-700/60 flex-shrink-0">
         <div>
           <div className="flex items-center gap-2">
             <span className="font-extrabold text-xs uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-amber-400/40 bg-amber-500/15 text-amber-500">
@@ -63,52 +64,56 @@ export default function InteractiveSolarSchema({
         </div>
 
         {/* 3-Way View Switcher Bar */}
-        <div className="flex flex-wrap items-center gap-1 p-1 rounded-xl border border-slate-700 bg-slate-900">
-          <button
-            type="button"
-            onClick={() => setViewMode('interactive_3d')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-              viewMode === 'interactive_3d'
-                ? 'btn-orange-active shadow-md'
-                : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            <Box className="w-3.5 h-3.5 text-amber-400" />
-            <span>🎮 3D Інтерактив (360°)</span>
-          </button>
-
-          {mountType !== 'ground' && (
+        {!hideExtraViews && (
+          <div className="flex flex-wrap items-center gap-1 p-1 rounded-xl border border-slate-700 bg-slate-900">
             <button
               type="button"
-              onClick={() => setViewMode('3d')}
+              onClick={() => setViewMode('interactive_3d')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                viewMode === '3d'
+                viewMode === 'interactive_3d'
                   ? 'btn-orange-active shadow-md'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Image className="w-3.5 h-3.5" />
-              <span>📸 3D Рендер</span>
+              <Box className="w-3.5 h-3.5 text-amber-400" />
+              <span>🎮 3D Інтерактив (360°)</span>
             </button>
-          )}
 
-          <button
-            type="button"
-            onClick={() => setViewMode('2d')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-              viewMode === '2d'
-                ? 'btn-orange-active shadow-md'
-                : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            <PenTool className="w-3.5 h-3.5" />
-            <span>📐 2D Схема</span>
-          </button>
-        </div>
+            {mountType !== 'ground' && (
+              <button
+                type="button"
+                onClick={() => setViewMode('3d')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  viewMode === '3d'
+                    ? 'btn-orange-active shadow-md'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <Image className="w-3.5 h-3.5" />
+                <span>📸 3D Рендер</span>
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={() => setViewMode('2d')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                viewMode === '2d'
+                  ? 'btn-orange-active shadow-md'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <PenTool className="w-3.5 h-3.5" />
+              <span>📐 2D Схема</span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Main Visual Display Container */}
-      <div className="w-full aspect-[16/10] sm:aspect-[16/9] relative rounded-2xl border border-slate-700/60 overflow-hidden bg-slate-950 flex items-center justify-center shadow-inner">
+      <div className={`w-full aspect-[16/10] sm:aspect-[16/9] relative rounded-2xl border overflow-hidden flex items-center justify-center shadow-inner flex-grow ${
+        isDark ? 'border-slate-700/60 bg-slate-950' : 'border-slate-200 bg-slate-50'
+      }`}>
         
         <AnimatePresence mode="wait">
           {/* VIEW MODE 1: THREE.JS REAL-TIME 3D WEBGL INTERACTIVE CANVAS */}

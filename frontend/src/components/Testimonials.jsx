@@ -105,14 +105,6 @@ export default function Testimonials({ theme }) {
                   <div className="absolute top-2.5 left-2.5">
                     <LiveBadge theme="dark" label="Field Engineer Verified" />
                   </div>
-                  <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between gap-2">
-                    <span className="glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label text-slate-200">
-                      {item.location}
-                    </span>
-                    <span className="glass-deep rounded-lg px-2 py-1 text-[9px] font-black tabular-nums text-amber-300">
-                      23.8% Efficiency
-                    </span>
-                  </div>
                 </div>
 
                 {/* Comment Body */}

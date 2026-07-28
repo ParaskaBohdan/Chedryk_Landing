@@ -24,6 +24,14 @@ export default function Solar3DCanvas({
 
   const [autoRotate, setAutoRotate] = useState(false);
 
+  const autoRotateRef = useRef(autoRotate);
+  const ambientLightRef = useRef(null);
+
+  useEffect(() => {
+    autoRotateRef.current = autoRotate;
+  }, [autoRotate]);
+
+  // EFFECT 1: WebGL Context Setup (Runs once on mount)
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -60,6 +68,7 @@ export default function Solar3DCanvas({
     // 4. LIGHTS
     const ambientLight = new THREE.AmbientLight(0xffffff, isDark ? 0.75 : 0.95);
     scene.add(ambientLight);
+    ambientLightRef.current = ambientLight;
 
     const sunLight = new THREE.DirectionalLight(0xfff8ee, 2.4);
     sunLight.position.set(14, 26, 16);
@@ -74,201 +83,17 @@ export default function Solar3DCanvas({
     const skyLight = new THREE.HemisphereLight(0x38bdf8, 0x0f172a, 0.5);
     scene.add(skyLight);
 
-    // 5. UNIFIED HOUSE MESH GROUP (SEALED, GAPS-FREE ARCHITECTURE)
+    // 5. UNIFIED HOUSE MESH GROUP
     const houseGroup = new THREE.Group();
     houseGroupRef.current = houseGroup;
     scene.add(houseGroup);
 
-    // Apply terrain slope rotation if ground mount and southern slope (pitched) is selected
-    if (mountType === 'ground' && roofType === 'pitched') {
-      houseGroup.rotation.x = 0.18; // ~10 degrees slope towards the front/sun
-    }
-
-    // Ground Base & Lawn
-    const baseMat = new THREE.MeshStandardMaterial({ color: isDark ? 0x1e293b : 0xe2e8f0, roughness: 0.6 });
-    const pedestalBase = new THREE.Mesh(new THREE.BoxGeometry(11.6, 0.35, 11.6), baseMat);
-    pedestalBase.position.y = -0.18;
-    pedestalBase.receiveShadow = true;
-    houseGroup.add(pedestalBase);
-
-    const lawnMat = new THREE.MeshStandardMaterial({ color: isDark ? 0x064e3b : 0x4ade80, roughness: 0.85 });
-    const lawn = new THREE.Mesh(new THREE.BoxGeometry(11.0, 0.05, 11.0), lawnMat);
-    lawn.position.y = 0.02;
-    lawn.receiveShadow = true;
-    houseGroup.add(lawn);
-
-    // Landscaping Trees & Shrubs
-    const treeMat = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.8 });
-    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x78350f });
-    [
-      { x: -4.4, z: 3.8, r: 0.65 },
-      { x: -4.0, z: -3.8, r: 0.55 },
-      { x: 4.4, z: -3.8, r: 0.6 },
-      { x: -1.2, z: 4.4, r: 0.4 },
-      { x: 1.8, z: 4.4, r: 0.45 }
-    ].forEach((t) => {
-      const foliage = new THREE.Mesh(new THREE.DodecahedronGeometry(t.r, 1), treeMat);
-      foliage.position.set(t.x, 0.6 + t.r, t.z);
-      foliage.castShadow = true;
-      
-      const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 0.6), trunkMat);
-      trunk.position.set(t.x, 0.3, t.z);
-      houseGroup.add(foliage, trunk);
-    });
-
-    if (mountType !== 'ground') {
-      // Materials
-      const wallMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.25 });
-      const darkTrimMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.3 });
-      const glassMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.08, metalness: 0.92 });
-      const frameMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.4 });
-
-      // 1st Floor Main Body (5.6m x 2.2m x 4.8m)
-      const firstFloor = new THREE.Mesh(new THREE.BoxGeometry(5.6, 2.2, 4.8), wallMat);
-      firstFloor.position.set(0, 1.1, 0);
-      firstFloor.castShadow = true;
-      firstFloor.receiveShadow = true;
-      houseGroup.add(firstFloor);
-
-      // Side Extension / Garage Body (2.2m x 1.8m x 4.0m)
-      const sideExtension = new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.8, 4.0), wallMat);
-      sideExtension.position.set(3.4, 0.9, 0);
-      sideExtension.castShadow = true;
-      sideExtension.receiveShadow = true;
-      houseGroup.add(sideExtension);
-
-      // Side Extension Cap Roof
-      const sideCap = new THREE.Mesh(new THREE.BoxGeometry(2.3, 0.12, 4.1), darkTrimMat);
-      sideCap.position.set(3.4, 1.84, 0);
-      sideCap.castShadow = true;
-      houseGroup.add(sideCap);
-
-      // 2nd Floor Main Body (5.6m x 2.0m x 4.4m)
-      const secondFloor = new THREE.Mesh(new THREE.BoxGeometry(5.6, 2.0, 4.4), wallMat);
-      secondFloor.position.set(0, 3.2, 0);
-      secondFloor.castShadow = true;
-      secondFloor.receiveShadow = true;
-      houseGroup.add(secondFloor);
-
-      // 2nd Floor Front Balcony Deck & Metal Railing
-      const balconyDeck = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.12, 1.0), darkTrimMat);
-      balconyDeck.position.set(-0.7, 2.2, 2.7);
-      balconyDeck.castShadow = true;
-      houseGroup.add(balconyDeck);
-
-      // Balcony Railings (Front + Left & Right Sides)
-      const railMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.8 });
-      
-      // Front Top Rail
-      const topRail = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.05, 0.05), railMat);
-      topRail.position.set(-0.7, 2.8, 3.18);
-      
-      // Left Side Top Rail
-      const leftSideRail = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 0.98), railMat);
-      leftSideRail.position.set(-2.78, 2.8, 2.69);
-
-      // Right Side Top Rail
-      const rightSideRail = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 0.98), railMat);
-      rightSideRail.position.set(1.38, 2.8, 2.69);
-
-      houseGroup.add(topRail, leftSideRail, rightSideRail);
-
-      // Vertical Posts (Front & Wall Posts)
-      [-2.78, -0.7, 1.38].forEach((rx) => {
-        const postFront = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.6, 0.04), railMat);
-        postFront.position.set(rx, 2.5, 3.18);
-        
-        if (rx !== -0.7) {
-          const postWall = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.6, 0.04), railMat);
-          postWall.position.set(rx, 2.5, 2.22);
-          houseGroup.add(postWall);
-        }
-        
-        houseGroup.add(postFront);
-      });
-
-      // WINDOWS & DOORS WITH DETAILED FRAME MULLIONS & SILLS
-      const sillMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.3 });
-
-      const createWindow = (w, h, x, y, z, isWallRotated = false) => {
-        const winGroup = new THREE.Group();
-        
-        const outerFrame = new THREE.Mesh(
-          isWallRotated ? new THREE.BoxGeometry(0.04, h + 0.1, w + 0.1) : new THREE.BoxGeometry(w + 0.1, h + 0.1, 0.04),
-          frameMat
-        );
-        outerFrame.position.set(x, y, isWallRotated ? z : z - 0.01);
-        
-        const glass = new THREE.Mesh(
-          isWallRotated ? new THREE.BoxGeometry(0.06, h, w) : new THREE.BoxGeometry(w, h, 0.06),
-          glassMat
-        );
-        glass.position.set(x, y, z);
-        
-        const vMullion = new THREE.Mesh(
-          isWallRotated ? new THREE.BoxGeometry(0.08, h, 0.03) : new THREE.BoxGeometry(0.03, h, 0.08),
-          frameMat
-        );
-        vMullion.position.set(x, y, z);
-
-        const hMullion = new THREE.Mesh(
-          isWallRotated ? new THREE.BoxGeometry(0.08, 0.03, w) : new THREE.BoxGeometry(w, 0.03, 0.08),
-          frameMat
-        );
-        hMullion.position.set(x, y + h * 0.15, z);
-
-        const sill = new THREE.Mesh(
-          isWallRotated ? new THREE.BoxGeometry(0.12, 0.04, w + 0.14) : new THREE.BoxGeometry(w + 0.14, 0.04, 0.12),
-          sillMat
-        );
-        sill.position.set(x, y - h / 2 - 0.02, isWallRotated ? z : z + 0.03);
-
-        winGroup.add(outerFrame, glass, vMullion, hMullion, sill);
-        return winGroup;
-      };
-
-      // 1st Floor Main Entrance Door
-      const door = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.7, 0.06), new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.4 }));
-      door.position.set(1.4, 0.85, 2.41);
-      const doorHandle = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.2, 0.08), new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.9 }));
-      doorHandle.position.set(1.1, 0.85, 2.45);
-      houseGroup.add(door, doorHandle);
-
-      // 1st Floor Main Detailed Window (Left Side)
-      houseGroup.add(createWindow(1.6, 1.3, -1.4, 1.1, 2.41));
-
-      // 2nd Floor Balcony Glass Exit Door (Left Side of Balcony)
-      const bDoorGroup = new THREE.Group();
-      const bDoorFrame = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.8, 0.04), frameMat);
-      bDoorFrame.position.set(-1.6, 3.1, 2.2);
-      const bDoorGlass = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.7, 0.06), glassMat);
-      bDoorGlass.position.set(-1.6, 3.1, 2.21);
-      const bDoorMullion = new THREE.Mesh(new THREE.BoxGeometry(0.04, 1.7, 0.08), frameMat);
-      bDoorMullion.position.set(-1.6, 3.1, 2.21);
-      const bDoorHandle = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.2, 0.08), new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.9 }));
-      bDoorHandle.position.set(-1.18, 3.0, 2.25);
-      bDoorGroup.add(bDoorFrame, bDoorGlass, bDoorMullion, bDoorHandle);
-      houseGroup.add(bDoorGroup);
-
-      // 2nd Floor Balcony Window (Right Side of Balcony)
-      houseGroup.add(createWindow(1.3, 1.2, 0.3, 3.1, 2.21));
-
-      // Extension Window (Front)
-      houseGroup.add(createWindow(1.2, 0.9, 3.4, 1.0, 2.01));
-
-      // 2nd Floor Side Window (Right Wall)
-      houseGroup.add(createWindow(1.4, 1.0, 2.81, 3.1, 0, true));
-    }
-
-    // 6. BUILD PERFECTLY MATCHED PITCHED / FLAT ROOF WITH SOLAR PANELS
-    buildRoofAndPanels(houseGroup, roofType, rowsCount, panelBrand, hasBattery, batteryCapacityKwh, isDark, mountType);
-
-    // 7. ANIMATION LOOP
+    // 6. ANIMATION LOOP
     let reqId;
     const animate = () => {
       reqId = requestAnimationFrame(animate);
       if (controlsRef.current) {
-        controlsRef.current.autoRotate = autoRotate;
+        controlsRef.current.autoRotate = autoRotateRef.current;
         controlsRef.current.autoRotateSpeed = 1.8;
         controlsRef.current.update();
       }
@@ -284,17 +109,212 @@ export default function Solar3DCanvas({
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+      // Immediately render to prevent blank frame latency during container resizing
+      renderer.render(scene, camera);
     };
-    window.addEventListener('resize', handleResize);
+
+    let resizeObserver = null;
+    if (typeof window !== 'undefined' && 'ResizeObserver' in window && containerRef.current) {
+      resizeObserver = new ResizeObserver(() => {
+        handleResize();
+      });
+      resizeObserver.observe(containerRef.current);
+    } else {
+      window.addEventListener('resize', handleResize);
+    }
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      } else {
+        window.removeEventListener('resize', handleResize);
+      }
       cancelAnimationFrame(reqId);
       if (renderer.domElement && containerRef.current) {
         containerRef.current.removeChild(renderer.domElement);
       }
       renderer.dispose();
     };
+  }, []);
+
+  // EFFECT 2: Rebuilding Meshes dynamically on props change (No Blinking)
+  useEffect(() => {
+    const scene = sceneRef.current;
+    const houseGroup = houseGroupRef.current;
+    if (!scene || !houseGroup) return;
+
+    // 1. Dynamic background & light intensity updates
+    scene.background = new THREE.Color(isDark ? 0x090d16 : 0xf8fafc);
+    if (ambientLightRef.current) {
+      ambientLightRef.current.intensity = isDark ? 0.75 : 0.95;
+    }
+
+    // 2. Clear old children
+    while (houseGroup.children.length > 0) {
+      const child = houseGroup.children[0];
+      houseGroup.remove(child);
+    }
+
+    // 3. Slope slope slope
+    if (mountType === 'ground' && roofType === 'pitched') {
+      houseGroup.rotation.x = 0.18; // ~10 deg slope
+    } else {
+      houseGroup.rotation.x = 0;
+    }
+
+    // 4. Ground base & lawn
+    const baseMat = new THREE.MeshStandardMaterial({ color: isDark ? 0x1e293b : 0xe2e8f0, roughness: 0.6 });
+    const pedestalBase = new THREE.Mesh(new THREE.BoxGeometry(11.6, 0.35, 11.6), baseMat);
+    pedestalBase.position.y = -0.18;
+    pedestalBase.receiveShadow = true;
+    houseGroup.add(pedestalBase);
+
+    const lawnMat = new THREE.MeshStandardMaterial({ color: isDark ? 0x064e3b : 0x4ade80, roughness: 0.85 });
+    const lawn = new THREE.Mesh(new THREE.BoxGeometry(11.0, 0.05, 11.0), lawnMat);
+    lawn.position.y = 0.02;
+    lawn.receiveShadow = true;
+    houseGroup.add(lawn);
+
+    // Landscape Trees
+    const treeMat = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.8 });
+    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x78350f });
+    [
+      { x: -4.4, z: 3.8, r: 0.65 },
+      { x: -4.0, z: -3.8, r: 0.55 },
+      { x: 4.4, z: -3.8, r: 0.6 },
+      { x: -1.2, z: 4.4, r: 0.4 },
+      { x: 1.8, z: 4.4, r: 0.45 }
+    ].forEach((t) => {
+      const foliage = new THREE.Mesh(new THREE.DodecahedronGeometry(t.r, 1), treeMat);
+      foliage.position.set(t.x, 0.6 + t.r, t.z);
+      foliage.castShadow = true;
+
+      const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 0.6), trunkMat);
+      trunk.position.set(t.x, 0.3, t.z);
+      houseGroup.add(foliage, trunk);
+    });
+
+    if (mountType !== 'ground') {
+      const wallMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.25 });
+      const darkTrimMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.3 });
+      const glassMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.08, metalness: 0.92 });
+      const frameMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.4 });
+
+      // 1st Floor Body
+      const firstFloor = new THREE.Mesh(new THREE.BoxGeometry(5.6, 2.2, 4.8), wallMat);
+      firstFloor.position.set(0, 1.1, 0);
+      firstFloor.castShadow = true;
+      firstFloor.receiveShadow = true;
+      houseGroup.add(firstFloor);
+
+      // Side Extension / Garage
+      const sideExtension = new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.8, 4.0), wallMat);
+      sideExtension.position.set(3.4, 0.9, 0);
+      sideExtension.castShadow = true;
+      sideExtension.receiveShadow = true;
+      houseGroup.add(sideExtension);
+
+      // Side Extension Cap
+      const sideCap = new THREE.Mesh(new THREE.BoxGeometry(2.3, 0.12, 4.1), darkTrimMat);
+      sideCap.position.set(3.4, 1.84, 0);
+      sideCap.castShadow = true;
+      houseGroup.add(sideCap);
+
+      // 2nd Floor Main Body
+      const secondFloor = new THREE.Mesh(new THREE.BoxGeometry(5.6, 2.0, 4.4), wallMat);
+      secondFloor.position.set(0, 3.2, 0);
+      secondFloor.castShadow = true;
+      secondFloor.receiveShadow = true;
+      houseGroup.add(secondFloor);
+
+      // 2nd Floor Balcony Deck
+      const balconyDeck = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.12, 1.0), darkTrimMat);
+      balconyDeck.position.set(-0.7, 2.2, 2.7);
+      balconyDeck.castShadow = true;
+      houseGroup.add(balconyDeck);
+
+      // Railings
+      const railMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.8 });
+      const topRail = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.05, 0.05), railMat);
+      topRail.position.set(-0.7, 2.8, 3.18);
+      const leftSideRail = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 0.98), railMat);
+      leftSideRail.position.set(-2.78, 2.8, 2.69);
+      const rightSideRail = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 0.98), railMat);
+      rightSideRail.position.set(1.38, 2.8, 2.69);
+      houseGroup.add(topRail, leftSideRail, rightSideRail);
+
+      [-2.78, -0.7, 1.38].forEach((rx) => {
+        const postFront = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.6, 0.04), railMat);
+        postFront.position.set(rx, 2.5, 3.18);
+        if (rx !== -0.7) {
+          const postWall = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.6, 0.04), railMat);
+          postWall.position.set(rx, 2.5, 2.22);
+          houseGroup.add(postWall);
+        }
+        houseGroup.add(postFront);
+      });
+
+      const frameMatLocal = frameMat;
+      const glassMatLocal = glassMat;
+      const createWindow = (w, h, x, y, z, isWallRotated = false) => {
+        const winGroup = new THREE.Group();
+        const outerFrame = new THREE.Mesh(
+          isWallRotated ? new THREE.BoxGeometry(0.04, h + 0.1, w + 0.1) : new THREE.BoxGeometry(w + 0.1, h + 0.1, 0.04),
+          frameMatLocal
+        );
+        outerFrame.position.set(x, y, isWallRotated ? z : z - 0.01);
+        const glass = new THREE.Mesh(
+          isWallRotated ? new THREE.BoxGeometry(0.06, h, w) : new THREE.BoxGeometry(w, h, 0.06),
+          glassMatLocal
+        );
+        glass.position.set(x, y, z);
+        const vMullion = new THREE.Mesh(
+          isWallRotated ? new THREE.BoxGeometry(0.08, h, 0.03) : new THREE.BoxGeometry(0.03, h, 0.08),
+          frameMatLocal
+        );
+        vMullion.position.set(x, y, z);
+        const hMullion = new THREE.Mesh(
+          isWallRotated ? new THREE.BoxGeometry(0.08, 0.03, w) : new THREE.BoxGeometry(w, 0.03, 0.08),
+          frameMatLocal
+        );
+        hMullion.position.set(x, y + h * 0.15, z);
+        const sillMat = new THREE.MeshStandardMaterial({ color: isDark ? 0x334155 : 0xe2e8f0 });
+        const sill = new THREE.Mesh(
+          isWallRotated ? new THREE.BoxGeometry(0.12, 0.04, w + 0.14) : new THREE.BoxGeometry(w + 0.14, 0.04, 0.12),
+          sillMat
+        );
+        sill.position.set(x, y - h / 2 - 0.02, isWallRotated ? z : z + 0.03);
+
+        winGroup.add(outerFrame, glass, vMullion, hMullion, sill);
+        return winGroup;
+      };
+
+      const door = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.7, 0.06), new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.4 }));
+      door.position.set(1.4, 0.85, 2.41);
+      const doorHandle = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.2, 0.08), new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.9 }));
+      doorHandle.position.set(1.1, 0.85, 2.45);
+      houseGroup.add(door, doorHandle);
+
+      houseGroup.add(createWindow(1.6, 1.3, -1.4, 1.1, 2.41));
+
+      const bDoorGroup = new THREE.Group();
+      const bDoorFrame = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.8, 0.04), frameMat);
+      bDoorFrame.position.set(-1.6, 3.1, 2.2);
+      const bDoorGlass = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.7, 0.06), glassMat);
+      bDoorGlass.position.set(-1.6, 3.1, 2.21);
+      const bDoorMullion = new THREE.Mesh(new THREE.BoxGeometry(0.04, 1.7, 0.08), frameMat);
+      bDoorMullion.position.set(-1.6, 3.1, 2.21);
+      const bDoorHandle = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.2, 0.08), new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.9 }));
+      bDoorHandle.position.set(-1.18, 3.0, 2.25);
+      bDoorGroup.add(bDoorFrame, bDoorGlass, bDoorMullion, bDoorHandle);
+      houseGroup.add(bDoorGroup);
+
+      houseGroup.add(createWindow(1.3, 1.2, 0.3, 3.1, 2.21));
+      houseGroup.add(createWindow(1.2, 0.9, 3.4, 1.0, 2.01));
+      houseGroup.add(createWindow(1.4, 1.0, 2.81, 3.1, 0, true));
+    }
+
+    buildRoofAndPanels(houseGroup, roofType, rowsCount, panelBrand, hasBattery, batteryCapacityKwh, isDark, mountType);
   }, [roofType, rowsCount, panelBrand, hasBattery, batteryCapacityKwh, isDark, mountType]);
 
   // Reset Camera View
