@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheck, FileCheck, Leaf, Cpu, CheckCircle2, ArrowRight } from 'lucide-react';
+import SolarPanelCard from './SolarPanelCard';
+import { LiveBadge, EnergyFlowStrip } from './SolarTech';
 
 export default function DeyeAndLegal({ onOpenConsultation, theme }) {
   const isDark = theme === 'dark';
@@ -38,6 +40,11 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
         isDark ? 'bg-orange-500/15' : 'bg-orange-400/20'
       }`} />
 
+      {/* Ambient Solar Lighting */}
+      <div className="solar-flare w-[240px] sm:w-[400px] h-[240px] sm:h-[400px] -top-32 left-[18%]" aria-hidden="true" />
+      <div className="solar-beam hidden sm:block w-[110px] h-[600px] -top-44 left-[8%]" aria-hidden="true" />
+      <div className="solar-beam hidden sm:block w-[80px] h-[520px] -top-36 right-[16%]" style={{ animationDelay: '3.4s' }} aria-hidden="true" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
@@ -68,10 +75,12 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className={`glass-card rounded-3xl p-6 sm:p-8 border flex flex-col justify-between transition-all group shadow-lg ${
-                  isDark ? 'border-slate-700/80 bg-slate-800/80 hover:border-amber-400/60' : 'border-amber-200 bg-white hover:border-amber-400 shadow-xs'
-                }`}
               >
+                <SolarPanelCard
+                  theme={theme}
+                  className="h-full p-6 sm:p-8 group shadow-lg"
+                  contentClassName="flex flex-col justify-between"
+                >
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     <div className="w-12 h-12 rounded-2xl flex items-center justify-center border border-amber-400/40 bg-amber-500/15 text-amber-500 shadow-md">
@@ -114,31 +123,39 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
+                </SolarPanelCard>
               </motion.div>
             );
           })}
         </div>
 
         {/* Deye Feature Highlights Banner */}
-        <div className={`mt-10 sm:mt-14 p-6 sm:p-8 rounded-3xl border flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl ${
-          isDark ? 'border-slate-700 bg-slate-800/90' : 'border-amber-200 bg-white shadow-amber-500/5'
-        }`}>
-          <div className="space-y-2 text-center md:text-left">
-            <h4 className={`text-lg sm:text-xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              Чому саме інвертори <span className="text-amber-500">Deye</span>?
-            </h4>
-            <p className={`text-xs sm:text-sm max-w-2xl ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-              Підтримка паралельного підключення, миттєве переключення за 4 мс при відключенні світла, інтеграція з генераторами та мобільний моніторинг.
-            </p>
-          </div>
+        <SolarPanelCard theme={theme} glow className="mt-10 sm:mt-14 p-6 sm:p-8 shadow-xl">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="space-y-3 text-center md:text-left">
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
+                <LiveBadge theme={theme} label="Hybrid Inverter Online" />
+                <LiveBadge theme={theme} label="ATS 4 ms" tone="amber" />
+              </div>
+              <h4 className={`text-lg sm:text-xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                Чому саме інвертори <span className="text-amber-500">Deye</span>?
+              </h4>
+              <p className={`text-xs sm:text-sm max-w-2xl ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                Підтримка паралельного підключення, миттєве переключення за 4 мс при відключенні світла, інтеграція з генераторами та мобільний моніторинг.
+              </p>
+              <div className="max-w-sm mx-auto md:mx-0">
+                <EnergyFlowStrip theme={theme} />
+              </div>
+            </div>
 
-          <button
-            onClick={onOpenConsultation}
-            className="btn-orange-bright font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-lg hover:scale-105 transition-all flex-shrink-0 glow-amber"
-          >
-            Замовити Розрахунок Deye
-          </button>
-        </div>
+            <button
+              onClick={onOpenConsultation}
+              className="btn-orange-bright font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-lg hover:scale-105 transition-all flex-shrink-0 glow-amber"
+            >
+              Замовити Розрахунок Deye
+            </button>
+          </div>
+        </SolarPanelCard>
 
       </div>
     </section>
