@@ -18,7 +18,7 @@ const MONO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
 
 function Scene({ label, children }) {
   return (
-    <svg viewBox="0 0 320 130" className="w-full h-auto" role="img" aria-label={label}>
+    <svg viewBox="0 -40 320 170" className="w-full h-auto" role="img" aria-label={label}>
       {children}
     </svg>
   );
@@ -51,7 +51,7 @@ export function InsolationScene({ theme }) {
   return (
     <Scene label="Карта інсоляції: сонячна радіація над Карпатським регіоном">
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="130" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect y="-40" width="320" height="170" rx="18" fill={`url(#${uid}-sky)`} />
 
       <Sun uid={uid} cx={252} cy={30} r={13} />
 
@@ -103,7 +103,7 @@ export function PaybackScene({ theme }) {
   return (
     <Scene label="Крива окупності: накопичений грошовий потік перетинає нуль">
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="130" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect y="-40" width="320" height="170" rx="18" fill={`url(#${uid}-sky)`} />
 
       <defs>
         <linearGradient id={`${uid}-pos`} x1="0" y1="0" x2="0" y2="1">
@@ -155,7 +155,7 @@ export function DegradationScene({ theme }) {
   return (
     <Scene label="Деградація фотомодулів протягом 25 років із гарантійним коридором">
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="130" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect y="-40" width="320" height="170" rx="18" fill={`url(#${uid}-sky)`} />
 
       <defs>
         <linearGradient id={`${uid}-band`} x1="0" y1="0" x2="1" y2="0">
@@ -197,7 +197,7 @@ export function InverterEfficiencyScene({ theme }) {
   return (
     <Scene label="Крива ККД інвертора залежно від навантаження">
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="130" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect y="-40" width="320" height="170" rx="18" fill={`url(#${uid}-sky)`} />
 
       <defs>
         <linearGradient id={`${uid}-eff`} x1="0" y1="0" x2="0" y2="1">

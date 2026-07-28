@@ -16,7 +16,7 @@ const frameProps = (isDark) => ({
 
 function Scene({ label, children, className }) {
   return (
-    <svg viewBox="0 0 320 150" className={`w-full h-auto ${className}`} role="img" aria-label={label}>
+    <svg viewBox="0 -40 320 190" className={`w-full h-auto ${className}`} role="img" aria-label={label}>
       {children}
     </svg>
   );
@@ -31,7 +31,7 @@ export function SolarFarmScene({ theme, className = '' }) {
   return (
     <Scene label="Сонячна електростанція: масив панелей та підключення до мережі" className={className}>
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect y="-40" width="320" height="190" rx="18" fill={`url(#${uid}-sky)`} />
 
       <Sun uid={uid} cx={46} cy={32} r={13} />
 
@@ -77,7 +77,7 @@ export function HybridSystemScene({ theme, className = '' }) {
   return (
     <Scene label="Гібридний інвертор Deye з акумуляторною стійкою" className={className}>
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect y="-40" width="320" height="190" rx="18" fill={`url(#${uid}-sky)`} />
 
       {/* Source module */}
       <TiltedModule uid={uid} x={14} y={122} w={34} rise={16} depth={11} drop={5} post={14} cells={2} />
@@ -149,7 +149,7 @@ export function RoofMountScene({ theme, className = '' }) {
   return (
     <Scene label="Монтаж сонячних панелей на скатний дах із кріпленнями" className={className}>
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect y="-40" width="320" height="190" rx="18" fill={`url(#${uid}-sky)`} />
 
       <Sun uid={uid} cx={276} cy={32} r={12} />
 
@@ -204,7 +204,7 @@ export function PermitsScene({ theme, className = '' }) {
   return (
     <Scene label="Документи, дозволи Обленерго та двонаправлений лічильник" className={className}>
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect y="-40" width="320" height="190" rx="18" fill={`url(#${uid}-sky)`} />
 
       {/* Dossier — back sheets */}
       <rect x="38" y="26" width="110" height="102" rx="6" fill={`url(#${uid}-case)`} stroke={c.hair} strokeWidth="1.5" opacity="0.6" transform="rotate(-5 93 77)" />
@@ -266,7 +266,7 @@ export function SwitchboardScene({ theme, className = '' }) {
   return (
     <Scene label="Розподільчий щит з автоматами, ПЗВ та заземленням" className={className}>
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect y="-40" width="320" height="190" rx="18" fill={`url(#${uid}-sky)`} />
 
       {/* Enclosure */}
       <rect x="52" y="16" width="200" height="112" rx="11" fill={`url(#${uid}-case)`} stroke={`url(#${uid}-metal)`} strokeWidth="2.5" />
