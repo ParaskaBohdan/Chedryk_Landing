@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import StatsSection from './components/StatsSection';
+import EngineerShowcase from './components/EngineerShowcase';
 import DeyeAndLegal from './components/DeyeAndLegal';
 import StepProcess from './components/StepProcess';
 import Testimonials from './components/Testimonials';
@@ -95,7 +96,11 @@ export default function App() {
                 theme={theme} 
               />
               <StatsSection theme={theme} />
-              <DeyeAndLegal 
+              <EngineerShowcase
+                theme={theme}
+                onOpenConsultation={() => handleOpenConsultation()}
+              />
+              <DeyeAndLegal
                 onOpenConsultation={() => handleOpenConsultation()} 
                 theme={theme} 
               />

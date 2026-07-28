@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Sun, BatteryCharging, Cpu, Layers, ShieldCheck, CheckCircle2, Zap, Wrench, ArrowRight, MessageSquare } from 'lucide-react';
+import SolarPanelCard from '../components/SolarPanelCard';
+import { LiveBadge, EfficiencyMeter, TelemetryChip } from '../components/SolarTech';
+import {
+  PanelModuleScene,
+  BatteryStackScene,
+  InverterUnitScene,
+  MountingHardwareScene,
+  SolarCableScene,
+  ProtectionBoxScene
+} from '../components/EquipmentIllustrations';
 
 export default function EquipmentPage({ theme, onOpenConsultation }) {
   const isDark = theme === 'dark';
@@ -25,7 +35,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
       degradation: '< 0.4% на рік',
       features: ['Низький температурний коефіцієнт (-0.29%/°C)', 'Двостороннє знімання енергії (+15-20%)', 'Скло-Скло захист від граду та снігу'],
       recommendedFor: 'Скаті та плоскі дахи приватних будинків',
-      badge: 'ТОП Вибір 2026'
+      badge: 'ТОП Вибір 2026',
+      visual: { cols: 6, rows: 3, bifacial: true },
+      status: 'N-Type TOPCon',
+      effValue: 22.6,
+      metrics: [
+        { label: 'Temp. Coef.', value: '−0.29 %/°C' },
+        { label: 'Cells', value: '108 (54×2)' }
+      ]
     },
     {
       id: 'risen-550',
@@ -40,7 +57,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
       degradation: '< 0.55% на рік',
       features: ['Оптимальне співвідношення ціна/якість', 'Високий опір PID та PID-Free', 'Підсилена алюмінієва рама 35 мм'],
       recommendedFor: 'Бюджетні та середні домашні СЕС 10-30 кВт',
-      badge: 'Бестселер'
+      badge: 'Бестселер',
+      visual: { cols: 5, rows: 3 },
+      status: 'PERC Half-Cell',
+      effValue: 21.3,
+      metrics: [
+        { label: 'Frame', value: '35 мм' },
+        { label: 'PID', value: 'PID-Free' }
+      ]
     },
     {
       id: 'longi-600',
@@ -55,7 +79,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
       degradation: '< 0.35% на рік',
       features: ['Максимальний ККД на ринку 22.8%', 'Преміальний чорний дизайн (Full Black)', 'Стійкість до затінення окремих осередків'],
       recommendedFor: "Преміум об'єкти та обмежена площа даху",
-      badge: 'Преміум ККД'
+      badge: 'Преміум ККД',
+      visual: { cols: 7, rows: 3, fullBlack: true },
+      status: 'HPBC Full Black',
+      effValue: 22.8,
+      metrics: [
+        { label: 'Shading', value: 'Cell-level' },
+        { label: 'Finish', value: 'Full Black' }
+      ]
     },
     {
       id: 'ja-670',
@@ -70,7 +101,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
       degradation: '< 0.4% на рік',
       features: ['Максимальна потужність 670 Вт з 1 модуля', 'Економія на кріпильних металоконструкціях', 'Розраховані на промислові навантаження'],
       recommendedFor: 'Комерційні СЕС 50 кВт – 1 МВт та наземні ферми',
-      badge: 'Промисловий Гігант'
+      badge: 'Промисловий Гігант',
+      visual: { cols: 8, rows: 4, bifacial: true },
+      status: 'N-Type Large Format',
+      effValue: 22.1,
+      metrics: [
+        { label: 'Format', value: '2384×1303' },
+        { label: 'Load', value: '5400 Па' }
+      ]
     }
   ];
 
@@ -92,7 +130,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
         'Вбудований АВР (введення резерву за 4 мілісекунди)',
         'Безпечна хімія: не вибухає та не горить при пробої'
       ],
-      badge: 'Флагман Автономії'
+      badge: 'Флагман Автономії',
+      visual: { style: 'rack', modules: 4 },
+      status: 'Rack 19 · Hot-Swap',
+      dod: 80,
+      metrics: [
+        { label: 'Cycles', value: '6000+' },
+        { label: 'ATS', value: '4 мс' }
+      ]
     },
     {
       id: 'ecoflow-powerkits',
@@ -110,7 +155,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
         'Керування та віддалений моніторинг через мобільний додаток',
         'Ідеально для швидкого монтажу в будинках та офісах'
       ],
-      badge: 'Мобільність & Смарт'
+      badge: 'Мобільність & Смарт',
+      visual: { style: 'portable' },
+      status: 'Plug & Play · App',
+      dod: 90,
+      metrics: [
+        { label: 'Cycles', value: '3500–6500' },
+        { label: 'Bus', value: '48 / 102 В' }
+      ]
     },
     {
       id: 'pylontech-us',
@@ -127,7 +179,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
         'Глибина розряду DOD до 95% без втрати ресурсу',
         "Сумісність з 99% інверторів на ринку"
       ],
-      badge: 'Перевірена Класика'
+      badge: 'Перевірена Класика',
+      visual: { style: 'rack', modules: 3 },
+      status: 'Low Voltage 48 В',
+      dod: 95,
+      metrics: [
+        { label: 'Cycles', value: '6000+' },
+        { label: 'Compat.', value: '99% інверторів' }
+      ]
     },
     {
       id: 'dyness-tower',
@@ -144,7 +203,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
         'Клас захисту IP65 (можна ставити у гаражі або на терасі)',
         'Високий струм розряду для старту потужних насосів/компресорів'
       ],
-      badge: 'Захист IP65'
+      badge: 'Захист IP65',
+      visual: { style: 'tower', modules: 4 },
+      status: 'Stackable Tower',
+      dod: 90,
+      metrics: [
+        { label: 'Ingress', value: 'IP65' },
+        { label: 'Discharge', value: 'High current' }
+      ]
     }
   ];
 
@@ -157,7 +223,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
       mppt: '2 MPPT трекери (до 10.4 кВт панелей)',
       backupSpeed: '4 мс (АВР)',
       features: ['Підключення бензо/дизель генератора з автозапуском', 'Асиметричний вихід на фази', 'Спеціальний порт Smart Load'],
-      idealFor: 'Приватні будинки 100-200 м²'
+      idealFor: 'Приватні будинки 100-200 м²',
+      visual: { phases: 1, mppt: 2 },
+      status: 'Single Phase Hybrid',
+      effValue: 97.6,
+      metrics: [
+        { label: 'PV Input', value: 'до 10.4 кВт' },
+        { label: 'Smart Load', value: 'Yes' }
+      ]
     },
     {
       power: '8 – 12 кВт (3-фазні)',
@@ -166,7 +239,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
       mppt: '2 MPPT трекери (до 15.6 кВт панелей)',
       backupSpeed: '4 мс (АВР)',
       features: ["100% неспланований вихід по фазах (до 50% номіналу на 1 фазу)", 'Підмішування сонця без скидання у мережу', "Паралельне з'єднання до 16 інверторів"],
-      idealFor: 'Великі котеджі, малі готелі та СТО'
+      idealFor: 'Великі котеджі, малі готелі та СТО',
+      visual: { phases: 3, mppt: 2 },
+      status: 'Three Phase Hybrid',
+      effValue: 97.6,
+      metrics: [
+        { label: 'PV Input', value: 'до 15.6 кВт' },
+        { label: 'Parallel', value: 'до 16 шт' }
+      ]
     },
     {
       power: '15 – 30 кВт (3-фазні)',
@@ -175,7 +255,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
       mppt: '3-4 MPPT трекери (до 40 кВт панелей)',
       backupSpeed: '4 мс (АВР)',
       features: ['Підтримка високовольтних батарей LiFePO4 (160-800V)', 'Максимальний ККД перетворення 97.6%', 'Промисловий пило-вологозахист IP65'],
-      idealFor: 'Комерційні підприємства, склади, цехи'
+      idealFor: 'Комерційні підприємства, склади, цехи',
+      visual: { phases: 3, mppt: 4 },
+      status: 'High Voltage · IP65',
+      effValue: 97.6,
+      metrics: [
+        { label: 'PV Input', value: 'до 40 кВт' },
+        { label: 'Battery', value: '160–800 В' }
+      ]
     },
     {
       power: '50 – 100 кВт (Комерційні СЕС)',
@@ -184,15 +271,80 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
       mppt: '4-8 MPPT трекерів (до 150 кВт панелей)',
       backupSpeed: '10 мс',
       features: ['Гібридний режим під Зелений Тариф та власне споживання', 'Моніторинг кожної стринги в реальному часі', 'Вбудовані ПЗІП тип II по DC та AC'],
-      idealFor: 'Заводи, виробництва, агрокомплекси'
+      idealFor: 'Заводи, виробництва, агрокомплекси',
+      visual: { phases: 3, mppt: 6, commercial: true },
+      status: 'Commercial Grade',
+      effValue: 98.8,
+      metrics: [
+        { label: 'PV Input', value: 'до 150 кВт' },
+        { label: 'SPD', value: 'Type II DC/AC' }
+      ]
+    }
+  ];
+
+  // Mounting hardware & protection gear
+  const mountingData = [
+    {
+      id: 'rails',
+      icon: Layers,
+      iconClass: 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-400/40',
+      Illustration: MountingHardwareScene,
+      status: 'Wind Load 24 m/s',
+      tone: 'amber',
+      title: 'Алюмінієві Профілі & Кронштейни',
+      desc: 'Первинний алюмінієвий сплав АД31 Т5. Нержавіючі шпильки М10 з ЕПДМ-ущільнювачами AISI 304 для металочерепиці, черепиці, профнастилу та фальцу.',
+      specs: [
+        { label: 'Alloy', value: 'АД31 Т5' },
+        { label: 'Fasteners', value: 'AISI 304 · M10' },
+        { label: 'Roof Types', value: '4 типи покрівлі' }
+      ],
+      meter: { label: 'Corrosion Resistance', value: 96, tone: 'amber', unit: '%' }
+    },
+    {
+      id: 'cable',
+      icon: Zap,
+      iconClass: 'bg-sky-500/20 text-sky-600 dark:text-sky-400 border-sky-400/40',
+      Illustration: SolarCableScene,
+      status: 'H1Z2Z2-K · IP68',
+      tone: 'sky',
+      title: 'Сонячний Кабель Solar 6 мм²',
+      desc: 'Спеціалізований кабель H1Z2Z2-K з лудженою міддю та подвійною ізоляцією. Стійкий до озону, УФ-випромінювання та перепадів температур від -40°C до +90°C.',
+      specs: [
+        { label: 'Section', value: '6 мм² · 1.5 кВ' },
+        { label: 'Conductor', value: 'Луджена Cu' },
+        { label: 'Temp. Range', value: '−40…+90 °C' }
+      ],
+      meter: { label: 'UV / Ozone Rating', value: 98, tone: 'sky', unit: '%' }
+    },
+    {
+      id: 'protection',
+      icon: ShieldCheck,
+      iconClass: 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-400/40',
+      Illustration: ProtectionBoxScene,
+      status: 'SPD Type II · IP65',
+      tone: 'emerald',
+      title: 'Щити Захисту DC / AC (ПЗІП)',
+      desc: 'Окремі герметичні щити IP65 з обмежувачами перенапруги (ПЗІП клас II), постійнострумовими запобіжниками 1000V DC та автоматами Schneider/ETI.',
+      specs: [
+        { label: 'Ingress', value: 'IP65' },
+        { label: 'DC Fuses', value: '1000 В DC' },
+        { label: 'Breakers', value: 'Schneider / ETI' }
+      ],
+      meter: { label: 'Surge Clamping', value: 99, tone: 'emerald', unit: '%' }
     }
   ];
 
   return (
-    <div className={`py-12 sm:py-20 min-h-screen transition-colors duration-300 ${
+    <div className={`py-12 sm:py-20 min-h-screen relative overflow-hidden transition-colors duration-300 ${
       isDark ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-950'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-14">
+      {/* Ambient Solar Lighting */}
+      <div className="solar-flare w-[240px] sm:w-[420px] h-[240px] sm:h-[420px] -top-32 right-[8%]" aria-hidden="true" />
+      <div className="solar-flare w-[200px] sm:w-[340px] h-[200px] sm:h-[340px] top-[45%] left-[4%]" style={{ animationDelay: '3.4s' }} aria-hidden="true" />
+      <div className="solar-beam hidden sm:block w-[110px] h-[620px] -top-44 left-[26%]" aria-hidden="true" />
+      <div className="solar-beam hidden lg:block w-[74px] h-[520px] -top-36 right-[30%]" style={{ animationDelay: '5s' }} aria-hidden="true" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-14 relative z-10">
         
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
@@ -219,8 +371,8 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
             className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-extrabold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'panels'
                 ? isDark
-                  ? 'bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
-                  : 'bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
+                  ? 'solar-halo bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
+                  : 'solar-halo bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
                   : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
@@ -236,8 +388,8 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
             className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-extrabold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'batteries'
                 ? isDark
-                  ? 'bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
-                  : 'bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
+                  ? 'solar-halo bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
+                  : 'solar-halo bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
                   : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
@@ -253,8 +405,8 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
             className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-extrabold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'inverters'
                 ? isDark
-                  ? 'bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
-                  : 'bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
+                  ? 'solar-halo bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
+                  : 'solar-halo bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
                   : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
@@ -270,8 +422,8 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
             className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-extrabold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'mounting'
                 ? isDark
-                  ? 'bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
-                  : 'bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
+                  ? 'solar-halo bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
+                  : 'solar-halo bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
                   : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
@@ -299,12 +451,26 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {solarPanelsData.map((panel) => (
-                <div
+                <SolarPanelCard
                   key={panel.id}
-                  className={`glass-panel p-6 sm:p-7 rounded-3xl border space-y-5 transition-all hover:border-amber-400/50 ${
-                    isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-300 bg-white shadow-md'
-                  }`}
+                  theme={theme}
+                  className="h-full p-6 sm:p-7"
+                  contentClassName="space-y-5"
                 >
+                  {/* Module illustration — cell layout, finish and bifacial gain
+                      are driven by the product's own spec */}
+                  <div className="relative rounded-2xl overflow-hidden">
+                    <PanelModuleScene theme={theme} {...panel.visual} />
+                    <div className="absolute top-2.5 left-2.5">
+                      <LiveBadge theme={theme} label={panel.status} tone="amber" />
+                    </div>
+                    <div className={`absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
+                      isDark ? 'text-slate-300' : 'text-slate-600'
+                    }`}>
+                      {panel.power}
+                    </div>
+                  </div>
+
                   <div className="flex items-start justify-between gap-3 border-b border-slate-700/60 pb-4">
                     <div>
                       <span className="text-xs font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
@@ -373,6 +539,19 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                     ))}
                   </div>
 
+                  {/* Live readouts */}
+                  <div className="pt-2 border-t border-slate-700/60 space-y-3">
+                    <EfficiencyMeter theme={theme} label="Module Efficiency" value={panel.effValue} live />
+                    <div className="grid grid-cols-2 gap-2.5">
+                      {panel.metrics.map((m) => (
+                        <TelemetryChip key={m.label} theme={theme} label={m.label} value={m.value} />
+                      ))}
+                    </div>
+                    <p className={`text-[9px] telemetry-label ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+                      Деградація {panel.degradation} · {panel.recommendedFor}
+                    </p>
+                  </div>
+
                   {/* Warranty & Application Footer */}
                   <div className="pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs">
                     <span className="font-black flex items-center gap-1" style={{ color: isDark ? '#e2e8f0' : '#000000' }}>
@@ -389,7 +568,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                     </button>
                   </div>
 
-                </div>
+                </SolarPanelCard>
               ))}
             </div>
           </div>
@@ -412,12 +591,25 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {batteriesData.map((bat) => (
-                <div
+                <SolarPanelCard
                   key={bat.id}
-                  className={`glass-panel p-6 sm:p-7 rounded-3xl border space-y-5 transition-all hover:border-emerald-400/50 ${
-                    isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-300 bg-white shadow-md'
-                  }`}
+                  theme={theme}
+                  className="h-full p-6 sm:p-7"
+                  contentClassName="space-y-5"
                 >
+                  {/* Storage illustration — rack, tower or portable kit */}
+                  <div className="relative rounded-2xl overflow-hidden">
+                    <BatteryStackScene theme={theme} {...bat.visual} />
+                    <div className="absolute top-2.5 left-2.5">
+                      <LiveBadge theme={theme} label={bat.status} />
+                    </div>
+                    <div className={`absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
+                      isDark ? 'text-slate-300' : 'text-slate-600'
+                    }`}>
+                      {bat.capacities[bat.capacities.length - 1]}
+                    </div>
+                  </div>
+
                   <div className="flex items-start justify-between gap-3 border-b border-slate-700/60 pb-4">
                     <div>
                       <span className="text-xs font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
@@ -487,6 +679,19 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                     ))}
                   </div>
 
+                  {/* Live readouts */}
+                  <div className="pt-2 border-t border-slate-700/60 space-y-3">
+                    <EfficiencyMeter theme={theme} label="Usable DOD" value={bat.dod} tone="emerald" decimals={0} />
+                    <div className="grid grid-cols-2 gap-2.5">
+                      {bat.metrics.map((m) => (
+                        <TelemetryChip key={m.label} theme={theme} label={m.label} value={m.value} />
+                      ))}
+                    </div>
+                    <p className={`text-[9px] telemetry-label ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+                      {bat.voltageType}
+                    </p>
+                  </div>
+
                   {/* CTA Footer */}
                   <div className="pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs">
                     <span className="font-black flex items-center gap-1" style={{ color: isDark ? '#e2e8f0' : '#000000' }}>
@@ -503,7 +708,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                     </button>
                   </div>
 
-                </div>
+                </SolarPanelCard>
               ))}
             </div>
           </div>
@@ -526,12 +731,26 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {invertersData.map((inv, idx) => (
-                <div
+                <SolarPanelCard
                   key={idx}
-                  className={`glass-panel p-6 sm:p-7 rounded-3xl border space-y-5 transition-all hover:border-sky-400/50 ${
-                    isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-300 bg-white shadow-md'
-                  }`}
+                  theme={theme}
+                  className="h-full p-6 sm:p-7"
+                  contentClassName="space-y-5"
                 >
+                  {/* Inverter illustration — MPPT inputs and output phases
+                      are drawn from this model's own configuration */}
+                  <div className="relative rounded-2xl overflow-hidden">
+                    <InverterUnitScene theme={theme} {...inv.visual} />
+                    <div className="absolute top-2.5 left-2.5">
+                      <LiveBadge theme={theme} label={inv.status} tone="sky" />
+                    </div>
+                    <div className={`absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
+                      isDark ? 'text-slate-300' : 'text-slate-600'
+                    }`}>
+                      {inv.backupSpeed}
+                    </div>
+                  </div>
+
                   <div className="flex items-start justify-between gap-3 border-b border-slate-700/60 pb-4">
                     <div>
                       <span className="text-xs font-black uppercase tracking-wider text-sky-700 dark:text-sky-400">
@@ -578,6 +797,16 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                     ))}
                   </div>
 
+                  {/* Live readouts */}
+                  <div className="pt-2 border-t border-slate-700/60 space-y-3">
+                    <EfficiencyMeter theme={theme} label="Max Efficiency" value={inv.effValue} tone="sky" live />
+                    <div className="grid grid-cols-2 gap-2.5">
+                      {inv.metrics.map((m) => (
+                        <TelemetryChip key={m.label} theme={theme} label={m.label} value={m.value} />
+                      ))}
+                    </div>
+                  </div>
+
                   <div className="pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs">
                     <span className="font-black flex items-center gap-1" style={{ color: isDark ? '#e2e8f0' : '#000000' }}>
                       <ShieldCheck className="w-4 h-4 text-sky-600 dark:text-sky-400" />
@@ -593,7 +822,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                     </button>
                   </div>
 
-                </div>
+                </SolarPanelCard>
               ))}
             </div>
           </div>
@@ -615,51 +844,73 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
-              <div className={`glass-panel p-6 rounded-3xl border space-y-4 ${
-                isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-300 bg-white shadow-md'
-              }`}>
-                <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center border border-amber-400/40">
-                  <Layers className="w-5 h-5" />
-                </div>
-                <h3 className="font-black text-base" style={{ color: isDark ? '#ffffff' : '#000000' }}>Алюмінієві Профілі & Кронштейни</h3>
-                <p className="text-xs font-bold leading-relaxed" style={{ color: isDark ? '#e2e8f0' : '#000000' }}>
-                  Первинний алюмінієвий сплав АД31 Т5. Нержавіючі шпильки М10 з ЕПДМ-ущільнювачами AISI 304 для металочерепиці, черепиці, профнастилу та фальцу.
-                </p>
-              </div>
+              {mountingData.map((item) => {
+                const ItemIcon = item.icon;
+                const ItemScene = item.Illustration;
+                return (
+                  <SolarPanelCard
+                    key={item.id}
+                    theme={theme}
+                    className="h-full p-6"
+                    contentClassName="flex flex-col space-y-4"
+                  >
+                    <div className="relative rounded-2xl overflow-hidden">
+                      <ItemScene theme={theme} />
+                      <div className="absolute top-2.5 left-2.5">
+                        <LiveBadge theme={theme} label={item.status} tone={item.tone} />
+                      </div>
+                    </div>
 
-              <div className={`glass-panel p-6 rounded-3xl border space-y-4 ${
-                isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-300 bg-white shadow-md'
-              }`}>
-                <div className="w-10 h-10 rounded-2xl bg-sky-500/20 text-sky-600 dark:text-sky-400 flex items-center justify-center border border-sky-400/40">
-                  <Zap className="w-5 h-5" />
-                </div>
-                <h3 className="font-black text-base" style={{ color: isDark ? '#ffffff' : '#000000' }}>Сонячний Кабель Solar 6 мм²</h3>
-                <p className="text-xs font-bold leading-relaxed" style={{ color: isDark ? '#e2e8f0' : '#000000' }}>
-                  Спеціалізований кабель H1Z2Z2-K з лудженою міддю та подвійною ізоляцією. Стійкий до озону, УФ-випромінювання та перепадів температур від -40°C до +90°C.
-                </p>
-              </div>
+                    <div className={`w-10 h-10 rounded-2xl ${item.iconClass} flex items-center justify-center border`}>
+                      <ItemIcon className="w-5 h-5" />
+                    </div>
 
-              <div className={`glass-panel p-6 rounded-3xl border space-y-4 ${
-                isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-300 bg-white shadow-md'
-              }`}>
-                <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-400/40">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <h3 className="font-black text-base" style={{ color: isDark ? '#ffffff' : '#000000' }}>Щити Захисту DC / AC (ПЗІП)</h3>
-                <p className="text-xs font-bold leading-relaxed" style={{ color: isDark ? '#e2e8f0' : '#000000' }}>
-                  Окремі герметичні щити IP65 з обмежувачами перенапруги (ПЗІП клас II), постійнострумовими запобіжниками 1000V DC та автоматами Schneider/ETI.
-                </p>
-              </div>
+                    <h3 className="font-black text-base" style={{ color: isDark ? '#ffffff' : '#000000' }}>{item.title}</h3>
+                    <p className="text-xs font-bold leading-relaxed flex-grow" style={{ color: isDark ? '#e2e8f0' : '#000000' }}>
+                      {item.desc}
+                    </p>
 
+                    {/* Spec sheet */}
+                    <dl className="pt-1">
+                      {item.specs.map((spec) => (
+                        <div
+                          key={spec.label}
+                          className={`flex items-baseline justify-between gap-3 py-1.5 border-b border-dashed ${
+                            isDark ? 'border-slate-700/60' : 'border-slate-300/70'
+                          }`}
+                        >
+                          <dt className={`text-[10px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                            {spec.label}
+                          </dt>
+                          <dd className={`text-[11px] font-black tabular-nums text-right ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            {spec.value}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+
+                    <EfficiencyMeter
+                      theme={theme}
+                      label={item.meter.label}
+                      value={item.meter.value}
+                      unit={item.meter.unit}
+                      tone={item.meter.tone}
+                      decimals={0}
+                    />
+                  </SolarPanelCard>
+                );
+              })}
             </div>
           </div>
         )}
 
         {/* Clean Banner CTA at bottom */}
-        <div className={`p-8 sm:p-10 rounded-3xl border text-center space-y-4 shadow-xl ${
-          isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-300 bg-white'
-        }`}>
+        <SolarPanelCard theme={theme} glow className="p-8 sm:p-10 shadow-xl" contentClassName="text-center space-y-4">
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
+            <LiveBadge theme={theme} label="Tier-1 Supply Chain" />
+            <LiveBadge theme={theme} label="Warranty up to 30y" tone="amber" />
+            <LiveBadge theme={theme} label="In Stock · Закарпаття" tone="sky" />
+          </div>
           <h3 className="text-xl sm:text-2xl font-black" style={{ color: isDark ? '#ffffff' : '#000000' }}>Потрібна допомога з підбором комплектуючих?</h3>
           <p className="text-xs sm:text-sm font-bold max-w-xl mx-auto" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
             Наші інженери підберуть оптимальні сонячні панелі, акумулятори та інвертори під ваші потреби та бюджет.
@@ -674,7 +925,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
               <span>Отримати Консультацію Фахівця</span>
             </button>
           </div>
-        </div>
+        </SolarPanelCard>
 
       </div>
     </div>

@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sun, ShieldCheck, Zap, TrendingUp, Award, MapPin, Calculator } from 'lucide-react';
+import { Sun, ShieldCheck, Zap, TrendingUp, Award, MapPin, Calculator, Compass, Thermometer } from 'lucide-react';
 
 import { Link } from 'react-router-dom';
+import SolarPanelCard from './SolarPanelCard';
+import { LiveBadge, EfficiencyMeter, TiltGauge, IrradianceChart, TelemetryChip } from './SolarTech';
 
 export default function Hero({ theme }) {
   const isDark = theme === 'dark';
@@ -25,6 +27,13 @@ export default function Hero({ theme }) {
       <div className={`absolute top-1/3 right-5 w-[250px] sm:w-[450px] h-[250px] sm:h-[450px] rounded-full blur-[130px] pointer-events-none ${
         isDark ? 'bg-orange-500/15' : 'bg-orange-400/15'
       }`} />
+
+      {/* Ambient Solar Lighting — flares & light beams */}
+      <div className="solar-flare w-[280px] sm:w-[460px] h-[280px] sm:h-[460px] -top-24 right-[4%]" aria-hidden="true" />
+      <div className="solar-flare w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] bottom-[-60px] left-[2%]" style={{ animationDelay: '2.8s' }} aria-hidden="true" />
+      <div className="solar-beam hidden sm:block w-[110px] h-[620px] -top-48 right-[18%]" aria-hidden="true" />
+      <div className="solar-beam hidden sm:block w-[64px] h-[520px] -top-40 right-[34%]" style={{ animationDelay: '4s' }} aria-hidden="true" />
+      <div className="solar-beam hidden lg:block w-[80px] h-[480px] -top-36 left-[12%]" style={{ animationDelay: '6s' }} aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
@@ -106,14 +115,20 @@ export default function Hero({ theme }) {
             transition={{ duration: 0.5, delay: 0.15 }}
             className="lg:col-span-5 relative"
           >
-            <div className={`glass-panel p-5 sm:p-8 rounded-3xl border shadow-2xl relative overflow-hidden ${
-              isDark ? 'border-slate-700/80 bg-slate-800/90' : 'border-slate-200 bg-white/95 shadow-md'
-            }`}>
+            {/* Floating efficiency readout */}
+            {/* <div className="absolute -top-3 -left-3 sm:-left-6 z-20 glass-deep rounded-xl px-3 py-2 shadow-xl hidden sm:block">
+              <p className={`text-[9px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                Panel Efficiency
+              </p>
+              <p className="text-base font-black tabular-nums text-solar-gradient">23.8%</p>
+            </div> */}
+
+            <SolarPanelCard theme={theme} glow className="p-5 sm:p-8 shadow-2xl">
               <div className={`flex items-center justify-between pb-5 border-b ${
                 isDark ? 'border-slate-700' : 'border-slate-200'
               }`}>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center border border-amber-400/40 text-amber-500">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center border border-amber-400/40 text-amber-500 solar-halo">
                     <Sun className="w-6 h-6" />
                   </div>
                   <div>
@@ -123,34 +138,31 @@ export default function Hero({ theme }) {
                     <p className="text-xs text-slate-400">Від 5 кВт до 1 МВт під ключ</p>
                   </div>
                 </div>
-                <span className="px-2.5 py-1 text-[11px] sm:text-xs font-bold rounded-full border bg-emerald-500/15 border-emerald-400/40 text-emerald-500">
-                  Активно 2026
-                </span>
+                <LiveBadge theme={theme} label="Live Grid Active" />
               </div>
 
               <div className="py-5 space-y-4">
-                <div className={`p-3.5 sm:p-4 rounded-xl border space-y-1.5 ${
-                  isDark ? 'border-slate-700 bg-slate-900/90' : 'border-slate-200 bg-slate-50'
+                <div className={`p-3.5 sm:p-4 rounded-xl border space-y-3.5 ${
+                  isDark ? 'border-slate-700 bg-slate-900/70' : 'border-slate-200 bg-slate-50/80'
                 }`}>
-                  <div className="flex justify-between text-xs font-medium">
-                    <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>Ефективність інвертора</span>
-                    <span className="text-amber-500 font-bold">98.4%</span>
-                  </div>
-                  <div className={`w-full h-2 rounded-full overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
-                    <div className="h-full w-[98%] bg-gradient-to-r from-amber-400 to-emerald-400" />
+                  <EfficiencyMeter theme={theme} label="Inverter Efficiency" value={98.4} tone="emerald" live />
+                  <EfficiencyMeter theme={theme} label="Panel Efficiency" value={23.8} live />
+                </div>
+
+                <div className={`p-3.5 sm:p-4 rounded-xl border flex items-center justify-between gap-3 ${
+                  isDark ? 'border-slate-700 bg-slate-900/70' : 'border-slate-200 bg-slate-50/80'
+                }`}>
+                  <TiltGauge theme={theme} angle={35} label="Tilt Angle" />
+                  <div className="space-y-2 min-w-0">
+                    <TelemetryChip theme={theme} icon={Compass} label="Azimuth" value="182°" />
+                    <TelemetryChip theme={theme} icon={Thermometer} label="Cell Temp" value="41.2 °C" live />
                   </div>
                 </div>
 
-                <div className={`p-3.5 sm:p-4 rounded-xl border space-y-1.5 ${
-                  isDark ? 'border-slate-700 bg-slate-900/90' : 'border-slate-200 bg-slate-50'
+                <div className={`p-3.5 sm:p-4 rounded-xl border ${
+                  isDark ? 'border-slate-700 bg-slate-900/70' : 'border-slate-200 bg-slate-50/80'
                 }`}>
-                  <div className="flex justify-between text-xs font-medium">
-                    <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>Економія електроенергії</span>
-                    <span className="text-emerald-500 font-bold">Максимальна</span>
-                  </div>
-                  <div className={`w-full h-2 rounded-full overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
-                    <div className="h-full w-[90%] bg-emerald-400" />
-                  </div>
+                  <IrradianceChart theme={theme} />
                 </div>
               </div>
 
@@ -162,7 +174,7 @@ export default function Hero({ theme }) {
                   Офіційний монтаж у Закарпатській та Івано-Франківській областях.
                 </p>
               </div>
-            </div>
+            </SolarPanelCard>
           </motion.div>
 
         </div>
@@ -175,23 +187,26 @@ export default function Hero({ theme }) {
           className="mt-12 sm:mt-16 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6"
         >
           {stats.map((item, index) => (
-            <div 
+            <div
               key={index}
-              className={`glass-card p-4 sm:p-6 rounded-2xl border transition-all group ${
-                isDark 
-                  ? 'border-slate-700/80 bg-slate-800/80 hover:border-amber-400/60' 
+              className={`glass-card pv-shell pv-texture solar-hover p-4 sm:p-6 rounded-2xl border group ${
+                isDark
+                  ? 'border-slate-700/80 bg-slate-800/80 hover:border-amber-400/60'
                   : 'border-slate-200 bg-white hover:border-amber-400 shadow-xs'
               }`}
             >
-              <p className={`text-[10px] sm:text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                {item.label}
-              </p>
-              <p className={`text-xl sm:text-3xl font-extrabold mt-1 group-hover:text-amber-500 transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                {item.value}
-              </p>
-              <p className={`text-[11px] sm:text-xs mt-1 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                {item.desc}
-              </p>
+              <span className="pv-sheen" aria-hidden="true" />
+              <div className="pv-content">
+                <p className={`text-[10px] sm:text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                  {item.label}
+                </p>
+                <p className={`text-xl sm:text-3xl font-extrabold mt-1 group-hover:text-amber-500 transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  {item.value}
+                </p>
+                <p className={`text-[11px] sm:text-xs mt-1 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                  {item.desc}
+                </p>
+              </div>
             </div>
           ))}
         </motion.div>

@@ -1,0 +1,22 @@
+Here is a refined, high-impact prompt in English specifically tailored for a model that already has your codebase in its context:
+
+```text
+Since you are already familiar with my current landing page code, I want us to take its visual quality and depth to the next level. I need you to enhance the home page with rich visual storytelling, high density of thematic details, and a solid "wow factor" centered around solar energy and modern GreenTech.
+
+Please upgrade the existing code by introducing the following features and visual enhancements:
+
+1. Visual Identity & "Solar" Aesthetics:
+   - Solar Panel UI Components: Redesign key container cards/sections to look like photovoltaic solar panels—complete with subtle grid cell textures, metallic border accents, and dark golden/deep blue color tones.
+   - Energy Glow & Ambient Lighting: Add dynamic CSS background glow effects, subtle light beams, and solar flares around high-priority elements.
+
+2. Rich Details & Human Element:
+   - Human/Engineer Concept Blocks: Add UI cards showcasing engineers installing, testing, or holding solar panels. Use a mix of clean SVG/glassmorphism graphics, overlaying real-time stats or badges (e.g., "Field Engineer Verified", "Panel Mounting in Progress").
+   - Micro-technical Details: Scatter high-tech indicators across the page (e.g., "Live Grid Active", real-time panel efficiency meters like "23.8% Efficiency", tilt-angle metrics, solar radiation charts).
+
+3. Micro-Interactions & Polish:
+   - Add modern glassmorphism (backdrop blurs), smooth hover effects (soft glow, subtle 3D scale/tilt), and fluid energy flow animations.
+   - Ensure all graphics, illustrations, and icons rely purely on SVG/CSS so everything renders seamlessly inline.
+
+Please update the existing layout while preserving the core content structure, and return the complete improved code.
+
+```

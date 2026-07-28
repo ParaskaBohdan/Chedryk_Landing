@@ -108,6 +108,382 @@
   box-shadow: 0 0 25px -4px rgba(245, 158, 11, 0.35);
 }
 
+/* ==========================================================================
+   SOLAR DESIGN SYSTEM
+   Photovoltaic surfaces, ambient lighting, telemetry accents and motion.
+   Everything below is pure CSS/SVG — no raster assets required.
+   ========================================================================== */
+
+:root {
+  --pv-cell: 26px;          /* photovoltaic cell pitch */
+  --solar-gold: #d4a017;
+  --solar-gold-soft: #f5c451;
+  --solar-deep: #0a1c33;
+  --solar-deep-alt: #0f2947;
+}
+
+/* --- Photovoltaic surface texture -------------------------------------- */
+/* Drop `pv-shell pv-texture` on any card to turn it into a solar module.   */
+
+.pv-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.pv-content {
+  position: relative;
+  z-index: 1;
+}
+
+.pv-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  mask-image: linear-gradient(155deg, #000 0%, rgba(0, 0, 0, 0.45) 55%, rgba(0, 0, 0, 0.18) 100%);
+  -webkit-mask-image: linear-gradient(155deg, #000 0%, rgba(0, 0, 0, 0.45) 55%, rgba(0, 0, 0, 0.18) 100%);
+}
+
+/* Dark theme: deep blue glass with dark golden bias */
+.dark .pv-texture::before {
+  background-image:
+    repeating-linear-gradient(90deg, rgba(226, 232, 240, 0.10) 0 1px, transparent 1px var(--pv-cell)),
+    repeating-linear-gradient(0deg, rgba(226, 232, 240, 0.10) 0 1px, transparent 1px var(--pv-cell)),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 calc(var(--pv-cell) * 0.5 - 1px),
+      rgba(212, 160, 23, 0.16) calc(var(--pv-cell) * 0.5 - 1px) calc(var(--pv-cell) * 0.5),
+      transparent calc(var(--pv-cell) * 0.5) var(--pv-cell)
+    ),
+    linear-gradient(135deg, rgba(13, 38, 66, 0.65), rgba(8, 20, 38, 0.3) 48%, rgba(133, 90, 12, 0.22));
+}
+
+/* Light theme.
+   Daylight cards currently render as a clean white surface: the photovoltaic
+   look never convinced on a bright background. The texture below is kept and
+   fully wired — set --pv-light-texture to 1 to switch it back on. */
+.light {
+  --pv-light-texture: 0;
+}
+
+.light .pv-texture::before,
+.light .pv-bolt {
+  opacity: var(--pv-light-texture);
+}
+
+/* A flat ruled grid on white reads as notebook paper, so the daylight module
+   is built from *tiled cells* instead: every cell gets its own specular bevel
+   and bottom-right shading over a silicon wash, with a diagonal glass
+   reflection across the sheet. Larger pitch keeps it reading as a module. */
+.light .pv-texture {
+  --pv-cell: 34px;
+}
+
+.light .pv-texture::before {
+  background-image:
+    /* glass reflection sweeping across the module */
+    linear-gradient(112deg, rgba(255, 255, 255, 0) 24%, rgba(255, 255, 255, 0.7) 41%, rgba(255, 255, 255, 0) 57%),
+    /* per-cell specular highlight */
+    radial-gradient(120% 120% at 26% 20%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 56%),
+    /* per-cell shading falling to the bottom-right */
+    radial-gradient(130% 130% at 82% 86%, rgba(30, 58, 95, 0.2) 0%, rgba(30, 58, 95, 0) 62%),
+    /* cell gaps */
+    repeating-linear-gradient(90deg, rgba(51, 84, 128, 0.24) 0 1.5px, transparent 1.5px var(--pv-cell)),
+    repeating-linear-gradient(0deg, rgba(51, 84, 128, 0.24) 0 1.5px, transparent 1.5px var(--pv-cell)),
+    /* silver busbars down each cell */
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 calc(var(--pv-cell) * 0.5 - 1px),
+      rgba(148, 163, 184, 0.55) calc(var(--pv-cell) * 0.5 - 1px) calc(var(--pv-cell) * 0.5),
+      transparent calc(var(--pv-cell) * 0.5) var(--pv-cell)
+    ),
+    /* silicon wash — gives the white highlights something to sit on */
+    linear-gradient(140deg, rgba(140, 172, 212, 0.42), rgba(226, 232, 240, 0.12) 54%, rgba(217, 160, 30, 0.22));
+  background-size:
+    cover,
+    var(--pv-cell) var(--pv-cell),
+    var(--pv-cell) var(--pv-cell),
+    auto,
+    auto,
+    auto,
+    cover;
+  mask-image: linear-gradient(150deg, #000 0%, rgba(0, 0, 0, 0.62) 58%, rgba(0, 0, 0, 0.32) 100%);
+  -webkit-mask-image: linear-gradient(150deg, #000 0%, rgba(0, 0, 0, 0.62) 58%, rgba(0, 0, 0, 0.32) 100%);
+}
+
+/* Corner mounting bolts (rendered by SolarPanelCard) */
+.pv-bolt {
+  opacity: 0.7;
+}
+
+/* --- Metallic anodised frame ------------------------------------------- */
+
+.pv-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    140deg,
+    rgba(226, 232, 240, 0.85),
+    rgba(100, 116, 139, 0.2) 24%,
+    rgba(212, 160, 23, 0.6) 50%,
+    rgba(100, 116, 139, 0.18) 74%,
+    rgba(226, 232, 240, 0.7)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.light .pv-frame::after {
+  background: linear-gradient(
+    140deg,
+    rgba(148, 163, 184, 0.75),
+    rgba(203, 213, 225, 0.35) 24%,
+    rgba(180, 118, 9, 0.55) 50%,
+    rgba(203, 213, 225, 0.3) 74%,
+    rgba(148, 163, 184, 0.6)
+  );
+}
+
+/* --- Light sweep across the glass (child element, hover driven) --------- */
+
+.pv-sheen {
+  position: absolute;
+  inset: -40% -60%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.16) 47%,
+    rgba(253, 224, 71, 0.28) 50%,
+    rgba(255, 255, 255, 0.16) 53%,
+    transparent 62%
+  );
+  transform: translateX(-38%);
+  transition: opacity 0.35s ease;
+}
+
+.pv-shell:hover .pv-sheen {
+  opacity: 1;
+  animation: pv-sweep 1.15s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+@keyframes pv-sweep {
+  from { transform: translateX(-38%); }
+  to { transform: translateX(38%); }
+}
+
+/* --- Ambient lighting: glows, beams, flares ---------------------------- */
+
+.solar-flare {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(253, 224, 71, 0.5) 0%,
+    rgba(249, 115, 22, 0.26) 34%,
+    transparent 70%
+  );
+  filter: blur(30px);
+  animation: solar-flare-pulse 7s ease-in-out infinite;
+}
+
+.light .solar-flare {
+  background: radial-gradient(
+    circle,
+    rgba(251, 191, 36, 0.38) 0%,
+    rgba(249, 115, 22, 0.16) 34%,
+    transparent 70%
+  );
+}
+
+@keyframes solar-flare-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.95; transform: scale(1.12); }
+}
+
+.solar-beam {
+  position: absolute;
+  pointer-events: none;
+  transform-origin: top center;
+  background: linear-gradient(180deg, rgba(251, 191, 36, 0.3), rgba(251, 191, 36, 0) 72%);
+  filter: blur(24px);
+  animation: solar-beam-sway 14s ease-in-out infinite alternate;
+}
+
+.light .solar-beam {
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.22), rgba(245, 158, 11, 0) 72%);
+}
+
+@keyframes solar-beam-sway {
+  from { transform: rotate(-7deg) scaleY(0.94); opacity: 0.65; }
+  to { transform: rotate(7deg) scaleY(1.1); opacity: 1; }
+}
+
+/* Halo for high-priority elements */
+.solar-halo {
+  box-shadow:
+    0 0 0 1px rgba(245, 158, 11, 0.25),
+    0 0 34px -8px rgba(245, 158, 11, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* --- Micro-interactions ------------------------------------------------- */
+
+.solar-hover {
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease;
+}
+
+.solar-hover:hover {
+  transform: perspective(900px) translateY(-6px) rotateX(1.6deg) scale(1.014);
+  box-shadow:
+    0 20px 48px -14px rgba(212, 160, 23, 0.4),
+    0 0 0 1px rgba(245, 158, 11, 0.28);
+}
+
+.light .solar-hover:hover {
+  box-shadow:
+    0 20px 44px -16px rgba(180, 118, 9, 0.28),
+    0 0 0 1px rgba(245, 158, 11, 0.35);
+}
+
+/* Deeper glassmorphism for telemetry surfaces */
+.dark .glass-deep {
+  background: linear-gradient(150deg, rgba(15, 41, 71, 0.72), rgba(15, 23, 42, 0.72));
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.light .glass-deep {
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.88), rgba(241, 245, 249, 0.82));
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(203, 213, 225, 0.9);
+}
+
+/* --- Energy flow ------------------------------------------------------- */
+
+/* Animated charge travelling along an SVG path */
+.energy-flow {
+  stroke-dasharray: 5 11;
+  animation: energy-dash 1.6s linear infinite;
+}
+
+@keyframes energy-dash {
+  to { stroke-dashoffset: -32; }
+}
+
+/* Animated charge travelling down a vertical conduit (div overlay) */
+.energy-conduit {
+  background-image: linear-gradient(
+    180deg,
+    rgba(253, 224, 71, 0) 0%,
+    rgba(253, 224, 71, 0.95) 45%,
+    rgba(251, 191, 36, 0) 100%
+  );
+  background-size: 100% 180px;
+  background-repeat: repeat-y;
+  animation: energy-conduit-run 3.6s linear infinite;
+}
+
+@keyframes energy-conduit-run {
+  from { background-position: 0 -180px; }
+  to { background-position: 0 180px; }
+}
+
+/* Live telemetry ping */
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  border: 1px solid currentColor;
+  animation: live-ping 1.9s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes live-ping {
+  0% { transform: scale(0.7); opacity: 0.9; }
+  80%, 100% { transform: scale(1.9); opacity: 0; }
+}
+
+/* Meter fill shimmer */
+.meter-fill {
+  position: relative;
+  overflow: hidden;
+}
+
+.meter-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-100%);
+  animation: meter-shimmer 2.8s ease-in-out infinite;
+}
+
+@keyframes meter-shimmer {
+  0% { transform: translateX(-100%); }
+  55%, 100% { transform: translateX(100%); }
+}
+
+/* Slow rotation for sun/irradiance dials */
+.solar-spin-slow {
+  animation: solar-spin 26s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes solar-spin {
+  to { transform: rotate(360deg); }
+}
+
+.text-solar-gradient {
+  background: linear-gradient(120deg, #fbbf24, #f97316 45%, #fde047);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Mono micro-labels used by telemetry chips */
+.telemetry-label {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* --- Accessibility ------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .solar-flare,
+  .solar-beam,
+  .energy-conduit,
+  .energy-flow,
+  .solar-spin-slow,
+  .meter-fill::after,
+  .live-dot::after,
+  .pv-shell:hover .pv-sheen {
+    animation: none !important;
+  }
+
+  .solar-hover:hover {
+    transform: none;
+  }
+}
+
 /* Touch Friendly Utilities */
 button, a {
   touch-action: manipulation;

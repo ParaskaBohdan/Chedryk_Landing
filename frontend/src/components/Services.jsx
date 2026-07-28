@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Sun, Home, BatteryCharging, Zap, ArrowRight, CheckCircle2, ChevronRight, X, FileText } from 'lucide-react';
+import SolarPanelCard from './SolarPanelCard';
+import { LiveBadge, EfficiencyMeter } from './SolarTech';
+import {
+  SolarFarmScene,
+  HybridSystemScene,
+  RoofMountScene,
+  PermitsScene,
+  SwitchboardScene
+} from './ServiceIllustrations';
 
 export default function Services({ onSelectService, theme }) {
   const [selectedModalService, setSelectedModalService] = useState(null);
@@ -13,6 +22,14 @@ export default function Services({ onSelectService, theme }) {
       category: 'Енергонезалежність під ключ',
       icon: Sun,
       color: 'from-amber-400 to-orange-500',
+      Illustration: SolarFarmScene,
+      status: 'Turnkey EPC · 5 kW–1 MW',
+      specs: [
+        { label: 'Peak Output', value: '1 МВт' },
+        { label: 'Specific Yield', value: '1 180 кВт·год/кВт' },
+        { label: 'Payback', value: '3.5–4.5 років' }
+      ],
+      meter: { label: 'System Efficiency', value: 23.8, tone: 'amber', live: true },
       shortDesc: 'Проектування, поставка інверторів, панелей, дозволи Обленерго та Зелений тариф для приватних будинків і підприємств.',
       features: [
         'Розрахунок інсоляції та проектування СЕС від 5 кВт до 1 МВт',
@@ -28,6 +45,14 @@ export default function Services({ onSelectService, theme }) {
       category: 'Автономне живлення під ключ',
       icon: BatteryCharging,
       color: 'from-orange-400 to-amber-500',
+      Illustration: HybridSystemScene,
+      status: 'Hybrid Inverter Ready',
+      specs: [
+        { label: 'Switchover', value: '4 мс' },
+        { label: 'Battery Bus', value: 'LiFePO4 · 48 В' },
+        { label: 'Power Range', value: '5–50 кВт' }
+      ],
+      meter: { label: 'Round-Trip Efficiency', value: 96.2, tone: 'emerald', live: true },
       shortDesc: 'Монтаж під ключ інверторів Deye (1-фазних та 3-фазних 5–50 кВт), портативних станцій EcoFlow та стаціонарних акумуляторів LiFePO4.',
       features: [
         'Професійний монтаж гібридних інверторів Deye під ключ',
@@ -43,6 +68,14 @@ export default function Services({ onSelectService, theme }) {
       category: 'Монтажні роботи',
       icon: Home,
       color: 'from-amber-400 to-yellow-500',
+      Illustration: RoofMountScene,
+      status: 'Roof Load Certified',
+      specs: [
+        { label: 'Tilt Range', value: '15–40°' },
+        { label: 'Wind Load', value: 'до 24 м/с' },
+        { label: 'Clamps', value: 'Inox A2 · EPDM' }
+      ],
+      meter: { label: 'Roof Coverage', value: 82.5, tone: 'sky', live: false },
       shortDesc: 'Професійне закріплення панелей на різні типи даху (черепиця, металочерепиця, профнастил, фальцева покрівля) без ризику протікання.',
       features: [
         'Надійні герметичні кріплення (нержавійка/алюміній)',
@@ -58,6 +91,14 @@ export default function Services({ onSelectService, theme }) {
       category: 'Юридичні послуги',
       icon: FileText,
       color: 'from-orange-500 to-amber-400',
+      Illustration: PermitsScene,
+      status: 'Permits Handled',
+      specs: [
+        { label: 'Docs Handled', value: '100% на нас' },
+        { label: 'ТУ Обленерго', value: '14–30 днів' },
+        { label: 'Metering', value: 'Bi-directional' }
+      ],
+      meter: { label: 'Approval Rate', value: 99.2, tone: 'emerald', live: false },
       shortDesc: 'Оформлення дозволів в Обленерго, ТУ, збільшення вхідної потужності та офіційне підключення Зеленого Тарифу без черг.',
       features: [
         'Подача заяви та отримання ТУ від Обленерго',
@@ -73,6 +114,14 @@ export default function Services({ onSelectService, theme }) {
       category: 'Електромонтажні роботи',
       icon: Zap,
       color: 'from-amber-500 to-orange-400',
+      Illustration: SwitchboardScene,
+      status: 'ПУЕ / ДБН Compliant',
+      specs: [
+        { label: 'Ground Resist.', value: '< 4 Ом' },
+        { label: 'Supply', value: '1Ф / 3Ф · 400 В' },
+        { label: 'Protection', value: 'ПЗВ 30 мА' }
+      ],
+      meter: { label: 'Phase Balance', value: 97.6, tone: 'emerald', live: true },
       shortDesc: 'Проектування, розведення проводки, збірка розподільчих щитів, заземлення та автоматика для приватних будинків і коммерційних приміщень.',
       features: [
         'Розрахунок навантаження на кожну фазу',
@@ -88,8 +137,16 @@ export default function Services({ onSelectService, theme }) {
     <section id="services" className={`py-16 sm:py-20 transition-colors duration-300 relative border-y scroll-mt-20 ${
       isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-slate-100/70 text-slate-900 border-slate-200'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+      {/* Ambient Solar Lighting (clipped locally so the modal stays unaffected) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div className="solar-flare w-[220px] sm:w-[380px] h-[220px] sm:h-[380px] -top-28 right-[6%]" />
+        <div className="solar-flare w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] bottom-[10%] left-[4%]" style={{ animationDelay: '3.6s' }} />
+        <div className="solar-beam hidden sm:block w-[100px] h-[600px] -top-44 left-[30%]" />
+        <div className="solar-beam hidden lg:block w-[70px] h-[520px] -top-36 right-[26%]" style={{ animationDelay: '5s' }} />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
           <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-semibold uppercase tracking-widest ${
             isDark ? 'bg-amber-500/15 border-amber-400/40 text-amber-300' : 'bg-amber-100 border-amber-300 text-amber-800'
@@ -116,13 +173,28 @@ export default function Services({ onSelectService, theme }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.08 }}
-                className={`glass-card rounded-3xl p-5 sm:p-7 border transition-all flex flex-col justify-between group shadow-md ${
-                  isDark 
-                    ? 'border-slate-700/80 bg-slate-800/80 hover:border-amber-400/60' 
-                    : 'border-slate-200 bg-white hover:border-amber-400 shadow-xs'
-                }`}
               >
+                <SolarPanelCard
+                  theme={theme}
+                  className="h-full p-5 sm:p-7 group shadow-md"
+                  contentClassName="flex flex-col justify-between"
+                >
                 <div>
+                  {/* Concept illustration with overlaid status telemetry */}
+                  <div className="relative rounded-2xl overflow-hidden mb-5">
+                    <service.Illustration theme={theme} />
+                    <div className="absolute top-2.5 left-2.5">
+                      <LiveBadge theme={theme} label={service.status} tone={index % 2 === 0 ? 'amber' : 'sky'} />
+                    </div>
+                    <div
+                      className={`absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
+                        isDark ? 'text-slate-300' : 'text-slate-600'
+                      }`}
+                    >
+                      SVC {String(index + 1).padStart(2, '0')}
+                    </div>
+                  </div>
+
                   <div className="flex items-center justify-between mb-5">
                     <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${service.color} p-0.5 flex items-center justify-center shadow-md`}>
                       <div className={`w-full h-full rounded-[14px] flex items-center justify-center ${
@@ -150,7 +222,7 @@ export default function Services({ onSelectService, theme }) {
                     {service.shortDesc}
                   </p>
 
-                  <ul className="space-y-2 mb-6">
+                  <ul className="space-y-2 mb-5">
                     {service.features.map((feat, i) => (
                       <li key={i} className={`flex items-start gap-2 text-xs ${
                         isDark ? 'text-slate-200' : 'text-slate-700'
@@ -160,6 +232,36 @@ export default function Services({ onSelectService, theme }) {
                       </li>
                     ))}
                   </ul>
+
+                  {/* Spec sheet */}
+                  <dl className="mb-5">
+                    {service.specs.map((spec) => (
+                      <div
+                        key={spec.label}
+                        className={`flex items-baseline justify-between gap-3 py-1.5 border-b border-dashed ${
+                          isDark ? 'border-slate-700/60' : 'border-slate-300/70'
+                        }`}
+                      >
+                        <dt className={`text-[10px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                          {spec.label}
+                        </dt>
+                        <dd className={`text-[11px] font-black tabular-nums text-right ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                          {spec.value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+
+                  {/* Live readout */}
+                  <div className="mb-5">
+                    <EfficiencyMeter
+                      theme={theme}
+                      label={service.meter.label}
+                      value={service.meter.value}
+                      tone={service.meter.tone}
+                      live={service.meter.live}
+                    />
+                  </div>
                 </div>
 
                 <div className={`pt-4 border-t flex items-center justify-between gap-3 ${
@@ -183,6 +285,7 @@ export default function Services({ onSelectService, theme }) {
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
+                </SolarPanelCard>
               </motion.div>
             );
           })}

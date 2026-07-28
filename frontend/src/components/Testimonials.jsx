@@ -1,5 +1,7 @@
 import React from 'react';
 import { MessageSquareQuote, MapPin } from 'lucide-react';
+import SolarPanelCard from './SolarPanelCard';
+import { LiveBadge } from './SolarTech';
 
 export default function Testimonials({ theme }) {
   const isDark = theme === 'dark';
@@ -56,10 +58,14 @@ export default function Testimonials({ theme }) {
   ];
 
   return (
-    <section id="reviews" className={`py-16 sm:py-20 transition-colors duration-300 relative ${
+    <section id="reviews" className={`py-16 sm:py-20 transition-colors duration-300 relative overflow-hidden ${
       isDark ? 'bg-slate-900 text-white' : 'bg-amber-50/40 text-slate-900'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Ambient Solar Lighting */}
+      <div className="solar-flare w-[220px] sm:w-[360px] h-[220px] sm:h-[360px] -top-28 right-[10%]" aria-hidden="true" />
+      <div className="solar-flare w-[190px] sm:w-[280px] h-[190px] sm:h-[280px] bottom-[4%] left-[6%]" style={{ animationDelay: '2.2s' }} aria-hidden="true" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3 sm:space-y-4">
@@ -81,20 +87,32 @@ export default function Testimonials({ theme }) {
         {/* Comments Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {reviews.map((item) => (
-            <div
+            <SolarPanelCard
               key={item.id}
-              className={`flex flex-col justify-between p-5 sm:p-6 rounded-3xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
-                isDark ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' : 'bg-white border-slate-200 shadow-md'
-              }`}
+              theme={theme}
+              className="h-full p-5 sm:p-6"
+              contentClassName="flex flex-col justify-between"
             >
               <div className="space-y-4">
-                {/* Photo of the installation */}
+                {/* Photo of the installation with field telemetry overlay */}
                 <div className="relative h-64 w-full overflow-hidden rounded-2xl shadow-xs border border-slate-700/20">
                   <img
                     src="/review-photo.jpg"
                     alt="Чедрик Іван монтаж СЕС"
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
+                  <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950/85 to-transparent pointer-events-none" />
+                  <div className="absolute top-2.5 left-2.5">
+                    <LiveBadge theme="dark" label="Field Engineer Verified" />
+                  </div>
+                  <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between gap-2">
+                    <span className="glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label text-slate-200">
+                      {item.location}
+                    </span>
+                    <span className="glass-deep rounded-lg px-2 py-1 text-[9px] font-black tabular-nums text-amber-300">
+                      23.8% Efficiency
+                    </span>
+                  </div>
                 </div>
 
                 {/* Comment Body */}
@@ -125,7 +143,7 @@ export default function Testimonials({ theme }) {
                   </span>
                 </div>
               </div>
-            </div>
+            </SolarPanelCard>
           ))}
         </div>
 
