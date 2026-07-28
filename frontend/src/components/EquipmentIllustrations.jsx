@@ -117,7 +117,7 @@ export function PanelModuleScene({ theme, cols = 6, rows = 3, fullBlack = false,
           {[86, 130, 174, 218].map((x) => (
             <line key={x} x1={x} y1="138" x2={x + 10} y2="122" stroke="#34d399" strokeWidth="1.6" strokeLinecap="round" className="energy-flow" opacity="0.9" />
           ))}
-          <Label x={300} y={144} text="+15–20%" isDark={isDark} anchor="end" tone="#34d399" />
+          {/* <Label x={300} y={144} text="+15–20%" isDark={isDark} anchor="end" tone="#34d399" /> */}
         </g>
       )}
 
