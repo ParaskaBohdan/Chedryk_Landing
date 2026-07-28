@@ -560,7 +560,7 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
               batteryCapacityKwh={batteryCapacityKwh}
               theme={theme}
               mountType={mountType}
-              hideExtraViews={serviceId === 'roof-installation'}
+              hideExtraViews={serviceId === 'roof-installation' || serviceId === 'ses-building'}
             />
           </div>
         </div>

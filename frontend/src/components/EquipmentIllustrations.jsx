@@ -123,7 +123,7 @@ export function PanelModuleScene({ theme, cols = 6, rows = 3, fullBlack = false,
 
       {/* Cell layout callout */}
       <Label x={20} y={20} text={`${cols}×${rows}`} isDark={isDark} anchor="start" />
-      {fullBlack && <Label x={20} y={34} text="FULL BLACK" isDark={isDark} anchor="start" />}
+      {/* {fullBlack && <Label x={20} y={34} text="FULL BLACK" isDark={isDark} anchor="start" />} */}
 
       {/* Width dimension */}
       <g stroke={c.hair} strokeWidth="1">

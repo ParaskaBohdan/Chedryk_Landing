@@ -79,7 +79,7 @@ export default function InteractiveSolarSchema({
               <span>🎮 3D Інтерактив (360°)</span>
             </button>
 
-            {mountType !== 'ground' && (
+            {/*{mountType !== 'ground' && (
               <button
                 type="button"
                 onClick={() => setViewMode('3d')}
@@ -92,9 +92,9 @@ export default function InteractiveSolarSchema({
                 <Image className="w-3.5 h-3.5" />
                 <span>📸 3D Рендер</span>
               </button>
-            )}
+            )}*/}
 
-            <button
+            {/*<button
               type="button"
               onClick={() => setViewMode('2d')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
@@ -105,7 +105,7 @@ export default function InteractiveSolarSchema({
             >
               <PenTool className="w-3.5 h-3.5" />
               <span>📐 2D Схема</span>
-            </button>
+            </button>*/}
           </div>
         )}
       </div>
