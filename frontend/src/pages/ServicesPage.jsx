@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { servicesData } from '../data/servicesData';
 import { Sun, BatteryCharging, FileCheck, Home, Zap, ArrowRight, CheckCircle2, Wrench, Calculator } from 'lucide-react';
+import SolarPanelCard from '../components/SolarPanelCard';
+import { LiveBadge } from '../components/SolarTech';
 
 const iconMap = {
   Sun: Sun,
@@ -47,16 +49,14 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
             const IconComponent = iconMap[service.iconName] || Sun;
 
             return (
-              <div
+              <SolarPanelCard
                 key={service.id}
-                className={`group flex flex-col rounded-2xl border transition-all duration-300 overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-1 ${
-                  isDark 
-                    ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' 
-                    : 'bg-white border-slate-200 hover:border-amber-500/50'
-                }`}
+                theme={theme}
+                className="group h-full shadow-md"
+                contentClassName="flex flex-col"
               >
                 {/* Card Top Image */}
-                <div className="relative h-56 w-full overflow-hidden">
+                <div className="relative h-56 w-full overflow-hidden rounded-t-3xl">
                   <img
                     src={service.image}
                     alt={service.title}
@@ -71,6 +71,14 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
                     </div>
                     <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-500 text-slate-950 shadow-md">
                       {service.badge}
+                    </span>
+                  </div>
+
+                  {/* Field telemetry over the photograph */}
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2">
+                    <LiveBadge theme="dark" label="Field Verified" />
+                    <span className="glass-deep rounded-lg px-2 py-1 text-[9px] font-black telemetry-label text-amber-300">
+                      Закарпаття
                     </span>
                   </div>
                 </div>
@@ -131,7 +139,7 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
                   </div>
 
                 </div>
-              </div>
+              </SolarPanelCard>
             );
           })}
         </div>

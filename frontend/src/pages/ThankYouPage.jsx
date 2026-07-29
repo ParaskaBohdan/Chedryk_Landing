@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle2, Phone, Video, Home, Calculator, ShieldCheck, ArrowRight } from 'lucide-react';
+import { CheckCircle2, Phone, Video, Home, Calculator, ShieldCheck, Activity } from 'lucide-react';
+import SolarPanelCard from '../components/SolarPanelCard';
+import { TelemetryChip } from '../components/SolarTech';
 
 export default function ThankYouPage({ theme }) {
   const isDark = theme === 'dark';
@@ -15,15 +17,31 @@ export default function ThankYouPage({ theme }) {
     }
   }, []);
 
+  // Bring the readouts online one at a time, like a station being commissioned
+  const [online, setOnline] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      setOnline(3);
+      return undefined;
+    }
+    const timers = [1, 2, 3].map((n) => setTimeout(() => setOnline(n), 420 * n));
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
   return (
-    <div className={`py-12 sm:py-20 min-h-screen flex items-center justify-center transition-colors duration-300 ${
+    <div className={`py-12 sm:py-20 min-h-screen flex items-center justify-center relative overflow-hidden transition-colors duration-300 ${
       isDark ? 'bg-slate-900 text-white' : 'bg-amber-50/40 text-slate-900'
     }`}>
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center space-y-8">
+      {/* Ambient lighting */}
+      <div className="solar-flare w-[260px] sm:w-[440px] h-[260px] sm:h-[440px] -top-24 left-1/2 -translate-x-1/2" aria-hidden="true" />
+      <div className="solar-beam hidden sm:block w-[100px] h-[560px] -top-40 left-[22%]" aria-hidden="true" />
+      <div className="solar-beam hidden sm:block w-[70px] h-[480px] -top-32 right-[24%]" style={{ animationDelay: '3s' }} aria-hidden="true" />
+
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center space-y-8 relative z-10">
         
         {/* Animated Success Badge */}
         <div className="relative inline-flex items-center justify-center">
-          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center border border-emerald-400/40 shadow-2xl animate-bounce">
+          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center border border-emerald-400/40 shadow-2xl solar-halo live-dot">
             <CheckCircle2 className="w-14 h-14 sm:w-16 sm:h-16" />
           </div>
           <div className="absolute inset-0 rounded-full bg-emerald-500/10 blur-2xl -z-10" />
@@ -47,10 +65,28 @@ export default function ThankYouPage({ theme }) {
           </p>
         </div>
 
+        {/* Commissioning readouts coming online */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          {[
+            { icon: ShieldCheck, label: 'Request', value: 'Отримано' },
+            { icon: Activity, label: 'Queue', value: 'В обробці' },
+            { icon: Phone, label: 'Callback', value: 'Заплановано' }
+          ].map((chip, i) => (
+            <div
+              key={chip.label}
+              className="transition-all duration-500"
+              style={{
+                opacity: online > i ? 1 : 0,
+                transform: online > i ? 'none' : 'translateY(10px)'
+              }}
+            >
+              <TelemetryChip theme={theme} icon={chip.icon} label={chip.label} value={chip.value} live={online > i} />
+            </div>
+          ))}
+        </div>
+
         {/* Content Box */}
-        <div className={`glass-panel p-6 sm:p-8 rounded-3xl border text-left space-y-6 shadow-2xl ${
-          isDark ? 'border-slate-700 bg-slate-800/90' : 'border-amber-200 bg-white shadow-amber-500/10'
-        }`}>
+        <SolarPanelCard theme={theme} glow className="p-6 sm:p-8 shadow-2xl" contentClassName="text-left space-y-6">
           <h3 className="text-lg font-bold flex items-center gap-2 text-amber-500 border-b border-slate-700/60 pb-3">
             <Phone className="w-5 h-5" /> Що відбувається далі?
           </h3>
@@ -122,7 +158,7 @@ export default function ThankYouPage({ theme }) {
             </a>
           </div>
 
-        </div>
+        </SolarPanelCard>
 
         {/* Bottom Actions Buttons */}
         <div className="flex flex-wrap justify-center items-center gap-4 pt-4">

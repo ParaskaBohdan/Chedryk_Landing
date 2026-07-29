@@ -271,7 +271,7 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
                 placeholder="наприклад, Олександр"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors ${
+                className={`solar-field w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors ${
                   isDark ? 'border-slate-700 bg-slate-900/90 text-white placeholder-slate-400' : 'border-amber-200 bg-amber-50/50 text-slate-900 placeholder-slate-400'
                 }`}
               />
@@ -341,7 +341,7 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
                 onClick={handlePhoneFocus}
                 onKeyDown={handlePhoneKeyDown}
                 onPaste={handlePhonePaste}
-                className="absolute inset-0 w-full pl-10 pr-4 py-2.5 text-sm font-mono text-transparent caret-amber-500 bg-transparent rounded-xl border border-transparent focus:border-amber-500 focus:outline-none transition-colors z-20"
+                className="solar-field absolute inset-0 w-full pl-10 pr-4 py-2.5 text-sm font-mono text-transparent caret-amber-500 bg-transparent rounded-xl border border-transparent focus:border-amber-500 focus:outline-none transition-colors z-20"
               />
             </div>
           </div>
@@ -356,7 +356,7 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
                 readOnly
                 rows={4}
                 value={configurationSummary || 'Параметри СЕС не вибрано'}
-                className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm font-medium leading-relaxed resize-none select-text transition-colors cursor-default ${
+                className={`solar-field w-full border rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm font-medium leading-relaxed resize-none select-text transition-colors cursor-default ${
                   isDark ? 'border-amber-500/30 bg-amber-500/10 text-amber-300' : 'border-amber-300 bg-amber-50/70 text-slate-800'
                 }`}
               />
@@ -384,7 +384,7 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
                       setFormData({ ...formData, preferred_date: e.target.value });
                     }
                   }}
-                  className={`w-full border rounded-xl pl-10 pr-3 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors cursor-pointer select-none ${
+                  className={`solar-field w-full border rounded-xl pl-10 pr-3 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors cursor-pointer select-none ${
                     isDark ? 'border-slate-700 bg-slate-900/90 text-white' : 'border-amber-200 bg-amber-50/50 text-slate-900'
                   }`}
                 />
@@ -416,7 +416,7 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
                 placeholder="Додаткові побажання чи деталі об'єкта..."
                 value={formData.comment}
                 onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
-                className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors ${
+                className={`solar-field w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors ${
                   isDark ? 'border-slate-700 bg-slate-900/90 text-white placeholder-slate-400' : 'border-amber-200 bg-amber-50/50 text-slate-900 placeholder-slate-400'
                 }`}
               />
@@ -426,7 +426,7 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
           <button
             type="submit"
             disabled={loading}
-            className="w-full btn-orange-bright font-bold text-sm py-3.5 rounded-xl shadow-lg hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-50 glow-amber cursor-pointer"
+            className={`w-full btn-orange-bright font-bold text-sm py-3.5 rounded-xl shadow-lg hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-50 glow-amber cursor-pointer ${loading ? 'btn-charging' : ''}`}
           >
             {loading ? (
               <>

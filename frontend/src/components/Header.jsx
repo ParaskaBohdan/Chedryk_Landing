@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { Phone, Menu, X, Sun, Moon, ShieldCheck, Video, Wrench, BarChart2, Zap, Calculator } from 'lucide-react';
 
@@ -46,6 +46,31 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
 
   const isDark = theme === 'dark';
 
+  // Generation busbar under the nav, filled by scroll depth. Reads through a
+  // rAF gate so a fast scroll can't queue layout work per event.
+  const [scrollPct, setScrollPct] = useState(0);
+
+  useEffect(() => {
+    let frame = null;
+    const measure = () => {
+      frame = null;
+      const doc = document.documentElement;
+      const travel = doc.scrollHeight - doc.clientHeight;
+      setScrollPct(travel > 0 ? Math.min(1, doc.scrollTop / travel) : 0);
+    };
+    const onScroll = () => {
+      if (frame === null) frame = requestAnimationFrame(measure);
+    };
+    measure();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      if (frame !== null) cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
+
   return (
     <header className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
       isDark ? 'border-slate-800/80 bg-slate-950/90 text-white backdrop-blur-md' : 'border-slate-200 bg-slate-100/95 text-slate-800 shadow-xs backdrop-blur-md'
@@ -61,11 +86,16 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
           }}
           className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group flex-shrink-0"
         >
-          <div className="h-9 sm:h-11 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-            <img 
-              src="/logo-icon.png" 
-              alt="NOVA ENERGY_UA" 
-              className="h-full w-auto object-contain"
+          <div className="relative h-9 sm:h-11 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+            {/* Ambient glow that lifts on hover, as if the mark were lit */}
+            <span
+              className="absolute inset-0 -m-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none blur-lg bg-amber-400/40"
+              aria-hidden="true"
+            />
+            <img
+              src="/logo-icon.png"
+              alt="NOVA ENERGY_UA"
+              className="relative h-full w-auto object-contain"
             />
           </div>
           <div className="flex flex-col justify-center select-none">
@@ -87,7 +117,7 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
             className={({ isActive }) =>
               `text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
                 isActive 
-                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5' 
+                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)]' 
                   : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-700 hover:text-amber-600'
               }`
             }
@@ -99,7 +129,7 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
             className={({ isActive }) =>
               `text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
                 isActive 
-                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5' 
+                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)]' 
                   : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-700 hover:text-amber-600'
               }`
             }
@@ -111,7 +141,7 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
             className={({ isActive }) =>
               `text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
                 isActive 
-                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5' 
+                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)]' 
                   : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-700 hover:text-amber-600'
               }`
             }
@@ -123,7 +153,7 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
             className={({ isActive }) =>
               `text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
                 isActive 
-                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5' 
+                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)]' 
                   : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-700 hover:text-amber-600'
               }`
             }
@@ -135,7 +165,7 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
             className={({ isActive }) =>
               `text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
                 isActive 
-                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5' 
+                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)]' 
                   : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-700 hover:text-amber-600'
               }`
             }
@@ -152,11 +182,25 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
           <button
             onClick={toggleTheme}
             title={isDark ? 'Увімкнути світлу тему' : 'Увімкнути темну тему'}
-            className={`flex items-center justify-center h-[38px] w-[38px] rounded-xl border transition-colors flex-shrink-0 ${
+            className={`group relative flex items-center justify-center h-[38px] w-[38px] rounded-xl border transition-colors flex-shrink-0 overflow-hidden ${
               isDark ? 'text-amber-400 border-slate-800 bg-slate-900 hover:bg-slate-800' : 'text-slate-700 border-slate-300 bg-slate-200/80 hover:bg-slate-200'
             }`}
           >
-            {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5 text-slate-800" />}
+            {/* Sun and moon cross-fade and rotate through each other */}
+            <Sun
+              className={`absolute w-5 h-5 transition-all duration-500 ${
+                isDark ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'
+              }`}
+            />
+            <Moon
+              className={`absolute w-5 h-5 text-slate-800 transition-all duration-500 ${
+                isDark ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'
+              }`}
+            />
+            <span
+              className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md bg-amber-400/30 pointer-events-none"
+              aria-hidden="true"
+            />
           </button>
 
           {/* Light Radiant Orange Button -> Leads to Calculator */}
@@ -270,6 +314,14 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
           </div>
         </div>
       )}
+
+      {/* Generation busbar: scroll progress as a charge level */}
+      <div className="absolute bottom-0 left-0 right-0 h-0.5 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div
+          className="scroll-busbar h-full w-full transition-transform duration-150 ease-out"
+          style={{ transform: `scaleX(${scrollPct})` }}
+        />
+      </div>
     </header>
   );
 }

@@ -31,6 +31,7 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  const { pathname } = useLocation();
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('chedryk_theme') || 'dark';
   });
@@ -83,8 +84,9 @@ export default function App() {
         toggleTheme={toggleTheme}
       />
 
-      {/* Main Content Body with React Router Routes */}
-      <main className="flex-grow">
+      {/* Main Content Body with React Router Routes.
+          Keyed on pathname so each navigation replays the enter animation. */}
+      <main className="flex-grow route-enter" key={pathname}>
         <Routes>
           <Route path="/" element={
             <>

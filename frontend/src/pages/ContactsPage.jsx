@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { Phone, MessageCircle, MapPin, Clock, Sun, Video } from 'lucide-react';
 import ConsultationForm from '../components/ConsultationForm';
+import SolarPanelCard from '../components/SolarPanelCard';
+import CoverageMap from '../components/CoverageMap';
+import { LiveBadge, TelemetryChip } from '../components/SolarTech';
 
 export default function ContactsPage({ theme }) {
   const isDark = theme === 'dark';
@@ -154,11 +157,24 @@ export default function ContactsPage({ theme }) {
               </div>
             </div>
 
-            {/* Coverage Cities */}
-            <div className={`glass-card p-5 sm:p-6 rounded-3xl border space-y-4 ${
-              isDark ? 'border-slate-700 bg-slate-800/90' : 'border-amber-200 bg-white shadow-md'
-            }`}>
-              <h4 className="font-bold text-sm flex items-center gap-2">
+            {/* Coverage map — replaces the flat city chip list */}
+            <SolarPanelCard theme={theme} glow className="p-5 sm:p-6" contentClassName="space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h4 className="font-bold text-sm flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-amber-500" />
+                  Зона виїзду майстра
+                </h4>
+                <LiveBadge theme={theme} label="2 області · 11 міст" tone="amber" />
+              </div>
+
+              <CoverageMap theme={theme} />
+
+              <div className="grid grid-cols-2 gap-2.5">
+                <TelemetryChip theme={theme} icon={MapPin} label="Радіус виїзду" value="до 200 км" />
+                <TelemetryChip theme={theme} icon={Clock} label="Час прибуття" value="45 хв – 3 год" />
+              </div>
+
+              <h4 className="font-bold text-sm flex items-center gap-2 pt-1">
                 <MapPin className="w-4 h-4 text-amber-500" />
                 Основні міста виїзду:
               </h4>
@@ -196,7 +212,7 @@ export default function ContactsPage({ theme }) {
                   </div>
                 </div>
               </div>
-            </div>
+            </SolarPanelCard>
 
           </div>
 
