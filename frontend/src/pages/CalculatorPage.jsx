@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator, Sun, DollarSign, Zap, ArrowRight, ShieldCheck, CheckCircle2, Home, Layers, Cpu, BatteryCharging } from 'lucide-react';
+import { Calculator, Sun, Zap, ArrowRight, Home, Layers, Cpu, TrendingUp, BatteryCharging } from 'lucide-react';
 import InteractiveSolarSchema from '../components/InteractiveSolarSchema';
 import CustomSelect from '../components/CustomSelect';
 import ConfigurationForm from '../components/ConfigurationForm';
+import SolarPanelCard from '../components/SolarPanelCard';
+import SystemFlowDiagram from '../components/SystemFlowDiagram';
+import { LiveBadge, TelemetryChip } from '../components/SolarTech';
+import { CountUp, SolarSlider, StepRail } from '../components/SolarControls';
 
 export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfiguration }) {
   const isDark = theme === 'dark';
@@ -81,64 +85,18 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
           </p>
         </div>
 
-        {/* Wizard Step Navigation */}
-        <div className="grid grid-cols-3 gap-1.5 sm:gap-4 max-w-3xl mx-auto mb-8 sm:mb-10">
-          <button
-            onClick={() => setStep(1)}
-            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-extrabold transition-all cursor-pointer text-center ${
-              step === 1
-                ? isDark
-                  ? 'bg-amber-500/25 border-2 border-amber-400 text-[#fde68a] shadow-md scale-[1.02]'
-                  : 'bg-amber-100 border-2 border-amber-500 text-[#78350f] shadow-xs scale-[1.02]'
-                : isDark
-                  ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
-                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
-            }`}
-          >
-            <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-            <span>
-              <span className="hidden sm:inline">1. Параметри даху</span>
-              <span className="sm:hidden">1. Дах</span>
-            </span>
-          </button>
-
-          <button
-            onClick={() => setStep(2)}
-            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-extrabold transition-all cursor-pointer text-center ${
-              step === 2
-                ? isDark
-                  ? 'bg-amber-500/25 border-2 border-amber-400 text-[#fde68a] shadow-md scale-[1.02]'
-                  : 'bg-amber-100 border-2 border-amber-500 text-[#78350f] shadow-xs scale-[1.02]'
-                : isDark
-                  ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
-                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
-            }`}
-          >
-            <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-            <span>
-              <span className="hidden sm:inline">2. Наповнення панелями</span>
-              <span className="sm:hidden">2. Панелі</span>
-            </span>
-          </button>
-
-          <button
-            onClick={() => setStep(3)}
-            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-extrabold transition-all cursor-pointer text-center ${
-              step === 3
-                ? isDark
-                  ? 'bg-amber-500/25 border-2 border-amber-400 text-[#fde68a] shadow-md scale-[1.02]'
-                  : 'bg-amber-100 border-2 border-amber-500 text-[#78350f] shadow-xs scale-[1.02]'
-                : isDark
-                  ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
-                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
-            }`}
-          >
-            <Cpu className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-            <span>
-              <span className="hidden sm:inline">3. Інвертор & АКБ</span>
-              <span className="sm:hidden">3. АКБ/Deye</span>
-            </span>
-          </button>
+        {/* Wizard Step Rail */}
+        <div className="max-w-3xl mx-auto mb-8 sm:mb-12">
+          <StepRail
+            theme={theme}
+            active={step - 1}
+            onSelect={(i) => setStep(i + 1)}
+            steps={[
+              { id: 'roof', label: 'Параметри даху', icon: Home },
+              { id: 'panels', label: 'Наповнення панелями', icon: Layers },
+              { id: 'inverter', label: 'Інвертор & АКБ', icon: Cpu }
+            ]}
+          />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
@@ -148,9 +106,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
             
             {/* STEP 1: ROOF PARAMETERS */}
             {step === 1 && (
-              <div className={`glass-panel p-6 sm:p-8 rounded-3xl border space-y-6 ${
-                isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-200 bg-white shadow-md'
-              }`}>
+              <SolarPanelCard theme={theme} className="p-6 sm:p-8" contentClassName="space-y-6">
                 <h3 className="text-lg font-bold flex items-center gap-2 text-amber-500">
                   <Home className="w-5 h-5" /> Крок 1: Оберіть тип та покриття даху
                 </h3>
@@ -217,25 +173,19 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                 )}
 
                 {/* Area Slider */}
-                <div className="space-y-3 pt-3 border-t border-slate-700/60">
-                  <div className="flex justify-between items-center">
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                      Корисна площа даху під панелі:
-                    </label>
-                    <span className="text-xl font-extrabold text-amber-500">{roofAreaSqM} м²</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="30"
-                    max="300"
-                    step="10"
+                <div className={`pt-4 border-t ${isDark ? 'border-slate-700/60' : 'border-slate-200'}`}>
+                  <SolarSlider
+                    id="roof-area"
+                    theme={theme}
+                    label="Корисна площа даху"
+                    display={`${roofAreaSqM} м²`}
+                    min={30}
+                    max={300}
+                    step={10}
                     value={roofAreaSqM}
-                    onChange={(e) => setRoofAreaSqM(Number(e.target.value))}
-                    className="w-full accent-amber-500 h-2 bg-slate-700 rounded-lg cursor-pointer"
+                    onChange={setRoofAreaSqM}
+                    hint={`Максимально вміщує близько ${maxPossiblePanels} шт. сонячних панелей.`}
                   />
-                  <p className="text-xs opacity-75">
-                    Максимально вміщує близько <strong className="text-amber-500">{maxPossiblePanels} шт.</strong> сонячних панелей.
-                  </p>
                 </div>
 
                 <div className="pt-4 flex justify-end">
@@ -248,14 +198,12 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                   </button>
                 </div>
 
-              </div>
+              </SolarPanelCard>
             )}
 
             {/* STEP 2: PANELS & ROWS CONFIGURATION */}
             {step === 2 && (
-              <div className={`glass-panel p-6 sm:p-8 rounded-3xl border space-y-6 ${
-                isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-200 bg-white shadow-md'
-              }`}>
+              <SolarPanelCard theme={theme} className="p-6 sm:p-8" contentClassName="space-y-6">
                 <h3 className="text-lg font-bold flex items-center gap-2 text-amber-500">
                   <Layers className="w-5 h-5" /> Крок 2: Наповнення панелями & Кількість рядів
                 </h3>
@@ -332,14 +280,12 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
-              </div>
+              </SolarPanelCard>
             )}
 
             {/* STEP 3: INVERTER & BATTERY */}
             {step === 3 && (
-              <div className={`glass-panel p-6 sm:p-8 rounded-3xl border space-y-6 ${
-                isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-200 bg-white shadow-md'
-              }`}>
+              <SolarPanelCard theme={theme} className="p-6 sm:p-8" contentClassName="space-y-6">
                 <h3 className="text-lg font-bold flex items-center gap-2 text-amber-500">
                   <Cpu className="w-5 h-5" /> Крок 3: Гібридний інвертор Deye & Акумулятори
                 </h3>
@@ -408,39 +354,79 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
-              </div>
+              </SolarPanelCard>
             )}
 
-            {/* COST CALCULATION SUMMARY CARD (Positioned under Steps 1-3 on Left Column) */}
-            <div className={`glass-card p-6 sm:p-7 rounded-3xl border space-y-4 shadow-xl ${
-              isDark ? 'border-slate-700 bg-slate-800/90' : 'border-slate-200 bg-white shadow-md'
-            }`}>
-              <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-amber-500 border-b border-slate-700/60 pb-3">
-                <span className="flex items-center gap-2">
-                  <Zap className="w-4 h-4" /> КАЛЬКУЛЯЦІЯ ПО ОБ'ЄКТУ
+            {/* LIVE CALCULATION BOARD — readouts ease to their new values as
+                the configuration changes, rather than snapping */}
+            <SolarPanelCard theme={theme} glow className="p-6 sm:p-7 shadow-xl" contentClassName="space-y-5">
+              <div className={`flex flex-wrap justify-between items-center gap-3 border-b pb-3 ${
+                isDark ? 'border-slate-700/60' : 'border-slate-200'
+              }`}>
+                <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-500">
+                  <Zap className="w-4 h-4" /> Калькуляція по об'єкту
                 </span>
-                <span className="text-sm font-black text-amber-500">{totalKw} КВТ СЕС</span>
+                <LiveBadge theme={theme} label={`${totalKw} кВт · Live`} tone="amber" />
               </div>
 
-              <div className="grid grid-cols-2 gap-4 text-xs">
+              {/* Headline figures */}
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <span className="opacity-70 block font-medium">Кількість панелей:</span>
-                  <span className="font-bold text-sm text-white">{activePanelCount} шт. ({selectedPanelWattage}W)</span>
+                  <p className={`text-[10px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                    Встановлена потужність
+                  </p>
+                  <p className="text-2xl sm:text-3xl font-black text-amber-500 tabular-nums">
+                    <CountUp value={totalKw} decimals={1} /> <span className="text-base">кВт</span>
+                  </p>
                 </div>
                 <div>
-                  <span className="opacity-70 block font-medium">Річна генерація:</span>
-                  <span className="font-bold text-sm text-emerald-400">~{annualGenKwh.toLocaleString()} кВт·год</span>
-                </div>
-                <div>
-                  <span className="opacity-70 block font-medium">Інвертор Deye:</span>
-                  <span className="font-bold text-sm text-sky-400">{inverterPowerKw} кВт (3-фази)</span>
-                </div>
-                <div>
-                  <span className="opacity-70 block font-medium">Орієнтовний кошторис:</span>
-                  <span className="font-extrabold text-base text-amber-400">~${totalEstimateUsd.toLocaleString()}</span>
+                  <p className={`text-[10px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                    Орієнтовний кошторис
+                  </p>
+                  <p className="text-2xl sm:text-3xl font-black text-solar-gradient tabular-nums">
+                    ~$<CountUp value={totalEstimateUsd} />
+                  </p>
                 </div>
               </div>
-            </div>
+
+              <div className="grid grid-cols-2 gap-2.5">
+                <TelemetryChip
+                  theme={theme}
+                  icon={Sun}
+                  label="Панелі"
+                  value={`${activePanelCount} шт · ${selectedPanelWattage}W`}
+                />
+                <TelemetryChip theme={theme} icon={Cpu} label="Інвертор Deye" value={`${inverterPowerKw} кВт`} />
+                <TelemetryChip
+                  theme={theme}
+                  icon={TrendingUp}
+                  label="Річна генерація"
+                  value={`${annualGenKwh.toLocaleString('uk-UA')} кВт·год`}
+                  live
+                />
+                <TelemetryChip
+                  theme={theme}
+                  icon={BatteryCharging}
+                  label="Резерв"
+                  value={hasBattery ? `${batteryCapacityKwh} кВт·год` : 'Без АКБ'}
+                />
+              </div>
+
+              {/* Single-line diagram of exactly what is configured */}
+              <div className={`pt-4 border-t ${isDark ? 'border-slate-700/60' : 'border-slate-200'}`}>
+                <p className={`text-[10px] font-bold telemetry-label mb-2 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                  Однолінійна схема станції
+                </p>
+                <SystemFlowDiagram
+                  theme={theme}
+                  panelCount={activePanelCount}
+                  totalKw={totalKw}
+                  inverterPowerKw={inverterPowerKw}
+                  hasBattery={hasBattery}
+                  batteryCapacityKwh={batteryCapacityKwh}
+                />
+              </div>
+            </SolarPanelCard>
 
           </div>
 

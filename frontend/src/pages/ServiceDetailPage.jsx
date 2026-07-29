@@ -8,6 +8,10 @@ import {
 } from 'lucide-react';
 import InteractiveSolarSchema from '../components/InteractiveSolarSchema';
 import CustomSelect from '../components/CustomSelect';
+import SolarPanelCard from '../components/SolarPanelCard';
+import SystemFlowDiagram from '../components/SystemFlowDiagram';
+import { LiveBadge } from '../components/SolarTech';
+import { CountUp, SolarSlider, StepRail } from '../components/SolarControls';
 
 const iconMap = {
   Sun: Sun,
@@ -83,10 +87,6 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
   const panelCount = recommendedPanelCount;
 
   // Slider Fill Percentages
-  const pctCons = ((monthlyConsumption - 100) / (2500 - 100)) * 100;
-  const pctCov = ((coveragePercent - 50) / (150 - 50)) * 100;
-  const pctArea = ((roofAreaSqM - 30) / (300 - 30)) * 100;
-  const trackBg = isDark ? '#334155' : '#cbd5e1';
 
   const mountType = serviceId === 'ses-building' ? 'ground' : 'roof';
 
@@ -103,72 +103,22 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
   if (serviceId === 'roof-installation' || serviceId === 'ses-building') {
     return (
       <div className="space-y-6">
-        {/* Wizard Step Navigation */}
-        <div className="grid grid-cols-3 gap-1.5 sm:gap-4 max-w-3xl mx-auto mb-6">
-          <button
-            onClick={() => setStep(1)}
-            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-extrabold transition-all cursor-pointer text-center ${
-              step === 1
-                ? isDark
-                  ? 'bg-amber-500/25 border-2 border-amber-400 text-[#fde68a] shadow-md scale-[1.02]'
-                  : 'bg-amber-100 border-2 border-amber-500 text-[#78350f] shadow-xs scale-[1.02]'
-                : isDark
-                  ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
-                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
-            }`}
-          >
-            {mountType === 'ground' ? (
-              <Compass className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-            ) : (
-              <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-            )}
-            <span>
-              <span className="hidden sm:inline">
-                {mountType === 'ground' ? '1. Параметри ділянки' : '1. Параметри даху'}
-              </span>
-              <span className="sm:hidden">
-                {mountType === 'ground' ? '1. Ділянка' : '1. Дах'}
-              </span>
-            </span>
-          </button>
-
-          <button
-            onClick={() => setStep(2)}
-            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-extrabold transition-all cursor-pointer text-center ${
-              step === 2
-                ? isDark
-                  ? 'bg-amber-500/25 border-2 border-amber-400 text-[#fde68a] shadow-md scale-[1.02]'
-                  : 'bg-amber-100 border-2 border-amber-500 text-[#78350f] shadow-xs scale-[1.02]'
-                : isDark
-                  ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
-                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
-            }`}
-          >
-            <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-            <span>
-              <span className="hidden sm:inline">2. Наповнення панелями</span>
-              <span className="sm:hidden">2. Панелі</span>
-            </span>
-          </button>
-
-          <button
-            onClick={() => setStep(3)}
-            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-sm font-extrabold transition-all cursor-pointer text-center ${
-              step === 3
-                ? isDark
-                  ? 'bg-amber-500/25 border-2 border-amber-400 text-[#fde68a] shadow-md scale-[1.02]'
-                  : 'bg-amber-100 border-2 border-amber-500 text-[#78350f] shadow-xs scale-[1.02]'
-                : isDark
-                  ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
-                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
-            }`}
-          >
-            <Cpu className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-            <span>
-              <span className="hidden sm:inline">3. Інвертор & АКБ</span>
-              <span className="sm:hidden">3. АКБ/Deye</span>
-            </span>
-          </button>
+        {/* Wizard Step Rail */}
+        <div className="max-w-3xl mx-auto mb-8">
+          <StepRail
+            theme={theme}
+            active={step - 1}
+            onSelect={(i) => setStep(i + 1)}
+            steps={[
+              {
+                id: 'site',
+                label: mountType === 'ground' ? 'Параметри ділянки' : 'Параметри даху',
+                icon: mountType === 'ground' ? Compass : Home
+              },
+              { id: 'panels', label: 'Наповнення панелями', icon: Layers },
+              { id: 'inverter', label: 'Інвертор & АКБ', icon: Cpu }
+            ]}
+          />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-8">
@@ -303,72 +253,44 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
                   )
                 )}
 
-                {/* Sliders Block */}
-                <div className="space-y-4 pt-3 border-t border-slate-700/40">
-                  {/* Monthly power consumption */}
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-xs sm:text-sm font-bold">
-                      <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>Місячне споживання електроенергії:</span>
-                      <span className="text-amber-500 font-extrabold text-base">{monthlyConsumption} кВт·год/міс</span>
-                    </div>
-                    <input
-                      type="range"
-                      min="100"
-                      max="2500"
-                      step="25"
-                      value={monthlyConsumption}
-                      onChange={(e) => setMonthlyConsumption(Number(e.target.value))}
-                      style={{
-                        background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${pctCons}%, ${trackBg} ${pctCons}%, ${trackBg} 100%)`
-                      }}
-                      className="w-full h-2.5 rounded-lg appearance-none cursor-pointer accent-amber-500 transition-all"
-                    />
-                  </div>
+                {/* Sliders Block — busbar tracks */}
+                <div className={`space-y-5 pt-4 border-t ${isDark ? 'border-slate-700/40' : 'border-slate-200'}`}>
+                  <SolarSlider
+                    id="sd-consumption"
+                    theme={theme}
+                    label="Місячне споживання"
+                    display={`${monthlyConsumption} кВт·год/міс`}
+                    min={100}
+                    max={2500}
+                    step={25}
+                    value={monthlyConsumption}
+                    onChange={setMonthlyConsumption}
+                  />
 
-                  {/* Target grid compensation */}
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-xs sm:text-sm font-bold">
-                      <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>Цільовий рівень компенсації мережі:</span>
-                      <span className="text-amber-500 font-extrabold text-base">{coveragePercent}%</span>
-                    </div>
-                    <input
-                      type="range"
-                      min="50"
-                      max="150"
-                      step="5"
-                      value={coveragePercent}
-                      onChange={(e) => setCoveragePercent(Number(e.target.value))}
-                      style={{
-                        background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${pctCov}%, ${trackBg} ${pctCov}%, ${trackBg} 100%)`
-                      }}
-                      className="w-full h-2.5 rounded-lg appearance-none cursor-pointer accent-amber-500 transition-all"
-                    />
-                  </div>
+                  <SolarSlider
+                    id="sd-coverage"
+                    theme={theme}
+                    label="Цільова компенсація мережі"
+                    display={`${coveragePercent}%`}
+                    min={50}
+                    max={150}
+                    step={5}
+                    value={coveragePercent}
+                    onChange={setCoveragePercent}
+                  />
 
-                  {/* Roof Area slider */}
-                  <div className="space-y-3 pt-2">
-                    <div className="flex justify-between items-center">
-                      <label className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                        {mountType === 'ground' ? 'Корисна площа ділянки під панелі:' : 'Корисна площа даху під панелі:'}
-                      </label>
-                      <span className="text-xl font-extrabold text-amber-500">{roofAreaSqM} м²</span>
-                    </div>
-                    <input
-                      type="range"
-                      min="30"
-                      max="300"
-                      step="10"
-                      value={roofAreaSqM}
-                      onChange={(e) => setRoofAreaSqM(Number(e.target.value))}
-                      style={{
-                        background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${pctArea}%, ${trackBg} ${pctArea}%, ${trackBg} 100%)`
-                      }}
-                      className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-amber-500 transition-all"
-                    />
-                    <p className="text-xs opacity-75">
-                      Максимально вміщує близько <strong className="text-amber-500">{maxPossiblePanels} шт.</strong> сонячних панелей.
-                    </p>
-                  </div>
+                  <SolarSlider
+                    id="sd-area"
+                    theme={theme}
+                    label={mountType === 'ground' ? 'Корисна площа ділянки' : 'Корисна площа даху'}
+                    display={`${roofAreaSqM} м²`}
+                    min={30}
+                    max={300}
+                    step={10}
+                    value={roofAreaSqM}
+                    onChange={setRoofAreaSqM}
+                    hint={`Максимально вміщує близько ${maxPossiblePanels} шт. сонячних панелей.`}
+                  />
                 </div>
 
                 <div className="pt-2 flex justify-end">
@@ -566,14 +488,46 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
         </div>
 
         {/* RESULTS SUMMARY CARD */}
-        <div className={`p-6 sm:p-7 rounded-3xl border space-y-4 shadow-xl ${
-          isDark ? 'border-slate-700 bg-slate-800/80' : 'border-slate-200 bg-white'
-        }`}>
-          <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-amber-500 border-b border-slate-700/60 pb-3">
-            <span className="flex items-center gap-2">
-              <Zap className="w-4 h-4" /> КАЛЬКУЛЯЦІЯ ПО ОБ'ЄКТУ
+        <SolarPanelCard theme={theme} glow className="p-6 sm:p-7 shadow-xl" contentClassName="space-y-5">
+          <div className={`flex flex-wrap justify-between items-center gap-3 border-b pb-3 ${
+            isDark ? 'border-slate-700/60' : 'border-slate-200'
+          }`}>
+            <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-500">
+              <Zap className="w-4 h-4" /> Калькуляція по об'єкту
             </span>
-            <span className="text-sm font-black text-amber-500">{totalKw} КВТ СЕС</span>
+            <LiveBadge theme={theme} label={`${totalKw} кВт · Live`} tone="amber" />
+          </div>
+
+          {/* Headline figures — ease to their new values as sliders move */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className={`text-[10px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                Встановлена потужність
+              </p>
+              <p className="text-2xl sm:text-3xl font-black text-amber-500 tabular-nums">
+                <CountUp value={totalKw} decimals={1} /> <span className="text-base">кВт</span>
+              </p>
+            </div>
+            <div>
+              <p className={`text-[10px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                Орієнтовний кошторис
+              </p>
+              <p className="text-2xl sm:text-3xl font-black text-solar-gradient tabular-nums">
+                ~$<CountUp value={totalEstimateUsd} />
+              </p>
+            </div>
+          </div>
+
+          {/* Single-line diagram of exactly what is configured */}
+          <div className={`pt-1 pb-1`}>
+            <SystemFlowDiagram
+              theme={theme}
+              panelCount={activePanelCount}
+              totalKw={totalKw}
+              inverterPowerKw={inverterPowerKw}
+              hasBattery={hasBattery}
+              batteryCapacityKwh={batteryCapacityKwh}
+            />
           </div>
 
           {/* Desktop Comparative Table */}
@@ -686,7 +640,7 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
               </span>
             </div>
           </div>
-        </div>
+        </SolarPanelCard>
       </div>
     );
   }
@@ -695,57 +649,39 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
   // RENDER PATH 2: Simple Slider-based Calculator (other services)
   // -------------------------------------------------------------
   return (
-    <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 ${
-      isDark ? 'bg-slate-800/80 border-slate-700/80 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
-    }`}>
+    <SolarPanelCard theme={theme} glow className="p-6 sm:p-8 shadow-2xl" contentClassName="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-2">
         <h3 className="font-extrabold text-lg sm:text-xl text-amber-500">
           Інтерактивний Калькулятор Потужності СЕС
         </h3>
-        <span className="text-xs font-semibold px-3 py-1 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30">
-          Онлайн Розрахунок
-        </span>
+        <LiveBadge theme={theme} label="Онлайн розрахунок" tone="amber" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         <div className="space-y-6">
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs sm:text-sm font-bold">
-              <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>Місячне споживання електроенергії:</span>
-              <span className="text-amber-500 font-extrabold text-base">{monthlyConsumption} кВт·год/міс</span>
-            </div>
-            <input
-              type="range"
-              min="100"
-              max="2500"
-              step="25"
-              value={monthlyConsumption}
-              onChange={(e) => setMonthlyConsumption(Number(e.target.value))}
-              style={{
-                background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${pctCons}%, ${trackBg} ${pctCons}%, ${trackBg} 100%)`
-              }}
-              className="w-full h-2.5 rounded-lg appearance-none cursor-pointer accent-amber-500 transition-all"
-            />
-          </div>
+          <SolarSlider
+            id="p2-consumption"
+            theme={theme}
+            label="Місячне споживання"
+            display={`${monthlyConsumption} кВт·год/міс`}
+            min={100}
+            max={2500}
+            step={25}
+            value={monthlyConsumption}
+            onChange={setMonthlyConsumption}
+          />
 
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs sm:text-sm font-bold">
-              <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>Цільовий рівень компенсації мережі:</span>
-              <span className="text-amber-500 font-extrabold text-base">{coveragePercent}%</span>
-            </div>
-            <input
-              type="range"
-              min="50"
-              max="150"
-              step="5"
-              value={coveragePercent}
-              onChange={(e) => setCoveragePercent(Number(e.target.value))}
-              style={{
-                background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${pctCov}%, ${trackBg} ${pctCov}%, ${trackBg} 100%)`
-              }}
-              className="w-full h-2.5 rounded-lg appearance-none cursor-pointer accent-amber-500 transition-all"
-            />
-          </div>
+          <SolarSlider
+            id="p2-coverage"
+            theme={theme}
+            label="Цільова компенсація мережі"
+            display={`${coveragePercent}%`}
+            min={50}
+            max={150}
+            step={5}
+            value={coveragePercent}
+            onChange={setCoveragePercent}
+          />
 
           <div className="pt-2 space-y-2">
             <label className="block text-xs font-bold uppercase tracking-wider text-amber-500">
@@ -792,7 +728,7 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
           </div>
         </div>
       </div>
-    </div>
+    </SolarPanelCard>
   );
 }
 
@@ -804,7 +740,6 @@ function BatterySliderCalculator({ isDark }) {
   const chargeTimeHours = (totalKwhRequired / (5 * 0.85)).toFixed(1);
   const pctLoad = ((loadWatts - 200) / (4000 - 200)) * 100;
   const pctHours = ((backupHours - 4) / (72 - 4)) * 100;
-  const trackBg = isDark ? '#334155' : '#cbd5e1';
 
   return (
     <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 ${
@@ -825,14 +760,14 @@ function BatterySliderCalculator({ isDark }) {
               <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>Середнє навантаження будинку:</span>
               <span className="text-emerald-500 font-extrabold text-base">{loadWatts} Вт</span>
             </div>
-            <input type="range" min="200" max="4000" step="50" value={loadWatts} onChange={(e) => setLoadWatts(Number(e.target.value))} style={{ background: `linear-gradient(to right, #10b981 0%, #10b981 ${pctLoad}%, ${trackBg} ${pctLoad}%, ${trackBg} 100%)` }} className="w-full h-2.5 rounded-lg appearance-none cursor-pointer accent-emerald-500 transition-all" />
+            <input type="range" min="200" max="4000" step="50" value={loadWatts} onChange={(e) => setLoadWatts(Number(e.target.value))} style={{ '--fill': `${pctLoad}%` }} className="solar-range" />
           </div>
           <div className="space-y-2">
             <div className="flex justify-between text-xs sm:text-sm font-bold">
               <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>Необхідний час автономності:</span>
               <span className="text-emerald-500 font-extrabold text-base">{backupHours} годин</span>
             </div>
-            <input type="range" min="4" max="72" step="2" value={backupHours} onChange={(e) => setBackupHours(Number(e.target.value))} style={{ background: `linear-gradient(to right, #10b981 0%, #10b981 ${pctHours}%, ${trackBg} ${pctHours}%, ${trackBg} 100%)` }} className="w-full h-2.5 rounded-lg appearance-none cursor-pointer accent-emerald-500 transition-all" />
+            <input type="range" min="4" max="72" step="2" value={backupHours} onChange={(e) => setBackupHours(Number(e.target.value))} style={{ '--fill': `${pctHours}%` }} className="solar-range" />
           </div>
         </div>
         <div className={`p-6 rounded-2xl border grid grid-cols-2 gap-4 ${

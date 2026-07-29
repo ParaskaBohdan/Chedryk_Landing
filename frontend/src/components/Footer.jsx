@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Sun, Phone, MapPin, ArrowUp, Video } from 'lucide-react';
+import { LiveBadge } from './SolarTech';
 
 export default function Footer({ onOpenConsultation, theme }) {
   const isDark = theme === 'dark';
@@ -38,10 +39,27 @@ export default function Footer({ onOpenConsultation, theme }) {
   };
 
   return (
-    <footer className={`border-t py-10 sm:py-12 transition-colors duration-300 ${
+    <footer className={`pv-shell pv-texture border-t py-10 sm:py-12 relative overflow-hidden transition-colors duration-300 ${
       isDark ? 'border-slate-800 bg-slate-950 text-slate-400' : 'border-amber-200 bg-amber-50/70 text-slate-600'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Ambient lighting */}
+      <div className="solar-flare w-[220px] sm:w-[380px] h-[220px] sm:h-[380px] -top-32 right-[8%]" aria-hidden="true" />
+      <div className="solar-beam hidden sm:block w-[90px] h-[420px] -top-40 left-[18%]" aria-hidden="true" />
+
+      <div className="pv-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Station status strip */}
+        <div className={`flex flex-wrap items-center justify-between gap-3 pb-6 mb-8 border-b ${
+          isDark ? 'border-slate-800' : 'border-amber-200'
+        }`}>
+          <div className="flex flex-wrap items-center gap-2.5">
+            <LiveBadge theme={theme} label="Grid Status · Online" />
+            <LiveBadge theme={theme} label="Закарпаття · Прикарпаття" tone="sky" />
+          </div>
+          <span className={`text-[10px] font-bold telemetry-label ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
+            Nova Energy · Monitoring 24/7
+          </span>
+        </div>
+
         
         <div className={`grid grid-cols-1 min-[340px]:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 pb-10 border-b ${
           isDark ? 'border-slate-800' : 'border-amber-200'
@@ -146,6 +164,11 @@ export default function Footer({ onOpenConsultation, theme }) {
           </button>
         </div>
 
+      </div>
+
+      {/* Conductor running along the base of the station panel */}
+      <div className="absolute bottom-0 left-0 right-0 h-0.5 pointer-events-none opacity-70" aria-hidden="true">
+        <div className="h-full w-full bg-gradient-to-r from-transparent via-amber-400/70 to-transparent" />
       </div>
     </footer>
   );

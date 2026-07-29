@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 
 /**
  * Container styled as a photovoltaic module: silicon cell grid, anodised
@@ -17,6 +17,23 @@ export default function SolarPanelCard({
   ...rest
 }) {
   const isDark = theme === 'dark';
+  const shellRef = useRef(null);
+  const frameRef = useRef(null);
+
+  // Track the pointer so the specular glare follows it, the way glare moves
+  // across a real module. Coalesced into one rAF so a fast pointer over a grid
+  // of cards can't queue up layout work.
+  const handlePointerMove = useCallback((event) => {
+    const el = shellRef.current;
+    if (!el || frameRef.current) return;
+    const { clientX, clientY } = event;
+    frameRef.current = requestAnimationFrame(() => {
+      frameRef.current = null;
+      const rect = el.getBoundingClientRect();
+      el.style.setProperty('--mx', `${((clientX - rect.left) / rect.width) * 100}%`);
+      el.style.setProperty('--my', `${((clientY - rect.top) / rect.height) * 100}%`);
+    });
+  }, []);
 
   const boltStyle = {
     background: isDark
@@ -31,9 +48,12 @@ export default function SolarPanelCard({
           ? 'border-slate-700/70 bg-slate-800/70'
           : 'border-slate-200 bg-white/90'
       } ${glow ? 'solar-halo' : ''} ${className}`}
+      ref={shellRef}
+      onPointerMove={handlePointerMove}
       {...rest}
     >
       {sheen && <span className="pv-sheen" aria-hidden="true" />}
+      <span className="pv-glare" aria-hidden="true" />
 
       {bolts && (
         <span aria-hidden="true">

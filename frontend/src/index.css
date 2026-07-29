@@ -297,6 +297,11 @@
   );
   filter: blur(30px);
   animation: solar-flare-pulse 7s ease-in-out infinite;
+  /* Own compositor layer: the blur rasterises once and only opacity is
+     composited, instead of re-blurring a large area on every frame. */
+  will-change: opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .light .solar-flare {
@@ -309,8 +314,8 @@
 }
 
 @keyframes solar-flare-pulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 0.95; transform: scale(1.12); }
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.95; }
 }
 
 .solar-beam {
@@ -320,6 +325,9 @@
   background: linear-gradient(180deg, rgba(251, 191, 36, 0.3), rgba(251, 191, 36, 0) 72%);
   filter: blur(24px);
   animation: solar-beam-sway 14s ease-in-out infinite alternate;
+  /* Promoted so the sway is a compositor transform on a cached texture. */
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .light .solar-beam {
@@ -506,4 +514,234 @@ button, a {
 .light ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 4px;
+}
+
+/* ==========================================================================
+   PHASE 2 — CONTROL SURFACES
+   Instrument framing, busbar sliders, cursor-tracked glare, scroll telemetry.
+   ========================================================================== */
+
+/* --- Cursor-tracked specular glare on panel surfaces -------------------- */
+/* A real module's glare follows the viewer; --mx/--my are set from JS.     */
+
+.pv-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(253, 224, 71, 0.2),
+    rgba(253, 224, 71, 0.06) 40%,
+    transparent 65%
+  );
+}
+
+.light .pv-glare {
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(245, 158, 11, 0.16),
+    rgba(245, 158, 11, 0.05) 40%,
+    transparent 65%
+  );
+}
+
+.pv-shell:hover .pv-glare {
+  opacity: 1;
+}
+
+/* --- Busbar range slider ------------------------------------------------ */
+/* --fill is the percentage of travel, set inline by SolarSlider.           */
+
+.solar-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 9999px;
+  outline: none;
+  cursor: pointer;
+  background: linear-gradient(
+    90deg,
+    #f59e0b 0%,
+    #fde047 var(--fill, 50%),
+    rgba(148, 163, 184, 0.22) var(--fill, 50%)
+  );
+}
+
+.light .solar-range {
+  background: linear-gradient(
+    90deg,
+    #f59e0b 0%,
+    #fbbf24 var(--fill, 50%),
+    rgba(100, 116, 139, 0.2) var(--fill, 50%)
+  );
+}
+
+.solar-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  background: radial-gradient(circle at 32% 28%, #fef9c3, #f59e0b 62%, #b45309);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.16), 0 2px 8px rgba(0, 0, 0, 0.35);
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.solar-range::-webkit-slider-thumb:hover,
+.solar-range:focus-visible::-webkit-slider-thumb {
+  transform: scale(1.14);
+  box-shadow: 0 0 0 7px rgba(245, 158, 11, 0.24), 0 0 18px rgba(251, 191, 36, 0.6);
+}
+
+.solar-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  background: radial-gradient(circle at 32% 28%, #fef9c3, #f59e0b 62%, #b45309);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.16);
+  cursor: pointer;
+}
+
+.solar-range::-moz-range-track {
+  height: 8px;
+  border-radius: 9999px;
+  background: transparent;
+}
+
+/* --- Instrument viewport ------------------------------------------------ */
+
+.instrument-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(148, 197, 255, 0.055) 0 1px,
+    transparent 1px 3px
+  );
+  mix-blend-mode: screen;
+}
+
+.light .instrument-scanlines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(30, 58, 95, 0.04) 0 1px,
+    transparent 1px 3px
+  );
+  mix-blend-mode: multiply;
+}
+
+.instrument-sweep {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 90px;
+  pointer-events: none;
+  z-index: 6;
+  background: linear-gradient(180deg, transparent, rgba(251, 191, 36, 0.13), transparent);
+  animation: instrument-sweep-run 6.5s ease-in-out infinite;
+}
+
+@keyframes instrument-sweep-run {
+  0% { transform: translateY(-100px); opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateY(560px); opacity: 0; }
+}
+
+/* Corner brackets that read as a machined bezel */
+.instrument-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  z-index: 7;
+  border-color: rgba(251, 191, 36, 0.75);
+}
+
+/* --- Header scroll telemetry -------------------------------------------- */
+
+.scroll-busbar {
+  transform-origin: left center;
+  background: linear-gradient(90deg, #f59e0b, #fde047 55%, #34d399);
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.55);
+}
+
+/* --- Submit button charging state --------------------------------------- */
+
+.btn-charging {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-charging::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: translateX(-100%);
+  animation: btn-charge 1.1s linear infinite;
+}
+
+@keyframes btn-charge {
+  to { transform: translateX(100%); }
+}
+
+/* --- Form field focus glow ---------------------------------------------- */
+
+.solar-field {
+  transition: border-color 0.2s ease, box-shadow 0.25s ease, background-color 0.2s ease;
+}
+
+.solar-field:focus,
+.solar-field:focus-visible {
+  outline: none;
+  border-color: rgba(251, 191, 36, 0.85) !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18), 0 0 18px -4px rgba(251, 191, 36, 0.5);
+}
+
+/* --- Route transition ---------------------------------------------------- */
+
+@keyframes route-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.route-enter {
+  animation: route-enter 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Small screens carry the same decoration but not its per-frame cost: the
+   glows stay put, their animation does not. */
+@media (max-width: 640px) {
+  .solar-flare,
+  .solar-beam {
+    animation: none !important;
+    will-change: auto;
+  }
+
+  .instrument-sweep {
+    display: none;
+  }
+}
+
+/* --- Accessibility ------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .instrument-sweep,
+  .btn-charging::after,
+  .route-enter {
+    animation: none !important;
+  }
+
+  .pv-shell:hover .pv-glare {
+    opacity: 0;
+  }
 }
