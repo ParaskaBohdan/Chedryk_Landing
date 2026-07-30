@@ -18,9 +18,9 @@ const ink = (isDark) => ({
   panelBack: isDark ? '#0b1a2e' : '#cbd5e1'
 });
 
-function Scene({ label, children }) {
+function Scene({ label, shiftY = -40, height = 190, children }) {
   return (
-    <svg viewBox="0 0 320 150" className="w-full h-auto" role="img" aria-label={label}>
+    <svg viewBox={`0 ${shiftY} 320 ${height}`} className="w-full h-auto" role="img" aria-label={label}>
       {children}
     </svg>
   );
@@ -66,11 +66,11 @@ export function PanelModuleScene({ theme, cols = 6, rows = 3, fullBlack = false,
   }
 
   return (
-    <Scene label={`Фотомодуль: ${cols}×${rows} комірок${bifacial ? ', двосторонній' : ''}${fullBlack ? ', Full Black' : ''}`}>
+    <Scene label={`Фотомодуль: ${cols}×${rows} комірок${bifacial ? ', двосторонній' : ''}${fullBlack ? ', Full Black' : ''}`} shiftY={-40} height={190}>
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect x="0" y="-40" width="320" height="190" rx="18" fill={`url(#${uid}-sky)`} />
 
-      <Sun uid={uid} cx={288} cy={22} r={9} />
+      <Sun uid={uid} cx={288} cy={-15} r={9} />
 
       {/* Depth plate behind the frame */}
       <rect x="54" y="30" width="220" height="94" rx="5" fill={c.panelBack} opacity="0.85" />
@@ -152,9 +152,9 @@ export function BatteryStackScene({ theme, style = 'rack', modules = 4 }) {
 
   if (style === 'portable') {
     return (
-      <Scene label="Портативна система накопичення Plug & Play з мобільним застосунком">
+      <Scene label="Портативна система накопичення Plug & Play з мобільним застосунком" shiftY={-20} height={170}>
         <SceneDefs uid={uid} isDark={isDark} />
-        <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+        <rect x="0" y="-20" width="320" height="170" rx="18" fill={`url(#${uid}-sky)`} />
 
         {/* Carry handle */}
         <path d="M104 34 C104 20 168 20 168 34" fill="none" stroke={`url(#${uid}-metal)`} strokeWidth="6" strokeLinecap="round" />
@@ -201,9 +201,9 @@ export function BatteryStackScene({ theme, style = 'rack', modules = 4 }) {
     const gap = 4;
     const topY = 30;
     return (
-      <Scene label="Стекова акумуляторна вежа з класом захисту IP65">
+      <Scene label="Стекова акумуляторна вежа з класом захисту IP65" shiftY={-20} height={170}>
         <SceneDefs uid={uid} isDark={isDark} />
-        <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+        <rect x="0" y="-20" width="320" height="170" rx="18" fill={`url(#${uid}-sky)`} />
 
         {/* Base */}
         <rect x="108" y={topY + modules * (h + gap) + 4} width="104" height="14" rx="4" fill={`url(#${uid}-metal)`} />
@@ -247,9 +247,9 @@ export function BatteryStackScene({ theme, style = 'rack', modules = 4 }) {
   const gap = 6;
   const topY = 34;
   return (
-    <Scene label={`Акумуляторна стійка 19 дюймів на ${modules} модулів`}>
+    <Scene label={`Акумуляторна стійка 19 дюймів на ${modules} модулів`} shiftY={-20} height={170}>
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect x="0" y="-20" width="320" height="170" rx="18" fill={`url(#${uid}-sky)`} />
 
       {/* Cabinet */}
       <rect
@@ -306,9 +306,9 @@ export function InverterUnitScene({ theme, phases = 1, mppt = 2, commercial = fa
   const phaseColors = ['#b45309', '#2563eb', '#84cc16'];
 
   return (
-    <Scene label={`Гібридний інвертор: ${mppt} MPPT входів, ${phases}-фазний вихід`}>
+    <Scene label={`Гібридний інвертор: ${mppt} MPPT входів, ${phases}-фазний вихід`} shiftY={-20} height={170}>
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect x="0" y="-20" width="320" height="170" rx="18" fill={`url(#${uid}-sky)`} />
 
       {/* Wall bracket */}
       <rect x={bx - 8} y={by + 8} width="6" height={bh - 16} rx="3" fill={`url(#${uid}-metal)`} opacity="0.8" />
@@ -389,9 +389,9 @@ export function MountingHardwareScene({ theme }) {
   const c = ink(isDark);
 
   return (
-    <Scene label="Кріплення: шпилька М10 з ЕПДМ-ущільнювачем, кронштейн та затискач">
+    <Scene label="Кріплення: шпилька М10 з ЕПДМ-ущільнювачем, кронштейн та затискач" shiftY={-40} height={190}>
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect x="0" y="-40" width="320" height="190" rx="18" fill={`url(#${uid}-sky)`} />
 
       {/* Profiled roof sheet */}
       <path
@@ -449,9 +449,9 @@ export function SolarCableScene({ theme }) {
   }
 
   return (
-    <Scene label="Сонячний кабель H1Z2Z2-K: лужена мідь та подвійна ізоляція">
+    <Scene label="Двожильний сонячний кабель у розрізі з обтиснутим конектором MC4" shiftY={-40} height={190}>
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect x="0" y="-40" width="320" height="190" rx="18" fill={`url(#${uid}-sky)`} />
 
       {/* Cable run */}
       <path d="M132 74 C176 74 190 40 232 40" fill="none" stroke={isDark ? '#0f172a' : '#334155'} strokeWidth="14" strokeLinecap="round" />
@@ -496,9 +496,9 @@ export function ProtectionBoxScene({ theme }) {
   const deviceFill = isDark ? '#1b2c47' : '#f8fafc';
 
   return (
-    <Scene label="Щит захисту IP65: ПЗІП, запобіжники 1000 В DC та автомати">
+    <Scene label="Типове металеве кріплення для похилого даху із затискачами" shiftY={-40} height={190}>
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect x="0" y="-40" width="320" height="190" rx="18" fill={`url(#${uid}-sky)`} />
 
       {/* Open door */}
       <path d="M60 26 L28 40 L28 122 L60 132 Z" fill={isDark ? '#16243c' : '#e2e8f0'} stroke={`url(#${uid}-metal)`} strokeWidth="2" strokeLinejoin="round" />

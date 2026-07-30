@@ -39,9 +39,9 @@ export function BiDirectionalMeterScene({ theme }) {
   const c = ink(isDark);
 
   return (
-    <svg viewBox="0 0 320 150" className="w-full h-auto" role="img" aria-label="Двонаправлений облік: віддача надлишків у мережу та споживання з мережі">
+    <svg viewBox="0 -40 320 190" className="w-full h-auto" role="img" aria-label="Двонаправлений облік: віддача надлишків у мережу та споживання з мережі">
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect x="0" y="-40" width="320" height="190" rx="18" fill={`url(#${uid}-sky)`} />
 
       <Sun uid={uid} cx={40} cy={24} r={10} />
 
@@ -133,9 +133,9 @@ export function EnergySplitScene({ theme, exportShare = 0.65 }) {
   const end = start + Math.PI * 2;
 
   return (
-    <svg viewBox="0 0 320 150" className="w-full h-auto" role="img" aria-label={`Розподіл генерації: ${Math.round(exportShare * 100)}% на продаж, решта на власне споживання`}>
+    <svg viewBox="0 -40 320 190" className="w-full h-auto" role="img" aria-label={`Розподіл генерації: ${Math.round(exportShare * 100)}% на продаж, решта на власне споживання`}>
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect x="0" y="-40" width="320" height="190" rx="18" fill={`url(#${uid}-sky)`} />
 
       <defs>
         <linearGradient id={`${uid}-exp`} x1="0" y1="0" x2="1" y2="1">
@@ -200,9 +200,9 @@ export function SettlementScene({ theme }) {
   });
 
   return (
-    <svg viewBox="0 0 320 150" className="w-full h-auto" role="img" aria-label="Поквартальний обсяг віддачі та накопичений розрахунок">
+    <svg viewBox="0 -40 320 190" className="w-full h-auto" role="img" aria-label="Поквартальний обсяг віддачі та накопичений розрахунок">
       <SceneDefs uid={uid} isDark={isDark} />
-      <rect width="320" height="150" rx="18" fill={`url(#${uid}-sky)`} />
+      <rect x="0" y="-40" width="320" height="190" rx="18" fill={`url(#${uid}-sky)`} />
 
       <defs>
         <linearGradient id={`${uid}-q`} x1="0" y1="0" x2="0" y2="1">

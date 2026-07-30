@@ -12,6 +12,7 @@ import SolarPanelCard from '../components/SolarPanelCard';
 import SystemFlowDiagram from '../components/SystemFlowDiagram';
 import { LiveBadge } from '../components/SolarTech';
 import { CountUp, SolarSlider, StepRail } from '../components/SolarControls';
+import CalculatorPage from './CalculatorPage';
 
 const iconMap = {
   Sun: Sun,
@@ -265,18 +266,6 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
                     step={25}
                     value={monthlyConsumption}
                     onChange={setMonthlyConsumption}
-                  />
-
-                  <SolarSlider
-                    id="sd-coverage"
-                    theme={theme}
-                    label="Цільова компенсація мережі"
-                    display={`${coveragePercent}%`}
-                    min={50}
-                    max={150}
-                    step={5}
-                    value={coveragePercent}
-                    onChange={setCoveragePercent}
                   />
 
                   <SolarSlider
@@ -671,18 +660,6 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
             onChange={setMonthlyConsumption}
           />
 
-          <SolarSlider
-            id="p2-coverage"
-            theme={theme}
-            label="Цільова компенсація мережі"
-            display={`${coveragePercent}%`}
-            min={50}
-            max={150}
-            step={5}
-            value={coveragePercent}
-            onChange={setCoveragePercent}
-          />
-
           <div className="pt-2 space-y-2">
             <label className="block text-xs font-bold uppercase tracking-wider text-amber-500">
               Оберіть модель фотомодулів:
@@ -1016,14 +993,25 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
               </div>
             </div>
 
-            {/* Interactive Solar Slider Widget */}
-            <SolarSliderCalculator 
-              isDark={isDark} 
-              onOpenConsultation={onOpenConsultation} 
-              onOpenConfiguration={onOpenConfiguration} 
-              theme={theme} 
-              serviceId={service.id} 
-            />
+            {/* Interactive Solar Slider Widget / Calculator */}
+            {service.id === 'roof-installation' || service.id === 'ses-building' ? (
+              <CalculatorPage
+                theme={theme}
+                onOpenConsultation={onOpenConsultation}
+                onOpenConfiguration={onOpenConfiguration}
+                isEmbed={true}
+                isGroundOnly={service.id === 'ses-building'}
+                isRoofOnly={service.id === 'roof-installation'}
+              />
+            ) : (
+              <SolarSliderCalculator 
+                isDark={isDark} 
+                onOpenConsultation={onOpenConsultation} 
+                onOpenConfiguration={onOpenConfiguration} 
+                theme={theme} 
+                serviceId={service.id} 
+              />
+            )}
 
             {/* Technical points below slider */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
