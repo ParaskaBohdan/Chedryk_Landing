@@ -33,8 +33,8 @@ export default function SystemFlowDiagram({
   ];
 
   const width = 560;
-  const height = 92;
-  const cy = 48;
+  const height = 72;
+  const cy = 40;
   const n = nodes.length;
   const xs = nodes.map((_, i) => ((i + 0.5) / n) * width);
 

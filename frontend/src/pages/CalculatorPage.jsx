@@ -10,14 +10,27 @@ import { CountUp, SolarSlider } from '../components/SolarControls';
 export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfiguration, isEmbed = false, isGroundOnly = false, isRoofOnly = false }) {
   const isDark = theme === 'dark';
 
+  const getOptionClass = (isActive) => {
+    if (isActive) {
+      return isDark
+        ? 'btn-orange-bright shadow-md text-white'
+        : 'border-orange-400 bg-transparent text-slate-700';
+    }
+    return isDark
+      ? 'border-slate-700 bg-slate-900 text-slate-300'
+      : 'border-slate-200 bg-slate-50 text-slate-700';
+  };
+
   // Configurator State - "Доступна площа під панелі"
   const [roofType, setRoofType] = useState(isGroundOnly ? 'ground' : 'pitched'); // 'pitched' | 'flat' | 'ground'
   const [roofMaterial, setRoofMaterial] = useState('metal_tile'); // 'metal_tile' | 'tile' | 'corrugated' | 'seam' | 'flat_concrete'
   const [roofAreaSqM, setRoofAreaSqM] = useState(80); // m2
-  const [targetAnnualGenKwh, setTargetAnnualGenKwh] = useState(10000); // kWh
+  const [targetSystemPowerKw, setTargetSystemPowerKw] = useState(15); // kW
   const [panelBrand, setPanelBrand] = useState('jinko'); // 'risen' | 'jinko' | 'longi' | 'jasolar'
   const [hasBattery, setHasBattery] = useState(true);
   const [batteryCapacityKwh, setBatteryCapacityKwh] = useState(10); // 5 | 10 | 15 | 20
+  const [loadWatts, setLoadWatts] = useState(625);
+  const [backupHours, setBackupHours] = useState(16);
 
   useEffect(() => {
     if (!isEmbed) {
@@ -39,8 +52,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
   // Calculations
   const maxPossiblePanels = Math.floor(roofAreaSqM / 2.2);
   const selectedPanelWattage = panelWattages[panelBrand];
-  const requiredKw = targetAnnualGenKwh / 1180;
-  const requiredPanelCount = Math.ceil((requiredKw * 1000) / selectedPanelWattage);
+  const requiredPanelCount = Math.ceil((targetSystemPowerKw * 1000) / selectedPanelWattage);
   const requiredAreaSqM = parseFloat((requiredPanelCount * 2.2).toFixed(1));
   const activePanelCount = requiredPanelCount;
 
@@ -59,7 +71,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
 
   const getConfigSummaryText = () => {
     const placementText = roofType === 'ground' ? 'Наземна СЕС' : roofType === 'flat' ? 'Плоский дах' : 'Скатий дах';
-    return `1) Розміщення: ${placementText}, доступна площа: ${roofAreaSqM} м²\n2) Бажана річна генерація: ${targetAnnualGenKwh} кВт·год (Необхідно панелей: ${requiredPanelCount} шт. ${panelBrand.toUpperCase()} (${totalKw} кВт), площа: ${requiredAreaSqM} м²)\n3) Інвертор Deye ${inverterPowerKw} кВт ${hasBattery ? `+ АКБ ${batteryCapacityKwh} кВт·год` : ''}\n4) Кошторис: ~$${totalEstimateUsd.toLocaleString()}`;
+    return `1) Розміщення: ${placementText}, доступна площа: ${roofAreaSqM} м²\n2) Бажана потужність СЕС: ${targetSystemPowerKw} кВт (Необхідно панелей: ${requiredPanelCount} шт. ${panelBrand.toUpperCase()} (${totalKw} кВт), площа: ${requiredAreaSqM} м²)\n3) Інвертор Deye ${inverterPowerKw} кВт ${hasBattery ? `+ АКБ ${batteryCapacityKwh} кВт·год (навантаження: ${loadWatts} Вт, час: ${backupHours} год)` : ''}\n4) Кошторис: ~$${totalEstimateUsd.toLocaleString()}`;
   };
 
   return (
@@ -85,6 +97,26 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
           </div>
         )}
 
+        {/* Real-time system diagram placed as a top banner */}
+        <SolarPanelCard
+          theme={theme}
+          glow
+          className="p-4 sm:p-5 mb-8 shadow-xl"
+          contentClassName="space-y-3"
+        >
+          <p className={`text-xs font-bold uppercase tracking-wider mb-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+            Схема СЕС в реальному часі
+          </p>
+          <SystemFlowDiagram
+            theme={theme}
+            panelCount={activePanelCount}
+            totalKw={totalKw}
+            inverterPowerKw={inverterPowerKw}
+            hasBattery={hasBattery}
+            batteryCapacityKwh={batteryCapacityKwh}
+          />
+        </SolarPanelCard>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
           
           {/* LEFT COLUMN: INPUT CONFIGURATOR */}
@@ -107,11 +139,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                         setRoofType('pitched');
                         setRoofMaterial('metal_tile');
                       }}
-                      className={`p-3 rounded-2xl border text-left transition-all cursor-pointer ${
-                        roofType === 'pitched'
-                          ? 'btn-orange-bright shadow-md text-white'
-                          : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
-                      }`}
+                      className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${getOptionClass(roofType === 'pitched')}`}
                     >
                       <p className="font-bold text-xs">Скатий дах</p>
                       <p className="text-[10px] opacity-75 mt-0.5">Нахил ~30°</p>
@@ -123,11 +151,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                         setRoofType('flat');
                         setRoofMaterial('flat_concrete');
                       }}
-                      className={`p-3 rounded-2xl border text-left transition-all cursor-pointer ${
-                        roofType === 'flat'
-                          ? 'btn-orange-bright shadow-md text-white'
-                          : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
-                      }`}
+                      className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${getOptionClass(roofType === 'flat')}`}
                     >
                       <p className="font-bold text-xs">Плоский дах</p>
                       <p className="text-[10px] opacity-75 mt-0.5">Ферми 15°</p>
@@ -140,11 +164,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                           setRoofType('ground');
                           setRoofMaterial('screw');
                         }}
-                        className={`p-3 rounded-2xl border text-left transition-all cursor-pointer ${
-                          roofType === 'ground'
-                            ? 'btn-orange-bright shadow-md text-white'
-                            : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
-                        }`}
+                        className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${getOptionClass(roofType === 'ground')}`}
                       >
                         <p className="font-bold text-xs">Наземна СЕС</p>
                         <p className="text-[10px] opacity-75 mt-0.5">На ґрунті</p>
@@ -191,18 +211,18 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                 />
               </div>
 
-              {/* 4. Desired Annual Generation Slider */}
+              {/* 4. Desired System Power Slider */}
               <div className={`pt-4 border-t ${isDark ? 'border-slate-700/60' : 'border-slate-200'}`}>
                 <SolarSlider
-                  id="target-annual-gen"
+                  id="target-system-power"
                   theme={theme}
-                  label="Бажана річна генерація"
-                  display={`${targetAnnualGenKwh.toLocaleString('uk-UA')} кВт·год`}
-                  min={3000}
-                  max={50000}
-                  step={1000}
-                  value={targetAnnualGenKwh}
-                  onChange={setTargetAnnualGenKwh}
+                  label="Бажана потужність станції"
+                  display={`${targetSystemPowerKw} кВт`}
+                  min={5}
+                  max={50}
+                  step={1}
+                  value={targetSystemPowerKw}
+                  onChange={setTargetSystemPowerKw}
                   hint={`Необхідно орієнтовно ${requiredPanelCount} панелей потужністю ${selectedPanelWattage} Вт.`}
                 />
               </div>
@@ -223,11 +243,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                       key={b.id}
                       type="button"
                       onClick={() => setPanelBrand(b.id)}
-                      className={`p-3 rounded-2xl border text-left transition-all cursor-pointer ${
-                        panelBrand === b.id
-                          ? 'btn-orange-bright shadow-md text-white'
-                          : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
-                      }`}
+                      className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${getOptionClass(panelBrand === b.id)}`}
                     >
                       <p className="font-bold text-xs sm:text-sm">{b.name}</p>
                       <p className="text-xs text-amber-500 font-extrabold mt-0.5">{b.watt}</p>
@@ -242,40 +258,67 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
                   Акумуляторний блок LiFePO4 резервного живлення:
                 </label>
-                <div className="grid grid-cols-5 gap-1.5">
+                <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
                     onClick={() => setHasBattery(false)}
-                    className={`p-2 rounded-xl border text-center transition-all cursor-pointer ${
-                      !hasBattery
-                        ? 'btn-orange-bright shadow-md text-white'
-                        : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
-                    }`}
+                    className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${getOptionClass(!hasBattery)}`}
                   >
-                    <p className="font-bold text-[10px] sm:text-xs">Без АКБ</p>
-                    <p className="text-[9px] opacity-75">Мережева</p>
+                    <p className="font-bold text-xs sm:text-sm">Без АКБ</p>
+                    <p className="text-[10px] opacity-75 mt-0.5">Мережева СЕС</p>
                   </button>
 
-                  {[5, 10, 15, 20].map((cap) => (
-                    <button
-                      key={cap}
-                      type="button"
-                      onClick={() => {
-                        setHasBattery(true);
-                        setBatteryCapacityKwh(cap);
-                      }}
-                      className={`p-2 rounded-xl border text-center transition-all cursor-pointer ${
-                        hasBattery && batteryCapacityKwh === cap
-                          ? 'btn-orange-bright shadow-md text-white'
-                          : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
-                      }`}
-                    >
-                      <p className="font-bold text-[10px] sm:text-xs">{cap} кВт·г</p>
-                      <p className="text-[9px] opacity-75">~{cap * 2} год</p>
-                    </button>
-                  ))}
+                  <button
+                    type="button"
+                    onClick={() => setHasBattery(true)}
+                    className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${getOptionClass(hasBattery)}`}
+                  >
+                    <p className="font-bold text-xs sm:text-sm">З АКБ</p>
+                    <p className="text-[10px] opacity-75 mt-0.5">Гібридна СЕС</p>
+                  </button>
                 </div>
               </div>
+
+              {/* 7. Battery Calculator Sliders */}
+              {hasBattery && (
+                <div className="space-y-4 pt-4 border-t border-slate-700/60">
+                  <SolarSlider
+                    id="load-watts"
+                    theme={theme}
+                    label="Середнє навантаження будинку"
+                    display={`${loadWatts} Вт`}
+                    min={200}
+                    max={4000}
+                    step={50}
+                    value={loadWatts}
+                    onChange={(val) => {
+                      setLoadWatts(val);
+                      const calculatedKwh = (val * backupHours) / 1000;
+                      const stepKwh = Math.max(5, Math.ceil(calculatedKwh / 5) * 5);
+                      setBatteryCapacityKwh(stepKwh);
+                    }}
+                    hint="Потужність приладів, які працюватимуть одночасно під час відключення."
+                  />
+
+                  <SolarSlider
+                    id="backup-hours"
+                    theme={theme}
+                    label="Необхідний час автономності"
+                    display={`${backupHours} ${backupHours === 4 ? 'години' : backupHours % 10 >= 2 && backupHours % 10 <= 4 && (backupHours < 10 || backupHours > 20) ? 'години' : 'годин'}`}
+                    min={4}
+                    max={72}
+                    step={2}
+                    value={backupHours}
+                    onChange={(val) => {
+                      setBackupHours(val);
+                      const calculatedKwh = (loadWatts * val) / 1000;
+                      const stepKwh = Math.max(5, Math.ceil(calculatedKwh / 5) * 5);
+                      setBatteryCapacityKwh(stepKwh);
+                    }}
+                    hint={`Розрахункова ємність резерву: ${((loadWatts * backupHours) / 1000).toFixed(1)} кВт·год.`}
+                  />
+                </div>
+              )}
 
               <div className={`pt-4 border-t ${isDark ? 'border-slate-700/60' : 'border-slate-200'} flex justify-end`}>
                 <button
@@ -421,6 +464,22 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                       </span>
                       <span className="font-bold text-emerald-500">{annualGenKwh.toLocaleString('uk-UA')} кВт·год</span>
                     </div>
+                    {hasBattery && (
+                      <>
+                        <div className="flex justify-between py-2.5">
+                          <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
+                            4.6 Середнє навантаження будинку
+                          </span>
+                          <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>{loadWatts} Вт</span>
+                        </div>
+                        <div className="flex justify-between py-2.5">
+                          <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
+                            4.7 Час автономності резерву
+                          </span>
+                          <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>{backupHours} год</span>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -441,20 +500,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
 
               </div>
 
-              {/* Single-line diagram of exactly what is configured */}
-              <div className={`pt-4 border-t ${isDark ? 'border-slate-700/60' : 'border-slate-200'}`}>
-                <p className={`text-[10px] font-bold telemetry-label mb-2 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                  Схема станції в реальному часі
-                </p>
-                <SystemFlowDiagram
-                  theme={theme}
-                  panelCount={activePanelCount}
-                  totalKw={totalKw}
-                  inverterPowerKw={inverterPowerKw}
-                  hasBattery={hasBattery}
-                  batteryCapacityKwh={batteryCapacityKwh}
-                />
-              </div>
+
             </SolarPanelCard>
           </div>
 

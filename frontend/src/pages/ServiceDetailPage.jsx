@@ -709,72 +709,7 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
   );
 }
 
-function BatterySliderCalculator({ isDark }) {
-  const [loadWatts, setLoadWatts] = useState(750);
-  const [backupHours, setBackupHours] = useState(16);
-  const totalKwhRequired = ((loadWatts * backupHours) / 1000).toFixed(1);
-  const batteryAh48V = Math.ceil((loadWatts * backupHours) / 48);
-  const chargeTimeHours = (totalKwhRequired / (5 * 0.85)).toFixed(1);
-  const pctLoad = ((loadWatts - 200) / (4000 - 200)) * 100;
-  const pctHours = ((backupHours - 4) / (72 - 4)) * 100;
 
-  return (
-    <div className={`p-6 sm:p-8 rounded-3xl border space-y-6 ${
-      isDark ? 'bg-slate-800/80 border-slate-700/80 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
-    }`}>
-      <div className="flex items-center justify-between flex-wrap gap-2">
-        <h3 className="font-extrabold text-lg sm:text-xl text-emerald-500">
-          Інтерактивний Калькулятор АКБ Резерву
-        </h3>
-        <span className="text-xs font-semibold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-          LiFePO4 Розрахунок
-        </span>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        <div className="space-y-6">
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs sm:text-sm font-bold">
-              <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>Середнє навантаження будинку:</span>
-              <span className="text-emerald-500 font-extrabold text-base">{loadWatts} Вт</span>
-            </div>
-            <input type="range" min="200" max="4000" step="50" value={loadWatts} onChange={(e) => setLoadWatts(Number(e.target.value))} style={{ '--fill': `${pctLoad}%` }} className="solar-range" />
-          </div>
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs sm:text-sm font-bold">
-              <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>Необхідний час автономності:</span>
-              <span className="text-emerald-500 font-extrabold text-base">{backupHours} годин</span>
-            </div>
-            <input type="range" min="4" max="72" step="2" value={backupHours} onChange={(e) => setBackupHours(Number(e.target.value))} style={{ '--fill': `${pctHours}%` }} className="solar-range" />
-          </div>
-        </div>
-        <div className={`p-6 rounded-2xl border grid grid-cols-2 gap-4 ${
-          isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-slate-50 border-slate-200'
-        }`}>
-          <div className="space-y-1">
-            <span className="text-[11px] opacity-70 block font-medium">Необхідна ємність АКБ</span>
-            <span className="text-xl sm:text-2xl font-black text-emerald-400">{totalKwhRequired} кВт·год</span>
-          </div>
-          <div className="space-y-1">
-            <span className="text-[11px] opacity-70 block font-medium">Конфігурація 48V</span>
-            <span className="text-xl sm:text-2xl font-black text-amber-400">~{batteryAh48V} Ah</span>
-          </div>
-          <div className="space-y-1">
-            <span className="text-[11px] opacity-70 block font-medium">Час повної зарядки</span>
-            <span className="text-base sm:text-lg font-bold">~{chargeTimeHours} год (0.5C)</span>
-          </div>
-          <div className="space-y-1">
-            <span className="text-[11px] opacity-70 block font-medium">Гарантований ресурс</span>
-            <span className="text-base sm:text-lg font-bold text-emerald-400">6000+ циклів</span>
-          </div>
-          <div className="col-span-2 pt-2 border-t border-slate-700/40 flex items-center justify-between">
-            <span className="text-xs font-semibold">Рекомендована батарея:</span>
-            <span className="text-xs font-extrabold text-emerald-400">LiFePO4 Smart BMS 48V</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenConfiguration }) {
   const { serviceId } = useParams();
@@ -1048,8 +983,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
               </div>
             </div>
 
-            {/* Interactive Battery Slider Widget */}
-            <BatterySliderCalculator isDark={isDark} />
+
 
             {/* Technical points below slider */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">

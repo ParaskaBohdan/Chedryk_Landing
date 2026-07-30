@@ -74,13 +74,7 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
                     </span>
                   </div>
 
-                  {/* Field telemetry over the photograph */}
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2">
-                    <LiveBadge theme="dark" label="Field Verified" />
-                    <span className="glass-deep rounded-lg px-2 py-1 text-[9px] font-black telemetry-label text-amber-300">
-                      Закарпаття
-                    </span>
-                  </div>
+
                 </div>
 
                 {/* Card Content Body */}
