@@ -357,7 +357,7 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
                 rows={4}
                 value={configurationSummary || 'Параметри СЕС не вибрано'}
                 className={`solar-field w-full border rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm font-medium leading-relaxed resize-none select-text transition-colors cursor-default ${
-                  isDark ? 'border-amber-500/30 bg-amber-500/10 text-amber-300' : 'border-amber-300 bg-amber-50/70 text-slate-800'
+                  isDark ? 'border-amber-400/60 bg-amber-500/10 text-amber-400' : 'border-amber-300 bg-amber-50/70 text-slate-800'
                 }`}
               />
             </div>

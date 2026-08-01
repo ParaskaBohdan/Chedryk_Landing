@@ -121,7 +121,7 @@ export default function CustomSelect({
                 className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium cursor-pointer transition-all duration-150 ${
                   isSelected
                     ? isDark 
-                      ? 'bg-amber-500/20 text-amber-300 font-bold border border-amber-500/40 shadow-xs' 
+                      ? 'bg-amber-500/10 text-amber-400 font-bold border border-amber-400/60 shadow-xs' 
                       : 'bg-amber-50 text-slate-700 font-bold border border-orange-400 shadow-xs'
                     : isDark 
                       ? 'text-slate-200 hover:bg-slate-800 hover:translate-x-0.5' 

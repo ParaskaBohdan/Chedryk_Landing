@@ -49,7 +49,9 @@ export default function ContactsPage({ theme }) {
               isDark ? 'border-slate-700 bg-slate-800/90' : 'border-amber-200 bg-white shadow-md'
             }`}>
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-400/40 text-amber-500 flex items-center justify-center">
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border-2 ${
+                  isDark ? 'bg-slate-950 border-[#fbbf24] text-[#fbbf24]' : 'bg-white border-orange-500 text-orange-500 shadow-sm'
+                }`}>
                   <Sun className="w-6 h-6" />
                 </div>
                 <div>
@@ -64,8 +66,8 @@ export default function ContactsPage({ theme }) {
                 
                 {/* Phone */}
                 <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 text-amber-500 ${
-                    isDark ? 'border-slate-700 bg-slate-900' : 'border-amber-200 bg-amber-50'
+                  <div className={`w-10 h-10 rounded-xl border-2 flex items-center justify-center flex-shrink-0 text-amber-500 ${
+                    isDark ? 'border-[#fbbf24]/50 bg-slate-950' : 'border-orange-500 bg-white shadow-sm'
                   }`}>
                     <Phone className="w-5 h-5" />
                   </div>
@@ -81,8 +83,8 @@ export default function ContactsPage({ theme }) {
 
                 {/* TikTok & Socials */}
                 <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 text-amber-500 ${
-                    isDark ? 'border-slate-700 bg-slate-900' : 'border-amber-200 bg-amber-50'
+                  <div className={`w-10 h-10 rounded-xl border-2 flex items-center justify-center flex-shrink-0 text-amber-500 ${
+                    isDark ? 'border-[#fbbf24]/50 bg-slate-950' : 'border-orange-500 bg-white shadow-sm'
                   }`}>
                     <Video className="w-5 h-5" />
                   </div>
@@ -103,8 +105,8 @@ export default function ContactsPage({ theme }) {
 
                 {/* Messengers */}
                 <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 text-sky-500 ${
-                    isDark ? 'border-slate-700 bg-slate-900' : 'border-amber-200 bg-amber-50'
+                  <div className={`w-10 h-10 rounded-xl border-2 flex items-center justify-center flex-shrink-0 text-sky-500 ${
+                    isDark ? 'border-sky-500/50 bg-slate-950' : 'border-sky-500 bg-white shadow-sm'
                   }`}>
                     <MessageCircle className="w-5 h-5" />
                   </div>
@@ -126,8 +128,8 @@ export default function ContactsPage({ theme }) {
 
                 {/* Coverage */}
                 <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 text-emerald-500 ${
-                    isDark ? 'border-slate-700 bg-slate-900' : 'border-amber-200 bg-amber-50'
+                  <div className={`w-10 h-10 rounded-xl border-2 flex items-center justify-center flex-shrink-0 text-emerald-500 ${
+                    isDark ? 'border-emerald-500/50 bg-slate-950' : 'border-emerald-500 bg-white shadow-sm'
                   }`}>
                     <MapPin className="w-5 h-5" />
                   </div>
@@ -140,8 +142,8 @@ export default function ContactsPage({ theme }) {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 text-purple-500 ${
-                    isDark ? 'border-slate-700 bg-slate-900' : 'border-amber-200 bg-amber-50'
+                  <div className={`w-10 h-10 rounded-xl border-2 flex items-center justify-center flex-shrink-0 text-purple-500 ${
+                    isDark ? 'border-purple-500/50 bg-slate-950' : 'border-purple-500 bg-white shadow-sm'
                   }`}>
                     <Clock className="w-5 h-5" />
                   </div>
@@ -173,7 +175,9 @@ export default function ContactsPage({ theme }) {
                         {city}
                       </span>
                     ))}
-                    <span className="px-2.5 py-0.5 border border-amber-400/40 bg-amber-500/15 text-amber-500 text-xs font-bold rounded-lg">
+                    <span className={`px-2.5 py-0.5 border text-xs font-bold rounded-lg ${
+                      isDark ? 'border-amber-400/60 bg-amber-500/10 text-amber-400' : 'border-orange-400/60 bg-amber-50/60 text-slate-800'
+                    }`}>
                       + Усі села та ОТГ
                     </span>
                   </div>
@@ -189,7 +193,9 @@ export default function ContactsPage({ theme }) {
                         {city}
                       </span>
                     ))}
-                    <span className="px-2.5 py-0.5 border border-amber-400/40 bg-amber-500/15 text-amber-500 text-xs font-bold rounded-lg">
+                    <span className={`px-2.5 py-0.5 border text-xs font-bold rounded-lg ${
+                      isDark ? 'border-amber-400/60 bg-amber-500/10 text-amber-400' : 'border-orange-400/60 bg-amber-50/60 text-slate-800'
+                    }`}>
                       + Усі села та ОТГ
                     </span>
                   </div>

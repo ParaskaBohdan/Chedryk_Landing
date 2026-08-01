@@ -45,20 +45,19 @@
   box-shadow: 0 6px 20px -4px rgba(15, 23, 42, 0.06);
 }
 
-/* Elegant Dual-State Tech Outline / Radiant Amber Button */
 .light .btn-orange-bright {
-  background-color: transparent;
-  border: 2px solid #f97316;
-  color: #ea580c;
+  background-color: #fffbeb; /* bg-amber-50 */
+  border: 2px solid #fb923c; /* border-orange-400 */
+  color: #334155; /* text-slate-700 */
   font-weight: 700;
   box-shadow: none;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dark .btn-orange-bright {
-  background-color: rgba(245, 158, 11, 0.15);
-  border: 2px solid #fbbf24;
-  color: #fde68a;
+  background-color: rgba(245, 158, 11, 0.10);
+  border: 2px solid rgba(251, 191, 36, 0.6);
+  color: #fbbf24;
   font-weight: 700;
   box-shadow: none;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -91,19 +90,18 @@
   color: #0f172a !important;
 }
 
-/* Option Buttons Hover Behavior in Dark Theme */
 .dark .btn-orange-selected-no-hover {
-  background-color: rgba(245, 158, 11, 0.15) !important;
-  border: 2px solid #fbbf24 !important;
-  color: #fde68a !important;
+  background-color: rgba(245, 158, 11, 0.10) !important;
+  border: 2px solid rgba(251, 191, 36, 0.6) !important;
+  color: #fbbf24 !important;
   font-weight: 700;
   box-shadow: none !important;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 .dark .btn-orange-selected-no-hover:hover {
-  background-color: rgba(245, 158, 11, 0.15) !important;
-  border-color: #fbbf24 !important;
-  color: #fde68a !important;
+  background-color: rgba(245, 158, 11, 0.10) !important;
+  border-color: rgba(251, 191, 36, 0.6) !important;
+  color: #fbbf24 !important;
 }
 
 .dark .btn-inactive-option {

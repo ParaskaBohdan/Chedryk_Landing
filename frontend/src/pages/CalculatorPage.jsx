@@ -84,7 +84,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
         {!isEmbed && (
           <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
             <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full border ${
-              isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
+              isDark ? 'bg-amber-500/10 border-amber-400/60 text-amber-400' : 'bg-amber-50 border-orange-400 text-slate-800'
             }`}>
               <Calculator className="w-4 h-4 text-amber-500" />
               <span>Інтерактивний Конфігуратор СЕС</span>
@@ -500,10 +500,10 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
 
                 {/* Final Total Cost Row */}
                 <div className="pt-2">
-                  <div className={`flex justify-between items-center px-4 py-4 rounded-xl font-black text-sm sm:text-base uppercase tracking-widest shadow-lg ${
+                  <div className={`flex justify-between items-center px-4 py-4 rounded-xl font-black text-sm sm:text-base uppercase tracking-widest border-2 ${
                     isDark
-                      ? 'bg-[#fbbf24] text-[#0f172a]'
-                      : 'bg-orange-500 text-white'
+                      ? 'bg-amber-500/10 border-amber-400 text-amber-400 shadow-none'
+                      : 'bg-orange-500 border-orange-500 text-white shadow-lg'
                   }`}>
                     <span>Загальна сума СЕС (під ключ)</span>
                     <span>~${totalEstimateUsd.toLocaleString()}</span>
