@@ -28,7 +28,7 @@ export default function ContactsPage({ theme }) {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
           <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full border ${
-            isDark ? 'border-amber-400/40 bg-amber-500/15 text-amber-300' : 'border-amber-300 bg-amber-100 text-amber-800'
+            isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
           }`}>
             <MessageCircle className="w-4 h-4 text-amber-500" />
             <span>Прямий Зв'язок & Соцмережі</span>

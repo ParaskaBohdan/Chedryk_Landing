@@ -348,8 +348,8 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
         
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-black rounded-full border ${
-            isDark ? 'border-amber-400/40 bg-amber-500/15 text-amber-300' : 'border-amber-500 bg-amber-100 text-black'
+          <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full border ${
+            isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
           }`}>
             <Cpu className="w-4 h-4 text-amber-500" />
             <span>Офіційні Комплектуючі Nova Energy</span>
@@ -368,11 +368,11 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
           <button
             type="button"
             onClick={() => setActiveTab('panels')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-extrabold transition-all cursor-pointer w-full md:w-auto justify-center ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-bold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'panels'
                 ? isDark
-                  ? 'solar-halo bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
-                  : 'solar-halo bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
+                  ? 'bg-amber-500/15 border-2 border-[#fbbf24] text-[#fde68a]'
+                  : 'bg-amber-50 border-2 border-orange-400 text-slate-700'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
                   : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
@@ -385,11 +385,11 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
           <button
             type="button"
             onClick={() => setActiveTab('batteries')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-extrabold transition-all cursor-pointer w-full md:w-auto justify-center ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-bold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'batteries'
                 ? isDark
-                  ? 'solar-halo bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
-                  : 'solar-halo bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
+                  ? 'bg-amber-500/15 border-2 border-[#fbbf24] text-[#fde68a]'
+                  : 'bg-amber-50 border-2 border-orange-400 text-slate-700'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
                   : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
@@ -402,11 +402,11 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
           <button
             type="button"
             onClick={() => setActiveTab('inverters')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-extrabold transition-all cursor-pointer w-full md:w-auto justify-center ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-bold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'inverters'
                 ? isDark
-                  ? 'solar-halo bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
-                  : 'solar-halo bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
+                  ? 'bg-amber-500/15 border-2 border-[#fbbf24] text-[#fde68a]'
+                  : 'bg-amber-50 border-2 border-orange-400 text-slate-700'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
                   : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
@@ -419,11 +419,11 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
           <button
             type="button"
             onClick={() => setActiveTab('mounting')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-extrabold transition-all cursor-pointer w-full md:w-auto justify-center ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-bold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'mounting'
                 ? isDark
-                  ? 'solar-halo bg-amber-500/25 border-2 border-amber-400 text-amber-300 shadow-md'
-                  : 'solar-halo bg-amber-100 border-2 border-amber-500 text-black shadow-xs'
+                  ? 'bg-amber-500/15 border-2 border-[#fbbf24] text-[#fde68a]'
+                  : 'bg-amber-50 border-2 border-orange-400 text-slate-700'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
                   : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
@@ -485,7 +485,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                     </div>
 
                     <span className={`px-3 py-1 rounded-full text-[11px] font-black border whitespace-nowrap ${
-                      isDark ? 'border-amber-400/40 bg-amber-500/20 text-amber-300' : 'border-amber-500 bg-amber-100 text-black'
+                      isDark ? 'border-amber-400/60 bg-amber-500/10 text-amber-200' : 'border-orange-400/60 bg-amber-50/60 text-slate-800'
                     }`}>
                       {panel.badge}
                     </span>
@@ -624,7 +624,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                     </div>
 
                     <span className={`px-3 py-1 rounded-full text-[11px] font-black border whitespace-nowrap ${
-                      isDark ? 'border-emerald-400/40 bg-emerald-500/20 text-emerald-300' : 'border-emerald-500 bg-emerald-100 text-black'
+                      isDark ? 'border-emerald-400/60 bg-emerald-500/10 text-emerald-200' : 'border-emerald-500/60 bg-emerald-50/60 text-slate-800'
                     }`}>
                       {bat.badge}
                     </span>

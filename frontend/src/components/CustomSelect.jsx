@@ -8,7 +8,8 @@ export default function CustomSelect({
   icon: Icon, 
   placeholder = 'Оберіть значення',
   className = '',
-  theme = 'dark'
+  theme = 'dark',
+  variant = 'default'
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
@@ -68,23 +69,31 @@ export default function CustomSelect({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full min-h-[44px] sm:min-h-[48px] border rounded-xl pl-10 pr-10 py-2.5 sm:py-3 text-xs sm:text-sm font-medium flex items-center justify-between text-left transition-all duration-200 cursor-pointer select-none ${
-          isDark 
-            ? 'border-slate-700 bg-slate-900/90 text-white hover:border-slate-600' 
-            : 'border-amber-200 bg-amber-50/50 text-slate-900 hover:border-amber-300'
+        className={`w-full min-h-[44px] sm:min-h-[48px] border-2 rounded-2xl pl-10 pr-10 py-2.5 sm:py-3 text-xs sm:text-sm font-medium flex items-center justify-between text-left transition-all duration-200 cursor-pointer select-none ${
+          variant === 'orange-outline'
+            ? isDark 
+              ? 'btn-orange-selected-no-hover shadow-md text-white' 
+              : 'border-orange-400 bg-amber-50 text-slate-700 hover:border-orange-500'
+            : isDark 
+              ? 'border-slate-700 bg-slate-900/90 text-white hover:border-slate-600' 
+              : 'border-slate-200 bg-slate-50 text-slate-900 hover:border-slate-300'
         } ${
           isOpen ? 'border-amber-500 ring-2 ring-amber-500/20 shadow-md' : ''
         }`}
       >
         {Icon && (
-          <Icon className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-amber-500 pointer-events-none" />
+          <Icon className={`w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none ${
+            variant === 'orange-outline' && isDark ? 'text-amber-400' : 'text-amber-500'
+          }`} />
         )}
         
         <span className="truncate pr-2">{selectedLabel}</span>
 
         <ChevronDown 
           className={`w-4 h-4 absolute right-3.5 top-1/2 -translate-y-1/2 transition-transform duration-200 pointer-events-none ${
-            isOpen ? 'rotate-180 text-amber-500' : 'text-slate-400'
+            variant === 'orange-outline' && isDark
+              ? 'text-amber-400'
+              : isOpen ? 'text-amber-500' : 'text-slate-400'
           }`} 
         />
       </button>
@@ -113,7 +122,7 @@ export default function CustomSelect({
                   isSelected
                     ? isDark 
                       ? 'bg-amber-500/20 text-amber-300 font-bold border border-amber-500/40 shadow-xs' 
-                      : 'bg-amber-100 text-amber-900 font-bold border border-amber-300 shadow-xs'
+                      : 'bg-amber-50 text-slate-700 font-bold border border-orange-400 shadow-xs'
                     : isDark 
                       ? 'text-slate-200 hover:bg-slate-800 hover:translate-x-0.5' 
                       : 'text-slate-700 hover:bg-amber-50 hover:translate-x-0.5'

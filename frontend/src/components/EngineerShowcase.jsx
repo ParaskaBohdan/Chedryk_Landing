@@ -68,7 +68,7 @@ export default function EngineerShowcase({ theme, onOpenConsultation }) {
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3 sm:space-y-4">
           <div
             className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-semibold uppercase tracking-widest ${
-              isDark ? 'bg-amber-500/15 border-amber-400/40 text-amber-300' : 'bg-amber-100 border-amber-300 text-amber-800'
+              isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
             }`}
           >
             <HardHat className="w-4 h-4 text-amber-500" />

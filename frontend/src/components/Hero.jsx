@@ -46,7 +46,7 @@ export default function Hero({ theme }) {
             className="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left"
           >
             <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-semibold ${
-              isDark ? 'bg-amber-500/15 border-amber-400/40 text-amber-300' : 'bg-slate-200/80 border-slate-300 text-slate-800'
+              isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
             }`}>
               <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500" />
               <span>Закарпатська & Івано-Франківська області</span>
@@ -128,7 +128,9 @@ export default function Hero({ theme }) {
                 isDark ? 'border-slate-700' : 'border-slate-200'
               }`}>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center border border-amber-400/40 text-amber-500 solar-halo">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center border-2 ${
+                    isDark ? 'bg-slate-950 border-[#fbbf24] text-[#fbbf24]' : 'bg-white border-orange-500 text-orange-500'
+                  }`}>
                     <Sun className="w-6 h-6" />
                   </div>
                   <div>

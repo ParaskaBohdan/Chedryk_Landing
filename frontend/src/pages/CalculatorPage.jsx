@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator, Sun, Zap, ArrowRight, Home, Layers, Cpu, TrendingUp, BatteryCharging, MessageSquare } from 'lucide-react';
+import { Calculator, Sun, Zap, Home, Layers, Cpu, TrendingUp, BatteryCharging, MessageSquare } from 'lucide-react';
 import CustomSelect from '../components/CustomSelect';
 import ConfigurationForm from '../components/ConfigurationForm';
 import SolarPanelCard from '../components/SolarPanelCard';
@@ -13,12 +13,12 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
   const getOptionClass = (isActive) => {
     if (isActive) {
       return isDark
-        ? 'btn-orange-bright shadow-md text-white'
-        : 'border-orange-400 bg-transparent text-slate-700';
+        ? 'btn-orange-selected-no-hover shadow-md text-white'
+        : 'border-orange-400 bg-amber-50 text-slate-700';
     }
     return isDark
-      ? 'border-slate-700 bg-slate-900 text-slate-300'
-      : 'border-slate-200 bg-slate-50 text-slate-700';
+      ? 'border-slate-700 bg-slate-900 text-slate-300 btn-inactive-option'
+      : 'border-slate-200 bg-slate-50 text-slate-700 btn-inactive-option';
   };
 
   // Configurator State - "Доступна площа під панелі"
@@ -83,8 +83,10 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
         {/* Page Title */}
         {!isEmbed && (
           <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full border badge-orange-outline">
-              <Calculator className="w-4 h-4" />
+            <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full border ${
+              isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
+            }`}>
+              <Calculator className="w-4 h-4 text-amber-500" />
               <span>Інтерактивний Конфігуратор СЕС</span>
             </div>
 
@@ -191,6 +193,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                     ]}
                     icon={Layers}
                     theme={theme}
+                    variant="orange-outline"
                   />
                 </div>
               )}
@@ -320,7 +323,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                 </div>
               )}
 
-              <div className={`pt-4 border-t ${isDark ? 'border-slate-700/60' : 'border-slate-200'} flex justify-end`}>
+              <div className={`pt-4 border-t ${isDark ? 'border-slate-700/60' : 'border-slate-200'}`}>
                 <button
                   type="button"
                   onClick={() => {
@@ -330,10 +333,9 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                       onOpenConsultation(getConfigSummaryText());
                     }
                   }}
-                  className="btn-orange-bright px-6 py-3 rounded-xl font-bold text-xs flex items-center gap-2 glow-amber cursor-pointer"
+                  className="w-full flex justify-center items-center px-4 py-4 rounded-xl btn-orange-bright font-black text-xs sm:text-sm uppercase tracking-widest hover:-translate-y-0.5 active:translate-y-0 cursor-pointer transition-all duration-300"
                 >
-                  <span>Надіслати конфігурацію майстру</span>
-                  <ArrowRight className="w-4 h-4" />
+                  Надіслати конфігурацію майстру
                 </button>
               </div>
             </SolarPanelCard>
@@ -376,7 +378,9 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                       <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>${frameCost.toLocaleString()}</span>
                     </div>
                   </div>
-                  <div className="flex justify-between items-center px-4 py-2.5 rounded-xl bg-slate-800 text-white border-2 border-orange-400 font-bold text-xs uppercase tracking-wider">
+                  <div className={`flex justify-between items-center px-4 py-2.5 rounded-xl bg-slate-800 text-white border-2 font-bold text-xs uppercase tracking-wider ${
+                    isDark ? 'border-amber-400/80' : 'border-orange-400'
+                  }`}>
                     <span>Сума обладнання</span>
                     <span>${(panelsCost + frameCost).toLocaleString()}</span>
                   </div>
@@ -401,7 +405,9 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                       <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>${batteryCost.toLocaleString()}</span>
                     </div>
                   </div>
-                  <div className="flex justify-between items-center px-4 py-2.5 rounded-xl bg-slate-800 text-white border-2 border-orange-400 font-bold text-xs uppercase tracking-wider">
+                  <div className={`flex justify-between items-center px-4 py-2.5 rounded-xl bg-slate-800 text-white border-2 font-bold text-xs uppercase tracking-wider ${
+                    isDark ? 'border-amber-400/80' : 'border-orange-400'
+                  }`}>
                     <span>Сума систем живлення</span>
                     <span>${(inverterCost + batteryCost).toLocaleString()}</span>
                   </div>
@@ -420,7 +426,9 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                       <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>${installationCost.toLocaleString()}</span>
                     </div>
                   </div>
-                  <div className="flex justify-between items-center px-4 py-2.5 rounded-xl bg-slate-800 text-white border-2 border-orange-400 font-bold text-xs uppercase tracking-wider">
+                  <div className={`flex justify-between items-center px-4 py-2.5 rounded-xl bg-slate-800 text-white border-2 font-bold text-xs uppercase tracking-wider ${
+                    isDark ? 'border-amber-400/80' : 'border-orange-400'
+                  }`}>
                     <span>Сума робіт</span>
                     <span>${installationCost.toLocaleString()}</span>
                   </div>
@@ -492,7 +500,11 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
 
                 {/* Final Total Cost Row */}
                 <div className="pt-2">
-                  <div className="flex justify-between items-center px-4 py-4 rounded-xl bg-orange-600 hover:bg-orange-500 transition-colors text-white font-black text-sm sm:text-base uppercase tracking-widest shadow-lg">
+                  <div className={`flex justify-between items-center px-4 py-4 rounded-xl font-black text-sm sm:text-base uppercase tracking-widest shadow-lg ${
+                    isDark
+                      ? 'bg-[#fbbf24] text-[#0f172a]'
+                      : 'bg-orange-500 text-white'
+                  }`}>
                     <span>Загальна сума СЕС (під ключ)</span>
                     <span>~${totalEstimateUsd.toLocaleString()}</span>
                   </div>

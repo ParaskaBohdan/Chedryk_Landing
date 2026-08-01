@@ -45,52 +45,90 @@
   box-shadow: 0 6px 20px -4px rgba(15, 23, 42, 0.06);
 }
 
-/* Elegant Dual-State Soft Amber / Radiant Orange Button */
+/* Elegant Dual-State Tech Outline / Radiant Amber Button */
 .light .btn-orange-bright {
-  background-color: rgba(254, 243, 199, 0.95);
-  border: 1.5px solid rgba(245, 158, 11, 0.7);
-  color: #78350f;
+  background-color: transparent;
+  border: 2px solid #f97316;
+  color: #ea580c;
   font-weight: 700;
-  box-shadow: 0 1px 3px rgba(245, 158, 11, 0.12);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dark .btn-orange-bright {
   background-color: rgba(245, 158, 11, 0.15);
-  border: 1.5px solid rgba(251, 191, 36, 0.5);
+  border: 2px solid #fbbf24;
   color: #fde68a;
   font-weight: 700;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Fallback if body has no theme class yet */
 .btn-orange-bright {
-  background-color: rgba(254, 243, 199, 0.95);
-  border: 1.5px solid rgba(245, 158, 11, 0.7);
-  color: #78350f;
+  background-color: transparent;
+  border: 2px solid #f97316;
+  color: #ea580c;
   font-weight: 700;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Soft Hover: Only darken border outline & subtle accent stroke without aggressive background changes */
+/* Hover: Transition to solid color fill & glow shadow */
 .light .btn-orange-bright:hover {
-  border-color: #b45309 !important;
-  background-color: #fef3c7 !important;
-  color: #78350f !important;
-  box-shadow: 0 2px 6px rgba(180, 83, 9, 0.2) !important;
+  background-color: #f97316 !important;
+  border-color: #f97316 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35) !important;
 }
 
 .dark .btn-orange-bright:hover {
-  border-color: #f59e0b !important;
-  background-color: rgba(245, 158, 11, 0.22) !important;
+  background-color: #fbbf24 !important;
+  border-color: #fbbf24 !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 18px rgba(251, 191, 36, 0.4) !important;
+}
+.dark .btn-orange-bright:hover * {
+  color: #0f172a !important;
+}
+
+/* Option Buttons Hover Behavior in Dark Theme */
+.dark .btn-orange-selected-no-hover {
+  background-color: rgba(245, 158, 11, 0.15) !important;
+  border: 2px solid #fbbf24 !important;
   color: #fde68a !important;
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25) !important;
+  font-weight: 700;
+  box-shadow: none !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.dark .btn-orange-selected-no-hover:hover {
+  background-color: rgba(245, 158, 11, 0.15) !important;
+  border-color: #fbbf24 !important;
+  color: #fde68a !important;
+}
+
+.dark .btn-inactive-option {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dark .btn-inactive-option:hover {
+  background-color: rgba(245, 158, 11, 0.08) !important;
+  border-color: rgba(251, 191, 36, 0.35) !important;
+  color: #fde68a !important;
+}
+
+.light .btn-inactive-option {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.light .btn-inactive-option:hover {
+  background-color: rgba(254, 243, 199, 0.5) !important;
+  border-color: rgba(251, 191, 36, 0.5) !important;
+  color: #b45309 !important;
 }
 
 .btn-orange-bright:hover {
-  border-color: #b45309 !important;
-  box-shadow: 0 2px 6px rgba(180, 83, 9, 0.2) !important;
+  background-color: #f97316 !important;
+  border-color: #f97316 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35) !important;
 }
 
 .btn-orange-active {
@@ -745,3 +783,5 @@ button, a {
     opacity: 0;
   }
 }
+
+

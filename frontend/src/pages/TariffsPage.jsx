@@ -92,7 +92,7 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full border ${
-            isDark ? 'border-amber-400/40 bg-amber-500/15 text-amber-300' : 'border-amber-300 bg-amber-100 text-amber-800'
+            isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
           }`}>
             <Zap className="w-4 h-4 text-amber-500" />
             <span>Зелений Тариф & Документи</span>
@@ -147,7 +147,9 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
                       </div>
                     </div>
 
-                    <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-400/40 flex items-center justify-center text-amber-500 mb-3">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center border-2 mb-3 ${
+                      isDark ? 'bg-slate-950 border-[#fbbf24] text-[#fbbf24]' : 'bg-white border-orange-500 text-orange-500 shadow-sm'
+                    }`}>
                       <Icon className="w-5 h-5" />
                     </div>
 

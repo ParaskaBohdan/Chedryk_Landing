@@ -70,7 +70,7 @@ export default function Testimonials({ theme }) {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3 sm:space-y-4">
           <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-semibold uppercase tracking-widest ${
-            isDark ? 'border-amber-400/40 bg-amber-500/15 text-amber-300' : 'border-amber-300 bg-amber-100 text-amber-800'
+            isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
           }`}>
             <MessageSquareQuote className="w-4 h-4 text-amber-500" />
             <span>Відгуки Наших Клієнтів</span>
@@ -124,7 +124,7 @@ export default function Testimonials({ theme }) {
 
                 <div className="text-right">
                   <span className={`text-[10px] font-semibold px-2.5 py-1 rounded-lg block whitespace-nowrap border ${
-                    isDark ? 'border-amber-500/30 bg-amber-500/10 text-amber-400' : 'border-amber-300 bg-amber-50 text-amber-900'
+                    isDark ? 'border-amber-400/60 bg-amber-500/10 text-amber-200' : 'border-orange-400/60 bg-amber-50/60 text-slate-800'
                   }`}>
                     {item.system}
                   </span>

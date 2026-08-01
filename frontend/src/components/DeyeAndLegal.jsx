@@ -50,7 +50,7 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
           <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-semibold ${
-            isDark ? 'bg-amber-500/15 border-amber-400/40 text-amber-300' : 'bg-amber-100 border-amber-300 text-amber-800'
+            isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
           }`}>
             <ShieldCheck className="w-4 h-4 text-amber-500" />
             <span>Юридичний Супровід & Преміум Монтаж</span>
@@ -83,11 +83,13 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
                 >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center border border-amber-400/40 bg-amber-500/15 text-amber-500 shadow-md">
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border-2 shadow-md ${
+                      isDark ? 'bg-slate-950 border-[#fbbf24] text-[#fbbf24]' : 'bg-white border-orange-500 text-orange-500'
+                    }`}>
                       <Icon className="w-6 h-6" />
                     </div>
                     <span className={`text-[11px] font-bold px-3 py-1 rounded-full border ${
-                      isDark ? 'text-amber-300 bg-slate-800 border-slate-700' : 'text-amber-800 bg-amber-50 border-amber-200'
+                      isDark ? 'text-amber-200 bg-amber-500/10 border-amber-400/60' : 'text-slate-800 bg-amber-50/60 border-orange-400/60'
                     }`}>
                       {item.badge}
                     </span>
@@ -150,7 +152,7 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
 
             <button
               onClick={onOpenConsultation}
-              className="btn-orange-bright font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-lg hover:scale-105 transition-all flex-shrink-0 glow-amber"
+              className="btn-orange-bright font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-lg hover:scale-105 transition-all flex-shrink-0 glow-amber cursor-pointer"
             >
               Замовити Розрахунок Deye
             </button>

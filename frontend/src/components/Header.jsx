@@ -230,10 +230,10 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
             to="/services"
             onClick={() => setMobileMenuOpen(false)}
             className={({ isActive }) =>
-              `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-colors ${
+              `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-all border ${
                 isActive 
-                  ? (isDark ? 'bg-amber-500/15 text-amber-400 font-bold' : 'bg-amber-100 text-amber-600 font-bold')
-                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70' : 'text-slate-800 hover:bg-amber-500/10')
+                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-50 text-orange-600 font-bold border-orange-400')
+                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-800 hover:bg-amber-500/10 border-transparent')
               }`
             }
           >
@@ -245,10 +245,10 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
             to="/equipment"
             onClick={() => setMobileMenuOpen(false)}
             className={({ isActive }) =>
-              `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-colors ${
+              `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-all border ${
                 isActive 
-                  ? (isDark ? 'bg-amber-500/15 text-amber-400 font-bold' : 'bg-amber-100 text-amber-600 font-bold')
-                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70' : 'text-slate-800 hover:bg-amber-500/10')
+                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-50 text-orange-600 font-bold border-orange-400')
+                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-800 hover:bg-amber-500/10 border-transparent')
               }`
             }
           >
@@ -260,10 +260,10 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
             to="/tariffs"
             onClick={() => setMobileMenuOpen(false)}
             className={({ isActive }) =>
-              `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-colors ${
+              `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-all border ${
                 isActive 
-                  ? (isDark ? 'bg-amber-500/15 text-amber-400 font-bold' : 'bg-amber-100 text-amber-600 font-bold')
-                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70' : 'text-slate-800 hover:bg-amber-500/10')
+                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-50 text-orange-600 font-bold border-orange-400')
+                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-800 hover:bg-amber-500/10 border-transparent')
               }`
             }
           >
@@ -275,10 +275,10 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
             to="/calculator"
             onClick={() => setMobileMenuOpen(false)}
             className={({ isActive }) =>
-              `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-colors ${
+              `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-all border ${
                 isActive 
-                  ? (isDark ? 'bg-amber-500/15 text-amber-400 font-bold' : 'bg-amber-100 text-amber-600 font-bold')
-                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70' : 'text-slate-800 hover:bg-amber-500/10')
+                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-50 text-orange-600 font-bold border-orange-400')
+                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-800 hover:bg-amber-500/10 border-transparent')
               }`
             }
           >
@@ -290,10 +290,10 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
             to="/contacts"
             onClick={() => setMobileMenuOpen(false)}
             className={({ isActive }) =>
-              `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-colors ${
+              `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-all border ${
                 isActive 
-                  ? (isDark ? 'bg-amber-500/15 text-amber-400 font-bold' : 'bg-amber-100 text-amber-600 font-bold')
-                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70' : 'text-slate-800 hover:bg-amber-500/10')
+                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-50 text-orange-600 font-bold border-orange-400')
+                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-800 hover:bg-amber-500/10 border-transparent')
               }`
             }
           >

@@ -53,6 +53,23 @@ export default function App() {
     }
   }, [theme]);
 
+  // Central Document Title Management for all static routes
+  useEffect(() => {
+    const titleMap = {
+      '/': 'Nova Energy — Сонячні Станції & Електромонтаж Закарпаття та Прикарпаття',
+      '/services': 'Каталог Послуг — Nova Energy',
+      '/equipment': 'Каталог Комплектуючих — Nova Energy',
+      '/tariffs': 'Зелений Тариф & Обленерго — Nova Energy',
+      '/calculator': 'Калькулятор СЕС — Nova Energy',
+      '/contacts': 'Контакти — Nova Energy',
+      '/thank-you': 'Дякуємо за заявку — Nova Energy',
+    };
+
+    if (!pathname.startsWith('/services/')) {
+      document.title = titleMap[pathname] || 'Сонячні електростанції під ключ — Nova Energy';
+    }
+  }, [pathname]);
+
   const toggleTheme = () => {
     setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
   };
