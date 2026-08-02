@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Sun, Phone, MapPin, ArrowUp, Video } from 'lucide-react';
 import { LiveBadge } from './SolarTech';
+import { SectionAmbience } from './SolarDetails';
 
 export default function Footer({ onOpenConsultation, theme }) {
   const isDark = theme === 'dark';
@@ -42,6 +43,8 @@ export default function Footer({ onOpenConsultation, theme }) {
     <footer className={`pv-shell pv-texture border-t py-10 sm:py-12 relative overflow-hidden transition-colors duration-300 ${
       isDark ? 'border-slate-800 bg-slate-950 text-slate-400' : 'border-amber-200 bg-amber-50/70 text-slate-600'
     }`}>
+      <SectionAmbience flares={false} beams={false} />
+
       {/* Ambient lighting */}
       <div className="solar-flare w-[220px] sm:w-[380px] h-[220px] sm:h-[380px] -top-32 right-[8%]" aria-hidden="true" />
       <div className="solar-beam hidden sm:block w-[90px] h-[420px] -top-40 left-[18%]" aria-hidden="true" />

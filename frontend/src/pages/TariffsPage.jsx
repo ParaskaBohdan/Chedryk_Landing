@@ -5,6 +5,7 @@ import StepProcess from '../components/StepProcess';
 import { Zap, FileCheck, Gauge, Leaf, Landmark, Clock, ArrowRight } from 'lucide-react';
 import SolarPanelCard from '../components/SolarPanelCard';
 import { LiveBadge, EfficiencyMeter, TelemetryChip } from '../components/SolarTech';
+import { BusbarDivider, RegistrationMarks } from '../components/SolarDetails';
 import {
   BiDirectionalMeterScene,
   EnergySplitScene,
@@ -112,6 +113,8 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
           </div>
         </div>
 
+        <BusbarDivider />
+
         {/* How the green tariff works */}
         <div className="space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-2">
@@ -189,6 +192,7 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
           transition={{ duration: 0.45 }}
         >
           <SolarPanelCard theme={theme} glow className="p-5 sm:p-8">
+            <RegistrationMarks />
             <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
               <div>
                 <h2 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>

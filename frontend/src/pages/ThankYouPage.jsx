@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { CheckCircle2, Phone, Video, Home, Calculator, ShieldCheck, Activity } from 'lucide-react';
 import SolarPanelCard from '../components/SolarPanelCard';
 import { TelemetryChip } from '../components/SolarTech';
+import { RegistrationMarks } from '../components/SolarDetails';
 
 export default function ThankYouPage({ theme }) {
   const isDark = theme === 'dark';
@@ -87,6 +88,7 @@ export default function ThankYouPage({ theme }) {
 
         {/* Content Box */}
         <SolarPanelCard theme={theme} glow className="p-6 sm:p-8 shadow-2xl" contentClassName="text-left space-y-6">
+          <RegistrationMarks />
           <h3 className="text-lg font-bold flex items-center gap-2 text-amber-500 border-b border-slate-700/60 pb-3">
             <Phone className="w-5 h-5" /> Що відбувається далі?
           </h3>

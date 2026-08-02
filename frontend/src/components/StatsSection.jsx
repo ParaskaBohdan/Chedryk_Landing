@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { BarChart3, Sun, DollarSign, Battery, Cpu, ShieldCheck, FileBarChart, TrendingUp, Gauge } from 'lucide-react';
 import SolarPanelCard from './SolarPanelCard';
+import { SectionAmbience } from './SolarDetails';
 import { LiveBadge, EfficiencyMeter, MonthlyYieldChart, TelemetryChip } from './SolarTech';
 import {
   InsolationScene,
@@ -68,6 +69,8 @@ export default function StatsSection({ theme }) {
     <section id="stats" className={`py-16 sm:py-20 relative overflow-hidden transition-colors duration-300 border-y scroll-mt-20 ${
       isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-amber-50/40 text-slate-900 border-amber-100'
     }`}>
+      <SectionAmbience flares={false} beams={false} />
+
       {/* Ambient Solar Lighting */}
       <div className="solar-flare w-[220px] sm:w-[360px] h-[220px] sm:h-[360px] -top-24 left-[12%]" aria-hidden="true" />
       <div className="solar-flare w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] -bottom-24 right-[10%]" style={{ animationDelay: '3.2s' }} aria-hidden="true" />

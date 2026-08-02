@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheck, FileCheck, Leaf, Cpu, CheckCircle2, ArrowRight } from 'lucide-react';
 import SolarPanelCard from './SolarPanelCard';
+import { SectionAmbience } from './SolarDetails';
 import { LiveBadge, EnergyFlowStrip } from './SolarTech';
 
 export default function DeyeAndLegal({ onOpenConsultation, theme }) {
@@ -39,6 +40,8 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
       <div className={`absolute top-1/2 right-0 -translate-y-1/2 w-[350px] h-[350px] rounded-full blur-[140px] pointer-events-none ${
         isDark ? 'bg-orange-500/15' : 'bg-orange-400/20'
       }`} />
+
+      <SectionAmbience flares={false} beams={false} />
 
       {/* Ambient Solar Lighting */}
       <div className="solar-flare w-[240px] sm:w-[400px] h-[240px] sm:h-[400px] -top-32 left-[18%]" aria-hidden="true" />
