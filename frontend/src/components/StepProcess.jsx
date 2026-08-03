@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { PhoneCall, FileText, Truck, Wrench, Headphones, ArrowDown } from 'lucide-react';
 import SolarPanelCard from './SolarPanelCard';
+import { SectionAmbience } from './SolarDetails';
 import { LiveBadge } from './SolarTech';
 
 export default function StepProcess({ onOpenConsultation, theme }) {
@@ -49,6 +50,8 @@ export default function StepProcess({ onOpenConsultation, theme }) {
     <section id="process" className={`py-16 sm:py-20 relative transition-colors duration-300 border-t scroll-mt-20 ${
       isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-amber-50/40 text-slate-900 border-amber-100'
     }`}>
+      <SectionAmbience flares={false} beams={false} />
+
       {/* Ambient Solar Lighting */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
         <div className="solar-flare w-[210px] sm:w-[340px] h-[210px] sm:h-[340px] top-[6%] left-[6%]" />

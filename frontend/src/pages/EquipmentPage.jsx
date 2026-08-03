@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Sun, BatteryCharging, Cpu, Layers, ShieldCheck, CheckCircle2, Zap, Wrench, ArrowRight, MessageSquare } from 'lucide-react';
 import SolarPanelCard from '../components/SolarPanelCard';
 import { LiveBadge, EfficiencyMeter, TelemetryChip } from '../components/SolarTech';
+import { BusbarDivider, RegistrationMarks } from '../components/SolarDetails';
 import {
   PanelModuleScene,
   BatteryStackScene,
@@ -362,6 +363,8 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
             Сертифіковані сонячні панелі, акумулятори, інвертори та монтажні системи від провідних світових брендів Tier-1 з гарантією до 25 років.
           </p>
         </div>
+
+        <BusbarDivider />
 
         {/* Category Tabs */}
         <div className="grid grid-cols-2 md:flex md:flex-row md:items-center gap-2 sm:gap-4 pb-3 border-b border-slate-700/40 w-full justify-center px-4 sm:px-0">
@@ -906,6 +909,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
 
         {/* Clean Banner CTA at bottom */}
         <SolarPanelCard theme={theme} glow className="p-8 sm:p-10 shadow-xl" contentClassName="text-center space-y-4">
+          <RegistrationMarks />
           <div className="flex flex-wrap items-center justify-center gap-2.5">
             <LiveBadge theme={theme} label="Tier-1 Supply Chain" />
             <LiveBadge theme={theme} label="Warranty up to 30y" tone="amber" />

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Sun, Phone, MapPin, ArrowUp, Video } from 'lucide-react';
 import { LiveBadge } from './SolarTech';
+import { SectionAmbience } from './SolarDetails';
 
 export default function Footer({ onOpenConsultation, theme }) {
   const isDark = theme === 'dark';
@@ -42,6 +43,8 @@ export default function Footer({ onOpenConsultation, theme }) {
     <footer className={`pv-shell pv-texture border-t py-10 sm:py-12 relative overflow-hidden transition-colors duration-300 ${
       isDark ? 'border-slate-800 bg-slate-950 text-slate-400' : 'border-amber-200 bg-amber-50/70 text-slate-600'
     }`}>
+      <SectionAmbience flares={false} beams={false} />
+
       {/* Ambient lighting */}
       <div className="solar-flare w-[220px] sm:w-[380px] h-[220px] sm:h-[380px] -top-32 right-[8%]" aria-hidden="true" />
       <div className="solar-beam hidden sm:block w-[90px] h-[420px] -top-40 left-[18%]" aria-hidden="true" />
@@ -152,8 +155,31 @@ export default function Footer({ onOpenConsultation, theme }) {
 
         </div>
 
+        {/* Station spec plate */}
+        <div className={`mt-8 pt-6 border-t grid grid-cols-2 sm:grid-cols-4 gap-4 ${
+          isDark ? 'border-slate-800' : 'border-amber-200'
+        }`}>
+          {[
+            { k: 'Потужність', v: '5 кВт – 1 МВт' },
+            { k: 'Окупність', v: '3.5 – 4.5 роки' },
+            { k: 'Гарантія', v: 'до 25 років' },
+            { k: 'Регіон', v: '2 області' }
+          ].map((spec) => (
+            <div key={spec.k}>
+              <p className={`text-[9px] font-bold telemetry-label ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
+                {spec.k}
+              </p>
+              <p className={`text-xs font-black tabular-nums ${isDark ? 'text-amber-300' : 'text-amber-700'}`}>
+                {spec.v}
+              </p>
+            </div>
+          ))}
+        </div>
+
         {/* Bottom Bar */}
-        <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between text-xs opacity-70 gap-3">
+        <div className={`mt-6 pt-6 border-t flex flex-col sm:flex-row items-center justify-between text-xs opacity-70 gap-3 ${
+          isDark ? 'border-slate-800' : 'border-amber-200'
+        }`}>
           <p>© {new Date().getFullYear()} Чедрик Іван. Усі права захищено. Закарпаття & Івано-Франківщина.</p>
           <button
             onClick={scrollToTop}

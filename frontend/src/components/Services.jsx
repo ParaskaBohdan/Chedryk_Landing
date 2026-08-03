@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Sun, Home, BatteryCharging, Zap, ArrowRight, CheckCircle2, ChevronRight, X, FileText } from 'lucide-react';
 import SolarPanelCard from './SolarPanelCard';
+import { SectionAmbience } from './SolarDetails';
 import { LiveBadge, EfficiencyMeter } from './SolarTech';
 import {
   SolarFarmScene,
@@ -137,6 +138,8 @@ export default function Services({ onSelectService, theme }) {
     <section id="services" className={`py-16 sm:py-20 transition-colors duration-300 relative border-y scroll-mt-20 ${
       isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-slate-100/70 text-slate-900 border-slate-200'
     }`}>
+      <SectionAmbience flares={false} beams={false} />
+
       {/* Ambient Solar Lighting (clipped locally so the modal stays unaffected) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
         <div className="solar-flare w-[220px] sm:w-[380px] h-[220px] sm:h-[380px] -top-28 right-[6%]" />

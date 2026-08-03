@@ -1,6 +1,7 @@
 import React from 'react';
 import { MessageSquareQuote, MapPin } from 'lucide-react';
 import SolarPanelCard from './SolarPanelCard';
+import { SectionAmbience } from './SolarDetails';
 import { LiveBadge } from './SolarTech';
 
 export default function Testimonials({ theme }) {
@@ -61,6 +62,8 @@ export default function Testimonials({ theme }) {
     <section id="reviews" className={`py-16 sm:py-20 transition-colors duration-300 relative overflow-hidden ${
       isDark ? 'bg-slate-900 text-white' : 'bg-amber-50/40 text-slate-900'
     }`}>
+      <SectionAmbience flares={false} beams={false} />
+
       {/* Ambient Solar Lighting */}
       <div className="solar-flare w-[220px] sm:w-[360px] h-[220px] sm:h-[360px] -top-28 right-[10%]" aria-hidden="true" />
       <div className="solar-flare w-[190px] sm:w-[280px] h-[190px] sm:h-[280px] bottom-[4%] left-[6%]" style={{ animationDelay: '2.2s' }} aria-hidden="true" />

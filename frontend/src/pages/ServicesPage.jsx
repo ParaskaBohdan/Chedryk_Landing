@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { servicesData } from '../data/servicesData';
 import { Sun, BatteryCharging, FileCheck, Home, Zap, ArrowRight, CheckCircle2, Wrench, Calculator } from 'lucide-react';
 import SolarPanelCard from '../components/SolarPanelCard';
-import { LiveBadge } from '../components/SolarTech';
+import { TelemetryChip } from '../components/SolarTech';
+import { SectionAmbience, BusbarDivider, RegistrationMarks } from '../components/SolarDetails';
 
 const iconMap = {
   Sun: Sun,
@@ -21,10 +22,12 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
   }, []);
 
   return (
-    <div className={`py-12 sm:py-20 min-h-screen transition-colors duration-300 ${
+    <div className={`py-12 sm:py-20 min-h-screen relative overflow-hidden transition-colors duration-300 ${
       isDark ? 'bg-slate-900 text-white' : 'bg-slate-100/70 text-slate-900'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionAmbience variant="a" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-4">
@@ -41,7 +44,17 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
           <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
             Повний комплекс інженерних робіт у Закарпатській та Івано-Франківській областях: будівництво СЕС, резервне живлення, документація та монтаж під ключ.
           </p>
+
+          {/* Capability strip */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-4 text-left">
+            <TelemetryChip theme={theme} icon={Sun} label="Потужність" value="5 кВт – 1 МВт" />
+            <TelemetryChip theme={theme} icon={Wrench} label="Монтаж" value="Під ключ" />
+            <TelemetryChip theme={theme} icon={FileCheck} label="Документи" value="100% на нас" />
+            <TelemetryChip theme={theme} icon={CheckCircle2} label="Гарантія" value="до 25 років" />
+          </div>
         </div>
+
+        <BusbarDivider className="mb-12 sm:mb-16" />
 
         {/* 4 Core Services Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8">
@@ -55,6 +68,7 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
                 className="group h-full shadow-md"
                 contentClassName="flex flex-col"
               >
+                <RegistrationMarks />
                 {/* Card Top Image */}
                 <div className="relative h-56 w-full overflow-hidden rounded-t-3xl">
                   <img

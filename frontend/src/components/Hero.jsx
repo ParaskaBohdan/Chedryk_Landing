@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Sun, ShieldCheck, Zap, TrendingUp, Award, MapPin, Calculator, Compass, Thermometer } from 'lucide-react';
 
 import { Link } from 'react-router-dom';
+import { SectionAmbience } from './SolarDetails';
 import SolarPanelCard from './SolarPanelCard';
 import { LiveBadge, EfficiencyMeter, TiltGauge, IrradianceChart, TelemetryChip } from './SolarTech';
 
@@ -27,6 +28,8 @@ export default function Hero({ theme }) {
       <div className={`absolute top-1/3 right-5 w-[250px] sm:w-[450px] h-[250px] sm:h-[450px] rounded-full blur-[130px] pointer-events-none ${
         isDark ? 'bg-orange-500/15' : 'bg-orange-400/15'
       }`} />
+
+      <SectionAmbience flares={false} beams={false} />
 
       {/* Ambient Solar Lighting — flares & light beams */}
       <div className="solar-flare w-[280px] sm:w-[460px] h-[280px] sm:h-[460px] -top-24 right-[4%]" aria-hidden="true" />

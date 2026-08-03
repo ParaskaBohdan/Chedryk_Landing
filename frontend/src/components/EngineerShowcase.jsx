@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { HardHat, Gauge, Thermometer, Wind, Activity, ArrowRight, Compass } from 'lucide-react';
 import SolarPanelCard from './SolarPanelCard';
+import { SectionAmbience } from './SolarDetails';
 import {
   EngineerMountingPanel,
   EngineerHoldingPanel,
@@ -57,6 +58,8 @@ export default function EngineerShowcase({ theme, onOpenConsultation }) {
         isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-slate-100/70 text-slate-900 border-slate-200'
       }`}
     >
+      <SectionAmbience flares={false} beams={false} />
+
       {/* Ambient lighting */}
       <div className="solar-flare w-[240px] sm:w-[420px] h-[240px] sm:h-[420px] -top-32 left-[8%]" aria-hidden="true" />
       <div className="solar-flare w-[200px] sm:w-[320px] h-[200px] sm:h-[320px] bottom-0 right-[6%]" style={{ animationDelay: '2.4s' }} aria-hidden="true" />

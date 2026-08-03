@@ -6,6 +6,7 @@ import SolarPanelCard from '../components/SolarPanelCard';
 import SystemFlowDiagram from '../components/SystemFlowDiagram';
 import { LiveBadge, TelemetryChip } from '../components/SolarTech';
 import { CountUp, SolarSlider } from '../components/SolarControls';
+import { SectionAmbience, RegistrationMarks } from '../components/SolarDetails';
 
 export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfiguration, isEmbed = false, isGroundOnly = false, isRoofOnly = false }) {
   const isDark = theme === 'dark';
@@ -75,10 +76,12 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
   };
 
   return (
-    <div className={isEmbed ? "w-full" : `py-12 sm:py-20 min-h-screen transition-colors duration-300 ${
+    <div className={isEmbed ? "w-full" : `py-12 sm:py-20 min-h-screen relative overflow-hidden transition-colors duration-300 ${
       isDark ? 'bg-slate-900 text-white' : 'bg-slate-100/70 text-slate-900'
     }`}>
-      <div className={isEmbed ? "w-full" : "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"}>
+      {!isEmbed && <SectionAmbience variant="c" />}
+
+      <div className={isEmbed ? "w-full" : "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"}>
         
         {/* Page Title */}
         {!isEmbed && (
@@ -106,9 +109,13 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
           className="p-4 sm:p-5 mb-8 shadow-xl"
           contentClassName="space-y-3"
         >
-          <p className={`text-xs font-bold uppercase tracking-wider mb-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-            Схема СЕС в реальному часі
-          </p>
+          <RegistrationMarks />
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+              Схема СЕС в реальному часі
+            </p>
+            <LiveBadge theme={theme} label={`${totalKw} кВт · Live`} tone="amber" />
+          </div>
           <SystemFlowDiagram
             theme={theme}
             panelCount={activePanelCount}

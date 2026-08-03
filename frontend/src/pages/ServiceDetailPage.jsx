@@ -12,6 +12,7 @@ import SolarPanelCard from '../components/SolarPanelCard';
 import SystemFlowDiagram from '../components/SystemFlowDiagram';
 import { LiveBadge } from '../components/SolarTech';
 import { CountUp, SolarSlider, StepRail } from '../components/SolarControls';
+import { SectionAmbience, BusbarDivider, RegistrationMarks } from '../components/SolarDetails';
 import CalculatorPage from './CalculatorPage';
 
 const iconMap = {
@@ -742,10 +743,12 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
   const IconComponent = iconMap[service.iconName] || Sun;
 
   return (
-    <div className={`py-10 sm:py-16 min-h-screen transition-colors duration-300 ${
+    <div className={`py-10 sm:py-16 min-h-screen relative overflow-hidden transition-colors duration-300 ${
       isDark ? 'bg-slate-900 text-white' : 'bg-slate-100/70 text-slate-900'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <SectionAmbience variant="a" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
         
         {/* Back Link & Breadcrumb Navigation */}
         <div className="flex items-center gap-3">
@@ -763,12 +766,15 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
           <span className="text-xs font-bold text-amber-500 line-clamp-1">{service.title}</span>
         </div>
 
+        <BusbarDivider />
+
         {/* Hero Section Banner */}
-        <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-3xl border ${
+        <div className={`pv-shell pv-texture pv-frame grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-3xl border ${
           isDark ? 'bg-slate-800/80 border-slate-700/80' : 'bg-white border-slate-200 shadow-xl'
         }`}>
+          <RegistrationMarks />
           
-          <div className="lg:col-span-7 space-y-5">
+          <div className="pv-content lg:col-span-7 space-y-5">
             <div className="flex items-center gap-3 flex-wrap">
               <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-amber-500 text-slate-950 shadow-md">
                 {service.badge}
@@ -812,7 +818,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
             </div>
           </div>
 
-          <div className="lg:col-span-5 relative h-72 sm:h-96 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/40">
+          <div className="pv-content lg:col-span-5 relative h-72 sm:h-96 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/40">
             <img 
               src={service.image} 
               alt={service.title}

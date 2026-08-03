@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Phone, MessageCircle, MapPin, Clock, Sun, Video } from 'lucide-react';
 import ConsultationForm from '../components/ConsultationForm';
 import SolarPanelCard from '../components/SolarPanelCard';
+import { LiveBadge, TelemetryChip } from '../components/SolarTech';
+import { SectionAmbience, BusbarDivider, RegistrationMarks } from '../components/SolarDetails';
 
 export default function ContactsPage({ theme }) {
   const isDark = theme === 'dark';
@@ -20,10 +22,12 @@ export default function ContactsPage({ theme }) {
   ];
 
   return (
-    <div className={`py-12 sm:py-20 min-h-screen transition-colors duration-300 ${
+    <div className={`py-12 sm:py-20 min-h-screen relative overflow-hidden transition-colors duration-300 ${
       isDark ? 'bg-slate-900 text-white' : 'bg-amber-50/40 text-slate-900'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionAmbience variant="b" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
@@ -39,15 +43,22 @@ export default function ContactsPage({ theme }) {
           <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
             Працюємо по Закарпатській та Івано-Франківській областях. Дивіться наші об'єкти в TikTok та зв'язуйтесь зручним месенджером.
           </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-2.5 pt-2">
+            <LiveBadge theme={theme} label="На зв'язку 09:00–18:00" />
+            <LiveBadge theme={theme} label="Виїзд до 200 км" tone="amber" />
+            <LiveBadge theme={theme} label="2 області" tone="sky" />
+          </div>
         </div>
+
+        <BusbarDivider className="mb-10 sm:mb-14" />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-start">
           
           {/* Left Column: Direct Contacts */}
           <div className="lg:col-span-6 space-y-6 sm:space-y-8">
-            <div className={`glass-panel p-6 sm:p-8 rounded-3xl border space-y-6 ${
-              isDark ? 'border-slate-700 bg-slate-800/90' : 'border-amber-200 bg-white shadow-md'
-            }`}>
+            <SolarPanelCard theme={theme} className="p-6 sm:p-8" contentClassName="space-y-6">
+              <RegistrationMarks />
               <div className="flex items-center gap-3">
                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border-2 ${
                   isDark ? 'bg-slate-950 border-[#fbbf24] text-[#fbbf24]' : 'bg-white border-orange-500 text-orange-500 shadow-sm'
@@ -155,7 +166,7 @@ export default function ContactsPage({ theme }) {
                   </div>
                 </div>
               </div>
-            </div>
+            </SolarPanelCard>
 
             {/* Major coverage cities list */}
             <SolarPanelCard theme={theme} glow className="p-5 sm:p-6" contentClassName="space-y-4">
@@ -163,6 +174,11 @@ export default function ContactsPage({ theme }) {
                 <MapPin className="w-4 h-4 text-amber-500" />
                 Основні міста виїзду:
               </h4>
+
+              <div className="grid grid-cols-2 gap-2.5">
+                <TelemetryChip theme={theme} icon={MapPin} label="Радіус виїзду" value="до 200 км" />
+                <TelemetryChip theme={theme} icon={Clock} label="Час прибуття" value="45 хв – 3 год" />
+              </div>
 
               <div className="space-y-3">
                 <div>

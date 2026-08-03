@@ -783,3 +783,204 @@ button, a {
 }
 
 
+
+/* ==========================================================================
+   PHASE 3 — DAYLIGHT IDENTITY & FINE DETAIL
+   Light mode was previously "dark mode with the texture removed", which read
+   flat. It now gets a surface language of its own: sunlit warm glow from the
+   top-left, a crisp inner top edge and layered paper shadows.
+   ========================================================================== */
+
+/* --- Sunlit card surface (light theme) ---------------------------------- */
+/* background-image is the free slot here: Tailwind sets background-color,
+   so the wash can layer over it without fighting utility classes. */
+
+.light .pv-shell {
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 252, 245, 0.5) 42%, rgba(255, 255, 255, 0) 100%),
+    radial-gradient(130% 90% at 10% -10%, rgba(254, 243, 199, 0.65), transparent 62%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 1px 2px rgba(15, 23, 42, 0.045),
+    0 10px 26px -14px rgba(15, 23, 42, 0.14),
+    0 28px 52px -36px rgba(180, 118, 9, 0.28);
+}
+
+.light .pv-shell:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 1px 2px rgba(15, 23, 42, 0.05),
+    0 16px 34px -14px rgba(15, 23, 42, 0.16),
+    0 34px 62px -34px rgba(217, 160, 30, 0.4);
+}
+
+/* Night surfaces get the reciprocal treatment: light pooling at the top edge
+   and a cool depth shadow, so both themes read as lit objects. */
+.dark .pv-shell {
+  background-image:
+    linear-gradient(180deg, rgba(148, 197, 255, 0.05), transparent 38%),
+    radial-gradient(130% 90% at 12% -10%, rgba(251, 191, 36, 0.07), transparent 60%);
+  box-shadow:
+    inset 0 1px 0 rgba(226, 232, 240, 0.07),
+    0 12px 30px -18px rgba(0, 0, 0, 0.65);
+}
+
+/* Warmer silver for the daylight frame — the cold grey read as unfinished. */
+.light .pv-frame::after {
+  background: linear-gradient(
+    140deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(203, 213, 225, 0.5) 22%,
+    rgba(217, 160, 30, 0.5) 50%,
+    rgba(203, 213, 225, 0.45) 76%,
+    rgba(255, 255, 255, 0.85)
+  );
+}
+
+/* --- Tactile grain ------------------------------------------------------- */
+/* A single tiled 120px turbulence tile. Kept very low opacity: it reads as
+   surface texture rather than noise, and stops large flat fills looking dead. */
+
+.grain-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+}
+
+.dark .grain-layer { opacity: 0.05; mix-blend-mode: overlay; }
+.light .grain-layer { opacity: 0.035; mix-blend-mode: multiply; }
+
+/* --- Section sky wash ---------------------------------------------------- */
+/* A soft directional light at the top of a section, so pages have a sense of
+   where the sun is instead of a uniform flat fill. */
+
+.sky-wash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .sky-wash {
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(30, 64, 110, 0.5), transparent 70%),
+    radial-gradient(80% 40% at 85% 0%, rgba(251, 191, 36, 0.07), transparent 65%);
+}
+
+.light .sky-wash {
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(191, 219, 254, 0.5), transparent 70%),
+    radial-gradient(80% 45% at 85% 0%, rgba(254, 243, 199, 0.75), transparent 65%);
+}
+
+/* --- Heading accent ------------------------------------------------------ */
+
+.heading-rule {
+  position: relative;
+  display: inline-block;
+}
+
+.heading-rule::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 64px;
+  height: 2px;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #f59e0b, #fde047, #f59e0b, transparent);
+}
+
+/* --- Divider between major sections -------------------------------------- */
+
+.busbar-divider {
+  position: relative;
+  height: 1px;
+  width: 100%;
+}
+
+.dark .busbar-divider {
+  background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.28) 20%, rgba(251, 191, 36, 0.45) 50%, rgba(148, 163, 184, 0.28) 80%, transparent);
+}
+
+.light .busbar-divider {
+  background: linear-gradient(90deg, transparent, rgba(100, 116, 139, 0.22) 20%, rgba(217, 160, 30, 0.5) 50%, rgba(100, 116, 139, 0.22) 80%, transparent);
+}
+
+/* --- Corner registration marks ------------------------------------------- */
+/* Engineering-drawing crop marks; used on feature panels for a technical feel. */
+
+.reg-mark {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.dark .reg-mark { border-color: rgba(251, 191, 36, 0.55); }
+.light .reg-mark { border-color: rgba(180, 118, 9, 0.45); }
+
+/* --- Light-theme ambient tuning ------------------------------------------ */
+/* Daylight glows should feel like sun haze, not neon. */
+
+.light .solar-flare {
+  background: radial-gradient(
+    circle,
+    rgba(253, 224, 71, 0.5) 0%,
+    rgba(251, 146, 60, 0.2) 36%,
+    transparent 70%
+  );
+}
+
+.light .solar-beam {
+  background: linear-gradient(180deg, rgba(251, 191, 36, 0.3), rgba(251, 191, 36, 0) 72%);
+}
+
+/* --- Telemetry chip surfaces --------------------------------------------- */
+
+.light .glass-deep {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+/* --- Amber legibility in daylight ---------------------------------------- */
+/* amber-500 (#f59e0b) on a white card is ~2.1:1 — under the 3:1 floor for
+   large text and well under 4.5:1 for body copy. Daylight gets a deeper amber
+   for *text only*; amber backgrounds, borders and the amber-300 used on dark
+   surfaces (photo overlays) are deliberately left alone. */
+
+.light .text-amber-500,
+.light .text-amber-400 {
+  color: #b45309;
+}
+
+.light .hover\:text-amber-600:hover,
+.light .group:hover .group-hover\:text-amber-600 {
+  color: #92400e;
+}
+
+/* Keep the accent bright where it sits on a dark surface inside light mode. */
+.light .on-dark .text-amber-500,
+.light .on-dark .text-amber-400 {
+  color: #fbbf24;
+}
+
+/* Muted micro-labels: slate-400 on white is ~2.6:1, which fails for the 9–12px
+   telemetry captions it is used on. Daylight nudges them one step darker. */
+.light .text-slate-400 {
+  color: #64748b;
+}
+
+.light .text-slate-500 {
+  color: #556274;
+}
+
+/* Night has the mirror-image problem: slate-500 captions sit at ~3.3:1 on the
+   dark surfaces, short of 4.5:1 at the 9px they are rendered at. */
+.dark .text-slate-500 {
+  color: #94a3b8;
+}
