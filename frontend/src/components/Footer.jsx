@@ -155,8 +155,31 @@ export default function Footer({ onOpenConsultation, theme }) {
 
         </div>
 
+        {/* Station spec plate */}
+        <div className={`mt-8 pt-6 border-t grid grid-cols-2 sm:grid-cols-4 gap-4 ${
+          isDark ? 'border-slate-800' : 'border-amber-200'
+        }`}>
+          {[
+            { k: 'Потужність', v: '5 кВт – 1 МВт' },
+            { k: 'Окупність', v: '3.5 – 4.5 роки' },
+            { k: 'Гарантія', v: 'до 25 років' },
+            { k: 'Регіон', v: '2 області' }
+          ].map((spec) => (
+            <div key={spec.k}>
+              <p className={`text-[9px] font-bold telemetry-label ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
+                {spec.k}
+              </p>
+              <p className={`text-xs font-black tabular-nums ${isDark ? 'text-amber-300' : 'text-amber-700'}`}>
+                {spec.v}
+              </p>
+            </div>
+          ))}
+        </div>
+
         {/* Bottom Bar */}
-        <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between text-xs opacity-70 gap-3">
+        <div className={`mt-6 pt-6 border-t flex flex-col sm:flex-row items-center justify-between text-xs opacity-70 gap-3 ${
+          isDark ? 'border-slate-800' : 'border-amber-200'
+        }`}>
           <p>© {new Date().getFullYear()} Чедрик Іван. Усі права захищено. Закарпаття & Івано-Франківщина.</p>
           <button
             onClick={scrollToTop}

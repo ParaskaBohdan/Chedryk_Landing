@@ -17,7 +17,9 @@ import ServiceDetailPage from './pages/ServiceDetailPage';
 import EquipmentPage from './pages/EquipmentPage';
 import TariffsPage from './pages/TariffsPage';
 import ThankYouPage from './pages/ThankYouPage';
+import NotFoundPage from './pages/NotFoundPage';
 import Footer from './components/Footer';
+import ScrollToTopButton from './components/ScrollToTopButton';
 import { X } from 'lucide-react';
 
 function ScrollToTop() {
@@ -66,7 +68,7 @@ export default function App() {
     };
 
     if (!pathname.startsWith('/services/')) {
-      document.title = titleMap[pathname] || 'Сонячні електростанції під ключ — Nova Energy';
+      document.title = titleMap[pathname] || 'Сторінку не знайдено — Nova Energy';
     }
   }, [pathname]);
 
@@ -184,6 +186,11 @@ export default function App() {
           <Route path="/thank-you" element={
             <ThankYouPage theme={theme} />
           } />
+
+          {/* Catch-all: an unknown URL previously rendered header + empty main */}
+          <Route path="*" element={
+            <NotFoundPage theme={theme} />
+          } />
         </Routes>
       </main>
 
@@ -192,6 +199,8 @@ export default function App() {
         onOpenConsultation={() => handleOpenConsultation()} 
         theme={theme}
       />
+
+      <ScrollToTopButton theme={theme} />
 
       {/* Global Consultation / Configuration Modal */}
       {consultationModalOpen && (
