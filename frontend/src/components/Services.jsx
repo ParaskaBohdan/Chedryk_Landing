@@ -26,8 +26,8 @@ export default function Services({ onSelectService, theme }) {
   const isDark = theme === 'dark';
 
   // НАЛАШТУВАННЯ ЗАДЕРЖОК (в мілісекундах)
-  const BUTTON_COOLDOWN = 150; // Нативно швидкий відгук на кнопки
-  const SWIPE_COOLDOWN = 150;  // Нативно швидкий відгук на свайпи
+  const BUTTON_COOLDOWN = 100; // Нативно швидкий відгук на кнопки
+  const SWIPE_COOLDOWN = 50;  // Нативно швидкий відгук на свайпи
 
   const activeIndex = ((virtualIndex % 6) + 6) % 6;
 
