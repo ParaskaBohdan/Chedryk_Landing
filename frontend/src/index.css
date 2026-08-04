@@ -90,6 +90,55 @@
   color: #0f172a !important;
 }
 
+/* Custom Header CTA Button with responsive mobile-only transparency */
+.header-cta-btn {
+  background-color: #fffbeb;
+  border: 2px solid #fb923c;
+  color: #334155;
+  font-weight: 700;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.light .header-cta-btn {
+  background-color: #fffbeb;
+  border: 2px solid #fb923c;
+  color: #334155;
+}
+
+.dark .header-cta-btn {
+  background-color: rgba(245, 158, 11, 0.10);
+  border: 2px solid rgba(251, 191, 36, 0.6);
+  color: #fbbf24;
+}
+
+.header-cta-btn:hover {
+  background-color: #f97316 !important;
+  border-color: #f97316 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35) !important;
+}
+
+.dark .header-cta-btn:hover {
+  background-color: #fbbf24 !important;
+  border-color: #fbbf24 !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 18px rgba(251, 191, 36, 0.4) !important;
+}
+
+.dark .header-cta-btn:hover * {
+  color: #0f172a !important;
+}
+
+@media (max-width: 767px) {
+  .header-cta-transparent {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+  }
+}
+
 .dark .btn-orange-selected-no-hover {
   background-color: rgba(245, 158, 11, 0.10) !important;
   border: 2px solid rgba(251, 191, 36, 0.6) !important;
@@ -953,21 +1002,7 @@ button, a {
    for *text only*; amber backgrounds, borders and the amber-300 used on dark
    surfaces (photo overlays) are deliberately left alone. */
 
-.light .text-amber-500,
-.light .text-amber-400 {
-  color: #b45309;
-}
 
-.light .hover\:text-amber-600:hover,
-.light .group:hover .group-hover\:text-amber-600 {
-  color: #92400e;
-}
-
-/* Keep the accent bright where it sits on a dark surface inside light mode. */
-.light .on-dark .text-amber-500,
-.light .on-dark .text-amber-400 {
-  color: #fbbf24;
-}
 
 /* Muted micro-labels: slate-400 on white is ~2.6:1, which fails for the 9–12px
    telemetry captions it is used on. Daylight nudges them one step darker. */

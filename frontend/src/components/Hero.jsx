@@ -18,22 +18,34 @@ export default function Hero({ theme }) {
   ];
 
   return (
-    <section id="hero" className={`relative py-8 md:py-20 lg:py-24 overflow-hidden transition-colors duration-300 ${
+    <section id="hero" className={`relative pt-24 pb-8 md:py-20 lg:py-24 overflow-hidden transition-colors duration-300 ${
       isDark ? 'bg-slate-900 text-white' : 'bg-slate-100/80 text-slate-900'
     }`}>
+      {/* Mobile-only background image */}
+      <div 
+        className="block md:hidden absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
+        style={{ backgroundImage: `url('/hero_mobile_bg.jpg')` }}
+      />
+      {/* Dark overlay for mobile to blend transparent header and keep high contrast */}
+      <div 
+        className="block md:hidden absolute inset-0 bg-gradient-to-b from-slate-950/98 via-slate-900/40 to-slate-950/95 pointer-events-none" 
+      />
+
       {/* Background Decorative Glowing Blobs */}
-      <div className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[650px] h-[350px] sm:h-[650px] rounded-full blur-[140px] pointer-events-none ${
+      <div className={`hidden md:block absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[650px] h-[350px] sm:h-[650px] rounded-full blur-[140px] pointer-events-none ${
         isDark ? 'bg-amber-500/15' : 'bg-amber-400/15'
       }`} />
-      <div className={`absolute top-1/3 right-5 w-[250px] sm:w-[450px] h-[250px] sm:h-[450px] rounded-full blur-[130px] pointer-events-none ${
+      <div className={`hidden md:block absolute top-1/3 right-5 w-[250px] sm:w-[450px] h-[250px] sm:h-[450px] rounded-full blur-[130px] pointer-events-none ${
         isDark ? 'bg-orange-500/15' : 'bg-orange-400/15'
       }`} />
 
-      <SectionAmbience flares={false} beams={false} />
+      <div className="hidden md:block">
+        <SectionAmbience flares={false} beams={false} />
+      </div>
 
       {/* Ambient Solar Lighting — flares & light beams */}
-      <div className="solar-flare w-[280px] sm:w-[460px] h-[280px] sm:h-[460px] -top-24 right-[4%]" aria-hidden="true" />
-      <div className="solar-flare w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] bottom-[-60px] left-[2%]" style={{ animationDelay: '2.8s' }} aria-hidden="true" />
+      <div className="hidden md:block solar-flare w-[280px] sm:w-[460px] h-[280px] sm:h-[460px] -top-24 right-[4%]" aria-hidden="true" />
+      <div className="hidden md:block solar-flare w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] bottom-[-60px] left-[2%]" style={{ animationDelay: '2.8s' }} aria-hidden="true" />
       <div className="solar-beam hidden sm:block w-[110px] h-[620px] -top-48 right-[18%]" aria-hidden="true" />
       <div className="solar-beam hidden sm:block w-[64px] h-[520px] -top-40 right-[34%]" style={{ animationDelay: '4s' }} aria-hidden="true" />
       <div className="solar-beam hidden lg:block w-[80px] h-[480px] -top-36 left-[12%]" style={{ animationDelay: '6s' }} aria-hidden="true" />
@@ -43,19 +55,15 @@ export default function Hero({ theme }) {
         {/* Mobile View: Render only title, description, and the 4 stats blocks */}
         <div className="block md:hidden space-y-6 text-center">
           <div className="space-y-4">
-            <h1 className={`text-3xl font-extrabold tracking-tight leading-tight ${
-              isDark ? 'text-white' : 'text-slate-900'
-            }`}>
+            <h1 className="text-3xl font-extrabold tracking-tight leading-tight text-white">
               Енергонезалежність & <br />
               <span className="bg-gradient-to-r from-amber-400 via-orange-500 to-amber-500 bg-clip-text text-transparent">
                 Сонячні Електростанції
               </span>
             </h1>
 
-            <p className={`text-sm font-normal leading-relaxed px-2 ${
-              isDark ? 'text-slate-200' : 'text-slate-700'
-            }`}>
-              Індивідуальне проектирування, професійний монтаж та пусконалагодження СЕС <strong className={isDark ? 'text-white' : 'text-slate-900'}>від 5 кВт до 1 МВт</strong> від <strong className={isDark ? 'text-white' : 'text-slate-900'}>Чедрика Івана</strong>. Гібридні системи Deye, автономне живлення EcoFlow та безпечний електромонтаж.
+            <p className="text-sm font-normal leading-relaxed px-2 text-slate-200">
+              Індивідуальне проектирування, професійний монтаж та пусконалагодження СЕС <strong className="text-white">від 5 кВт до 1 МВт</strong> від <strong className="text-white">Чедрика Івана</strong>. Гібридні системи Deye, автономне живлення EcoFlow та безпечний електромонтаж.
             </p>
           </div>
 
@@ -64,21 +72,26 @@ export default function Hero({ theme }) {
             {stats.map((item, index) => (
               <div
                 key={index}
-                className={`glass-card pv-shell pv-texture py-2 px-3 rounded-xl border text-left ${
+                className={`py-2 px-3 rounded-xl border text-left backdrop-blur-md transition-all ${
                   isDark
-                    ? 'border-slate-800 bg-slate-800/60'
-                    : 'border-slate-200 bg-white shadow-xs'
+                    ? 'pv-shell pv-texture border-white/10 bg-white/5 text-white'
+                    : 'border-white/10 text-white shadow-md'
                 }`}
+                style={
+                  !isDark
+                    ? { background: 'rgba(255, 255, 255, 0.12)' }
+                    : undefined
+                }
               >
-                <span className="pv-sheen" aria-hidden="true" />
+                {isDark && <span className="pv-sheen" aria-hidden="true" />}
                 <div className="pv-content">
-                  <p className={`text-[8px] font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                  <p className="text-[8px] font-bold uppercase tracking-wider text-white/70">
                     {item.label}
                   </p>
-                  <p className={`text-base font-black mt-0 ${isDark ? 'text-amber-400' : 'text-orange-500'}`}>
+                  <p className="text-base font-black mt-0 text-orange-500">
                     {item.value}
                   </p>
-                  <p className={`text-[9px] mt-0 leading-tight ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                  <p className="text-[9px] mt-0 leading-tight text-white/90">
                     {item.desc}
                   </p>
                 </div>

@@ -108,9 +108,9 @@ export default function NotFoundPage({ theme }) {
       <SectionAmbience variant="c" />
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center space-y-8 relative z-10">
-        <div className="flex justify-center">
+        {/*<div className="flex justify-center">
           <LiveBadge theme={theme} label="Signal Lost · 404" tone="amber" />
-        </div>
+        </div>*/}
 
         <div className="space-y-3">
           <h1 className="text-5xl sm:text-7xl font-black tracking-tight text-solar-gradient">404</h1>

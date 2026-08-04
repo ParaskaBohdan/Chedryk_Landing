@@ -68,6 +68,71 @@ export function SolarFarmScene({ theme, className = '' }) {
   );
 }
 
+/** Interactive Solar Calculator & ROI estimation dashboard. */
+export function CalculatorScene({ theme, className = '' }) {
+  const isDark = theme === 'dark';
+  const uid = useId().replace(/:/g, '');
+  const c = frameProps(isDark);
+
+  return (
+    <Scene label="Калькулятор СЕС: розрахунок вартості та окупності" className={className}>
+      <SceneDefs uid={uid} isDark={isDark} />
+      <rect y="-40" width="320" height="190" rx="18" fill={`url(#${uid}-sky)`} />
+
+      <Sun uid={uid} cx={46} cy={32} r={13} />
+
+      {/* Terrain */}
+      <line x1="8" y1="132" x2="312" y2="132" stroke={c.ground} strokeWidth="1.5" />
+
+      {/* House Silhouette with Solar Panels on the left */}
+      <g stroke={c.stroke} strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M24 132 L24 92 L64 62 L104 92 L104 132 Z" />
+        <path d="M54 132 L54 104 L74 104 L74 132" />
+        <rect x="32" y="98" width="14" height="14" rx="2" />
+        {/* Solar panels on roof */}
+        <path d="M68 72 L96 93" stroke="#fbbf24" strokeWidth="2.5" />
+        <path d="M64 76 L92 97" stroke="#fbbf24" strokeWidth="2.5" />
+      </g>
+
+      {/* Financial Bar Chart / Payback Graph on the right */}
+      <g stroke={c.stroke} strokeWidth="2" fill="none" strokeLinecap="round">
+        {/* Graph Axes */}
+        <path d="M148 132 L148 44" />
+        <path d="M148 132 L290 132" />
+
+        {/* Year 1 Bar */}
+        <rect x="162" y="106" width="18" height="26" rx="3" fill="rgba(251, 191, 36, 0.15)" stroke={c.stroke} strokeWidth="1.5" />
+        {/* Year 2 Bar */}
+        <rect x="198" y="88" width="18" height="44" rx="3" fill="rgba(251, 191, 36, 0.35)" stroke={c.stroke} strokeWidth="1.5" />
+        {/* Year 3 Bar */}
+        <rect x="234" y="66" width="18" height="66" rx="3" fill="rgba(251, 191, 36, 0.65)" stroke={c.stroke} strokeWidth="1.5" />
+        {/* Year 4 Bar (Payback complete!) */}
+        <rect x="270" y="44" width="18" height="88" rx="3" fill="#fbbf24" stroke="#d97706" strokeWidth="1.5" />
+
+        {/* Animated flow payback trendline */}
+        <path d="M152 128 Q180 115 208 92 T280 48" stroke={isDark ? 'rgba(245,158,11,0.5)' : 'rgba(217,119,6,0.4)'} strokeWidth="2.5" />
+        <path d="M152 128 Q180 115 208 92 T280 48" stroke="#fbbf24" strokeWidth="3" className="energy-flow" />
+      </g>
+
+      {/* Floating Calculator badge */}
+      <g transform="translate(132, -18)">
+        <rect x="0" y="0" width="36" height="46" rx="6" fill={isDark ? '#1e293b' : '#ffffff'} stroke={c.stroke} strokeWidth="2" />
+        <rect x="5" y="6" width="26" height="10" rx="2" fill={isDark ? '#0f172a' : '#f1f5f9'} stroke={c.stroke} strokeWidth="1" />
+        <line x1="9" y1="11" x2="27" y2="11" stroke="#10b981" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="10" cy="24" r="1.5" fill="#f59e0b" />
+        <circle cx="18" cy="24" r="1.5" fill={c.ink} />
+        <circle cx="26" cy="24" r="1.5" fill={c.ink} />
+        <circle cx="10" cy="31" r="1.5" fill={c.ink} />
+        <circle cx="18" cy="31" r="1.5" fill={c.ink} />
+        <circle cx="26" cy="31" r="1.5" fill="#10b981" />
+        <circle cx="10" cy="38" r="1.5" fill={c.ink} />
+        <circle cx="18" cy="38" r="1.5" fill={c.ink} />
+        <circle cx="26" cy="38" r="1.5" fill={c.ink} />
+      </g>
+    </Scene>
+  );
+}
+
 /** Hybrid inverter wired to a LiFePO4 battery rack. */
 export function HybridSystemScene({ theme, className = '' }) {
   const isDark = theme === 'dark';

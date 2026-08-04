@@ -49,6 +49,7 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
   // Generation busbar under the nav, filled by scroll depth. Reads through a
   // rAF gate so a fast scroll can't queue layout work per event.
   const [scrollPct, setScrollPct] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     let frame = null;
@@ -57,6 +58,7 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
       const doc = document.documentElement;
       const travel = doc.scrollHeight - doc.clientHeight;
       setScrollPct(travel > 0 ? Math.min(1, doc.scrollTop / travel) : 0);
+      setIsScrolled(doc.scrollTop > 10);
     };
     const onScroll = () => {
       if (frame === null) frame = requestAnimationFrame(measure);
@@ -72,8 +74,11 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
   }, []);
 
   return (
-    <header className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
-      isDark ? 'border-slate-800/80 bg-slate-950/90 text-white backdrop-blur-md' : 'border-slate-200 bg-slate-100/95 text-slate-800 shadow-xs backdrop-blur-md'
+    <header className={`z-50 transition-all duration-300 ${
+      !isScrolled
+        ? 'max-md:absolute max-md:w-full max-md:top-0 max-md:bg-transparent max-md:border-transparent max-md:shadow-none max-md:backdrop-blur-none ' + 
+          (isDark ? 'md:sticky md:top-0 md:border-b md:border-slate-800/80 md:bg-slate-950/90 md:text-white md:backdrop-blur-md text-white' : 'md:sticky md:top-0 md:border-b md:border-slate-200 md:bg-slate-100/95 md:text-slate-800 md:shadow-xs md:backdrop-blur-md text-slate-800')
+        : 'sticky top-0 border-b ' + (isDark ? 'border-slate-800/80 bg-slate-950/90 text-white backdrop-blur-md' : 'border-slate-200 bg-slate-100/95 text-slate-800 shadow-xs backdrop-blur-md')
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
         
@@ -103,6 +108,8 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
               NOVA
             </span>
             <span className={`font-extrabold text-[10px] sm:text-[11px] tracking-[0.22em] leading-tight ${
+              !isScrolled ? 'max-md:text-white ' : ''
+            }${
               isDark ? 'text-white' : 'text-slate-900'
             }`}>
               ENERGY_UA
@@ -189,7 +196,16 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
             onClick={toggleTheme}
             title={isDark ? 'Увімкнути світлу тему' : 'Увімкнути темну тему'}
             className={`group relative flex items-center justify-center h-[38px] w-[38px] rounded-xl border transition-colors flex-shrink-0 overflow-hidden ${
-              isDark ? 'text-amber-400 border-slate-800 bg-slate-900 hover:bg-slate-800' : 'text-slate-700 border-slate-300 bg-slate-200/80 hover:bg-slate-200'
+              !isScrolled
+                ? 'max-md:text-white max-md:border-white/20 max-md:bg-white/10 ' + 
+                  (isDark 
+                    ? 'border-slate-800 bg-slate-900 hover:bg-slate-800 text-amber-400' 
+                    : 'border-slate-300 bg-slate-200/80 hover:bg-slate-200 text-slate-700'
+                  )
+                : (isDark 
+                    ? 'text-amber-400 border-slate-800 bg-slate-900 hover:bg-slate-800' 
+                    : 'text-slate-700 border-slate-300 bg-slate-200/80 hover:bg-slate-200'
+                  )
             }`}
           >
             {/* Sun and moon cross-fade and rotate through each other */}
@@ -199,7 +215,9 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
               }`}
             />
             <Moon
-              className={`absolute w-5 h-5 text-slate-800 transition-all duration-500 ${
+              className={`absolute w-5 h-5 transition-all duration-500 ${
+                !isScrolled ? 'max-md:text-white ' : 'text-slate-800 '
+              }${
                 isDark ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'
               }`}
             />
@@ -212,15 +230,26 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
           {/* Light Radiant Orange Button -> Leads to Calculator */}
           <button
             onClick={() => onOpenConsultation && onOpenConsultation('Замовити безкоштовну консультацію')}
-            className="hidden sm:inline-flex btn-orange-bright font-extrabold text-xs uppercase tracking-wider px-4 sm:px-5 py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap flex-shrink-0 shadow-md hover:shadow-amber-500/20 cursor-pointer"
+            className={`hidden sm:inline-flex font-extrabold text-xs uppercase tracking-wider px-4 sm:px-5 py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap flex-shrink-0 cursor-pointer header-cta-btn ${
+              !isScrolled ? 'header-cta-transparent' : ''
+            }`}
           >
             Замовити послугу
           </button>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`lg:hidden p-2 rounded-xl border flex-shrink-0 ${
-              isDark ? 'text-slate-300 border-slate-800 bg-slate-900' : 'text-slate-700 border-slate-300 bg-slate-200/80'
+            className={`lg:hidden p-2 rounded-xl border transition-colors flex-shrink-0 ${
+              !isScrolled
+                ? 'text-white border-white/20 bg-white/10 ' + 
+                  (isDark 
+                    ? 'md:text-slate-300 md:border-slate-800 md:bg-slate-900' 
+                    : 'md:text-slate-700 md:border-slate-300 md:bg-slate-200/80'
+                  )
+                : (isDark 
+                    ? 'text-slate-300 border-slate-800 bg-slate-900' 
+                    : 'text-slate-700 border-slate-300 bg-slate-200/80'
+                  )
             }`}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

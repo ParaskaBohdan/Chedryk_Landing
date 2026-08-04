@@ -10,7 +10,8 @@ import {
   HybridSystemScene,
   RoofMountScene,
   PermitsScene,
-  SwitchboardScene
+  SwitchboardScene,
+  CalculatorScene
 } from './ServiceIllustrations';
 
 export default function Services({ onSelectService, theme }) {
@@ -151,7 +152,7 @@ export default function Services({ onSelectService, theme }) {
       category: 'Калькулятор СЕС',
       icon: Calculator,
       color: 'from-amber-500 to-yellow-500',
-      Illustration: SolarFarmScene,
+      Illustration: CalculatorScene,
       status: 'Interactive Calculator',
       targetUrl: '/calculator',
       specs: [
