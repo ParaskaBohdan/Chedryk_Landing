@@ -176,8 +176,14 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
 
         {/* Right Action Bar */}
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-          
-
+          <a
+            href="tel:+380970000000"
+            title="Зателефонувати Чедрику Івану"
+            className="flex items-center justify-center h-[38px] w-[38px] sm:w-auto sm:px-4 rounded-xl bg-green-600 hover:bg-green-700 text-white transition-colors flex-shrink-0 shadow-md gap-2"
+          >
+            <Phone className="w-4 h-4 fill-current" />
+            <span className="text-xs font-bold hidden sm:inline">+380 (97) 000-00-00</span>
+          </a>
 
           <button
             onClick={toggleTheme}

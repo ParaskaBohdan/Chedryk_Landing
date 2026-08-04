@@ -13,12 +13,12 @@ export default function Hero({ theme }) {
   const stats = [
     { label: 'Потужність станцій', value: '5 кВт – 1 МВт', desc: 'Для будинків, підприємств та СЕС' },
     { label: 'Термін окупності', value: '3 – 4 роки', desc: 'При мережевих та гібридних рішеннях' },
-    { label: 'Термін служби панелей', value: '25+ років', desc: 'Офіційна гарантія виробника' },
+    { label: 'Досвід та довіра', value: '700+', desc: 'задоволених клієнтів' },
     { label: 'Зниження витрат', value: 'До 90%', desc: 'На власні потреби та енергію' }
   ];
 
   return (
-    <section id="hero" className={`relative py-12 sm:py-20 lg:py-24 overflow-hidden transition-colors duration-300 ${
+    <section id="hero" className={`hidden md:block relative py-12 sm:py-20 lg:py-24 overflow-hidden transition-colors duration-300 ${
       isDark ? 'bg-slate-900 text-white' : 'bg-slate-100/80 text-slate-900'
     }`}>
       {/* Background Decorative Glowing Blobs */}
@@ -116,7 +116,7 @@ export default function Hero({ theme }) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="lg:col-span-5 relative"
+            className="hidden lg:block lg:col-span-5 relative"
           >
             {/* Floating efficiency readout */}
             {/* <div className="absolute -top-3 -left-3 sm:-left-6 z-20 glass-deep rounded-xl px-3 py-2 shadow-xl hidden sm:block">

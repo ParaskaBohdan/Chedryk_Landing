@@ -20,6 +20,7 @@ import ThankYouPage from './pages/ThankYouPage';
 import NotFoundPage from './pages/NotFoundPage';
 import Footer from './components/Footer';
 import ScrollToTopButton from './components/ScrollToTopButton';
+import CallWidget from './components/CallWidget';
 import { X } from 'lucide-react';
 
 function ScrollToTop() {
@@ -201,6 +202,7 @@ export default function App() {
       />
 
       <ScrollToTopButton theme={theme} />
+      <CallWidget />
 
       {/* Global Consultation / Configuration Modal */}
       {consultationModalOpen && (

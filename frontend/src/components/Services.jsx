@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Sun, Home, BatteryCharging, Zap, ArrowRight, CheckCircle2, ChevronRight, X, FileText } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Sun, Home, BatteryCharging, Zap, ArrowRight, CheckCircle2, ChevronRight, ChevronLeft, X, FileText, Calculator } from 'lucide-react';
 import SolarPanelCard from './SolarPanelCard';
 import { SectionAmbience } from './SolarDetails';
 import { LiveBadge, EfficiencyMeter } from './SolarTech';
@@ -14,9 +15,160 @@ import {
 
 export default function Services({ onSelectService, theme }) {
   const [selectedModalService, setSelectedModalService] = useState(null);
+  const [virtualIndex, setVirtualIndex] = useState(0);
+  const [cooldownActive, setCooldownActive] = useState(false);
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [touchStartY, setTouchStartY] = useState(0);
+  const [touchOffsetX, setTouchOffsetX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isSwipingHorizontally, setIsSwipingHorizontally] = useState(false);
+  const [isSwipingVertically, setIsSwipingVertically] = useState(false);
   const isDark = theme === 'dark';
 
+  // НАЛАШТУВАННЯ ЗАДЕРЖОК (в мілісекундах)
+  const BUTTON_COOLDOWN = 150; // Нативно швидкий відгук на кнопки
+  const SWIPE_COOLDOWN = 150;  // Нативно швидкий відгук на свайпи
+
+  const activeIndex = ((virtualIndex % 6) + 6) % 6;
+
+  const getCardOffset = (itemIndex, vIndex, totalItems = 6) => {
+    const activeMod = ((vIndex % totalItems) + totalItems) % totalItems;
+    let diff = itemIndex - activeMod;
+    const half = totalItems / 2;
+    while (diff < -half) diff += totalItems;
+    while (diff >= half) diff -= totalItems;
+    return diff;
+  };
+
+  const handleTouchStart = (e) => {
+    if (cooldownActive) return;
+    setTouchStartX(e.touches[0].clientX);
+    setTouchStartY(e.touches[0].clientY);
+    setTouchOffsetX(0);
+    setIsDragging(true);
+    setIsSwipingHorizontally(false);
+    setIsSwipingVertically(false);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+    const diffX = currentX - touchStartX;
+    const diffY = currentY - touchStartY;
+
+    if (!isSwipingHorizontally && !isSwipingVertically) {
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 5) {
+        setIsSwipingHorizontally(true);
+      } else if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 5) {
+        setIsSwipingVertically(true);
+      }
+    }
+
+    if (isSwipingHorizontally) {
+      setTouchOffsetX(diffX);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+
+    if (isSwipingHorizontally) {
+      const cardWidth = Math.min(window.innerWidth || 360, 448) - 16;
+      let shift = Math.round(touchOffsetX / cardWidth);
+      
+      if (shift === 0) {
+        const flickThreshold = 40;
+        if (touchOffsetX < -flickThreshold) {
+          shift = -1;
+        } else if (touchOffsetX > flickThreshold) {
+          shift = 1;
+        }
+      }
+
+      if (shift !== 0) {
+        handleSwipeShift(-shift);
+      }
+    }
+    setTouchOffsetX(0);
+    setIsSwipingHorizontally(false);
+    setIsSwipingVertically(false);
+  };
+
+  const handleSwipeShift = (delta) => {
+    if (cooldownActive) return;
+    setCooldownActive(true);
+
+    setTimeout(() => {
+      setCooldownActive(false);
+    }, SWIPE_COOLDOWN);
+
+    setVirtualIndex(prev => prev + delta);
+  };
+
+  const handleNext = (source = 'button') => {
+    if (cooldownActive) return;
+    setCooldownActive(true);
+
+    const delay = source === 'swipe' ? SWIPE_COOLDOWN : BUTTON_COOLDOWN;
+    setTimeout(() => {
+      setCooldownActive(false);
+    }, delay);
+
+    setVirtualIndex(prev => prev + 1);
+  };
+
+  const handlePrev = (source = 'button') => {
+    if (cooldownActive) return;
+    setCooldownActive(true);
+
+    const delay = source === 'swipe' ? SWIPE_COOLDOWN : BUTTON_COOLDOWN;
+    setTimeout(() => {
+      setCooldownActive(false);
+    }, delay);
+
+    setVirtualIndex(prev => prev - 1);
+  };
+
+  const handleDotClick = (targetIndex) => {
+    if (cooldownActive) return;
+    setCooldownActive(true);
+    setTimeout(() => setCooldownActive(false), BUTTON_COOLDOWN);
+
+    let diff = targetIndex - activeIndex;
+    const half = 6 / 2;
+    if (diff > half) diff -= 6;
+    if (diff < -half) diff += 6;
+
+    setVirtualIndex(prev => prev + diff);
+  };
+
   const services = [
+    {
+      id: 'calculator_slide',
+      title: 'Розрахунок вартості СЕС та окупності',
+      category: 'Калькулятор СЕС',
+      icon: Calculator,
+      color: 'from-amber-500 to-yellow-500',
+      Illustration: SolarFarmScene,
+      status: 'Interactive Calculator',
+      targetUrl: '/calculator',
+      specs: [
+        { label: 'Calculation time', value: '1 хв' },
+        { label: 'Accuracy', value: 'Висока' },
+        { label: 'Cost estimate', value: 'Безкоштовно' }
+      ],
+      meter: { label: 'Calculation Speed', value: 99.9, tone: 'amber', live: false },
+      shortDesc: 'Розрахуйте вартість сонячної станції під ключ, необхідну кількість панелей, ємність акумуляторів та термін окупності для вашого будинку.',
+      features: [
+        'Вибір типу даху та покрівлі',
+        'Розрахунок кількості панелей та бренду',
+        'Підбір ємності акумуляторів Deye/EcoFlow',
+        'Детальний кошторис та окупність СЕС'
+      ],
+      details: 'Інтерактивний онлайн-калькулятор сонячної електростанції під ключ. Дозволяє за лічені секунди отримати орієнтовну вартість обладнання та монтажу.'
+    },
     {
       id: 'solar_plants',
       title: 'Побудова сонячних станцій (5 кВт – 1 МВт)',
@@ -25,6 +177,7 @@ export default function Services({ onSelectService, theme }) {
       color: 'from-amber-400 to-orange-500',
       Illustration: SolarFarmScene,
       status: 'Turnkey EPC · 5 kW–1 MW',
+      targetUrl: '/services/ses-building',
       specs: [
         { label: 'Peak Output', value: '1 МВт' },
         { label: 'Specific Yield', value: '1 180 кВт·год/кВт' },
@@ -48,6 +201,7 @@ export default function Services({ onSelectService, theme }) {
       color: 'from-orange-400 to-amber-500',
       Illustration: HybridSystemScene,
       status: 'Hybrid Inverter Ready',
+      targetUrl: '/services/hybrid-systems',
       specs: [
         { label: 'Switchover', value: '4 мс' },
         { label: 'Battery Bus', value: 'LiFePO4 · 48 В' },
@@ -71,6 +225,7 @@ export default function Services({ onSelectService, theme }) {
       color: 'from-amber-400 to-yellow-500',
       Illustration: RoofMountScene,
       status: 'Roof Load Certified',
+      targetUrl: '/services/roof-installation',
       specs: [
         { label: 'Tilt Range', value: '15–40°' },
         { label: 'Wind Load', value: 'до 24 м/с' },
@@ -94,6 +249,7 @@ export default function Services({ onSelectService, theme }) {
       color: 'from-orange-500 to-amber-400',
       Illustration: PermitsScene,
       status: 'Permits Handled',
+      targetUrl: '/tariffs',
       specs: [
         { label: 'Docs Handled', value: '100% на нас' },
         { label: 'ТУ Обленерго', value: '14–30 днів' },
@@ -117,6 +273,7 @@ export default function Services({ onSelectService, theme }) {
       color: 'from-amber-500 to-orange-400',
       Illustration: SwitchboardScene,
       status: 'ПУЕ / ДБН Compliant',
+      targetUrl: '/services/battery-systems',
       specs: [
         { label: 'Ground Resist.', value: '< 4 Ом' },
         { label: 'Supply', value: '1Ф / 3Ф · 400 В' },
@@ -134,8 +291,16 @@ export default function Services({ onSelectService, theme }) {
     }
   ];
 
+  const loopSlides = [
+    services[services.length - 2],
+    services[services.length - 1],
+    ...services,
+    services[0],
+    services[1]
+  ];
+
   return (
-    <section id="services" className={`py-16 sm:py-20 transition-colors duration-300 relative border-y scroll-mt-20 ${
+    <section id="services" className={`pt-3 pb-16 md:py-20 transition-colors duration-300 relative border-y scroll-mt-20 ${
       isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-slate-100/70 text-slate-900 border-slate-200'
     }`}>
       <SectionAmbience flares={false} beams={false} />
@@ -150,7 +315,7 @@ export default function Services({ onSelectService, theme }) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
+        <div className="hidden md:block text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
           <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-semibold uppercase tracking-widest ${
             isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
           }`}>
@@ -165,8 +330,8 @@ export default function Services({ onSelectService, theme }) {
           </p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        {/* Services Grid (Desktop/Tablet only) */}
+        <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
@@ -294,6 +459,125 @@ export default function Services({ onSelectService, theme }) {
           })}
         </div>
 
+        {/* Mobile Slider (Phones/Mobile only) */}
+        {(() => {
+          return (
+            <div className="md:hidden flex flex-col items-center">
+              {/* Slide Wrapper Container */}
+              <div 
+                className="w-full max-w-md overflow-hidden relative min-h-[425px] h-[425px] mt-2 touch-pan-y"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
+                {services.map((service, index) => {
+                  const offset = getCardOffset(index, virtualIndex, services.length);
+                  const isVisibleRange = Math.abs(offset + (isDragging ? touchOffsetX / 300 : 0)) <= 1.8;
+                  const currentPos = `calc(${offset * 100}% + ${isDragging ? touchOffsetX : 0}px)`;
+
+                  return (
+                    <div
+                      key={service.id}
+                      className="absolute top-0 left-0 w-full h-full px-1.5"
+                      style={{
+                        transform: `translateX(${currentPos})`,
+                        transition: isDragging || !isVisibleRange ? 'none' : 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+                        visibility: isVisibleRange ? 'visible' : 'hidden'
+                      }}
+                    >
+                      <SolarPanelCard
+                        theme={theme}
+                        className="p-5 relative flex flex-col group shadow-lg min-h-[425px] h-[425px]"
+                        contentClassName="flex flex-col h-full justify-between"
+                      >
+                        <div className="flex flex-col h-full justify-between">
+                          <div className="flex flex-col">
+                            {/* 1. Illustration (Image) at the top */}
+                            <div className="relative rounded-2xl overflow-hidden w-full aspect-video flex items-center justify-center bg-slate-950/20 mb-4">
+                              <service.Illustration theme={theme} />
+                              
+                              {/* Status telemetry overlay */}
+                              <div className="absolute top-2.5 left-2.5">
+                                <LiveBadge theme={theme} label={service.status} tone={index % 2 === 0 ? 'amber' : 'sky'} />
+                              </div>
+                            </div>
+
+                            {/* 2. Title */}
+                            <h3 className={`text-base font-bold transition-colors mb-2 ${
+                              isDark ? 'text-white' : 'text-slate-900'
+                            }`}>
+                              {service.title}
+                            </h3>
+
+                            {/* 3. Short description */}
+                            <p className={`text-xs leading-relaxed ${
+                              isDark ? 'text-slate-300' : 'text-slate-600'
+                            }`}>
+                              {service.shortDesc}
+                            </p>
+                          </div>
+
+                          {/* 4. Button "Детальніше" / "Отримати розрахунок" below the text */}
+                          <div className="pt-4">
+                            <Link
+                              to={service.targetUrl}
+                              className="block w-full py-3.5 rounded-full bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-xs uppercase tracking-widest text-center shadow-lg transition-transform active:scale-98 cursor-pointer"
+                            >
+                              {service.id === 'calculator_slide' ? 'Отримати розрахунок' : 'Детальніше'}
+                            </Link>
+                          </div>
+                        </div>
+                      </SolarPanelCard>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Navigation Controls */}
+              <div className="flex items-center justify-between w-full max-w-sm px-6 mt-4">
+                <button
+                  onClick={() => handlePrev('button')}
+                  className={`p-2 rounded-full border transition-colors cursor-pointer ${
+                    isDark ? 'border-slate-800 bg-slate-900 text-slate-300 hover:text-white' : 'border-slate-200 bg-white text-slate-600 hover:text-slate-900 shadow-sm'
+                  }`}
+                  aria-label="Попередній слайд"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+
+                {/* Dot Indicators */}
+                <div className="flex items-center gap-3.5">
+                  {services.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => handleDotClick(i)}
+                      className={`transition-all duration-300 cursor-pointer flex items-center justify-center rounded-full ${
+                        activeIndex === i
+                          ? 'w-4 h-4 border border-amber-500 bg-transparent'
+                          : 'w-2 h-2 ' + (isDark ? 'bg-slate-700' : 'bg-slate-300')
+                      }`}
+                      aria-label={`Перейти до слайду ${i + 1}`}
+                    >
+                      {activeIndex === i && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => handleNext('button')}
+                  className={`p-2 rounded-full border transition-colors cursor-pointer ${
+                    isDark ? 'border-slate-800 bg-slate-900 text-slate-300 hover:text-white' : 'border-slate-200 bg-white text-slate-600 hover:text-slate-900 shadow-sm'
+                  }`}
+                  aria-label="Наступний слайд"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          );
+        })()}
       </div>
 
       {/* Service Detail Modal */}

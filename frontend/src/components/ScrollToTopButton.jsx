@@ -44,7 +44,7 @@ export default function ScrollToTopButton({ theme }) {
       type="button"
       aria-label="Повернутися нагору"
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className={`fixed bottom-5 right-5 z-40 w-12 h-12 rounded-full flex items-center justify-center border backdrop-blur-md transition-all duration-300 cursor-pointer ${
+      className={`fixed bottom-[84px] right-5 z-40 w-12 h-12 rounded-full flex items-center justify-center border backdrop-blur-md transition-all duration-300 cursor-pointer ${
         isDark
           ? 'border-slate-700 bg-slate-900/85 text-amber-400 hover:border-amber-400/70'
           : 'border-slate-300 bg-white/90 text-amber-700 hover:border-amber-400 shadow-lg'
