@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Services from './components/Services';
+import MiniRoiCalculator from './components/MiniRoiCalculator';
 import StatsSection from './components/StatsSection';
 import EngineerShowcase from './components/EngineerShowcase';
 import DeyeAndLegal from './components/DeyeAndLegal';
@@ -111,6 +112,9 @@ export default function App() {
           <Route path="/" element={
             <>
               <Hero 
+                theme={theme} 
+              />
+              <MiniRoiCalculator 
                 theme={theme} 
               />
               <Services 
