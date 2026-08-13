@@ -41,7 +41,7 @@ export default function ContactsPage({ theme }) {
             Контакти Майстра <span className="text-amber-500">Чедрика Івана</span>
           </h1>
           <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-            Працюємо по Закарпатській та Івано-Франківській областях. Дивіться наші об'єкти в TikTok та зв'язуйтесь зручним месенджером.
+            Працюємо по Закарпатській та Івано-Франківській областях. Дивіться наші об'єкти в TikTok та пишіть у зручний месенджер.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-2.5 pt-2">

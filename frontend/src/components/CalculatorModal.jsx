@@ -205,7 +205,7 @@ export default function CalculatorModal({ onClose, theme }) {
             Приклад Розрахунку <span className="theme-text-accent">СЕС 20–30 кВт</span>
           </h2>
           <p className="text-xs theme-text-secondary">
-            Ориєнтовний розрахунок обладнання та робіт «під ключ».
+            Орієнтовний розрахунок обладнання та робіт «під ключ».
           </p>
         </div>
 

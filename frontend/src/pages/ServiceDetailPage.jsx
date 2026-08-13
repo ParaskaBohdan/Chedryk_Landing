@@ -96,7 +96,7 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
     if (mountType === 'ground') {
       return `1) Наземна СЕС: ${roofType === 'pitched' ? 'На схилі' : 'На рівній ділянці'}, ${roofAreaSqM} м²\n2) Панелі: ${activePanelCount} шт. ${panelBrand.toUpperCase()} (${totalKw} кВт) у ${rowsCount} ряди\n3) Інвертор Deye ${inverterPowerKw} кВт ${hasBattery ? `+ АКБ ${batteryCapacityKwh} кВт·год` : ''}\n4) Кошторис: ~$${totalEstimateUsd.toLocaleString()}`;
     }
-    return `1) Специфікація Даху: ${roofType === 'pitched' ? 'Скатий' : 'Плоский'}, ${roofAreaSqM} м²\n2) Панелі: ${activePanelCount} шт. ${panelBrand.toUpperCase()} (${totalKw} кВт) у ${rowsCount} ряди\n3) Інвертор Deye ${inverterPowerKw} кВт ${hasBattery ? `+ АКБ ${batteryCapacityKwh} кВт·год` : ''}\n4) Кошторис: ~$${totalEstimateUsd.toLocaleString()}`;
+    return `1) Специфікація Даху: ${roofType === 'pitched' ? 'Скатний' : 'Плоский'}, ${roofAreaSqM} м²\n2) Панелі: ${activePanelCount} шт. ${panelBrand.toUpperCase()} (${totalKw} кВт) у ${rowsCount} ряди\n3) Інвертор Deye ${inverterPowerKw} кВт ${hasBattery ? `+ АКБ ${batteryCapacityKwh} кВт·год` : ''}\n4) Кошторис: ~$${totalEstimateUsd.toLocaleString()}`;
   };
 
   // -------------------------------------------------------------
@@ -133,7 +133,7 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
                 isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-200 bg-white shadow-md'
               }`}>
                 <h3 className="text-base sm:text-lg font-bold flex items-center gap-2 text-amber-500">
-                  <Home className="w-5 h-5" /> {mountType === 'ground' ? 'Крок 1: Оберіть тип конструкції, грунт та споживання' : 'Крок 1: Оберіть тип, покриття та споживання'}
+                  <Home className="w-5 h-5" /> {mountType === 'ground' ? 'Крок 1: Оберіть тип конструкції, ґрунт та споживання' : 'Крок 1: Оберіть тип, покриття та споживання'}
                 </h3>
 
                 {/* Roof Shape / Ground Slope */}
@@ -192,7 +192,7 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
                             : isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-50 text-slate-700'
                         }`}
                       >
-                        <p className="font-bold text-sm">Скатий / Нахилений (~30°)</p>
+                        <p className="font-bold text-sm">Скатний / Нахилений (~30°)</p>
                         <p className="text-[11px] opacity-75 mt-1">Класичний дах будинку</p>
                       </button>
 
@@ -219,14 +219,14 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
                 {mountType === 'ground' ? (
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
-                      Тип грунту (Визначає спосіб монтажу):
+                      Тип ґрунту (Визначає спосіб монтажу):
                     </label>
                     <CustomSelect
                       value={roofMaterial}
                       onChange={(val) => setRoofMaterial(val)}
                       options={[
                         { value: 'screw', label: 'Геошурупи (Сталеві гвинтові палі)' },
-                        { value: 'concrete', label: 'Бетоновані палі (Для кам\'янистих грунтів)' },
+                        { value: 'concrete', label: 'Бетоновані палі (Для кам\'янистих ґрунтів)' },
                         { value: 'hammered', label: 'Забивні палі (Гаряче цинкування)' }
                       ]}
                       icon={Layers}

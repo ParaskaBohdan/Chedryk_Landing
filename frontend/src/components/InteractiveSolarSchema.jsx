@@ -250,7 +250,7 @@ export default function InteractiveSolarSchema({
                 ) : roofType === 'pitched' ? (
                   <g>
                     <polygon points="120,280 520,280 520,420 120,420" fill="#0f172a" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
-                    <text x="320" y="360" fill="#64748b" fontSize="13" textAnchor="middle" fontFamily="monospace">АРХІТЕКТУРНИЙ ПРОФІЛЬ САКТНОГО ДАХУ (~30°)</text>
+                    <text x="320" y="360" fill="#64748b" fontSize="13" textAnchor="middle" fontFamily="monospace">АРХІТЕКТУРНИЙ ПРОФІЛЬ СКАТНОГО ДАХУ (~30°)</text>
                     <polygon points="100,280 320,130 540,280" fill="#1e293b" stroke="#f59e0b" strokeWidth="3" />
 
                     <line x1="160" y1="240" x2="480" y2="240" stroke="#fbbf24" strokeWidth="4" />
@@ -275,7 +275,7 @@ export default function InteractiveSolarSchema({
                 ) : (
                   <g>
                     <rect x="100" y="270" width="450" height="160" fill="#0f172a" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
-                    <text x="325" y="360" fill="#64748b" fontSize="13" textAnchor="middle" fontFamily="monospace">ПЛОСКИЙ БЕТОННИЙ ДАХ СЛАР (0°–5°)</text>
+                    <text x="325" y="360" fill="#64748b" fontSize="13" textAnchor="middle" fontFamily="monospace">ПЛОСКИЙ БЕТОННИЙ ДАХ (0°–5°)</text>
                     <line x1="80" y1="270" x2="470" y2="270" stroke="#cbd5e1" strokeWidth="4" />
 
                     {Array.from({ length: Math.min(rowsCount, 3) }).map((_, rIdx) => {

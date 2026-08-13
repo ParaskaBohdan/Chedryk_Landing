@@ -105,7 +105,7 @@ export default function ThankYouPage({ theme }) {
               <span className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-500 font-extrabold flex items-center justify-center flex-shrink-0 text-xs mt-0.5 border border-amber-400/40">2</span>
               <div>
                 <strong className="block font-bold">Безкоштовний виїзд інженера</strong>
-                <span className="opacity-80">За потреби виїжджаємо на об'єкт по Закарпатській та Івано-Франківській областях для замірів та аудіту електромережі.</span>
+                <span className="opacity-80">За потреби виїжджаємо на об\'єкт по Закарпатській та Івано-Франківській областях для замірів та аудиту електромережі.</span>
               </div>
             </li>
             <li className="flex items-start gap-3">

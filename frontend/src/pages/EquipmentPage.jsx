@@ -35,7 +35,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
       warranty: '25 років продукт / 30 років генерація',
       degradation: '< 0.4% на рік',
       features: ['Низький температурний коефіцієнт (-0.29%/°C)', 'Двостороннє знімання енергії (+15-20%)', 'Скло-Скло захист від граду та снігу'],
-      recommendedFor: 'Скаті та плоскі дахи приватних будинків',
+      recommendedFor: 'Скатні та плоскі дахи приватних будинків',
       badge: 'ТОП Вибір 2026',
       visual: { cols: 6, rows: 3, bifacial: true },
       status: 'N-Type TOPCon',
@@ -239,7 +239,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
       phases: '3 Фази (380V)',
       mppt: '2 MPPT трекери (до 15.6 кВт панелей)',
       backupSpeed: '4 мс (АВР)',
-      features: ["100% неспланований вихід по фазах (до 50% номіналу на 1 фазу)", 'Підмішування сонця без скидання у мережу', "Паралельне з'єднання до 16 інверторів"],
+      features: ["100% незбалансований вихід по фазах (до 50% номіналу на 1 фазу)", 'Підмішування сонця без скидання у мережу', "Паралельне з'єднання до 16 інверторів"],
       idealFor: 'Великі котеджі, малі готелі та СТО',
       visual: { phases: 3, mppt: 2 },
       status: 'Three Phase Hybrid',
@@ -841,7 +841,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                   Кріпильні Системи & Захисна Автоматика DC/AC
                 </h2>
                 <p className="text-xs sm:text-sm mt-1 font-bold" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
-                  Німецькі та українські сертифіковані метал-конструкції, сонячні кабелі з подвійною ізоляцією та ПЗІП захист.
+                  Німецькі та українські сертифіковані металоконструкції, сонячні кабелі з подвійною ізоляцією та ПЗІП захист.
                 </p>
               </div>
             </div>

@@ -18,7 +18,7 @@ export default function StepProcess({ onOpenConsultation, theme }) {
     },
     {
       step: '02',
-      title: 'Проектування & Дозволи Обленерго',
+      title: 'Проєктування & Дозволи Обленерго',
       icon: FileText,
       phase: 'Design & Permits',
       desc: 'Розрахунок потужності (від 5 кВт до 1 МВт для СЕС або гібридів Deye). Подача документів, ТУ та дозволів від Обленерго на збільшення потужності.'

@@ -41,7 +41,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
     'Гібридні системи Deye та акумулятори',
     'Установка панелей на дах',
     'Супровід документації & Зелений Тариф',
-    'Проектування та налагодження електромереж в будівлях',
+    'Проєктування та налагодження електромереж у будівлях',
     'Розрахунок з Калькулятора СЕС',
     'Інше (Загальне запитання)'
   ];
@@ -411,7 +411,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
               <MessageSquare className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-500" />
               <textarea
                 rows={3}
-                placeholder="Потужність, типом даху чи місто..."
+                placeholder="Потужність, тип даху чи місто..."
                 value={formData.comment}
                 onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
                 className={`solar-field w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors ${
@@ -434,7 +434,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
             ) : (
               <>
                 <Send className="w-4 h-4" />
-                <span>Надіслати Заявку Мастеру</span>
+                <span>Надіслати Заявку Майстру</span>
               </>
             )}
           </button>

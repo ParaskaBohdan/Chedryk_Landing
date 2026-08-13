@@ -71,7 +71,7 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
   const pipeline = [
     { stage: 'Заява та пакет документів', duration: '1–3 дні', status: 'Готово' },
     { stage: 'Технічні умови (ТУ)', duration: '14–30 днів', status: 'Готово' },
-    { stage: 'Проект та монтаж СЕС', duration: '5–14 днів', status: 'В роботі' },
+    { stage: 'Проєкт та монтаж СЕС', duration: '5–14 днів', status: 'В роботі' },
     { stage: 'Двонаправлений лічильник', duration: '3–7 днів', status: 'Очікує' },
     { stage: 'Договір на продаж', duration: '5–10 днів', status: 'Очікує' }
   ];

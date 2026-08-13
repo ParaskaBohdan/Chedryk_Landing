@@ -247,7 +247,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                           }}
                           className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${getOptionClass(roofType === 'pitched')}`}
                         >
-                          <p className="font-bold text-xs">Скатий дах</p>
+                          <p className="font-bold text-xs">Скатний дах</p>
                           <p className="text-[10px] opacity-75 mt-0.5">Нахил ~30°</p>
                         </button>
 
@@ -411,7 +411,15 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                         id="backup-hours"
                         theme={theme}
                         label="Необхідний час автономності"
-                        display={`${backupHours} ${backupHours === 4 ? 'години' : backupHours % 10 >= 2 && backupHours % 10 <= 4 && (backupHours < 10 || backupHours > 20) ? 'години' : 'годин'}`}
+                        display={`${backupHours} ${
+                          backupHours % 100 >= 11 && backupHours % 100 <= 19
+                            ? 'годин'
+                            : backupHours % 10 === 1
+                            ? 'година'
+                            : backupHours % 10 >= 2 && backupHours % 10 <= 4
+                            ? 'години'
+                            : 'годин'
+                        }`}
                         min={4}
                         max={72}
                         step={2}
@@ -475,7 +483,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                           <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
                             1.2 Металоконструкція та кріплення ({
                               roofType === 'ground' ? 'наземна СЕС' :
-                              roofType === 'flat' ? 'плоский дах' : 'скатий дах'
+                              roofType === 'flat' ? 'плоский дах' : 'скатний дах'
                             })
                           </span>
                           <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>${frameCost.toLocaleString()}</span>
@@ -559,7 +567,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                         </div>
                         <div className="flex justify-between py-2.5">
                           <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
-                            4.3 Максимальна вмістимість панелей
+                            4.3 Максимальна місткість панелей
                           </span>
                           <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>{maxPossiblePanels} шт.</span>
                         </div>
