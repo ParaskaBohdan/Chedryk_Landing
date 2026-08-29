@@ -18,17 +18,35 @@ export default function Hero({ theme }) {
   ];
 
   return (
-    <section id="hero" className={`relative pt-24 pb-8 md:py-20 lg:py-24 overflow-hidden transition-colors duration-300 ${
+    <section id="hero" className={`relative max-md:-mt-20 max-md:pt-24 pb-8 md:py-20 lg:py-24 overflow-hidden transition-colors duration-300 ${
       isDark ? 'bg-slate-900 text-white' : 'bg-slate-100/80 text-slate-900'
     }`}>
-      {/* Mobile-only background image */}
+      {/* Mobile-only background image - Dark theme */}
       <div 
-        className="block md:hidden absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
-        style={{ backgroundImage: `url('/hero_mobile_bg.jpg')` }}
+        className={`block md:hidden absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none transition-opacity duration-300 ${
+          isDark ? 'opacity-100' : 'opacity-0'
+        }`}
+        style={{ backgroundImage: "url('/hero_mobile_bg.jpg')" }}
       />
-      {/* Dark overlay for mobile to blend transparent header and keep high contrast */}
+      {/* Mobile-only background image - Light theme */}
       <div 
-        className="block md:hidden absolute inset-0 bg-gradient-to-b from-slate-950/98 via-slate-900/40 to-slate-950/95 pointer-events-none" 
+        className={`block md:hidden absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none transition-opacity duration-300 ${
+          isDark ? 'opacity-0' : 'opacity-100'
+        }`}
+        style={{ backgroundImage: "url('/hero_mobile_bg_light.jpg')" }}
+      />
+
+      {/* Dark overlay for mobile - Dark theme */}
+      <div 
+        className={`block md:hidden absolute inset-0 pointer-events-none transition-opacity duration-300 bg-gradient-to-b from-slate-950/95 via-slate-950/75 to-slate-950/98 ${
+          isDark ? 'opacity-100' : 'opacity-0'
+        }`} 
+      />
+      {/* Light overlay for mobile - Light theme with guaranteed high contrast */}
+      <div 
+        className={`block md:hidden absolute inset-0 pointer-events-none transition-opacity duration-300 bg-gradient-to-b from-white/98 via-white/88 to-white/98 backdrop-blur-[1px] ${
+          isDark ? 'opacity-0' : 'opacity-100'
+        }`} 
       />
 
       {/* Background Decorative Glowing Blobs */}
@@ -55,15 +73,19 @@ export default function Hero({ theme }) {
         {/* Mobile View: Render only title, description, and the 4 stats blocks */}
         <div className="block md:hidden space-y-6 text-center">
           <div className="space-y-4">
-            <h1 className="text-3xl font-extrabold tracking-tight leading-tight text-white">
+            <h1 className={`text-3xl font-extrabold tracking-tight leading-tight ${
+              isDark ? 'text-white' : 'text-slate-950'
+            }`}>
               Енергонезалежність & <br />
-              <span className="bg-gradient-to-r from-amber-400 via-orange-500 to-amber-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 bg-clip-text text-transparent">
                 Сонячні Електростанції
               </span>
             </h1>
 
-            <p className="text-sm font-normal leading-relaxed px-2 text-slate-200">
-              Індивідуальне проєктування, професійний монтаж та пусконалагодження СЕС <strong className="text-white">від 5 кВт до 1 МВт</strong> від <strong className="text-white">Чедрика Івана</strong>. Гібридні системи Deye, автономне живлення EcoFlow та безпечний електромонтаж.
+            <p className={`text-sm leading-relaxed px-2 font-normal ${
+              isDark ? 'text-slate-200' : 'text-slate-800'
+            }`}>
+              Індивідуальне проєктування, професійний монтаж та пусконалагодження СЕС <strong className={isDark ? 'text-white font-bold' : 'text-slate-950 font-bold'}>від 5 кВт до 1 МВт</strong> від <strong className={isDark ? 'text-white font-bold' : 'text-slate-950 font-bold'}>Чедрика Івана</strong>. Гібридні системи Deye, автономне живлення EcoFlow та безпечний електромонтаж.
             </p>
           </div>
 
@@ -72,26 +94,25 @@ export default function Hero({ theme }) {
             {stats.map((item, index) => (
               <div
                 key={index}
-                className={`py-2 px-3 rounded-xl border text-left backdrop-blur-md transition-all ${
+                className={`py-2.5 px-3 rounded-xl border text-left backdrop-blur-md transition-all ${
                   isDark
-                    ? 'pv-shell pv-texture border-white/10 bg-white/5 text-white'
-                    : 'border-white/10 text-white shadow-md'
+                    ? 'pv-shell pv-texture border-white/10 bg-slate-950/60 text-white shadow-lg'
+                    : 'border-amber-300/70 bg-white/90 text-slate-900 shadow-md'
                 }`}
-                style={
-                  !isDark
-                    ? { background: 'rgba(255, 255, 255, 0.12)' }
-                    : undefined
-                }
               >
                 {isDark && <span className="pv-sheen" aria-hidden="true" />}
                 <div className="pv-content">
-                  <p className="text-[8px] font-bold uppercase tracking-wider text-white/70">
+                  <p className={`text-[8px] font-bold uppercase tracking-wider ${
+                    isDark ? 'text-white/70' : 'text-slate-600'
+                  }`}>
                     {item.label}
                   </p>
-                  <p className="text-base font-black mt-0 text-orange-500">
+                  <p className="text-base font-black mt-0 text-amber-500">
                     {item.value}
                   </p>
-                  <p className="text-[9px] mt-0 leading-tight text-white/90">
+                  <p className={`text-[9px] mt-0 leading-tight ${
+                    isDark ? 'text-white/90' : 'text-slate-800 font-medium'
+                  }`}>
                     {item.desc}
                   </p>
                 </div>

@@ -154,14 +154,14 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
         )}
 
         {/* Mode Switcher Tabs */}
-        <div className="flex justify-center mb-10">
-          <div className={`inline-flex p-1.5 rounded-2xl border shadow-lg ${
+        <div className="flex justify-center mb-8 sm:mb-10">
+          <div className={`inline-flex items-center gap-2 sm:gap-3 p-1.5 rounded-2xl border shadow-lg ${
             isDark ? 'bg-slate-800/90 border-slate-700/80' : 'bg-white border-slate-200'
           }`}>
             <button
               type="button"
               onClick={() => setCalcMode('cost')}
-              className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all duration-300 cursor-pointer ${
+              className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all duration-300 cursor-pointer ${
                 calcMode === 'cost'
                   ? isDark
                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
@@ -178,7 +178,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
             <button
               type="button"
               onClick={() => setCalcMode('income')}
-              className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all duration-300 cursor-pointer ${
+              className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all duration-300 cursor-pointer ${
                 calcMode === 'income'
                   ? isDark
                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
@@ -203,7 +203,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
             <SolarPanelCard
               theme={theme}
               glow
-              className="p-4 sm:p-5 mb-8 shadow-xl"
+              className="p-4 sm:p-5 mb-8 shadow-xl w-full"
               contentClassName="space-y-3"
             >
               <RegistrationMarks />

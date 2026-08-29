@@ -769,69 +769,97 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
         <BusbarDivider />
 
         {/* Hero Section Banner */}
-        <div className={`pv-shell pv-texture pv-frame grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-3xl border ${
-          isDark ? 'bg-slate-800/80 border-slate-700/80' : 'bg-white border-slate-200 shadow-xl'
+        <div className={`pv-shell pv-texture pv-frame relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch p-6 sm:p-8 lg:p-10 rounded-3xl border transition-all duration-300 ${
+          isDark
+            ? 'bg-slate-800/90 border-slate-700/80 shadow-2xl'
+            : 'bg-gradient-to-br from-white via-amber-50/40 to-orange-50/20 border-amber-200/90 shadow-2xl shadow-amber-500/5'
         }`}>
           <RegistrationMarks />
           
-          <div className="pv-content lg:col-span-7 space-y-5">
-            <div className="flex items-center gap-3 flex-wrap">
-              <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-amber-500 text-slate-950 shadow-md">
-                {service.badge}
-              </span>
-              <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full border ${
-                isDark ? 'border-slate-800 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-100 text-slate-700'
-              }`}>
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-                <span>Закарпаття & Франківщина</span>
-              </span>
+          <div className="pv-content lg:col-span-7 flex flex-col justify-between space-y-6">
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-amber-500 text-slate-950 shadow-md">
+                  {service.badge}
+                </span>
+                <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full border ${
+                  isDark ? 'border-slate-800 bg-slate-900 text-slate-300' : 'border-amber-200/70 bg-amber-100/60 text-slate-700'
+                }`}>
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>Закарпаття & Франківщина</span>
+                </span>
+              </div>
+
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+                {service.title}
+              </h1>
+
+              <p className={`text-sm sm:text-base leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                {service.fullDescription}
+              </p>
             </div>
-
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
-              {service.title}
-            </h1>
-
-            <p className={`text-sm sm:text-base leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-              {service.fullDescription}
-            </p>
 
             {/* Quick Advantages Badge list */}
-            <div className="pt-2 flex flex-wrap gap-3">
-              {service.advantages.map((adv, idx) => (
-                <div key={idx} className={`flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-xl border ${
-                  isDark ? 'border-slate-800 bg-slate-900 text-amber-300' : 'border-amber-200 bg-amber-50 text-amber-900'
-                }`}>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
-                  <span>{adv}</span>
-                </div>
-              ))}
-            </div>
+            <div className="space-y-4">
+              <div className="flex flex-wrap gap-2.5 sm:gap-3">
+                {service.advantages.map((adv, idx) => (
+                  <div key={idx} className={`flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-xl border transition-colors ${
+                    isDark ? 'border-slate-800 bg-slate-900/90 text-amber-300' : 'border-amber-200/90 bg-amber-50/90 text-amber-900 shadow-sm'
+                  }`}>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
+                    <span>{adv}</span>
+                  </div>
+                ))}
+              </div>
 
-            {/* CTA Button */}
-            <div className="pt-4">
-              <button
-                onClick={() => onOpenConsultation(service.title)}
-                className="btn-orange-bright font-bold py-3.5 px-8 rounded-xl shadow-lg text-sm transition-transform active:scale-95 cursor-pointer"
-              >
-                Замовити Безкоштовний Розрахунок
-              </button>
+              {/* CTA Button & Trust Line */}
+              <div className="pt-2 flex flex-wrap items-center gap-4">
+                <button
+                  onClick={() => onOpenConsultation(service.title)}
+                  className="btn-orange-bright font-bold py-3.5 px-8 rounded-xl shadow-lg text-sm transition-all hover:scale-105 active:scale-95 glow-amber cursor-pointer flex items-center gap-2"
+                >
+                  <Calculator className="w-4 h-4" />
+                  <span>Замовити Безкоштовний Розрахунок</span>
+                </button>
+                <span className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                  • Виїзд інженера та замір безкоштовно
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="pv-content lg:col-span-5 relative h-72 sm:h-96 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/40">
+          {/* Right Column: Full-Height Immersive Photo Showcase */}
+          <div className="pv-content lg:col-span-5 relative min-h-[340px] sm:min-h-[400px] lg:min-h-full rounded-2xl overflow-hidden shadow-2xl border border-slate-700/40 group flex flex-col justify-between">
             <img 
               src={service.image} 
               alt={service.title}
-              className="w-full h-full object-cover" 
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
-            <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-slate-950/80 backdrop-blur-md border border-slate-700/60 flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold">
-                <IconComponent className="w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-white">NOVA ENERGY_UA</p>
-                <p className="text-[11px] text-amber-400 font-semibold">Гарантія якості та сервісу</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/25 to-slate-950/40 pointer-events-none" />
+
+            {/* Top Badges overlay */}
+            <div className="relative z-10 p-3.5 sm:p-4 flex items-center justify-between gap-2">
+              <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-slate-900/80 backdrop-blur-md text-amber-300 border border-amber-500/30 shadow-lg">
+                Tier-1 Стандарт
+              </span>
+              <LiveBadge theme="dark" label="Інженерний Монтаж" tone="amber" />
+            </div>
+
+            {/* Bottom Brand Card */}
+            <div className="relative z-10 p-3.5 sm:p-4">
+              <div className="p-3 sm:p-3.5 rounded-xl bg-slate-950/90 backdrop-blur-md border border-white/15 flex items-center justify-between gap-3 shadow-2xl">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-amber-500 text-slate-950 font-bold shadow-md flex-shrink-0">
+                    <IconComponent className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs sm:text-sm font-bold text-white tracking-wide">NOVA ENERGY_UA</p>
+                    <p className="text-[11px] text-amber-400 font-semibold">Гарантія якості та сервісу</p>
+                  </div>
+                </div>
+                <span className="hidden sm:inline-flex px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                  Гарантія
+                </span>
               </div>
             </div>
           </div>

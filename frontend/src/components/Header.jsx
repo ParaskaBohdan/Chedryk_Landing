@@ -75,11 +75,11 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
   }, []);
 
   return (
-    <header className={`z-50 transition-all duration-300 ${
+    <header className={`sticky top-0 z-50 w-full transition-colors duration-300 ${
       !isScrolled && isHomePage
-        ? 'max-md:absolute max-md:w-full max-md:top-0 max-md:bg-transparent max-md:border-transparent max-md:shadow-none max-md:backdrop-blur-none ' + 
-          (isDark ? 'md:sticky md:top-0 md:border-b md:border-slate-800/80 md:bg-slate-950/90 md:text-white md:backdrop-blur-md text-white' : 'md:sticky md:top-0 md:border-b md:border-slate-200 md:bg-slate-100/95 md:text-slate-800 md:shadow-xs md:backdrop-blur-md text-slate-800')
-        : 'sticky top-0 border-b ' + (isDark ? 'border-slate-800/80 bg-slate-950/90 text-white backdrop-blur-md' : 'border-slate-200 bg-slate-100/95 text-slate-800 shadow-xs backdrop-blur-md')
+        ? 'max-md:bg-transparent max-md:border-transparent max-md:shadow-none max-md:backdrop-blur-none ' + 
+          (isDark ? 'md:border-b md:border-slate-800/80 md:bg-slate-950/90 md:text-white md:backdrop-blur-md text-white' : 'md:border-b md:border-slate-200 md:bg-slate-100/95 md:text-slate-800 md:shadow-xs md:backdrop-blur-md text-slate-800')
+        : 'border-b ' + (isDark ? 'border-slate-800/80 bg-slate-950/90 text-white backdrop-blur-md' : 'border-slate-200 bg-slate-100/95 text-slate-800 shadow-xs backdrop-blur-md')
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
         
@@ -109,8 +109,6 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
               NOVA
             </span>
             <span className={`font-extrabold text-[10px] sm:text-[11px] tracking-[0.22em] leading-tight ${
-              !isScrolled && isHomePage ? 'max-md:text-white ' : ''
-            }${
               isDark ? 'text-white' : 'text-slate-900'
             }`}>
               ENERGY_UA
@@ -197,16 +195,9 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
             onClick={toggleTheme}
             title={isDark ? 'Увімкнути світлу тему' : 'Увімкнути темну тему'}
             className={`group relative flex items-center justify-center h-[38px] w-[38px] rounded-xl border transition-colors flex-shrink-0 overflow-hidden ${
-              !isScrolled && isHomePage
-                ? 'max-md:text-white max-md:border-white/20 max-md:bg-white/10 ' + 
-                  (isDark 
-                    ? 'md:border-slate-800 md:bg-slate-900 md:text-amber-400 hover:bg-slate-800' 
-                    : 'md:border-slate-300 md:bg-slate-200/80 md:text-slate-700 hover:bg-slate-200'
-                  )
-                : (isDark 
-                    ? 'text-amber-400 border-slate-800 bg-slate-900 hover:bg-slate-800' 
-                    : 'text-slate-700 border-slate-300 bg-slate-200/80 hover:bg-slate-200'
-                  )
+              isDark 
+                ? 'text-amber-400 border-slate-800 bg-slate-900/90 hover:bg-slate-800' 
+                : 'text-slate-700 border-slate-300 bg-white/80 hover:bg-slate-100'
             }`}
           >
             {/* Sun and moon cross-fade and rotate through each other */}
@@ -216,9 +207,7 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
               }`}
             />
             <Moon
-              className={`absolute w-5 h-5 transition-all duration-500 ${
-                !isScrolled && isHomePage ? 'max-md:text-white ' : 'text-slate-800 '
-              }${
+              className={`absolute w-5 h-5 transition-all duration-500 text-slate-800 ${
                 isDark ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'
               }`}
             />
@@ -241,12 +230,9 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className={`lg:hidden p-2 rounded-xl border transition-colors flex-shrink-0 ${
-              !isScrolled && isHomePage
-                ? 'text-white border-white/20 bg-white/10'
-                : (isDark 
-                    ? 'text-slate-300 border-slate-800 bg-slate-900' 
-                    : 'text-slate-700 border-slate-300 bg-slate-200/80'
-                  )
+              isDark 
+                ? 'text-slate-200 border-slate-800 bg-slate-900/90' 
+                : 'text-slate-800 border-slate-300 bg-white/80'
             }`}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

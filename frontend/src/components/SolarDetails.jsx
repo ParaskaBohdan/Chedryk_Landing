@@ -59,7 +59,7 @@ export function SectionAmbience({ flares = true, beams = true, variant = 'a' }) 
 /** Engineering crop marks on the four corners of a feature panel. */
 export function RegistrationMarks() {
   return (
-    <span aria-hidden="true">
+    <span aria-hidden="true" className="pointer-events-none absolute inset-0 block overflow-hidden">
       <span className="reg-mark top-3 left-3 border-t border-l" />
       <span className="reg-mark top-3 right-3 border-t border-r" />
       <span className="reg-mark bottom-3 left-3 border-b border-l" />

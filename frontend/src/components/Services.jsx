@@ -522,9 +522,14 @@ export default function Services({ onSelectService, theme }) {
                           <div className="pt-4">
                             <Link
                               to={service.targetUrl}
-                              className="block w-full py-3.5 rounded-full bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-xs uppercase tracking-widest text-center shadow-lg transition-transform active:scale-98 cursor-pointer"
+                              className={`w-full py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider text-center transition-all active:scale-98 cursor-pointer flex items-center justify-center gap-2 shadow-md ${
+                                isDark
+                                  ? 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-amber-500/15'
+                                  : 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-orange-500/20'
+                              }`}
                             >
-                              {service.id === 'calculator_slide' ? 'Отримати розрахунок' : 'Детальніше'}
+                              <span>{service.id === 'calculator_slide' ? 'Отримати розрахунок' : 'Детальніше'}</span>
+                              <ArrowRight className="w-3.5 h-3.5" />
                             </Link>
                           </div>
                         </div>
