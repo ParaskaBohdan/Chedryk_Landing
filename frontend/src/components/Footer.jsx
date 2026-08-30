@@ -135,9 +135,9 @@ export default function Footer({ onOpenConsultation, theme }) {
               Контакти & Соцмережі
             </h4>
             <div className="space-y-2 text-xs">
-              <a href="tel:+380970000000" className="flex items-center gap-2 hover:text-amber-500 transition-colors">
+              <a href="tel:+380675300103" className="flex items-center gap-2 hover:text-amber-500 transition-colors">
                 <Phone className="w-3.5 h-3.5 text-amber-500" />
-                <span>+380 (97) 000-00-00</span>
+                <span>+380 (67) 530-01-03</span>
               </a>
 
               <div className="flex items-center gap-2 opacity-80">
@@ -180,7 +180,7 @@ export default function Footer({ onOpenConsultation, theme }) {
         <div className={`mt-6 pt-6 border-t flex flex-col sm:flex-row items-center justify-between text-xs opacity-70 gap-3 ${
           isDark ? 'border-slate-800' : 'border-amber-200'
         }`}>
-          <p>© {new Date().getFullYear()} Чедрик Іван. Усі права захищено. Закарпаття & Івано-Франківщина.</p>
+          <p>© {new Date().getFullYear()} Nova Energy. Усі права захищено. Закарпаття & Івано-Франківщина.</p>
           <button
             onClick={scrollToTop}
             className="flex items-center gap-1.5 hover:text-amber-500 transition-colors"

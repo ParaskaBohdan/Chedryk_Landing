@@ -85,7 +85,7 @@ export default function Hero({ theme }) {
             <p className={`text-sm leading-relaxed px-2 font-normal ${
               isDark ? 'text-slate-200' : 'text-slate-800'
             }`}>
-              Індивідуальне проєктування, професійний монтаж та пусконалагодження СЕС <strong className={isDark ? 'text-white font-bold' : 'text-slate-950 font-bold'}>від 5 кВт до 1 МВт</strong> від <strong className={isDark ? 'text-white font-bold' : 'text-slate-950 font-bold'}>Чедрика Івана</strong>. Гібридні системи Deye, автономне живлення EcoFlow та безпечний електромонтаж.
+              Індивідуальне проєктування, професійний монтаж та пусконалагодження СЕС <strong className={isDark ? 'text-white font-bold' : 'text-slate-950 font-bold'}>від 5 кВт до 1 МВт</strong> від <strong className={isDark ? 'text-white font-bold' : 'text-slate-950 font-bold'}>Nova Energy</strong>. Гібридні системи Deye, автономне живлення EcoFlow та безпечний електромонтаж.
             </p>
           </div>
 
@@ -151,7 +151,7 @@ export default function Hero({ theme }) {
               <p className={`text-sm sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed ${
                 isDark ? 'text-slate-200' : 'text-slate-700'
               }`}>
-                Індивідуальне проєктування, професійний монтаж та пусконалагодження СЕС <strong className={isDark ? 'text-white' : 'text-slate-900'}>від 5 кВт до 1 МВт</strong> від <strong className={isDark ? 'text-white' : 'text-slate-900'}>Чедрика Івана</strong>. Гібридні системи Deye, автономне живлення EcoFlow та безпечний електромонтаж.
+                Індивідуальне проєктування, професійний монтаж та пусконалагодження СЕС <strong className={isDark ? 'text-white' : 'text-slate-900'}>від 5 кВт до 1 МВт</strong> від <strong className={isDark ? 'text-white' : 'text-slate-900'}>Nova Energy</strong>. Гібридні системи Deye, автономне живлення EcoFlow та безпечний електромонтаж.
               </p>
 
               {/* CTA Buttons */}

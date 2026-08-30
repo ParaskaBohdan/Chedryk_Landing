@@ -67,7 +67,7 @@ if (empty($name) || empty($phone)) {
 $botToken = getenv('TELEGRAM_BOT_TOKEN') ?: 'YOUR_TELEGRAM_BOT_TOKEN';
 $chatId = getenv('TELEGRAM_CHAT_ID') ?: 'YOUR_TELEGRAM_CHAT_ID';
 
-$textMessage = "⚡ <b>Нова заявка на консультацію (Chedryk Landing)</b> ⚡\n\n";
+$textMessage = "⚡ <b>Нова заявка на консультацію (Nova Energy)</b> ⚡\n\n";
 $textMessage .= "👤 <b>Ім'я:</b> " . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . "\n";
 $textMessage .= "📞 <b>Телефон:</b> " . htmlspecialchars($phone, ENT_QUOTES, 'UTF-8') . "\n";
 $textMessage .= "🛠️ <b>Вибрана послуга:</b> " . htmlspecialchars($service, ENT_QUOTES, 'UTF-8') . "\n";
@@ -114,6 +114,6 @@ if ($botToken !== 'YOUR_TELEGRAM_BOT_TOKEN' && $chatId !== 'YOUR_TELEGRAM_CHAT_I
 http_response_code(200);
 echo json_encode([
     'success' => true,
-    'message' => 'Дякуємо! Вашу заявку успішно прийнято. Чедрик Іван зв\'яжеться з вами найближчим часом.',
+    'message' => 'Дякуємо! Вашу заявку успішно прийнято. Фахівець Nova Energy зв\'яжеться з вами у вибраний час.',
     'telegram_status' => $telegramSent ? 'sent_or_mocked' : $telegramError
 ]);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { Phone, Menu, X, Sun, Moon, ShieldCheck, Video, Wrench, BarChart2, Zap, Calculator } from 'lucide-react';
+import { Phone, Menu, X, ShieldCheck, Video, Wrench, BarChart2, Zap, Calculator } from 'lucide-react';
 
 function TikTokIcon(props) {
   return (
@@ -10,7 +10,7 @@ function TikTokIcon(props) {
   );
 }
 
-export default function Header({ onOpenConsultation, theme, toggleTheme }) {
+export default function Header({ onOpenConsultation, theme }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -183,39 +183,13 @@ export default function Header({ onOpenConsultation, theme, toggleTheme }) {
         {/* Right Action Bar */}
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <a
-            href="tel:+380970000000"
-            title="Зателефонувати Чедрику Івану"
+            href="tel:+380675300103"
+            title="Зателефонувати в Nova Energy"
             className="flex items-center justify-center h-[38px] w-[38px] sm:w-auto sm:px-4 rounded-xl bg-green-600 hover:bg-green-700 text-white transition-colors flex-shrink-0 shadow-md gap-2"
           >
             <Phone className="w-4 h-4 fill-current" />
-            <span className="text-xs font-bold hidden sm:inline">+380 (97) 000-00-00</span>
+            <span className="text-xs font-bold hidden sm:inline">+380 (67) 530-01-03</span>
           </a>
-
-          <button
-            onClick={toggleTheme}
-            title={isDark ? 'Увімкнути світлу тему' : 'Увімкнути темну тему'}
-            className={`group relative flex items-center justify-center h-[38px] w-[38px] rounded-xl border transition-colors flex-shrink-0 overflow-hidden ${
-              isDark 
-                ? 'text-amber-400 border-slate-800 bg-slate-900/90 hover:bg-slate-800' 
-                : 'text-slate-700 border-slate-300 bg-white/80 hover:bg-slate-100'
-            }`}
-          >
-            {/* Sun and moon cross-fade and rotate through each other */}
-            <Sun
-              className={`absolute w-5 h-5 transition-all duration-500 ${
-                isDark ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'
-              }`}
-            />
-            <Moon
-              className={`absolute w-5 h-5 transition-all duration-500 text-slate-800 ${
-                isDark ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'
-              }`}
-            />
-            <span
-              className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md bg-amber-400/30 pointer-events-none"
-              aria-hidden="true"
-            />
-          </button>
 
           {/* Light Radiant Orange Button -> Leads to Calculator */}
           <button

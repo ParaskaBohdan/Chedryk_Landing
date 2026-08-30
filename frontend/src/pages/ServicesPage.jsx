@@ -35,7 +35,7 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
             isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
           }`}>
             <Wrench className="w-4 h-4 text-amber-500" />
-            <span>Каталог Послуг Чедрика Івана • NOVA ENERGY_UA</span>
+            <span>Каталог Послуг NOVA ENERGY</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">

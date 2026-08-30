@@ -38,7 +38,7 @@ export default function ContactsPage({ theme }) {
             <span>Прямий Зв'язок & Соцмережі</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold">
-            Контакти Майстра <span className="text-amber-500">Чедрика Івана</span>
+            Контакти Компанії <span className="text-amber-500">Nova Energy</span>
           </h1>
           <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
             Працюємо по Закарпатській та Івано-Франківській областях. Дивіться наші об'єкти в TikTok та пишіть у зручний месенджер.
@@ -66,7 +66,7 @@ export default function ContactsPage({ theme }) {
                   <Sun className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">Чедрик Іван</h3>
+                  <h3 className="text-xl font-bold">Nova Energy</h3>
                   <p className="text-xs text-amber-500 font-semibold">
                     Монтаж СЕС (5 кВт – 1 МВт) • Закарпаття & Франківщина
                   </p>
@@ -86,8 +86,8 @@ export default function ContactsPage({ theme }) {
                     <p className="text-xs font-medium opacity-70">
                       Телефон для консультацій
                     </p>
-                    <a href="tel:+380970000000" className="text-lg font-bold hover:text-amber-500 transition-colors">
-                      +380 (97) 000-00-00
+                    <a href="tel:+380675300103" className="text-lg font-bold hover:text-amber-500 transition-colors">
+                      +380 (67) 530-01-03
                     </a>
                   </div>
                 </div>

@@ -9,8 +9,8 @@ import { Phone } from 'lucide-react';
 export default function CallWidget() {
   return (
     <a
-      href="tel:+380970000000"
-      aria-label="Зателефонувати майстру"
+      href="tel:+380675300103"
+      aria-label="Зателефонувати в Nova Energy"
       style={{ width: '48px', height: '48px', minWidth: '48px', minHeight: '48px' }}
       className="fixed bottom-5 right-5 z-40 rounded-full bg-green-500 hover:bg-green-600 text-white flex items-center justify-center shadow-[0_4px_20px_rgba(34,197,94,0.4)] transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer group flex-shrink-0"
     >

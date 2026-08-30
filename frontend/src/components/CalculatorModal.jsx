@@ -198,14 +198,14 @@ export default function CalculatorModal({ onClose, theme }) {
         {/* Modal Header */}
         <div className="text-center space-y-1 mb-4 pr-8 flex-shrink-0">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[11px] font-semibold theme-badge">
-            <Calculator className="w-3.5 h-3.5 theme-icon-accent" />
-            <span>Деталізований Кошторис СЕС</span>
+            <Zap className="w-3.5 h-3.5 theme-icon-accent" />
+            <span>Фінансова Модель СЕС</span>
           </div>
           <h2 className="text-lg sm:text-2xl font-extrabold theme-text-primary">
-            Приклад Розрахунку <span className="theme-text-accent">СЕС 20–30 кВт</span>
+            Прогноз Доходу <span className="theme-text-accent">СЕС 20–30 кВт</span>
           </h2>
           <p className="text-xs theme-text-secondary">
-            Орієнтовний розрахунок обладнання та робіт «під ключ».
+            Орієнтовний розрахунок річної генерації, виплат за Зеленим тарифом та економії.
           </p>
         </div>
 
@@ -217,55 +217,58 @@ export default function CalculatorModal({ onClose, theme }) {
         ) : (
           <div className="flex-grow overflow-y-auto pr-1 space-y-4">
             
-            {/* Calculation Table */}
-            <div className="overflow-x-auto max-h-56 overflow-y-auto rounded-xl border theme-border-subtle shadow-xs">
-              <table className="w-full text-left border-collapse text-xs">
-                <thead className="sticky top-0 z-10">
-                  <tr className="border-b theme-border-subtle theme-bg-input font-bold theme-text-primary">
-                    <th className="py-2 px-2.5">#</th>
-                    <th className="py-2 px-2.5">Найменування</th>
-                    <th className="py-2 px-2 text-center">Ціна од.</th>
-                    <th className="py-2 px-2 text-center">К-сть</th>
-                    <th className="py-2 px-2.5 text-right">Сума ($)</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y theme-border-subtle theme-text-secondary">
-                  {calculationData?.items?.map((item, index) => (
-                    <tr key={item.id || index} className="hover:theme-bg-input/50 transition-colors">
-                      <td className="py-1.5 px-2.5 font-mono font-bold theme-text-accent">{index + 1}</td>
-                      <td className="py-1.5 px-2.5 font-medium theme-text-primary">{item.name}</td>
-                      <td className="py-1.5 px-2 text-center font-mono theme-text-muted">{item.unit_price}</td>
-                      <td className="py-1.5 px-2 text-center font-mono">{item.qty}</td>
-                      <td className="py-1.5 px-2.5 text-right font-mono font-bold theme-text-primary">
-                        ${item.total_usd.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            {/* Financial & Generation Metrics Grid */}
+            <div className="grid grid-cols-2 gap-2.5 text-xs">
+              <div className="p-3 rounded-xl border theme-border-subtle theme-bg-card space-y-1">
+                <span className="text-[11px] font-medium theme-text-secondary block">Річна генерація:</span>
+                <span className="text-sm sm:text-base font-extrabold theme-text-primary block font-mono">
+                  23 600 – 35 400 кВт·год
+                </span>
+              </div>
+
+              <div className="p-3 rounded-xl border theme-border-subtle theme-bg-card space-y-1">
+                <span className="text-[11px] font-medium theme-text-secondary block">Зелений тариф (продаж):</span>
+                <span className="text-sm sm:text-base font-extrabold text-amber-500 block font-mono">
+                  0.163 € (~$0.18) / кВт·год
+                </span>
+              </div>
+
+              <div className="p-3 rounded-xl border theme-border-subtle theme-bg-card space-y-1">
+                <span className="text-[11px] font-medium theme-text-secondary block">Середній дохід на місяць:</span>
+                <span className="text-sm sm:text-base font-extrabold text-emerald-500 block font-mono">
+                  +$320 – $460 / міс
+                </span>
+              </div>
+
+              <div className="p-3 rounded-xl border theme-border-subtle theme-bg-card space-y-1">
+                <span className="text-[11px] font-medium theme-text-secondary block">Термін окупності:</span>
+                <span className="text-sm sm:text-base font-extrabold theme-text-accent block font-mono">
+                  ~3.8 – 4.5 років
+                </span>
+              </div>
             </div>
 
-            {/* Total Highlight Banner */}
-            <div className="p-3 sm:p-4 rounded-xl border flex items-center justify-between gap-3 theme-badge shadow-sm">
+            {/* Total Highlight Banner - ANNUAL INCOME FOCUS */}
+            <div className="p-3.5 sm:p-4 rounded-xl border flex items-center justify-between gap-3 theme-badge shadow-sm">
               <div className="flex items-center gap-2.5">
                 <div className="p-2.5 rounded-lg theme-btn-primary flex items-center justify-center">
-                  <DollarSign className="w-5 h-5" />
+                  <Zap className="w-5 h-5" />
                 </div>
                 <div>
                   <span className="text-[11px] uppercase font-bold tracking-wider opacity-90 block">
-                    Загальна Вартість «Під Ключ»
+                    Орієнтовний Річний Дохід
                   </span>
                   <span className="text-[10px] theme-text-secondary">
-                    Обладнання, доставка, монтаж та налаштування
+                    Зелений тариф + економія на власних рахунках
                   </span>
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-xl sm:text-2xl font-black font-mono tracking-tight theme-text-accent block">
-                  ${calculationData?.total_usd?.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                <span className="text-xl sm:text-2xl font-black font-mono tracking-tight text-emerald-500 block">
+                  +$3 800 – $5 500
                 </span>
                 <span className="text-[10px] font-semibold theme-text-muted block">
-                  (~ 567 000 грн)
+                  (~ 158 000 – 228 000 грн/рік)
                 </span>
               </div>
             </div>
@@ -276,7 +279,7 @@ export default function CalculatorModal({ onClose, theme }) {
                 <CheckCircle className="w-10 h-10 mx-auto theme-icon-accent" />
                 <h3 className="text-base font-bold theme-text-primary">Заявку Успішно Відправлено!</h3>
                 <p className="text-xs theme-text-secondary max-w-sm mx-auto">
-                  Чедрик Іван зв'яжеться з вами за вказаним номером для детального узгодження кошторису.
+                  Фахівець Nova Energy зв'яжеться з вами за вказаним номером для детального узгодження кошторису.
                 </p>
                 <button
                   onClick={onClose}
@@ -350,7 +353,7 @@ export default function CalculatorModal({ onClose, theme }) {
                     ) : (
                       <>
                         <Send className="w-3.5 h-3.5 fill-current" />
-                        <span>Отримати Кошторис Від Чедрика Івана</span>
+                        <span>Отримати Розрахунок Кошторису Nova Energy</span>
                       </>
                     )}
                   </button>

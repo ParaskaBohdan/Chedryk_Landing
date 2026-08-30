@@ -36,17 +36,34 @@ function ScrollToTop() {
 
 export default function App() {
   const { pathname } = useLocation();
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('chedryk_theme') || 'dark';
-  });
+  const getSystemTheme = () => {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return 'dark';
+  };
+
+  const [theme, setTheme] = useState(getSystemTheme);
 
   const [consultationModalOpen, setConsultationModalOpen] = useState(false);
   const [modalType, setModalType] = useState('consultation'); // 'consultation' | 'configuration'
   const [prefilledService, setPrefilledService] = useState('');
   const [configSummaryText, setConfigSummaryText] = useState('');
 
+  // Auto sync with system theme changes (dark/light)
   useEffect(() => {
-    localStorage.setItem('chedryk_theme', theme);
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleThemeChange = (e) => {
+      setTheme(e.matches ? 'dark' : 'light');
+    };
+
+    mediaQuery.addEventListener('change', handleThemeChange);
+    return () => mediaQuery.removeEventListener('change', handleThemeChange);
+  }, []);
+
+  useEffect(() => {
     const root = document.documentElement;
     if (theme === 'dark') {
       root.classList.add('dark');
@@ -56,27 +73,6 @@ export default function App() {
       root.classList.remove('dark');
     }
   }, [theme]);
-
-  // Central Document Title Management for all static routes
-  useEffect(() => {
-    const titleMap = {
-      '/': 'Nova Energy — Сонячні Станції & Електромонтаж Закарпаття та Прикарпаття',
-      '/services': 'Каталог Послуг — Nova Energy',
-      '/equipment': 'Каталог Комплектуючих — Nova Energy',
-      '/tariffs': 'Зелений Тариф & Обленерго — Nova Energy',
-      '/calculator': 'Калькулятор СЕС — Nova Energy',
-      '/contacts': 'Контакти — Nova Energy',
-      '/thank-you': 'Дякуємо за заявку — Nova Energy',
-    };
-
-    if (!pathname.startsWith('/services/')) {
-      document.title = titleMap[pathname] || 'Сторінку не знайдено — Nova Energy';
-    }
-  }, [pathname]);
-
-  const toggleTheme = () => {
-    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
-  };
 
   const handleOpenConsultation = (serviceTitle = '') => {
     setModalType('consultation');
@@ -102,7 +98,6 @@ export default function App() {
       <Header 
         onOpenConsultation={() => handleOpenConsultation()} 
         theme={theme}
-        toggleTheme={toggleTheme}
       />
 
       {/* Main Content Body with React Router Routes.

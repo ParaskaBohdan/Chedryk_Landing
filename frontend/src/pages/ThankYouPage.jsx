@@ -141,7 +141,7 @@ export default function ThankYouPage({ theme }) {
             </a>
 
             <a
-              href="tel:+380970000000"
+              href="tel:+380675300103"
               className={`p-4 rounded-2xl border transition-all flex items-center gap-3 text-left group ${
                 isDark
                   ? 'border-slate-700 bg-slate-900/60 hover:bg-slate-900 text-white'
@@ -155,7 +155,7 @@ export default function ThankYouPage({ theme }) {
               </div>
               <div>
                 <p className={`text-xs font-bold group-hover:underline ${isDark ? 'text-amber-400' : 'text-amber-600'}`}>Термінове запитання?</p>
-                <p className={`text-[11px] ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>Телефонуйте прямо зараз: +380 (97) 000-00-00</p>
+                <p className={`text-[11px] ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>Телефонуйте прямо зараз: +380 (67) 530-01-03</p>
               </div>
             </a>
           </div>
