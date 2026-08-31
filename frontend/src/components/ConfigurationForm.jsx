@@ -272,7 +272,7 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className={`solar-field w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors ${
-                  isDark ? 'border-slate-700 bg-slate-900/90 text-white placeholder-slate-400' : 'border-amber-200 bg-amber-50/50 text-slate-900 placeholder-slate-400'
+                  isDark ? 'border-slate-700 bg-slate-900/90 text-white placeholder-slate-400' : 'border-slate-300 bg-slate-100/90 text-slate-900 placeholder-slate-400'
                 }`}
               />
             </div>
@@ -287,7 +287,7 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
               
               {/* Visual Mask Overlay */}
               <div className={`w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm font-mono flex items-center select-none z-10 ${
-                isDark ? 'border-slate-700 bg-slate-900/90' : 'border-amber-200 bg-amber-50/50'
+                isDark ? 'border-slate-700 bg-slate-900/90' : 'border-slate-300 bg-slate-100/90'
               }`}>
                 <span className={isDark ? 'text-white font-bold' : 'text-slate-900 font-bold'}>+380 (</span>
                 
@@ -356,8 +356,8 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
                 readOnly
                 rows={4}
                 value={configurationSummary || 'Параметри СЕС не вибрано'}
-                className={`solar-field w-full border rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm font-medium leading-relaxed resize-none select-text transition-colors cursor-default ${
-                  isDark ? 'border-amber-400/60 bg-amber-500/10 text-amber-400' : 'border-amber-300 bg-amber-50/70 text-slate-800'
+                className={`solar-field w-full border rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm font-semibold leading-relaxed resize-none select-text transition-colors cursor-default ${
+                  isDark ? 'border-slate-700 bg-slate-900/90 text-slate-200' : 'border-slate-300 bg-slate-100/90 text-slate-900'
                 }`}
               />
             </div>
@@ -385,7 +385,7 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
                     }
                   }}
                   className={`solar-field w-full border rounded-xl pl-10 pr-3 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors cursor-pointer select-none ${
-                    isDark ? 'border-slate-700 bg-slate-900/90 text-white' : 'border-amber-200 bg-amber-50/50 text-slate-900'
+                    isDark ? 'border-slate-700 bg-slate-900/90 text-white' : 'border-slate-300 bg-slate-100/90 text-slate-900'
                   }`}
                 />
               </div>
@@ -417,7 +417,7 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
                 value={formData.comment}
                 onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
                 className={`solar-field w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors ${
-                  isDark ? 'border-slate-700 bg-slate-900/90 text-white placeholder-slate-400' : 'border-amber-200 bg-amber-50/50 text-slate-900 placeholder-slate-400'
+                  isDark ? 'border-slate-700 bg-slate-900/90 text-white placeholder-slate-400' : 'border-slate-300 bg-slate-100/90 text-slate-900 placeholder-slate-400'
                 }`}
               />
             </div>

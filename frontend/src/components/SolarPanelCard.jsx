@@ -43,10 +43,10 @@ export default function SolarPanelCard({
 
   return (
     <Tag
-      className={`pv-shell pv-texture pv-frame solar-hover rounded-3xl border ${
+      className={`pv-shell pv-texture pv-frame solar-hover rounded-3xl border transition-all ${
         isDark
           ? 'border-slate-700/70 bg-slate-800/70'
-          : 'border-slate-200 bg-white/90'
+          : 'border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#f1f5f9)] shadow-md shadow-slate-400/20'
       } ${glow ? 'solar-halo' : ''} ${className}`}
       ref={shellRef}
       onPointerMove={handlePointerMove}

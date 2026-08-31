@@ -45,6 +45,22 @@ export default function App() {
 
   const [theme, setTheme] = useState(getSystemTheme);
 
+  const [lightVariant, setLightVariant] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('nova_light_variant') || '2';
+      return saved.charAt(0) || '2';
+    }
+    return '2';
+  });
+
+  const handleSetLightVariant = (variant) => {
+    const cleanVariant = variant.charAt(0);
+    setLightVariant(cleanVariant);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('nova_light_variant', cleanVariant);
+    }
+  };
+
   const [consultationModalOpen, setConsultationModalOpen] = useState(false);
   const [modalType, setModalType] = useState('consultation'); // 'consultation' | 'configuration'
   const [prefilledService, setPrefilledService] = useState('');
@@ -67,12 +83,13 @@ export default function App() {
     const root = document.documentElement;
     if (theme === 'dark') {
       root.classList.add('dark');
-      root.classList.remove('light');
+      root.classList.remove('light', 'light-v1', 'light-v2', 'light-v3', 'light-v4', 'light-no-grad');
     } else {
       root.classList.add('light');
-      root.classList.remove('dark');
+      root.classList.remove('dark', 'light-v1', 'light-v2', 'light-v3', 'light-v4', 'light-no-grad');
+      root.classList.add(`light-v${lightVariant}`);
     }
-  }, [theme]);
+  }, [theme, lightVariant]);
 
   const handleOpenConsultation = (serviceTitle = '') => {
     setModalType('consultation');
@@ -90,7 +107,7 @@ export default function App() {
 
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 selection:bg-amber-400 selection:text-slate-950 ${
-      isDark ? 'bg-slate-900 text-slate-100 dark' : 'bg-amber-50/20 text-slate-900 light'
+      isDark ? 'bg-slate-900 text-slate-100 dark' : 'bg-[var(--bg-app,#e2e8f0)] text-slate-900 light'
     }`}>
       <ScrollToTop />
       
@@ -98,6 +115,8 @@ export default function App() {
       <Header 
         onOpenConsultation={() => handleOpenConsultation()} 
         theme={theme}
+        lightVariant={lightVariant}
+        onSetLightVariant={handleSetLightVariant}
       />
 
       {/* Main Content Body with React Router Routes.

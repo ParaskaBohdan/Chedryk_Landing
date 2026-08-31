@@ -34,11 +34,11 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
     if (isActive) {
       return isDark
         ? 'btn-orange-selected-no-hover shadow-md text-white'
-        : 'border-orange-400 bg-amber-50 text-slate-700';
+        : 'border-orange-500 bg-amber-500/12 text-slate-900 font-bold shadow-xs';
     }
     return isDark
       ? 'border-slate-700 bg-slate-900 text-slate-300 btn-inactive-option'
-      : 'border-slate-200 bg-slate-50 text-slate-700 btn-inactive-option';
+      : 'border-slate-300 bg-slate-100/90 text-slate-800 btn-inactive-option hover:bg-slate-200';
   };
 
   // Configurator 1 State - "Розрахунок вартості СЕС"
@@ -155,8 +155,8 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
 
         {/* Mode Switcher Tabs */}
         <div className="flex justify-center mb-8 sm:mb-10">
-          <div className={`inline-flex items-center gap-2 sm:gap-3 p-1.5 rounded-2xl border shadow-lg ${
-            isDark ? 'bg-slate-800/90 border-slate-700/80' : 'bg-white border-slate-200'
+          <div className={`inline-flex items-center gap-2 sm:gap-3 p-1.5 rounded-2xl border shadow-md ${
+            isDark ? 'bg-slate-800/90 border-slate-700/80' : 'bg-slate-200/90 border-slate-300'
           }`}>
             <button
               type="button"
@@ -473,32 +473,32 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                       <h4 className={`font-black uppercase tracking-wider ${isDark ? 'text-slate-300' : 'text-slate-900'}`}>
                         1. Продуктивність та генерація
                       </h4>
-                      <div className={`border-t ${isDark ? 'border-slate-700/50' : 'border-slate-200'} divide-y ${isDark ? 'divide-slate-800' : 'divide-slate-100'}`}>
+                      <div className={`border-t ${isDark ? 'border-slate-700/50' : 'border-slate-300'} divide-y ${isDark ? 'divide-slate-800' : 'divide-slate-200'}`}>
                         <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
+                          <span className={isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}>
                             1.1 Розрахункова потужність СЕС
                           </span>
                           <span className="font-bold text-amber-500">{totalKw} кВт</span>
                         </div>
                         <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
+                          <span className={isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}>
                             1.2 Очікувана річна генерація (Закарпаття/Прикарпаття)
                           </span>
                           <span className="font-bold text-emerald-500">{annualGenKwh.toLocaleString('uk-UA')} кВт·год / рік</span>
                         </div>
                         <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
+                          <span className={isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}>
                             1.3 Продаж у мережу за Зеленим тарифом (~80%)
                           </span>
-                          <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
+                          <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900 font-extrabold'}`}>
                             ~{Math.round(annualGenKwh * 0.8).toLocaleString('uk-UA')} кВт·год / рік
                           </span>
                         </div>
                         <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
+                          <span className={isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}>
                             1.4 Власне покриття споживання об'єкта (~20%)
                           </span>
-                          <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
+                          <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900 font-extrabold'}`}>
                             ~{Math.round(annualGenKwh * 0.2).toLocaleString('uk-UA')} кВт·год / рік
                           </span>
                         </div>
@@ -510,9 +510,9 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                       <h4 className={`font-black uppercase tracking-wider ${isDark ? 'text-slate-300' : 'text-slate-900'}`}>
                         2. Очікуваний дохід та вигода
                       </h4>
-                      <div className={`border-t ${isDark ? 'border-slate-700/50' : 'border-slate-200'} divide-y ${isDark ? 'divide-slate-800' : 'divide-slate-100'}`}>
+                      <div className={`border-t ${isDark ? 'border-slate-700/50' : 'border-slate-300'} divide-y ${isDark ? 'divide-slate-800' : 'divide-slate-200'}`}>
                         <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
+                          <span className={isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}>
                             2.1 Виплати за Зеленим тарифом (0.163 € ≈ $0.18/кВт·год)
                           </span>
                           <span className="font-bold text-amber-500">
@@ -681,9 +681,9 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
 
                 {/* Info Card: Tariffs Used */}
                 <div className={`p-4 rounded-2xl border text-xs space-y-2.5 ${
-                  isDark ? 'bg-slate-800/60 border-slate-700 text-slate-300' : 'bg-amber-50/70 border-amber-200 text-slate-700'
+                  isDark ? 'bg-slate-800/60 border-slate-700 text-slate-300' : 'bg-[var(--bg-subcard,#e2e8f0)] border-[var(--border-card-shell,#cbd5e1)] text-slate-800 shadow-xs'
                 }`}>
-                  <div className="flex items-center justify-between font-bold border-b pb-2 border-slate-700/40">
+                  <div className={`flex items-center justify-between font-bold border-b pb-2 ${isDark ? 'border-slate-700/40' : 'border-[var(--border-subcard,#cbd5e1)]'}`}>
                     <span className="flex items-center gap-1.5 text-amber-500">
                       <Sparkles className="w-4 h-4" /> Діючі тарифні ставки (2025–2026)
                     </span>
@@ -753,18 +753,18 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                   </div>
 
                   <div className="space-y-3">
-                    <div className={`p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-white border-slate-200'}`}>
-                      <p className="text-[11px] text-slate-400 font-bold uppercase">Загальна річна вигода</p>
+                    <div className={`p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-[var(--bg-subcard,#e2e8f0)] border-[var(--border-subcard,#cbd5e1)] shadow-xs'}`}>
+                      <p className={`text-[11px] font-extrabold uppercase ${isDark ? 'text-slate-400' : 'text-slate-800'}`}>Загальна річна вигода</p>
                       <p className="text-xl font-extrabold text-emerald-500 mt-0.5">
                         +${totalAnnualBenefitUsd.toLocaleString()} / рік
                       </p>
-                      <p className="text-[11px] text-slate-400">
+                      <p className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}`}>
                         ~{Math.round(totalAnnualBenefitUsd * usdToUah).toLocaleString()} грн/рік
                       </p>
                     </div>
 
-                    <div className={`p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-white border-slate-200'}`}>
-                      <p className="text-[11px] text-slate-400 font-bold uppercase">Середній дохід на місяць</p>
+                    <div className={`p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-[var(--bg-subcard,#e2e8f0)] border-[var(--border-subcard,#cbd5e1)] shadow-xs'}`}>
+                      <p className={`text-[11px] font-extrabold uppercase ${isDark ? 'text-slate-400' : 'text-slate-800'}`}>Середній дохід на місяць</p>
                       <p className="text-lg font-extrabold text-amber-500 mt-0.5">
                         +${Math.round(totalAnnualBenefitUsd / 12).toLocaleString()} / міс
                       </p>
@@ -778,35 +778,35 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                 
                 {/* 1. Green Tariff Sales */}
                 <div className={`p-5 rounded-2xl border transition-all ${
-                  isDark ? 'bg-slate-800/90 border-slate-700' : 'bg-white border-slate-200 shadow-md'
+                  isDark ? 'bg-slate-800/90 border-slate-700' : 'bg-[var(--bg-card-shell,#f1f5f9)] border-[var(--border-card-shell,#cbd5e1)] shadow-md'
                 }`}>
                   <div className="flex items-center gap-2 text-amber-500 mb-2">
                     <DollarSign className="w-5 h-5" />
                     <h4 className="font-extrabold text-sm">Продаж у мережу</h4>
                   </div>
                   <p className="text-2xl font-black text-amber-500">${annualGreenIncomeUsd.toLocaleString()}</p>
-                  <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}`}>
                     ~{Math.round(annualGreenIncomeUsd * usdToUah).toLocaleString()} грн / рік
                   </p>
-                  <div className={`mt-3 pt-3 border-t text-[11px] ${isDark ? 'border-slate-700/60 text-slate-400' : 'border-slate-100 text-slate-500'}`}>
-                    Обсяг експорту: <span className="font-bold text-slate-300">{annualGridExportKwh.toLocaleString()} кВт·год</span>
+                  <div className={`mt-3 pt-3 border-t text-[11px] ${isDark ? 'border-slate-700/60 text-slate-400' : 'border-[var(--border-subcard,#cbd5e1)] text-slate-700 font-medium'}`}>
+                    Обсяг експорту: <span className={isDark ? 'font-bold text-slate-300' : 'font-extrabold text-slate-900'}>{annualGridExportKwh.toLocaleString()} кВт·год</span>
                   </div>
                 </div>
 
                 {/* 2. Self Consumption Savings */}
                 <div className={`p-5 rounded-2xl border transition-all ${
-                  isDark ? 'bg-slate-800/90 border-slate-700' : 'bg-white border-slate-200 shadow-md'
+                  isDark ? 'bg-slate-800/90 border-slate-700' : 'bg-[var(--bg-card-shell,#f1f5f9)] border-[var(--border-card-shell,#cbd5e1)] shadow-md'
                 }`}>
                   <div className="flex items-center gap-2 text-emerald-500 mb-2">
                     <PiggyBank className="w-5 h-5" />
                     <h4 className="font-extrabold text-sm">Економія на рахунках</h4>
                   </div>
                   <p className="text-2xl font-black text-emerald-500">${annualElectricitySavingsUsd.toLocaleString()}</p>
-                  <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}`}>
                     ~{Math.round(annualElectricitySavingsUsd * usdToUah).toLocaleString()} грн / рік
                   </p>
-                  <div className={`mt-3 pt-3 border-t text-[11px] ${isDark ? 'border-slate-700/60 text-slate-400' : 'border-slate-100 text-slate-500'}`}>
-                    Власне покриття: <span className="font-bold text-slate-300">{annualSelfCoverageKwh.toLocaleString()} кВт·год</span>
+                  <div className={`mt-3 pt-3 border-t text-[11px] ${isDark ? 'border-slate-700/60 text-slate-400' : 'border-[var(--border-subcard,#cbd5e1)] text-slate-700 font-medium'}`}>
+                    Власне покриття: <span className={isDark ? 'font-bold text-slate-300' : 'font-extrabold text-slate-900'}>{annualSelfCoverageKwh.toLocaleString()} кВт·год</span>
                   </div>
                 </div>
 

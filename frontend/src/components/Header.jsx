@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { Phone, Menu, X, ShieldCheck, Video, Wrench, BarChart2, Zap, Calculator } from 'lucide-react';
+import { Phone, Menu, X, ShieldCheck, Video, Wrench, BarChart2, Zap, Calculator, Palette, Check, ChevronDown } from 'lucide-react';
 
 function TikTokIcon(props) {
   return (
@@ -10,11 +10,24 @@ function TikTokIcon(props) {
   );
 }
 
-export default function Header({ onOpenConsultation, theme }) {
+export default function Header({ onOpenConsultation, theme, lightVariant = '2', onSetLightVariant }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [variantMenuOpen, setVariantMenuOpen] = useState(false);
+  const variantDropdownRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (variantDropdownRef.current && !variantDropdownRef.current.contains(event.target)) {
+        setVariantMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const scrollToSection = (sectionId) => {
     const elem = document.getElementById(sectionId);
@@ -78,8 +91,8 @@ export default function Header({ onOpenConsultation, theme }) {
     <header className={`sticky top-0 z-50 w-full transition-colors duration-300 ${
       !isScrolled && isHomePage
         ? 'max-md:bg-transparent max-md:border-transparent max-md:shadow-none max-md:backdrop-blur-none ' + 
-          (isDark ? 'md:border-b md:border-slate-800/80 md:bg-slate-950/90 md:text-white md:backdrop-blur-md text-white' : 'md:border-b md:border-slate-200 md:bg-slate-100/95 md:text-slate-800 md:shadow-xs md:backdrop-blur-md text-slate-800')
-        : 'border-b ' + (isDark ? 'border-slate-800/80 bg-slate-950/90 text-white backdrop-blur-md' : 'border-slate-200 bg-slate-100/95 text-slate-800 shadow-xs backdrop-blur-md')
+          (isDark ? 'md:border-b md:border-slate-800/80 md:bg-slate-950/90 md:text-white md:backdrop-blur-md text-white' : 'md:border-b md:border-[var(--border-card-shell,#cbd5e1)] md:bg-[var(--bg-card-shell,#e2e8f0)]/95 md:text-slate-900 md:shadow-xs md:backdrop-blur-md text-slate-900')
+        : 'border-b ' + (isDark ? 'border-slate-800/80 bg-slate-950/90 text-white backdrop-blur-md' : 'border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#e2e8f0)]/95 text-slate-900 shadow-sm backdrop-blur-md')
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
         
@@ -93,13 +106,12 @@ export default function Header({ onOpenConsultation, theme }) {
           className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group flex-shrink-0"
         >
           <div className="relative h-9 sm:h-11 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-            {/* Ambient glow that lifts on hover, as if the mark were lit */}
             <span
               className="absolute inset-0 -m-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none blur-lg bg-amber-400/40"
               aria-hidden="true"
             />
             <img
-              src="/logo-icon.png"
+              src="/logo.png"
               alt="NOVA ENERGY_UA"
               className="relative h-full w-auto object-contain"
             />
@@ -123,8 +135,8 @@ export default function Header({ onOpenConsultation, theme }) {
             className={({ isActive }) =>
               `text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
                 isActive 
-                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)]' 
-                  : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-700 hover:text-amber-600'
+                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)] font-bold' 
+                  : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-900 font-bold hover:text-amber-600'
               }`
             }
           >
@@ -135,8 +147,8 @@ export default function Header({ onOpenConsultation, theme }) {
             className={({ isActive }) =>
               `text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
                 isActive 
-                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)]' 
-                  : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-700 hover:text-amber-600'
+                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)] font-bold' 
+                  : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-900 font-bold hover:text-amber-600'
               }`
             }
           >
@@ -147,8 +159,8 @@ export default function Header({ onOpenConsultation, theme }) {
             className={({ isActive }) =>
               `text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
                 isActive 
-                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)]' 
-                  : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-700 hover:text-amber-600'
+                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)] font-bold' 
+                  : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-900 font-bold hover:text-amber-600'
               }`
             }
           >
@@ -159,8 +171,8 @@ export default function Header({ onOpenConsultation, theme }) {
             className={({ isActive }) =>
               `text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
                 isActive 
-                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)]' 
-                  : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-700 hover:text-amber-600'
+                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)] font-bold' 
+                  : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-900 font-bold hover:text-amber-600'
               }`
             }
           >
@@ -171,8 +183,8 @@ export default function Header({ onOpenConsultation, theme }) {
             className={({ isActive }) =>
               `text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
                 isActive 
-                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)]' 
-                  : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-700 hover:text-amber-600'
+                  ? 'text-amber-500 border-b-2 border-amber-500 pb-0.5 [text-shadow:0_0_14px_rgba(251,191,36,0.55)] font-bold' 
+                  : isDark ? 'text-slate-300 hover:text-amber-400' : 'text-slate-900 font-bold hover:text-amber-600'
               }`
             }
           >
@@ -182,6 +194,59 @@ export default function Header({ onOpenConsultation, theme }) {
 
         {/* Right Action Bar */}
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          
+          {/* Temporary Light Theme Variant Selector Dropdown */}
+          {!isDark && (
+            <div className="relative" ref={variantDropdownRef}>
+              <button
+                type="button"
+                onClick={() => setVariantMenuOpen(!variantMenuOpen)}
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 h-[38px] rounded-xl text-xs font-black border border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#ffffff)] text-slate-900 hover:bg-[var(--bg-card-hover,#f1f5f9)] shadow-xs cursor-pointer transition-all duration-200"
+                title="Виберіть колірний варіант світлої теми (від світлішого до сірішого)"
+              >
+                <Palette className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" />
+                <span className="whitespace-nowrap">Версія {lightVariant}</span>
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${variantMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {variantMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-52 rounded-2xl border border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#ffffff)] shadow-2xl p-1.5 z-50 animate-fadeIn">
+                  <div className="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-200/60">
+                    Ступінь сірості:
+                  </div>
+                  {[
+                    { id: '1', label: 'Версія 1', desc: 'Світла (Slate-50)' },
+                    { id: '2', label: 'Версія 2', desc: 'Титаново-сіра (Slate-200)' },
+                    { id: '3', label: 'Версія 3', desc: 'Сіріша (Slate-300)' },
+                    { id: '4', label: 'Версія 4', desc: 'Макс. сіра (Slate-400)' },
+                  ].map((v) => (
+                    <button
+                      key={v.id}
+                      type="button"
+                      onClick={() => {
+                        if (onSetLightVariant) onSetLightVariant(v.id);
+                        setVariantMenuOpen(false);
+                      }}
+                      className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between transition-all cursor-pointer ${
+                        lightVariant === v.id
+                          ? 'bg-amber-500/15 text-amber-950 font-extrabold border border-amber-400 shadow-xs'
+                          : 'text-slate-800 hover:bg-slate-200/50 font-semibold'
+                      }`}
+                    >
+                      <div>
+                        <p className="font-extrabold leading-tight">{v.label}</p>
+                        <p className="text-[10px] text-slate-500">{v.desc}</p>
+                      </div>
+                      {lightVariant === v.id && (
+                        <Check className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
           <a
             href="tel:+380675300103"
             title="Зателефонувати в Nova Energy"
@@ -206,7 +271,7 @@ export default function Header({ onOpenConsultation, theme }) {
             className={`lg:hidden p-2 rounded-xl border transition-colors flex-shrink-0 ${
               isDark 
                 ? 'text-slate-200 border-slate-800 bg-slate-900/90' 
-                : 'text-slate-800 border-slate-300 bg-white/80'
+                : 'text-slate-900 border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#ffffff)]/90 shadow-xs'
             }`}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -215,17 +280,49 @@ export default function Header({ onOpenConsultation, theme }) {
       </div>
 
       {mobileMenuOpen && (
-        <div className={`lg:hidden border-t px-4 py-5 space-y-1.5 transition-colors ${
-          isDark ? 'bg-slate-950/98 border-slate-800 text-slate-100' : 'bg-slate-100/98 border-slate-200 text-slate-900 shadow-xl'
+        <div className={`lg:hidden border-t px-4 py-5 space-y-3 transition-colors ${
+          isDark ? 'bg-slate-950/98 border-slate-800 text-slate-100' : 'bg-[var(--bg-app,#e2e8f0)] border-[var(--border-card-shell,#cbd5e1)] text-slate-900 shadow-2xl'
         }`}>
+          {!isDark && (
+            <div className="p-3 rounded-2xl border border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#ffffff)]/95 space-y-2 shadow-xs">
+              <div className="flex items-center justify-between text-xs font-bold text-slate-700">
+                <span className="flex items-center gap-1.5">
+                  <Palette className="w-3.5 h-3.5 text-amber-500" />
+                  <span>Колірна версія теми:</span>
+                </span>
+                <span className="text-amber-600 font-extrabold">Версія {lightVariant}</span>
+              </div>
+              <div className="grid grid-cols-2 gap-1.5">
+                {[
+                  { id: '1', label: 'Версія 1 (Світла)' },
+                  { id: '2', label: 'Версія 2 (Стандарт)' },
+                  { id: '3', label: 'Версія 3 (Сіріша)' },
+                  { id: '4', label: 'Версія 4 (Макс. сіра)' },
+                ].map((v) => (
+                  <button
+                    key={v.id}
+                    type="button"
+                    onClick={() => onSetLightVariant && onSetLightVariant(v.id)}
+                    className={`py-2 px-2 rounded-xl text-[11px] font-bold border text-center transition-colors cursor-pointer ${
+                      lightVariant === v.id
+                        ? 'bg-amber-500/15 border-amber-400 text-amber-950 font-extrabold shadow-xs'
+                        : 'bg-[var(--bg-subcard,#e2e8f0)] border-[var(--border-subcard,#cbd5e1)] text-slate-800 font-semibold'
+                    }`}
+                  >
+                    {v.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
           <NavLink
             to="/services"
             onClick={() => setMobileMenuOpen(false)}
             className={({ isActive }) =>
               `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-all border ${
                 isActive 
-                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-50 text-orange-600 font-bold border-orange-400')
-                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-800 hover:bg-amber-500/10 border-transparent')
+                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-500/20 text-amber-950 font-black border-amber-400 shadow-xs')
+                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-900 font-bold hover:bg-[var(--bg-card-shell,#ffffff)] border-transparent')
               }`
             }
           >
@@ -239,8 +336,8 @@ export default function Header({ onOpenConsultation, theme }) {
             className={({ isActive }) =>
               `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-all border ${
                 isActive 
-                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-50 text-orange-600 font-bold border-orange-400')
-                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-800 hover:bg-amber-500/10 border-transparent')
+                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-500/20 text-amber-950 font-black border-amber-400 shadow-xs')
+                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-900 font-bold hover:bg-[var(--bg-card-shell,#ffffff)] border-transparent')
               }`
             }
           >
@@ -254,8 +351,8 @@ export default function Header({ onOpenConsultation, theme }) {
             className={({ isActive }) =>
               `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-all border ${
                 isActive 
-                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-50 text-orange-600 font-bold border-orange-400')
-                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-800 hover:bg-amber-500/10 border-transparent')
+                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-500/20 text-amber-950 font-black border-amber-400 shadow-xs')
+                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-900 font-bold hover:bg-[var(--bg-card-shell,#ffffff)] border-transparent')
               }`
             }
           >
@@ -269,8 +366,8 @@ export default function Header({ onOpenConsultation, theme }) {
             className={({ isActive }) =>
               `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-all border ${
                 isActive 
-                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-50 text-orange-600 font-bold border-orange-400')
-                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-800 hover:bg-amber-500/10 border-transparent')
+                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-500/20 text-amber-950 font-black border-amber-400 shadow-xs')
+                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-900 font-bold hover:bg-[var(--bg-card-shell,#ffffff)] border-transparent')
               }`
             }
           >
@@ -284,8 +381,8 @@ export default function Header({ onOpenConsultation, theme }) {
             className={({ isActive }) =>
               `flex items-center gap-3 w-full text-left text-sm font-semibold py-2.5 px-3 rounded-xl transition-all border ${
                 isActive 
-                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-50 text-orange-600 font-bold border-orange-400')
-                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-800 hover:bg-amber-500/10 border-transparent')
+                  ? (isDark ? 'bg-amber-500/15 text-[#fde68a] font-bold border-[#fbbf24]/40' : 'bg-amber-500/20 text-amber-950 font-black border-amber-400 shadow-xs')
+                  : (isDark ? 'text-slate-200 hover:bg-slate-800/70 border-transparent' : 'text-slate-900 font-bold hover:bg-[var(--bg-card-shell,#ffffff)] border-transparent')
               }`
             }
           >

@@ -73,7 +73,7 @@ export default function ContactsPage({ theme }) {
                 </div>
               </div>
 
-              <div className={`space-y-4 pt-4 border-t ${isDark ? 'border-slate-700' : 'border-amber-100'}`}>
+              <div className={`space-y-4 pt-4 border-t ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
                 
                 {/* Phone */}
                 <div className="flex items-center gap-4">

@@ -32,7 +32,7 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-4">
           <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full border ${
-            isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
+            isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-slate-200/90 border-slate-300 text-slate-800 shadow-xs'
           }`}>
             <Wrench className="w-4 h-4 text-amber-500" />
             <span>Каталог Послуг NOVA ENERGY</span>
@@ -154,16 +154,16 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
 
         {/* Bottom CTA Banner */}
         <div className={`mt-16 p-8 sm:p-10 rounded-3xl border text-center space-y-4 shadow-xl ${
-          isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-300 bg-white'
+          isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#f1f5f9)] text-slate-900 shadow-md'
         }`}>
-          <h3 className="text-xl sm:text-2xl font-black" style={{ color: isDark ? '#ffffff' : '#000000' }}>Бажаєте замовити інженерні послуги?</h3>
-          <p className="text-xs sm:text-sm font-bold max-w-xl mx-auto" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
+          <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">Бажаєте замовити інженерні послуги?</h3>
+          <p className="text-xs sm:text-sm font-medium max-w-xl mx-auto text-slate-700 dark:text-slate-300">
             Отримайте кваліфіковану відповідь інженера щодо монтажу СЕС, підключення Deye або Зеленого Тарифу.
           </p>
           <div className="pt-2">
             <button
               onClick={() => onOpenConsultation && onOpenConsultation('Замовлення послуг')}
-              className="btn-orange-bright px-8 py-3.5 rounded-2xl font-extrabold text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-lg"
+              className="btn-orange-bright px-8 py-3.5 rounded-2xl font-extrabold text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-md"
             >
               <span>Замовити Консультацію</span>
             </button>

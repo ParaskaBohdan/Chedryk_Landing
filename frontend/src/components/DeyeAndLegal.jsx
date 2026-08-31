@@ -53,7 +53,7 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
           <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-semibold ${
-            isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
+            isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-slate-200/90 border-slate-300 text-slate-800 shadow-xs'
           }`}>
             <ShieldCheck className="w-4 h-4 text-amber-500" />
             <span>Юридичний Супровід & Преміум Монтаж</span>
@@ -92,7 +92,7 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
                       <Icon className="w-6 h-6" />
                     </div>
                     <span className={`text-[11px] font-bold px-3 py-1 rounded-full border ${
-                      isDark ? 'text-amber-200 bg-amber-500/10 border-amber-400/60' : 'text-slate-800 bg-amber-50/60 border-orange-400/60'
+                      isDark ? 'text-amber-200 bg-amber-500/10 border-amber-400/60' : 'text-slate-800 bg-slate-100 border-slate-300'
                     }`}>
                       {item.badge}
                     </span>
@@ -112,7 +112,7 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
                 </div>
 
                 <div className={`pt-4 border-t flex items-center justify-between ${
-                  isDark ? 'border-slate-700/80' : 'border-amber-100'
+                  isDark ? 'border-slate-700/80' : 'border-slate-200'
                 }`}>
                   <span className="text-xs font-semibold flex items-center gap-1 text-amber-500">
                     <CheckCircle2 className="w-4 h-4 text-emerald-500" />
@@ -122,7 +122,7 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
                   <button
                     onClick={onOpenConsultation}
                     className={`p-2 rounded-xl border transition-all ${
-                      isDark ? 'border-slate-700 bg-slate-800 text-slate-200 hover:text-white hover:border-amber-400' : 'border-amber-200 bg-amber-50 text-slate-700 hover:border-amber-400'
+                      isDark ? 'border-slate-700 bg-slate-800 text-slate-200 hover:text-white hover:border-amber-400' : 'border-slate-300 bg-slate-100 text-slate-700 hover:border-amber-400 hover:bg-slate-200'
                     }`}
                   >
                     <ArrowRight className="w-4 h-4" />

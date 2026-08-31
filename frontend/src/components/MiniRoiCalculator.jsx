@@ -38,7 +38,7 @@ export default function MiniRoiCalculator({ theme }) {
 
   return (
     <section className={`py-12 sm:py-16 relative overflow-hidden border-b transition-colors duration-300 ${
-      isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-amber-50/40 border-amber-100 text-slate-900'
+      isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-slate-100/60 border-slate-300/70 text-slate-900'
     }`}>
       <SectionAmbience flares={true} beams={true} />
 
@@ -149,18 +149,18 @@ export default function MiniRoiCalculator({ theme }) {
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-1 sm:gap-0 sm:space-y-3">
-                  <div className={`p-2.5 sm:p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-white border-slate-200'}`}>
-                    <p className="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase">Загальна річна вигода</p>
+                  <div className={`p-2.5 sm:p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-[var(--bg-subcard,#e2e8f0)] border-[var(--border-subcard,#cbd5e1)] shadow-xs'}`}>
+                    <p className={`text-[9px] sm:text-[10px] font-extrabold uppercase ${isDark ? 'text-slate-400' : 'text-slate-800'}`}>Загальна річна вигода</p>
                     <p className="text-[13px] sm:text-xl font-extrabold text-emerald-500 mt-0.5">
                       +${totalAnnualBenefitUsd.toLocaleString()} / рік
                     </p>
-                    <p className="text-[9px] sm:text-[10px] text-slate-400">
+                    <p className={`text-[9px] sm:text-[10px] ${isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}`}>
                       ~{Math.round(totalAnnualBenefitUsd * usdToUah).toLocaleString()} грн/рік
                     </p>
                   </div>
 
-                  <div className={`p-2.5 sm:p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-white border-slate-200'}`}>
-                    <p className="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase">Середній дохід на місяць</p>
+                  <div className={`p-2.5 sm:p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-[var(--bg-subcard,#e2e8f0)] border-[var(--border-subcard,#cbd5e1)] shadow-xs'}`}>
+                    <p className={`text-[9px] sm:text-[10px] font-extrabold uppercase ${isDark ? 'text-slate-400' : 'text-slate-800'}`}>Середній дохід на місяць</p>
                     <p className="text-[13px] sm:text-lg font-extrabold text-amber-500 mt-0.5">
                       +${Math.round(totalAnnualBenefitUsd / 12).toLocaleString()} / міс
                     </p>
@@ -174,38 +174,37 @@ export default function MiniRoiCalculator({ theme }) {
               
               {/* 1. Green Tariff Sales */}
               <div className={`p-5 rounded-2xl border transition-all ${
-                isDark ? 'bg-slate-800/90 border-slate-700' : 'bg-white border-slate-200 shadow-md'
+                isDark ? 'bg-slate-800/90 border-slate-700' : 'bg-[var(--bg-card-shell,#f1f5f9)] border-[var(--border-card-shell,#cbd5e1)] shadow-md'
               }`}>
                 <div className="flex items-center gap-2 text-amber-500 mb-2">
                   <DollarSign className="w-5 h-5" />
                   <h4 className="font-extrabold text-xs sm:text-sm">Продаж у мережу</h4>
                 </div>
                 <p className="text-2xl font-black text-amber-500">${annualGreenIncomeUsd.toLocaleString()}</p>
-                <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}`}>
                   ~{Math.round(annualGreenIncomeUsd * usdToUah).toLocaleString()} грн / рік
                 </p>
-                <div className={`mt-3 pt-3 border-t text-[10px] sm:text-[11px] ${isDark ? 'border-slate-700/60 text-slate-400' : 'border-slate-100 text-slate-500'}`}>
-                  Обсяг експорту: <span className="font-bold text-slate-300">{annualGridExportKwh.toLocaleString()} кВт·год</span>
+                <div className={`mt-3 pt-3 border-t text-[10px] sm:text-[11px] ${isDark ? 'border-slate-700/60 text-slate-400' : 'border-[var(--border-subcard,#cbd5e1)] text-slate-700 font-medium'}`}>
+                  Обсяг експорту: <span className={isDark ? 'font-bold text-slate-300' : 'font-extrabold text-slate-900'}>{annualGridExportKwh.toLocaleString()} кВт·год</span>
                 </div>
               </div>
 
               {/* 2. Self Consumption Savings */}
               <div className={`p-5 rounded-2xl border transition-all ${
-                isDark ? 'bg-slate-800/90 border-slate-700' : 'bg-white border-slate-200 shadow-md'
+                isDark ? 'bg-slate-800/90 border-slate-700' : 'bg-[var(--bg-card-shell,#f1f5f9)] border-[var(--border-card-shell,#cbd5e1)] shadow-md'
               }`}>
                 <div className="flex items-center gap-2 text-emerald-500 mb-2">
                   <PiggyBank className="w-5 h-5" />
                   <h4 className="font-extrabold text-xs sm:text-sm">Економія на рахунках</h4>
                 </div>
                 <p className="text-2xl font-black text-emerald-500">${annualElectricitySavingsUsd.toLocaleString()}</p>
-                <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}`}>
                   ~{Math.round(annualElectricitySavingsUsd * usdToUah).toLocaleString()} грн / рік
                 </p>
-                <div className={`mt-3 pt-3 border-t text-[10px] sm:text-[11px] ${isDark ? 'border-slate-700/60 text-slate-400' : 'border-slate-100 text-slate-500'}`}>
-                  Власне покриття: <span className="font-bold text-slate-300">{annualSelfCoverageKwh.toLocaleString()} кВт·год</span>
+                <div className={`mt-3 pt-3 border-t text-[10px] sm:text-[11px] ${isDark ? 'border-slate-700/60 text-slate-400' : 'border-[var(--border-subcard,#cbd5e1)] text-slate-700 font-medium'}`}>
+                  Власне покриття: <span className={isDark ? 'font-bold text-slate-300' : 'font-extrabold text-slate-900'}>{annualSelfCoverageKwh.toLocaleString()} кВт·год</span>
                 </div>
               </div>
-
             </div>
 
           </div>

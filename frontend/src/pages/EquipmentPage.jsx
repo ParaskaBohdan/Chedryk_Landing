@@ -350,7 +350,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full border ${
-            isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
+            isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-slate-200/90 border-slate-300 text-slate-800 shadow-xs'
           }`}>
             <Cpu className="w-4 h-4 text-amber-500" />
             <span>Офіційні Комплектуючі Nova Energy</span>
@@ -375,10 +375,10 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
               activeTab === 'panels'
                 ? isDark
                   ? 'bg-amber-500/15 border-2 border-[#fbbf24] text-[#fde68a]'
-                  : 'bg-amber-50 border-2 border-orange-400 text-slate-700'
+                  : 'bg-slate-200/90 border-2 border-orange-500 text-orange-800 shadow-xs'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
-                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
+                  : 'bg-white/90 border border-slate-300 text-slate-800 hover:border-orange-500 hover:bg-slate-100'
             }`}
           >
             <Sun className="w-4 h-4 text-amber-500 flex-shrink-0" />
@@ -392,10 +392,10 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
               activeTab === 'batteries'
                 ? isDark
                   ? 'bg-amber-500/15 border-2 border-[#fbbf24] text-[#fde68a]'
-                  : 'bg-amber-50 border-2 border-orange-400 text-slate-700'
+                  : 'bg-slate-200/90 border-2 border-orange-500 text-orange-800 shadow-xs'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
-                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
+                  : 'bg-white/90 border border-slate-300 text-slate-800 hover:border-orange-500 hover:bg-slate-100'
             }`}
           >
             <BatteryCharging className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
@@ -409,10 +409,10 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
               activeTab === 'inverters'
                 ? isDark
                   ? 'bg-amber-500/15 border-2 border-[#fbbf24] text-[#fde68a]'
-                  : 'bg-amber-50 border-2 border-orange-400 text-slate-700'
+                  : 'bg-slate-200/90 border-2 border-orange-500 text-orange-800 shadow-xs'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
-                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
+                  : 'bg-white/90 border border-slate-300 text-slate-800 hover:border-orange-500 hover:bg-slate-100'
             }`}
           >
             <Cpu className="w-4 h-4 text-sky-600 dark:text-sky-400 flex-shrink-0" />
@@ -426,10 +426,10 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
               activeTab === 'mounting'
                 ? isDark
                   ? 'bg-amber-500/15 border-2 border-[#fbbf24] text-[#fde68a]'
-                  : 'bg-amber-50 border-2 border-orange-400 text-slate-700'
+                  : 'bg-slate-200/90 border-2 border-orange-500 text-orange-800 shadow-xs'
                 : isDark
                   ? 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400/60 hover:text-amber-300'
-                  : 'bg-white border border-slate-300 text-black hover:border-amber-500 hover:bg-amber-50'
+                  : 'bg-white/90 border border-slate-300 text-slate-800 hover:border-orange-500 hover:bg-slate-100'
             }`}
           >
             <Wrench className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0" />
@@ -488,7 +488,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                     </div>
 
                     <span className={`px-3 py-1 rounded-full text-[11px] font-black border whitespace-nowrap ${
-                      isDark ? 'border-amber-400/60 bg-amber-500/10 text-amber-200' : 'border-orange-400/60 bg-amber-50/60 text-slate-800'
+                      isDark ? 'border-amber-400/60 bg-amber-500/10 text-amber-200' : 'border-slate-300 bg-slate-100 text-slate-800'
                     }`}>
                       {panel.badge}
                     </span>
@@ -496,21 +496,21 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
 
                   {/* Specs Grid */}
                   <div className="grid grid-cols-2 gap-3 text-xs">
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-slate-100/90'}`}>
                       <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
                         Потужність:
                       </span>
                       <span className="font-black text-base text-amber-600 dark:text-amber-400">{panel.power}</span>
                     </div>
 
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-slate-100/90'}`}>
                       <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
                         ККД Модуля:
                       </span>
                       <span className="font-black text-base text-emerald-700 dark:text-emerald-400">{panel.efficiency}</span>
                     </div>
 
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-slate-100/90'}`}>
                       <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
                         Габарити (В×Ш×Т):
                       </span>
@@ -519,7 +519,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                       </span>
                     </div>
 
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-slate-100/90'}`}>
                       <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
                         Вага 1 панелі:
                       </span>
@@ -654,14 +654,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
 
                   {/* Specs Grid */}
                   <div className="grid grid-cols-2 gap-3 text-xs">
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-slate-100/90'}`}>
                       <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
                         Ресурс циклів:
                       </span>
                       <span className="font-black text-base text-emerald-700 dark:text-emerald-400">{bat.cycles}</span>
                     </div>
 
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-slate-100/90'}`}>
                       <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
                         Термін служби:
                       </span>
@@ -773,14 +773,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                   </div>
 
                   <div className="space-y-2 text-xs">
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-slate-100/90'}`}>
                       <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
                         MPPT Контролери:
                       </span>
                       <span className="font-black text-base" style={{ color: isDark ? '#7dd3fc' : '#475569' }}>{inv.mppt}</span>
                     </div>
 
-                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-amber-300 bg-amber-50/60'}`}>
+                    <div className={`p-3.5 rounded-2xl border ${isDark ? 'border-slate-700 bg-slate-900/60' : 'border-slate-300 bg-slate-100/90'}`}>
                       <span className="block font-black text-xs mb-0.5" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
                         Рекомендоване призначення:
                       </span>

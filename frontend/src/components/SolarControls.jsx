@@ -87,7 +87,7 @@ export function SolarSlider({ value, min, max, step = 1, onChange, theme, label,
       {(label || display) && (
         <div className="flex justify-between items-baseline gap-3">
           {label && (
-            <label htmlFor={id} className={`text-[10px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+            <label htmlFor={id} className={`text-[10px] sm:text-xs font-black telemetry-label tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-900'}`}>
               {label}
             </label>
           )}
@@ -105,7 +105,7 @@ export function SolarSlider({ value, min, max, step = 1, onChange, theme, label,
         className="solar-range"
         style={{ '--fill': `${pct}%` }}
       />
-      {hint && <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{hint}</p>}
+      {hint && <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}`}>{hint}</p>}
     </div>
   );
 }
@@ -120,7 +120,7 @@ export function InstrumentFrame({ theme, children, className = '', label, status
 
   return (
     <div className={`relative rounded-2xl overflow-hidden border ${
-      isDark ? 'border-slate-700/70 bg-slate-950' : 'border-slate-300 bg-slate-100'
+      isDark ? 'border-slate-700/70 bg-slate-950' : 'border-slate-300 bg-slate-200/90'
     } ${className}`}>
       {children}
 

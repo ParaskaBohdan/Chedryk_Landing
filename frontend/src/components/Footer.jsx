@@ -41,7 +41,7 @@ export default function Footer({ onOpenConsultation, theme }) {
 
   return (
     <footer className={`pv-shell pv-texture border-t py-10 sm:py-12 relative overflow-hidden transition-colors duration-300 ${
-      isDark ? 'border-slate-800 bg-slate-950 text-slate-400' : 'border-amber-200 bg-amber-50/70 text-slate-600'
+      isDark ? 'border-slate-800 bg-slate-950 text-slate-400' : 'border-slate-300/80 bg-slate-200/80 text-slate-700'
     }`}>
       <SectionAmbience flares={false} beams={false} />
 
@@ -52,7 +52,7 @@ export default function Footer({ onOpenConsultation, theme }) {
       <div className="pv-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Station status strip */}
         <div className={`flex flex-wrap items-center justify-between gap-3 pb-6 mb-8 border-b ${
-          isDark ? 'border-slate-800' : 'border-amber-200'
+          isDark ? 'border-slate-800' : 'border-slate-300/80'
         }`}>
           <div className="flex flex-wrap items-center gap-2.5">
             <LiveBadge theme={theme} label="Grid Status · Online" />
@@ -65,7 +65,7 @@ export default function Footer({ onOpenConsultation, theme }) {
 
         
         <div className={`grid grid-cols-1 min-[340px]:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 pb-10 border-b ${
-          isDark ? 'border-slate-800' : 'border-amber-200'
+          isDark ? 'border-slate-800' : 'border-slate-300/80'
         }`}>
           
           {/* Brand Col */}

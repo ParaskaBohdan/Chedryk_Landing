@@ -19,7 +19,7 @@ export default function Hero({ theme }) {
 
   return (
     <section id="hero" className={`relative max-md:-mt-20 max-md:pt-24 pb-8 md:py-20 lg:py-24 overflow-hidden transition-colors duration-300 ${
-      isDark ? 'bg-slate-900 text-white' : 'bg-slate-100/80 text-slate-900'
+      isDark ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-900'
     }`}>
       {/* Mobile-only background image - Dark theme */}
       <div 
@@ -42,18 +42,18 @@ export default function Hero({ theme }) {
           isDark ? 'opacity-100' : 'opacity-0'
         }`} 
       />
-      {/* Light overlay for mobile - Light theme with guaranteed high contrast */}
+      {/* Light overlay for mobile - Light theme dynamic overlay */}
       <div 
-        className={`block md:hidden absolute inset-0 pointer-events-none transition-opacity duration-300 bg-gradient-to-b from-white/98 via-white/88 to-white/98 backdrop-blur-[1px] ${
+        className={`block md:hidden absolute inset-0 pointer-events-none transition-opacity duration-300 bg-[var(--overlay-mobile,rgba(226,232,240,0.94))] backdrop-blur-[1px] ${
           isDark ? 'opacity-0' : 'opacity-100'
         }`} 
       />
 
       {/* Background Decorative Glowing Blobs */}
-      <div className={`hidden md:block absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[650px] h-[350px] sm:h-[650px] rounded-full blur-[140px] pointer-events-none ${
+      <div className={`hero-ambient-blob hidden md:block absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[650px] h-[350px] sm:h-[650px] rounded-full blur-[140px] pointer-events-none ${
         isDark ? 'bg-amber-500/15' : 'bg-amber-400/15'
       }`} />
-      <div className={`hidden md:block absolute top-1/3 right-5 w-[250px] sm:w-[450px] h-[250px] sm:h-[450px] rounded-full blur-[130px] pointer-events-none ${
+      <div className={`hero-ambient-blob hidden md:block absolute top-1/3 right-5 w-[250px] sm:w-[450px] h-[250px] sm:h-[450px] rounded-full blur-[130px] pointer-events-none ${
         isDark ? 'bg-orange-500/15' : 'bg-orange-400/15'
       }`} />
 
@@ -97,13 +97,13 @@ export default function Hero({ theme }) {
                 className={`py-2.5 px-3 rounded-xl border text-left backdrop-blur-md transition-all ${
                   isDark
                     ? 'pv-shell pv-texture border-white/10 bg-slate-950/60 text-white shadow-lg'
-                    : 'border-amber-300/70 bg-white/90 text-slate-900 shadow-md'
+                    : 'border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#f1f5f9)] text-slate-900 shadow-md'
                 }`}
               >
                 {isDark && <span className="pv-sheen" aria-hidden="true" />}
                 <div className="pv-content">
                   <p className={`text-[8px] font-bold uppercase tracking-wider ${
-                    isDark ? 'text-white/70' : 'text-slate-600'
+                    isDark ? 'text-white/70' : 'text-slate-800 font-extrabold'
                   }`}>
                     {item.label}
                   </p>
@@ -133,7 +133,7 @@ export default function Hero({ theme }) {
               className="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left"
             >
               <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-semibold ${
-                isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
+                isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-slate-200/90 border-slate-300 text-slate-800 shadow-xs'
               }`}>
                 <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500" />
                 <span>Закарпатська & Івано-Франківська області</span>
@@ -273,18 +273,18 @@ export default function Hero({ theme }) {
                 className={`glass-card pv-shell pv-texture solar-hover p-4 sm:p-6 rounded-2xl border group ${
                   isDark
                     ? 'border-slate-700/80 bg-slate-800/80 hover:border-amber-400/60'
-                    : 'border-slate-200 bg-white hover:border-amber-400 shadow-xs'
+                    : 'border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#f1f5f9)] hover:border-amber-400 shadow-xs'
                 }`}
               >
                 <span className="pv-sheen" aria-hidden="true" />
                 <div className="pv-content">
-                  <p className={`text-[10px] sm:text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                  <p className={`text-[10px] sm:text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-700 font-bold'}`}>
                     {item.label}
                   </p>
                   <p className={`text-xl sm:text-3xl font-extrabold mt-1 group-hover:text-amber-500 transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>
                     {item.value}
                   </p>
-                  <p className={`text-[11px] sm:text-xs mt-1 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                  <p className={`text-[11px] sm:text-xs mt-1 ${isDark ? 'text-slate-300' : 'text-slate-800 font-medium'}`}>
                     {item.desc}
                   </p>
                 </div>

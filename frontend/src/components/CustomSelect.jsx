@@ -73,10 +73,10 @@ export default function CustomSelect({
           variant === 'orange-outline'
             ? isDark 
               ? 'btn-orange-selected-no-hover shadow-md text-white' 
-              : 'border-orange-400 bg-amber-50 text-slate-700 hover:border-orange-500'
+              : 'border-orange-500 bg-slate-100/90 text-slate-900 hover:border-orange-600'
             : isDark 
               ? 'border-slate-700 bg-slate-900/90 text-white hover:border-slate-600' 
-              : 'border-slate-200 bg-slate-50 text-slate-900 hover:border-slate-300'
+              : 'border-slate-300 bg-slate-100/90 text-slate-900 hover:border-slate-400'
         } ${
           isOpen ? 'border-amber-500 ring-2 ring-amber-500/20 shadow-md' : ''
         }`}
@@ -104,7 +104,7 @@ export default function CustomSelect({
           className={`absolute left-0 right-0 z-50 rounded-2xl border shadow-2xl p-1.5 space-y-1 max-h-48 overflow-y-auto animate-in fade-in duration-150 backdrop-blur-xl ${
             isDark 
               ? 'bg-slate-900/98 border-slate-700 text-white shadow-slate-950/80' 
-              : 'bg-white/98 border-amber-200 text-slate-900 shadow-xl'
+              : 'bg-white/98 border-slate-300 text-slate-900 shadow-xl'
           } ${
             openUpward ? 'bottom-[calc(100%+6px)]' : 'top-[calc(100%+6px)]'
           }`}
@@ -122,10 +122,10 @@ export default function CustomSelect({
                   isSelected
                     ? isDark 
                       ? 'bg-amber-500/10 text-amber-400 font-bold border border-amber-400/60 shadow-xs' 
-                      : 'bg-amber-50 text-slate-700 font-bold border border-orange-400 shadow-xs'
+                      : 'bg-amber-500/15 text-orange-950 font-bold border border-orange-400 shadow-xs'
                     : isDark 
                       ? 'text-slate-200 hover:bg-slate-800 hover:translate-x-0.5' 
-                      : 'text-slate-700 hover:bg-amber-50 hover:translate-x-0.5'
+                      : 'text-slate-800 hover:bg-slate-100 hover:translate-x-0.5'
                 }`}
               >
                 <span className="truncate pr-2">{optLabel}</span>

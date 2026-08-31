@@ -88,7 +88,7 @@ export function Eyebrow({ children, theme, icon: Icon, className = '' }) {
       className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-[10px] sm:text-xs font-bold telemetry-label ${
         isDark
           ? 'bg-amber-500/12 border-amber-400/40 text-amber-300'
-          : 'bg-amber-50 border-amber-300 text-amber-800'
+          : 'bg-slate-200/90 border-slate-300 text-slate-800 shadow-xs'
       } ${className}`}
     >
       {Icon && <Icon className="w-3.5 h-3.5 text-amber-500" />}

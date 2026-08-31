@@ -14,13 +14,13 @@ export function LiveBadge({ label = 'Live Grid Active', theme, tone = 'emerald',
   const tones = {
     emerald: isDark
       ? 'border-emerald-400/40 bg-emerald-500/12 text-emerald-300'
-      : 'border-emerald-300 bg-emerald-50 text-emerald-700',
+      : 'border-emerald-300/90 bg-emerald-100/80 text-emerald-800',
     amber: isDark
       ? 'border-amber-400/40 bg-amber-500/12 text-amber-300'
-      : 'border-amber-300 bg-amber-50 text-amber-800',
+      : 'border-amber-300/90 bg-amber-100/80 text-amber-900',
     sky: isDark
       ? 'border-sky-400/40 bg-sky-500/12 text-sky-300'
-      : 'border-sky-300 bg-sky-50 text-sky-700'
+      : 'border-sky-300/90 bg-sky-100/80 text-sky-800'
   };
 
   return (
@@ -330,17 +330,23 @@ export function TelemetryChip({ icon: Icon, label, value, theme, live = false })
   const isDark = theme === 'dark';
   return (
     <div
-      className={`glass-deep rounded-xl px-3 py-2.5 flex items-center gap-2.5 transition-colors ${
-        isDark ? 'hover:border-amber-400/40' : 'hover:border-amber-400/70'
+      className={`rounded-xl px-3 py-2.5 flex items-center gap-2.5 transition-colors border shadow-xs ${
+        isDark 
+          ? 'glass-deep hover:border-amber-400/40' 
+          : 'bg-[var(--bg-card-shell,#f1f5f9)] border-[var(--border-card-shell,#cbd5e1)] hover:border-amber-400/70'
       }`}
     >
       {Icon && (
-        <span className="w-7 h-7 rounded-lg flex items-center justify-center border border-amber-400/40 bg-amber-500/15 text-amber-500 flex-shrink-0">
+        <span className={`w-7 h-7 rounded-lg flex items-center justify-center border flex-shrink-0 ${
+          isDark 
+            ? 'border-amber-400/40 bg-amber-500/15 text-amber-500' 
+            : 'border-amber-300/80 bg-amber-100/80 text-amber-700'
+        }`}>
           <Icon className="w-3.5 h-3.5" />
         </span>
       )}
       <div className="min-w-0">
-        <p className={`text-[9px] font-bold telemetry-label truncate ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+        <p className={`text-[9px] font-bold telemetry-label truncate ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>
           {label}
         </p>
         <p className={`text-xs font-black tabular-nums flex items-center gap-1.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>

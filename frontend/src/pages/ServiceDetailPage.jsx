@@ -772,7 +772,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
         <div className={`pv-shell pv-texture pv-frame relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch p-6 sm:p-8 lg:p-10 rounded-3xl border transition-all duration-300 ${
           isDark
             ? 'bg-slate-800/90 border-slate-700/80 shadow-2xl'
-            : 'bg-gradient-to-br from-white via-amber-50/40 to-orange-50/20 border-amber-200/90 shadow-2xl shadow-amber-500/5'
+            : 'bg-white/95 border-slate-300/80 shadow-xl'
         }`}>
           <RegistrationMarks />
           
@@ -783,7 +783,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
                   {service.badge}
                 </span>
                 <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full border ${
-                  isDark ? 'border-slate-800 bg-slate-900 text-slate-300' : 'border-amber-200/70 bg-amber-100/60 text-slate-700'
+                  isDark ? 'border-slate-800 bg-slate-900 text-slate-300' : 'border-slate-300 bg-slate-100 text-slate-700'
                 }`}>
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Закарпаття & Франківщина</span>
@@ -804,7 +804,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
               <div className="flex flex-wrap gap-2.5 sm:gap-3">
                 {service.advantages.map((adv, idx) => (
                   <div key={idx} className={`flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-xl border transition-colors ${
-                    isDark ? 'border-slate-800 bg-slate-900/90 text-amber-300' : 'border-amber-200/90 bg-amber-50/90 text-amber-900 shadow-sm'
+                    isDark ? 'border-slate-800 bg-slate-900/90 text-amber-300' : 'border-slate-300 bg-slate-100 text-slate-800 shadow-xs'
                   }`}>
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
                     <span>{adv}</span>
@@ -884,7 +884,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
                 {/* Step Card */}
                 <div
                   className={`p-5.5 rounded-2xl border transition-all duration-300 relative flex flex-col justify-between h-full ${
-                    isDark ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' : 'bg-white border-slate-200 shadow-md'
+                    isDark ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' : 'bg-[var(--bg-card-shell,#f1f5f9)] border-[var(--border-card-shell,#cbd5e1)] shadow-md text-slate-900'
                   }`}
                 >
                   <div>
@@ -895,7 +895,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
                       </div>
                       <h3 className="font-bold text-base leading-tight">{step.title}</h3>
                     </div>
-                    <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                    <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700 font-medium'}`}>
                       {step.description}
                     </p>
                   </div>

@@ -48,7 +48,7 @@ export default function StepProcess({ onOpenConsultation, theme }) {
 
   return (
     <section id="process" className={`py-16 sm:py-20 relative transition-colors duration-300 border-t scroll-mt-20 ${
-      isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-amber-50/40 text-slate-900 border-amber-100'
+      isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-slate-100/60 text-slate-900 border-slate-300/70'
     }`}>
       <SectionAmbience flares={false} beams={false} />
 
@@ -63,7 +63,7 @@ export default function StepProcess({ onOpenConsultation, theme }) {
 
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
           <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-semibold uppercase tracking-widest ${
-            isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
+            isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-slate-200/90 border-slate-300 text-slate-800 shadow-xs'
           }`}>
             <span>Прозорий Процес</span>
           </div>
