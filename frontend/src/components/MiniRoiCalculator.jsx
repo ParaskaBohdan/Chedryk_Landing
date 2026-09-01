@@ -53,10 +53,10 @@ export default function MiniRoiCalculator({ theme }) {
         
         {/* Component Header (Optional but good for layout on landing) */}
         <div className="text-center max-w-3xl mx-auto mb-10 space-y-3">
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
             Оцініть <span className="text-amber-500">Фінансову Ефективність</span> вашої СЕС
           </h2>
-          <p className={`text-xs sm:text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+          <p className={`text-sm sm:text-lg font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
             Вкажіть параметри вашого будинку та дізнайтеся термін окупності та річний дохід.
           </p>
         </div>
@@ -134,10 +134,10 @@ export default function MiniRoiCalculator({ theme }) {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 items-center pt-1 sm:pt-2">
-                <div className={`p-3 sm:p-5 rounded-2xl border text-center ${
+                <div className={`p-3.5 sm:p-5 rounded-2xl border text-center ${
                   isDark ? 'bg-amber-500/10 border-amber-400/50' : 'bg-orange-500/10 border-orange-400/30'
                 }`}>
-                  <p className={`text-[10px] sm:text-xs uppercase font-bold tracking-wider ${isDark ? 'text-amber-300' : 'text-orange-700'}`}>
+                  <p className={`text-xs sm:text-xs uppercase font-black tracking-wider ${isDark ? 'text-amber-300' : 'text-orange-700'}`}>
                     Термін повного повернення
                   </p>
                   <p className="text-3xl sm:text-5xl font-black text-amber-500 mt-1">
@@ -149,19 +149,19 @@ export default function MiniRoiCalculator({ theme }) {
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-1 sm:gap-0 sm:space-y-3">
-                  <div className={`p-2.5 sm:p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-[var(--bg-subcard,#e2e8f0)] border-[var(--border-subcard,#cbd5e1)] shadow-xs'}`}>
-                    <p className={`text-[9px] sm:text-[10px] font-extrabold uppercase ${isDark ? 'text-slate-400' : 'text-slate-800'}`}>Загальна річна вигода</p>
-                    <p className="text-[13px] sm:text-xl font-extrabold text-emerald-500 mt-0.5">
+                  <div className={`p-3 sm:p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-transparent border-[var(--border-subcard,#cbd5e1)]'}`}>
+                    <p className={`text-[10px] sm:text-[10px] font-black uppercase ${isDark ? 'text-slate-400' : 'text-slate-800'}`}>Загальна річна вигода</p>
+                    <p className="text-sm sm:text-xl font-black text-emerald-500 mt-0.5">
                       +${totalAnnualBenefitUsd.toLocaleString()} / рік
                     </p>
-                    <p className={`text-[9px] sm:text-[10px] ${isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}`}>
+                    <p className={`text-[11px] sm:text-[10px] ${isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}`}>
                       ~{Math.round(totalAnnualBenefitUsd * usdToUah).toLocaleString()} грн/рік
                     </p>
                   </div>
 
-                  <div className={`p-2.5 sm:p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-[var(--bg-subcard,#e2e8f0)] border-[var(--border-subcard,#cbd5e1)] shadow-xs'}`}>
-                    <p className={`text-[9px] sm:text-[10px] font-extrabold uppercase ${isDark ? 'text-slate-400' : 'text-slate-800'}`}>Середній дохід на місяць</p>
-                    <p className="text-[13px] sm:text-lg font-extrabold text-amber-500 mt-0.5">
+                  <div className={`p-3 sm:p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-transparent border-[var(--border-subcard,#cbd5e1)]'}`}>
+                    <p className={`text-[10px] sm:text-[10px] font-black uppercase ${isDark ? 'text-slate-400' : 'text-slate-800'}`}>Середній дохід на місяць</p>
+                    <p className="text-sm sm:text-lg font-black text-amber-500 mt-0.5">
                       +${Math.round(totalAnnualBenefitUsd / 12).toLocaleString()} / міс
                     </p>
                   </div>

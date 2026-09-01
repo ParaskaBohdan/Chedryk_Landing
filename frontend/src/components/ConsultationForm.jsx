@@ -227,7 +227,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
         <h3 className="text-xl sm:text-2xl font-bold mb-2">
           Замовити Безкоштовну Консультацію
         </h3>
-        <p className={`text-xs sm:text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+        <p className={`text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
           Залиште контакти та зручний час — фахівець Nova Energy зателефонує вам для узгодження деталей.
         </p>
       </div>
@@ -238,7 +238,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
             <CheckCircle2 className="w-8 h-8" />
           </div>
           <h4 className="text-lg font-bold">Заявку Прийнято!</h4>
-          <p className="text-xs sm:text-sm leading-relaxed opacity-90">{status.message}</p>
+          <p className="text-sm leading-relaxed opacity-90">{status.message}</p>
           <div className="pt-2">
             <button
               onClick={() => {
@@ -262,7 +262,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
           )}
 
           <div>
-            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
+            <label className={`block text-sm font-bold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
               Ваше Ім'я *
             </label>
             <div className="relative">
@@ -281,7 +281,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
           </div>
 
           <div>
-            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
+            <label className={`block text-sm font-bold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
               Номер Телефону *
             </label>
             <div className="relative flex items-center">
@@ -349,7 +349,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
           </div>
 
           <div>
-            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
+            <label className={`block text-sm font-bold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
               Послуга, яка вас цікавить
             </label>
             <CustomSelect
@@ -364,7 +364,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
           {/* Date & Time Booking Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
+              <label className={`block text-sm font-bold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
                 Зручний день
               </label>
               <div 
@@ -390,7 +390,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
             </div>
 
             <div>
-              <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
+              <label className={`block text-sm font-bold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
                 Час
               </label>
               <CustomSelect
@@ -404,17 +404,17 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
           </div>
 
           <div>
-            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
+            <label className={`block text-sm font-bold mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
               Коментар або опис об'єкта (необов'язково)
             </label>
             <div className="relative">
-              <MessageSquare className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-500" />
+              <MessageSquare className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-500 pointer-events-none" />
               <textarea
                 rows={3}
                 placeholder="Потужність, тип даху чи місто..."
                 value={formData.comment}
                 onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
-                className={`solar-field w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors ${
+                className={`solar-field w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors resize-none ${
                   isDark ? 'border-slate-700 bg-slate-900/90 text-white placeholder-slate-400' : 'border-slate-300 bg-slate-100/90 text-slate-900 placeholder-slate-400'
                 }`}
               />

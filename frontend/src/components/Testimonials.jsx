@@ -82,7 +82,7 @@ export default function Testimonials({ theme }) {
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
             Що Кажуть Про Нашу <span className="text-amber-500">Роботу</span>
           </h2>
-          <p className={`text-xs sm:text-base ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+          <p className={`text-sm sm:text-lg font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
             Враження та реальний досвід власників збудованих нами сонячних електростанцій та гібридних систем.
           </p>
         </div>
@@ -106,7 +106,7 @@ export default function Testimonials({ theme }) {
                 </div>
 
                 {/* Comment Body */}
-                <p className={`text-xs sm:text-sm leading-relaxed italic ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                <p className={`text-sm leading-relaxed italic font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                   "{item.comment}"
                 </p>
               </div>
@@ -116,17 +116,17 @@ export default function Testimonials({ theme }) {
                 isDark ? 'border-slate-700/60' : 'border-slate-100'
               }`}>
                 <div>
-                  <h3 className={`font-bold text-xs sm:text-sm ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  <h3 className={`font-bold text-sm sm:text-base ${isDark ? 'text-white' : 'text-slate-900'}`}>
                     {item.name}
                   </h3>
-                  <div className={`flex items-center gap-1 text-[11px] mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                    <MapPin className="w-3 h-3 text-amber-500 flex-shrink-0" />
+                  <div className={`flex items-center gap-1 text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                    <MapPin className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" />
                     <span>{item.location}</span>
                   </div>
                 </div>
 
                 <div className="text-right">
-                  <span className={`text-[10px] font-semibold px-2.5 py-1 rounded-lg block whitespace-nowrap border ${
+                  <span className={`text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-lg block whitespace-nowrap border ${
                     isDark ? 'border-amber-400/60 bg-amber-500/10 text-amber-200' : 'border-orange-400/60 bg-amber-50/60 text-slate-800'
                   }`}>
                     {item.system}

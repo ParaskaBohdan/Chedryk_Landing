@@ -126,11 +126,11 @@ export default function ContactsPage({ theme }) {
                       Месенджери (Telegram / WhatsApp / Viber)
                     </p>
                     <div className="flex gap-3 mt-1">
-                      <a href="https://t.me/" target="_blank" rel="noreferrer" className="text-xs font-bold text-sky-500 hover:underline">
+                      <a href="https://t.me/" target="_blank" rel="noreferrer" className="text-sm font-bold text-sky-500 hover:underline">
                         Telegram
                       </a>
                       <span className="opacity-40">•</span>
-                      <a href="https://wa.me/" target="_blank" rel="noreferrer" className="text-xs font-bold text-emerald-500 hover:underline">
+                      <a href="https://wa.me/" target="_blank" rel="noreferrer" className="text-sm font-bold text-emerald-500 hover:underline">
                         WhatsApp
                       </a>
                     </div>

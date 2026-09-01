@@ -111,7 +111,7 @@ export default function Header({ onOpenConsultation, theme, lightVariant = '2', 
               aria-hidden="true"
             />
             <img
-              src="/logo.png"
+              src="/logo-icon.png"
               alt="NOVA ENERGY_UA"
               className="relative h-full w-auto object-contain"
             />

@@ -14,7 +14,8 @@ import {
   Clock,
   Leaf,
   RotateCcw,
-  Sparkles
+  Sparkles,
+  Coins
 } from 'lucide-react';
 import CustomSelect from '../components/CustomSelect';
 import ConfigurationForm from '../components/ConfigurationForm';
@@ -147,21 +148,21 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold">
               Калькулятор <span className="text-amber-500">Доходу СЕС</span>
             </h1>
-            <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+            <p className={`text-sm sm:text-lg font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
               Розрахуйте орієнтовний річний дохід від генерації сонячної електростанції, виплати за Зеленим Тарифом та термін окупності під ваш будинок або бізнес.
             </p>
           </div>
         )}
 
-        {/* Mode Switcher Tabs */}
-        <div className="flex justify-center mb-8 sm:mb-10">
-          <div className={`inline-flex items-center gap-2 sm:gap-3 p-1.5 rounded-2xl border shadow-md ${
+        {/* Mode Switcher Tabs - Vertical on mobile, horizontal on sm+ */}
+        <div className="flex justify-center mb-8 sm:mb-10 w-full px-2 sm:px-0">
+          <div className={`flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 p-2 sm:p-1.5 rounded-2xl border shadow-md w-full sm:w-auto ${
             isDark ? 'bg-slate-800/90 border-slate-700/80' : 'bg-slate-200/90 border-slate-300'
           }`}>
             <button
               type="button"
               onClick={() => setCalcMode('cost')}
-              className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all duration-300 cursor-pointer ${
+              className={`flex items-center justify-center gap-2.5 px-4 sm:px-6 py-3.5 sm:py-3 rounded-xl text-sm font-extrabold transition-all duration-300 cursor-pointer w-full sm:w-auto ${
                 calcMode === 'cost'
                   ? isDark
                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
@@ -171,14 +172,14 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                     : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Sun className="w-4 h-4" />
+              <Sun className="w-4.5 h-4.5 flex-shrink-0" />
               <span>1. Дохід за параметрами даху</span>
             </button>
 
             <button
               type="button"
               onClick={() => setCalcMode('income')}
-              className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all duration-300 cursor-pointer ${
+              className={`flex items-center justify-center gap-2.5 px-4 sm:px-6 py-3.5 sm:py-3 rounded-xl text-sm font-extrabold transition-all duration-300 cursor-pointer w-full sm:w-auto ${
                 calcMode === 'income'
                   ? isDark
                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
@@ -188,7 +189,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                     : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <TrendingUp className="w-4 h-4" />
+              <TrendingUp className="w-4.5 h-4.5 flex-shrink-0" />
               <span>2. Прогноз доходу та окупності</span>
             </button>
           </div>
@@ -235,7 +236,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                   {/* 1. Placement Type */}
                   {!isGroundOnly && (
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                      <label className={`block text-xs sm:text-xs font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                         Тип розміщення станції:
                       </label>
                       <div className={`grid ${isRoofOnly ? 'grid-cols-2' : 'grid-cols-3'} gap-2`}>
@@ -247,8 +248,8 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                           }}
                           className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${getOptionClass(roofType === 'pitched')}`}
                         >
-                          <p className="font-bold text-xs">Скатний дах</p>
-                          <p className="text-[10px] opacity-75 mt-0.5">Нахил ~30°</p>
+                          <p className="font-bold text-xs sm:text-sm">Скатний дах</p>
+                          <p className="text-xs opacity-80 mt-0.5">Нахил ~30°</p>
                         </button>
 
                         <button
@@ -259,8 +260,8 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                           }}
                           className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${getOptionClass(roofType === 'flat')}`}
                         >
-                          <p className="font-bold text-xs">Плоский дах</p>
-                          <p className="text-[10px] opacity-75 mt-0.5">Ферми 15°</p>
+                          <p className="font-bold text-xs sm:text-sm">Плоский дах</p>
+                          <p className="text-xs opacity-80 mt-0.5">Ферми 15°</p>
                         </button>
 
                         {!isRoofOnly && (
@@ -272,8 +273,8 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                             }}
                             className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${getOptionClass(roofType === 'ground')}`}
                           >
-                            <p className="font-bold text-xs">Наземна СЕС</p>
-                            <p className="text-[10px] opacity-75 mt-0.5">На ґрунті</p>
+                            <p className="font-bold text-xs sm:text-sm">Наземна СЕС</p>
+                            <p className="text-xs opacity-80 mt-0.5">На ґрунті</p>
                           </button>
                         )}
                       </div>
@@ -283,7 +284,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                   {/* 2. Roof Material */}
                   {roofType === 'pitched' && (
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                      <label className={`block text-xs sm:text-xs font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                         Матеріал покриття (Визначає тип кріплення):
                       </label>
                       <CustomSelect
@@ -336,7 +337,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
 
                   {/* 5. Panel Brand Selection */}
                   <div className={`pt-4 border-t ${isDark ? 'border-slate-700/60' : 'border-slate-200'}`}>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                    <label className={`block text-xs sm:text-xs font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       Бренд сонячних фотомодулів (Tier-1):
                     </label>
                     <div className="grid grid-cols-2 gap-3">
@@ -353,8 +354,8 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                           className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${getOptionClass(panelBrand === b.id)}`}
                         >
                           <p className="font-bold text-xs sm:text-sm">{b.name}</p>
-                          <p className="text-xs text-amber-500 font-extrabold mt-0.5">{b.watt}</p>
-                          <p className="text-[10px] opacity-75 mt-1">{b.desc}</p>
+                          <p className="text-xs sm:text-sm text-amber-500 font-black mt-0.5">{b.watt}</p>
+                          <p className="text-xs opacity-75 mt-1">{b.desc}</p>
                         </button>
                       ))}
                     </div>
@@ -362,7 +363,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
 
                   {/* 6. Battery Reserve Options */}
                   <div className={`pt-4 border-t ${isDark ? 'border-slate-700/60' : 'border-slate-200'}`}>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                    <label className={`block text-xs sm:text-xs font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       Акумуляторний блок LiFePO4 резервного живлення:
                     </label>
                     <div className="grid grid-cols-2 gap-3">
@@ -372,7 +373,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                         className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${getOptionClass(!hasBattery)}`}
                       >
                         <p className="font-bold text-xs sm:text-sm">Без АКБ</p>
-                        <p className="text-[10px] opacity-75 mt-0.5">Мережева СЕС</p>
+                        <p className="text-xs opacity-80 mt-0.5">Мережева СЕС</p>
                       </button>
 
                       <button
@@ -381,7 +382,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                         className={`p-3 rounded-2xl border-2 text-left transition-all cursor-pointer ${getOptionClass(hasBattery)}`}
                       >
                         <p className="font-bold text-xs sm:text-sm">З АКБ</p>
-                        <p className="text-[10px] opacity-75 mt-0.5">Гібридна СЕС</p>
+                        <p className="text-xs opacity-80 mt-0.5">Гібридна СЕС</p>
                       </button>
                     </div>
                   </div>
@@ -445,7 +446,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                           onOpenConsultation(getConfigSummaryText());
                         }
                       }}
-                      className="w-full flex justify-center items-center px-4 py-4 rounded-xl btn-orange-bright font-black text-xs sm:text-sm uppercase tracking-widest hover:-translate-y-0.5 active:translate-y-0 cursor-pointer transition-all duration-300"
+                      className="w-full flex justify-center items-center px-4 py-4 rounded-xl btn-orange-bright font-black text-sm sm:text-base uppercase tracking-wider hover:-translate-y-0.5 active:translate-y-0 cursor-pointer transition-all duration-300"
                     >
                       Надіслати конфігурацію майстру
                     </button>
@@ -470,106 +471,150 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                     
                     {/* 1. Generation Metrics */}
                     <div className="space-y-2">
-                      <h4 className={`font-black uppercase tracking-wider ${isDark ? 'text-slate-300' : 'text-slate-900'}`}>
+                      <h4 className={`text-sm sm:text-base font-black uppercase tracking-wider ${isDark ? 'text-white' : 'text-slate-950'}`}>
                         1. Продуктивність та генерація
                       </h4>
                       <div className={`border-t ${isDark ? 'border-slate-700/50' : 'border-slate-300'} divide-y ${isDark ? 'divide-slate-800' : 'divide-slate-200'}`}>
-                        <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}>
+                        <div className="flex justify-between items-start py-3 gap-3">
+                          <span className={`text-xs sm:text-sm font-bold leading-snug ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                             1.1 Розрахункова потужність СЕС
                           </span>
-                          <span className="font-bold text-amber-500">{totalKw} кВт</span>
+                          <span className="font-black text-sm sm:text-base text-amber-500 tabular-nums shrink-0">{totalKw} кВт</span>
                         </div>
-                        <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}>
+                        <div className="flex justify-between items-start py-3 gap-3">
+                          <span className={`text-xs sm:text-sm font-bold leading-snug ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                             1.2 Очікувана річна генерація (Закарпаття/Прикарпаття)
                           </span>
-                          <span className="font-bold text-emerald-500">{annualGenKwh.toLocaleString('uk-UA')} кВт·год / рік</span>
+                          <div className="text-right shrink-0">
+                            <div className="font-black text-sm sm:text-base text-emerald-600 dark:text-emerald-400 tabular-nums leading-tight">
+                              {annualGenKwh.toLocaleString('uk-UA')}
+                            </div>
+                            <div className={`text-[11px] font-bold mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                              кВт·год / рік
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}>
+                        <div className="flex justify-between items-start py-3 gap-3">
+                          <span className={`text-xs sm:text-sm font-bold leading-snug ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                             1.3 Продаж у мережу за Зеленим тарифом (~80%)
                           </span>
-                          <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900 font-extrabold'}`}>
-                            ~{Math.round(annualGenKwh * 0.8).toLocaleString('uk-UA')} кВт·год / рік
-                          </span>
+                          <div className="text-right shrink-0">
+                            <div className={`font-black text-sm sm:text-base tabular-nums leading-tight ${isDark ? 'text-white' : 'text-slate-950'}`}>
+                              ~{Math.round(annualGenKwh * 0.8).toLocaleString('uk-UA')}
+                            </div>
+                            <div className={`text-[11px] font-bold mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                              кВт·год / рік
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}>
+                        <div className="flex justify-between items-start py-3 gap-3">
+                          <span className={`text-xs sm:text-sm font-bold leading-snug ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                             1.4 Власне покриття споживання об'єкта (~20%)
                           </span>
-                          <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900 font-extrabold'}`}>
-                            ~{Math.round(annualGenKwh * 0.2).toLocaleString('uk-UA')} кВт·год / рік
-                          </span>
+                          <div className="text-right shrink-0">
+                            <div className={`font-black text-sm sm:text-base tabular-nums leading-tight ${isDark ? 'text-white' : 'text-slate-950'}`}>
+                              ~{Math.round(annualGenKwh * 0.2).toLocaleString('uk-UA')}
+                            </div>
+                            <div className={`text-[11px] font-bold mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                              кВт·год / рік
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
 
                     {/* 2. Financial Benefit & Green Tariff Income */}
                     <div className="space-y-2">
-                      <h4 className={`font-black uppercase tracking-wider ${isDark ? 'text-slate-300' : 'text-slate-900'}`}>
+                      <h4 className={`text-sm sm:text-base font-black uppercase tracking-wider ${isDark ? 'text-white' : 'text-slate-950'}`}>
                         2. Очікуваний дохід та вигода
                       </h4>
                       <div className={`border-t ${isDark ? 'border-slate-700/50' : 'border-slate-300'} divide-y ${isDark ? 'divide-slate-800' : 'divide-slate-200'}`}>
-                        <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-700 font-semibold'}>
+                        <div className="flex justify-between items-start py-3 gap-3">
+                          <span className={`text-xs sm:text-sm font-bold leading-snug ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                             2.1 Виплати за Зеленим тарифом (0.163 € ≈ $0.18/кВт·год)
                           </span>
-                          <span className="font-bold text-amber-500">
-                            +${Math.round(annualGenKwh * 0.8 * 0.18).toLocaleString()} / рік (~{Math.round(annualGenKwh * 0.8 * 0.18 * usdToUah).toLocaleString()} грн)
-                          </span>
+                          <div className="text-right shrink-0">
+                            <div className="font-black text-sm sm:text-base text-amber-500 tabular-nums leading-tight">
+                              +${Math.round(annualGenKwh * 0.8 * 0.18).toLocaleString()} / рік
+                            </div>
+                            <div className={`text-[11px] font-bold mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                              (~{Math.round(annualGenKwh * 0.8 * 0.18 * usdToUah).toLocaleString()} грн)
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
+                        <div className="flex justify-between items-start py-3 gap-3">
+                          <span className={`text-xs sm:text-sm font-bold leading-snug ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                             2.2 Економія на власному споживанні
                           </span>
-                          <span className="font-bold text-emerald-500">
-                            +${Math.round(annualGenKwh * 0.2 * (gridPriceUah / usdToUah)).toLocaleString()} / рік (~{Math.round(annualGenKwh * 0.2 * gridPriceUah).toLocaleString()} грн)
-                          </span>
+                          <div className="text-right shrink-0">
+                            <div className="font-black text-sm sm:text-base text-emerald-600 dark:text-emerald-400 tabular-nums leading-tight">
+                              +${Math.round(annualGenKwh * 0.2 * (gridPriceUah / usdToUah)).toLocaleString()} / рік
+                            </div>
+                            <div className={`text-[11px] font-bold mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                              (~{Math.round(annualGenKwh * 0.2 * gridPriceUah).toLocaleString()} грн)
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
+                        <div className="flex justify-between items-start py-3 gap-3">
+                          <span className={`text-xs sm:text-sm font-bold leading-snug ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                             2.3 Середньомісячний фінансовий дохід
                           </span>
-                          <span className="font-bold text-amber-400">
-                            +${Math.round(((annualGenKwh * 0.8 * 0.18) + (annualGenKwh * 0.2 * (gridPriceUah / usdToUah))) / 12).toLocaleString()} / міс (~{Math.round((((annualGenKwh * 0.8 * 0.18) + (annualGenKwh * 0.2 * (gridPriceUah / usdToUah))) * usdToUah) / 12).toLocaleString()} грн)
-                          </span>
+                          <div className="text-right shrink-0">
+                            <div className="font-black text-sm sm:text-base text-amber-500 tabular-nums leading-tight">
+                              +${Math.round(((annualGenKwh * 0.8 * 0.18) + (annualGenKwh * 0.2 * (gridPriceUah / usdToUah))) / 12).toLocaleString()} / міс
+                            </div>
+                            <div className={`text-[11px] font-bold mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                              (~{Math.round((((annualGenKwh * 0.8 * 0.18) + (annualGenKwh * 0.2 * (gridPriceUah / usdToUah))) * usdToUah) / 12).toLocaleString()} грн)
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
 
                     {/* 3. Technical Parameters */}
                     <div className="space-y-2">
-                      <h4 className={`font-black uppercase tracking-wider ${isDark ? 'text-slate-300' : 'text-slate-900'}`}>
+                      <h4 className={`text-sm sm:text-base font-black uppercase tracking-wider ${isDark ? 'text-white' : 'text-slate-950'}`}>
                         3. Технічні параметри системи
                       </h4>
-                      <div className={`border-t ${isDark ? 'border-slate-700/50' : 'border-slate-200'} divide-y ${isDark ? 'divide-slate-800' : 'divide-slate-100'}`}>
-                        <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
+                      <div className={`border-t ${isDark ? 'border-slate-700/50' : 'border-slate-300'} divide-y ${isDark ? 'divide-slate-800' : 'divide-slate-200'}`}>
+                        <div className="flex justify-between items-start py-3 gap-3">
+                          <span className={`text-xs sm:text-sm font-bold leading-snug ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                             3.1 Сонячні панелі {panelBrand.toUpperCase()} ({selectedPanelWattage} Вт)
                           </span>
-                          <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>{activePanelCount} шт.</span>
+                          <span className={`font-black text-sm sm:text-base tabular-nums shrink-0 ${isDark ? 'text-white' : 'text-slate-950'}`}>{activePanelCount} шт.</span>
                         </div>
-                        <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
+                        <div className="flex justify-between items-start py-3 gap-3">
+                          <span className={`text-xs sm:text-sm font-bold leading-snug ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                             3.2 Необхідна площа під фотомодулі
                           </span>
-                          <span className={`font-bold ${requiredAreaSqM > roofAreaSqM ? 'text-rose-500' : isDark ? 'text-slate-200' : 'text-slate-900'}`}>
-                            {requiredAreaSqM} м² (з доступних {roofAreaSqM} м²)
-                          </span>
+                          <div className="text-right shrink-0">
+                            <div className={`font-black text-sm sm:text-base tabular-nums leading-tight ${requiredAreaSqM > roofAreaSqM ? 'text-rose-500' : isDark ? 'text-white' : 'text-slate-950'}`}>
+                              {requiredAreaSqM} м²
+                            </div>
+                            <div className={`text-[11px] font-bold mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                              (з доступних {roofAreaSqM} м²)
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex justify-between py-2.5">
-                          <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
+                        <div className="flex justify-between items-start py-3 gap-3">
+                          <span className={`text-xs sm:text-sm font-bold leading-snug ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                             3.3 Гібридний інвертор Deye
                           </span>
-                          <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>{inverterPowerKw} кВт</span>
+                          <span className={`font-black text-sm sm:text-base tabular-nums shrink-0 ${isDark ? 'text-white' : 'text-slate-950'}`}>{inverterPowerKw} кВт</span>
                         </div>
                         {hasBattery && (
-                          <div className="flex justify-between py-2.5">
-                            <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
+                          <div className="flex justify-between items-start py-3 gap-3">
+                            <span className={`text-xs sm:text-sm font-bold leading-snug ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                               3.4 Акумулятори LiFePO4 (автономність)
                             </span>
-                            <span className="font-bold text-emerald-500">{batteryCapacityKwh} кВт·год (~{backupHours} год)</span>
+                            <div className="text-right shrink-0">
+                              <div className="font-black text-sm sm:text-base text-emerald-600 dark:text-emerald-400 tabular-nums leading-tight">
+                                {batteryCapacityKwh} кВт·год
+                              </div>
+                              <div className={`text-[11px] font-bold mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                                (~{backupHours} год)
+                              </div>
+                            </div>
                           </div>
                         )}
                       </div>
@@ -584,23 +629,28 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
 
                     {/* Final Annual Income Highlight Banner */}
                     <div className="pt-2">
-                      <div className={`p-4 sm:p-5 rounded-2xl border-2 space-y-1 text-center ${
+                      <div className={`p-5 sm:p-6 rounded-2xl border text-center transition-all duration-300 ${
                         isDark
-                          ? 'bg-amber-500/10 border-amber-400 text-amber-400 shadow-none'
-                          : 'bg-orange-500/10 border-orange-500 text-slate-900 shadow-lg'
+                          ? 'bg-gradient-to-br from-amber-500/10 via-slate-900 to-emerald-500/10 border-amber-500/30 shadow-lg shadow-black/20'
+                          : 'bg-gradient-to-br from-amber-500/[0.06] via-slate-50 to-emerald-500/[0.06] border-amber-300/80 shadow-md'
                       }`}>
-                        <span className="text-xs uppercase font-extrabold tracking-wider text-amber-500 block">
-                          Орієнтовний Річний Дохід СЕС
-                        </span>
-                        <div className="text-2xl sm:text-3xl font-black font-mono tracking-tight text-emerald-500">
-                          +${Math.round((annualGenKwh * 0.8 * 0.18) + (annualGenKwh * 0.2 * (gridPriceUah / usdToUah))).toLocaleString()} <span className="text-sm font-bold text-slate-400">/ рік</span>
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-xs font-black uppercase tracking-wider mb-2.5">
+                          <Coins className="w-3.5 h-3.5 text-amber-500" />
+                          <span>Орієнтовний Річний Дохід СЕС</span>
                         </div>
-                        <div className={`text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                          (~ {Math.round(((annualGenKwh * 0.8 * 0.18) + (annualGenKwh * 0.2 * (gridPriceUah / usdToUah))) * usdToUah).toLocaleString()} грн / рік)
+                        
+                        <div className="text-3xl sm:text-4xl font-black tracking-tight text-emerald-600 dark:text-emerald-400 tabular-nums">
+                          +${Math.round((annualGenKwh * 0.8 * 0.18) + (annualGenKwh * 0.2 * (gridPriceUah / usdToUah))).toLocaleString()}
+                          <span className="text-sm sm:text-base font-bold text-slate-500 dark:text-slate-400 ml-1">/ рік</span>
                         </div>
-                        <p className={`text-[10px] pt-1 opacity-75 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+
+                        <div className={`text-xs sm:text-sm font-bold mt-1.5 tabular-nums ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                          (~{Math.round(((annualGenKwh * 0.8 * 0.18) + (annualGenKwh * 0.2 * (gridPriceUah / usdToUah))) * usdToUah).toLocaleString()} грн / рік)
+                        </div>
+
+                        <div className={`pt-3 mt-3 border-t text-[11px] sm:text-xs leading-relaxed ${isDark ? 'border-slate-800 text-slate-400' : 'border-slate-200 text-slate-600 font-medium'}`}>
                           Виплати за Зеленим тарифом + 100% економія на власних рахунках за електроенергію
-                        </p>
+                        </div>
                       </div>
                     </div>
 
@@ -681,7 +731,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
 
                 {/* Info Card: Tariffs Used */}
                 <div className={`p-4 rounded-2xl border text-xs space-y-2.5 ${
-                  isDark ? 'bg-slate-800/60 border-slate-700 text-slate-300' : 'bg-[var(--bg-subcard,#e2e8f0)] border-[var(--border-card-shell,#cbd5e1)] text-slate-800 shadow-xs'
+                  isDark ? 'bg-slate-800/60 border-slate-700 text-slate-300' : 'bg-transparent border-[var(--border-card-shell,#cbd5e1)] text-slate-800'
                 }`}>
                   <div className={`flex items-center justify-between font-bold border-b pb-2 ${isDark ? 'border-slate-700/40' : 'border-[var(--border-subcard,#cbd5e1)]'}`}>
                     <span className="flex items-center gap-1.5 text-amber-500">
@@ -714,7 +764,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                         onOpenConsultation(getConfigSummaryText());
                       }
                     }}
-                    className="w-full flex justify-center items-center px-4 py-4 rounded-xl btn-orange-bright font-black text-xs sm:text-sm uppercase tracking-widest hover:-translate-y-0.5 active:translate-y-0 cursor-pointer transition-all duration-300"
+                    className="w-full flex justify-center items-center px-4 py-4 rounded-xl btn-orange-bright font-black text-sm sm:text-base uppercase tracking-wider hover:-translate-y-0.5 active:translate-y-0 cursor-pointer transition-all duration-300"
                   >
                     Отримати детальну фінансову модель
                   </button>
@@ -753,7 +803,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                   </div>
 
                   <div className="space-y-3">
-                    <div className={`p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-[var(--bg-subcard,#e2e8f0)] border-[var(--border-subcard,#cbd5e1)] shadow-xs'}`}>
+                    <div className={`p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-transparent border-[var(--border-subcard,#cbd5e1)]'}`}>
                       <p className={`text-[11px] font-extrabold uppercase ${isDark ? 'text-slate-400' : 'text-slate-800'}`}>Загальна річна вигода</p>
                       <p className="text-xl font-extrabold text-emerald-500 mt-0.5">
                         +${totalAnnualBenefitUsd.toLocaleString()} / рік
@@ -763,7 +813,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                       </p>
                     </div>
 
-                    <div className={`p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-[var(--bg-subcard,#e2e8f0)] border-[var(--border-subcard,#cbd5e1)] shadow-xs'}`}>
+                    <div className={`p-3 rounded-xl border ${isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-transparent border-[var(--border-subcard,#cbd5e1)]'}`}>
                       <p className={`text-[11px] font-extrabold uppercase ${isDark ? 'text-slate-400' : 'text-slate-800'}`}>Середній дохід на місяць</p>
                       <p className="text-lg font-extrabold text-amber-500 mt-0.5">
                         +${Math.round(totalAnnualBenefitUsd / 12).toLocaleString()} / міс
@@ -814,69 +864,69 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
 
               {/* Seasonal Generation Distribution */}
               <SolarPanelCard theme={theme} className="p-6" contentClassName="space-y-4">
-                <div className="flex justify-between items-center border-b pb-3 border-slate-700/40">
-                  <h4 className="font-extrabold text-xs sm:text-sm uppercase tracking-wider text-slate-300 flex items-center gap-2">
-                    <Sun className="w-4 h-4 text-amber-500" /> Сезонний розподіл генерації
+                <div className={`flex justify-between items-center border-b pb-3 ${isDark ? 'border-slate-700/40' : 'border-slate-200'}`}>
+                  <h4 className={`font-black text-sm sm:text-base uppercase tracking-wider flex items-center gap-2 ${isDark ? 'text-white' : 'text-slate-950'}`}>
+                    <Sun className="w-4.5 h-4.5 text-amber-500" /> Сезонний розподіл генерації
                   </h4>
-                  <span className="text-xs font-bold text-amber-500">
+                  <span className="text-xs sm:text-sm font-black text-amber-500">
                     {annualIncomeGenKwh.toLocaleString()} кВт·год/рік
                   </span>
                 </div>
 
-                <div className="space-y-3 text-xs">
+                <div className="space-y-3.5 text-xs sm:text-sm">
                   {/* Summer */}
                   <div>
-                    <div className="flex justify-between mb-1 font-semibold">
-                      <span className="flex items-center gap-1.5 text-amber-400">☀️ Літо (Червень – Серпень) — 45%</span>
-                      <span>{Math.round(annualIncomeGenKwh * 0.45).toLocaleString()} кВт·год</span>
+                    <div className="flex justify-between mb-1.5 font-bold">
+                      <span className="flex items-center gap-1.5 text-amber-500">☀️ Літо (Червень – Серпень) — 45%</span>
+                      <span className={isDark ? 'text-white' : 'text-slate-900'}>{Math.round(annualIncomeGenKwh * 0.45).toLocaleString()} кВт·год</span>
                     </div>
-                    <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div className={`w-full ${isDark ? 'bg-slate-800' : 'bg-slate-200'} h-2.5 rounded-full overflow-hidden`}>
                       <div className="bg-amber-400 h-full rounded-full" style={{ width: '45%' }}></div>
                     </div>
                   </div>
 
                   {/* Spring */}
                   <div>
-                    <div className="flex justify-between mb-1 font-semibold">
-                      <span className="flex items-center gap-1.5 text-emerald-400">🌱 Весна (Березень – Травень) — 30%</span>
-                      <span>{Math.round(annualIncomeGenKwh * 0.30).toLocaleString()} кВт·год</span>
+                    <div className="flex justify-between mb-1.5 font-bold">
+                      <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">🌱 Весна (Березень – Травень) — 30%</span>
+                      <span className={isDark ? 'text-white' : 'text-slate-900'}>{Math.round(annualIncomeGenKwh * 0.30).toLocaleString()} кВт·год</span>
                     </div>
-                    <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div className={`w-full ${isDark ? 'bg-slate-800' : 'bg-slate-200'} h-2.5 rounded-full overflow-hidden`}>
                       <div className="bg-emerald-400 h-full rounded-full" style={{ width: '30%' }}></div>
                     </div>
                   </div>
 
                   {/* Autumn */}
                   <div>
-                    <div className="flex justify-between mb-1 font-semibold">
-                      <span className="flex items-center gap-1.5 text-orange-400">🍂 Осінь (Вересень – Листопад) — 18%</span>
-                      <span>{Math.round(annualIncomeGenKwh * 0.18).toLocaleString()} кВт·год</span>
+                    <div className="flex justify-between mb-1.5 font-bold">
+                      <span className="flex items-center gap-1.5 text-orange-500">🍂 Осінь (Вересень – Листопад) — 18%</span>
+                      <span className={isDark ? 'text-white' : 'text-slate-900'}>{Math.round(annualIncomeGenKwh * 0.18).toLocaleString()} кВт·год</span>
                     </div>
-                    <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div className={`w-full ${isDark ? 'bg-slate-800' : 'bg-slate-200'} h-2.5 rounded-full overflow-hidden`}>
                       <div className="bg-orange-400 h-full rounded-full" style={{ width: '18%' }}></div>
                     </div>
                   </div>
 
                   {/* Winter */}
                   <div>
-                    <div className="flex justify-between mb-1 font-semibold">
-                      <span className="flex items-center gap-1.5 text-sky-400">❄️ Зима (Грудень – Лютий) — 7%</span>
-                      <span>{Math.round(annualIncomeGenKwh * 0.07).toLocaleString()} кВт·год</span>
+                    <div className="flex justify-between mb-1.5 font-bold">
+                      <span className="flex items-center gap-1.5 text-sky-600 dark:text-sky-400">❄️ Зима (Грудень – Лютий) — 7%</span>
+                      <span className={isDark ? 'text-white' : 'text-slate-900'}>{Math.round(annualIncomeGenKwh * 0.07).toLocaleString()} кВт·год</span>
                     </div>
-                    <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div className={`w-full ${isDark ? 'bg-slate-800' : 'bg-slate-200'} h-2.5 rounded-full overflow-hidden`}>
                       <div className="bg-sky-400 h-full rounded-full" style={{ width: '7%' }}></div>
                     </div>
                   </div>
                 </div>
 
                 {/* Eco footprint metric */}
-                <div className={`mt-4 p-3 rounded-xl flex items-center justify-between text-xs border ${
-                  isDark ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                <div className={`mt-4 p-3.5 rounded-xl flex items-center justify-between text-xs sm:text-sm border ${
+                  isDark ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-emerald-50 border-emerald-300 text-emerald-900'
                 }`}>
-                  <span className="flex items-center gap-2 font-semibold">
-                    <Leaf className="w-4 h-4 text-emerald-500" /> Зменшення викидів CO₂ на рік:
+                  <span className="flex items-center gap-2 font-bold">
+                    <Leaf className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Зменшення викидів CO₂ на рік:
                   </span>
-                  <span className="font-extrabold text-sm">~{co2SavingsTons} тонн</span>
+                  <span className="font-black text-sm sm:text-base">~{co2SavingsTons} тонн</span>
                 </div>
 
               </SolarPanelCard>

@@ -62,7 +62,7 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
             Зелений Тариф, Дозволи Обленерго & <span className="text-amber-500">Системи Deye</span>
           </h2>
-          <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+          <p className={`text-sm sm:text-lg font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
             Беремо на себе найскладніші етапи — від юридичного оформлення документів до вибору інверторів Deye на Закарпатті та Франківщині.
           </p>
         </div>
@@ -104,8 +104,8 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
                     {item.title}
                   </h3>
 
-                  <p className={`text-xs sm:text-sm leading-relaxed mb-6 ${
-                    isDark ? 'text-slate-300' : 'text-slate-600'
+                  <p className={`text-sm leading-relaxed mb-6 font-medium ${
+                    isDark ? 'text-slate-300' : 'text-slate-700'
                   }`}>
                     {item.desc}
                   </p>
@@ -138,14 +138,14 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
         <SolarPanelCard theme={theme} glow className="mt-10 sm:mt-14 p-6 sm:p-8 shadow-xl">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-3 text-center md:text-left">
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
+              <div className="hidden sm:flex flex-wrap items-center justify-center md:justify-start gap-2">
                 <LiveBadge theme={theme} label="Hybrid Inverter Online" />
                 <LiveBadge theme={theme} label="ATS 4 ms" tone="amber" />
               </div>
-              <h4 className={`text-lg sm:text-xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              <h4 className={`text-xl sm:text-2xl font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>
                 Чому саме інвертори <span className="text-amber-500">Deye</span>?
               </h4>
-              <p className={`text-xs sm:text-sm max-w-2xl ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+              <p className={`text-sm sm:text-base leading-relaxed font-medium max-w-2xl ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                 Підтримка паралельного підключення, миттєве перемикання за 4 мс при відключенні світла, інтеграція з генераторами та мобільний моніторинг.
               </p>
               <div className="max-w-sm mx-auto md:mx-0">
@@ -155,7 +155,7 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
 
             <button
               onClick={onOpenConsultation}
-              className="btn-orange-bright font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-lg hover:scale-105 transition-all flex-shrink-0 glow-amber cursor-pointer"
+              className="btn-orange-bright font-extrabold text-sm px-6 py-3.5 rounded-xl shadow-lg hover:scale-105 transition-all flex-shrink-0 glow-amber cursor-pointer"
             >
               Замовити Розрахунок Deye
             </button>

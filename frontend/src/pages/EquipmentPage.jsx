@@ -367,11 +367,11 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
         <BusbarDivider />
 
         {/* Category Tabs */}
-        <div className="grid grid-cols-2 md:flex md:flex-row md:items-center gap-2 sm:gap-4 pb-3 border-b border-slate-700/40 w-full justify-center px-4 sm:px-0">
+        <div className="grid grid-cols-2 md:flex md:flex-row md:items-center gap-2.5 sm:gap-4 pb-3 border-b border-slate-700/40 w-full justify-center px-2 sm:px-0">
           <button
             type="button"
             onClick={() => setActiveTab('panels')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-bold transition-all cursor-pointer w-full md:w-auto justify-center ${
+            className={`flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-3 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'panels'
                 ? isDark
                   ? 'bg-amber-500/15 border-2 border-[#fbbf24] text-[#fde68a]'
@@ -388,7 +388,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
           <button
             type="button"
             onClick={() => setActiveTab('batteries')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-bold transition-all cursor-pointer w-full md:w-auto justify-center ${
+            className={`flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-3 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'batteries'
                 ? isDark
                   ? 'bg-amber-500/15 border-2 border-[#fbbf24] text-[#fde68a]'
@@ -405,7 +405,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
           <button
             type="button"
             onClick={() => setActiveTab('inverters')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-bold transition-all cursor-pointer w-full md:w-auto justify-center ${
+            className={`flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-3 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'inverters'
                 ? isDark
                   ? 'bg-amber-500/15 border-2 border-[#fbbf24] text-[#fde68a]'
@@ -422,7 +422,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
           <button
             type="button"
             onClick={() => setActiveTab('mounting')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-[10px] xs:text-xs sm:text-sm font-bold transition-all cursor-pointer w-full md:w-auto justify-center ${
+            className={`flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-3 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer w-full md:w-auto justify-center ${
               activeTab === 'mounting'
                 ? isDark
                   ? 'bg-amber-500/15 border-2 border-[#fbbf24] text-[#fde68a]'
@@ -464,10 +464,10 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                       are driven by the product's own spec */}
                   <div className="relative rounded-2xl overflow-hidden">
                     <PanelModuleScene theme={theme} {...panel.visual} />
-                    <div className="absolute top-2.5 left-2.5">
+                    <div className="hidden sm:block absolute top-2.5 left-2.5">
                       <LiveBadge theme={theme} label={panel.status} tone="amber" />
                     </div>
-                    <div className={`absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
+                    <div className={`hidden sm:block absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
                       isDark ? 'text-slate-300' : 'text-slate-600'
                     }`}>
                       {panel.power}
@@ -603,10 +603,10 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                   {/* Storage illustration — rack, tower or portable kit */}
                   <div className="relative rounded-2xl overflow-hidden">
                     <BatteryStackScene theme={theme} {...bat.visual} />
-                    <div className="absolute top-2.5 left-2.5">
+                    <div className="hidden sm:block absolute top-2.5 left-2.5">
                       <LiveBadge theme={theme} label={bat.status} />
                     </div>
-                    <div className={`absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
+                    <div className={`hidden sm:block absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
                       isDark ? 'text-slate-300' : 'text-slate-600'
                     }`}>
                       {bat.capacities[bat.capacities.length - 1]}
@@ -744,10 +744,10 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                       are drawn from this model's own configuration */}
                   <div className="relative rounded-2xl overflow-hidden">
                     <InverterUnitScene theme={theme} {...inv.visual} />
-                    <div className="absolute top-2.5 left-2.5">
+                    <div className="hidden sm:block absolute top-2.5 left-2.5">
                       <LiveBadge theme={theme} label={inv.status} tone="sky" />
                     </div>
-                    <div className={`absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
+                    <div className={`hidden sm:block absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
                       isDark ? 'text-slate-300' : 'text-slate-600'
                     }`}>
                       {inv.backupSpeed}

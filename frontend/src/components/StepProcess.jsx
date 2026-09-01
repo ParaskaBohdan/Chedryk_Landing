@@ -70,7 +70,7 @@ export default function StepProcess({ onOpenConsultation, theme }) {
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
             5 Кроків До Вашої <span className="text-amber-500">Енергонезалежності</span>
           </h2>
-          <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+          <p className={`text-sm sm:text-lg font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
             Як відбувається співпраця від першого дзвінка до виходу на виплати за Зеленим тарифом.
           </p>
         </div>
@@ -110,13 +110,13 @@ export default function StepProcess({ onOpenConsultation, theme }) {
                           <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
                       </div>
-                      <h3 className={`text-base sm:text-xl font-bold mb-2 transition-colors ${
+                      <h3 className={`text-lg sm:text-xl font-bold mb-2 transition-colors ${
                         isDark ? 'text-white group-hover:text-amber-400' : 'text-slate-900 group-hover:text-amber-600'
                       }`}>
                         {item.title}
                       </h3>
-                      <p className={`text-xs sm:text-sm leading-relaxed mb-4 ${
-                        isDark ? 'text-slate-300' : 'text-slate-600'
+                      <p className={`text-sm leading-relaxed mb-4 font-medium ${
+                        isDark ? 'text-slate-300' : 'text-slate-700'
                       }`}>
                         {item.desc}
                       </p>

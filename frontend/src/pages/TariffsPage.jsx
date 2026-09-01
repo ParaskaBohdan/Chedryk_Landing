@@ -145,21 +145,21 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
                   >
                     <div className="relative rounded-2xl overflow-hidden mb-4">
                       <Illustration theme={theme} />
-                      <div className="absolute top-2.5 left-2.5">
+                      <div className="hidden sm:block absolute top-2.5 left-2.5">
                         <LiveBadge theme={theme} label={item.badge} tone={item.tone} />
                       </div>
                     </div>
 
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center border-2 mb-3 ${
+                    <div className={`w-11 h-11 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center border-2 mb-3 ${
                       isDark ? 'bg-slate-950 border-[#fbbf24] text-[#fbbf24]' : 'bg-white border-orange-500 text-orange-500 shadow-sm'
                     }`}>
                       <Icon className="w-5 h-5" />
                     </div>
 
-                    <h3 className={`text-base sm:text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    <h3 className={`text-lg sm:text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                       {item.title}
                     </h3>
-                    <p className={`text-xs leading-relaxed mb-4 flex-grow ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                    <p className={`text-sm sm:text-xs leading-relaxed mb-4 flex-grow font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       {item.desc}
                     </p>
 
@@ -195,14 +195,16 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
             <RegistrationMarks />
             <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
               <div>
-                <h2 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                <h2 className={`text-2xl sm:text-3xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>
                   Маршрут Оформлення в <span className="text-amber-500">Обленерго</span>
                 </h2>
-                <p className={`text-xs sm:text-sm mt-1 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                <p className={`text-sm sm:text-lg font-medium mt-1 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                   П’ять етапів від подачі заяви до договору на продаж надлишків. Усю бюрократію ведемо ми.
                 </p>
               </div>
-              <LiveBadge theme={theme} label="Pipeline Active" tone="amber" />
+              <div className="hidden sm:block">
+                <LiveBadge theme={theme} label="Pipeline Active" tone="amber" />
+              </div>
             </div>
 
             <div className="hidden lg:block">
@@ -214,7 +216,7 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
               {pipeline.map((step, index) => (
                 <div
                   key={step.stage}
-                  className={`rounded-xl border p-3 space-y-1.5 ${
+                  className={`rounded-xl border p-3.5 space-y-2 ${
                     index === 2
                       ? isDark
                         ? 'border-amber-400/50 bg-amber-500/10'
@@ -224,17 +226,19 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
                         : 'border-slate-200 bg-white/70'
                   }`}
                 >
-                  <p className={`text-[9px] font-bold telemetry-label ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+                  <p className={`text-xs sm:text-[10px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                     Етап {String(index + 1).padStart(2, '0')}
                   </p>
-                  <p className={`text-xs font-bold leading-snug ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  <p className={`text-sm sm:text-base font-bold leading-snug ${isDark ? 'text-white' : 'text-slate-900'}`}>
                     {step.stage}
                   </p>
-                  <p className={`text-[10px] telemetry-label flex items-center gap-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                    <Clock className="w-3 h-3 flex-shrink-0" />
+                  <p className={`text-xs sm:text-[11px] font-medium telemetry-label flex items-center gap-1 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                    <Clock className="w-3.5 h-3.5 flex-shrink-0 text-amber-500" />
                     {step.duration}
                   </p>
-                  <LiveBadge theme={theme} label={step.status} tone={statusTone[step.status]} />
+                  <div className="pt-1">
+                    <LiveBadge theme={theme} label={step.status} tone={statusTone[step.status]} />
+                  </div>
                 </div>
               ))}
             </div>

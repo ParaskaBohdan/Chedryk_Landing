@@ -561,71 +561,71 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
           </div>
 
           {/* Mobile Stacked Layout with inline parameters */}
-          <div className="md:hidden space-y-6 text-xs border-b border-slate-700/20 pb-4">
+          <div className="md:hidden space-y-6 text-xs sm:text-sm border-b border-slate-700/20 pb-4">
             {/* Left: Recommended */}
-            <div className="space-y-2 border-b border-slate-700/20 pb-4">
-              <h4 className="font-extrabold text-amber-500 uppercase text-[10px] tracking-wider mb-2">Рекомендовано за споживанням:</h4>
-              <div className="flex justify-between items-center">
-                <span className="opacity-70">Необхідна потужність:</span>
-                <span className="font-extrabold text-amber-300">{recommendedKw} кВт</span>
+            <div className="space-y-2.5 border-b border-slate-700/20 pb-4">
+              <h4 className="font-black text-amber-500 uppercase text-xs tracking-wider mb-2">Рекомендовано за споживанням:</h4>
+              <div className="flex justify-between items-center py-1">
+                <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Необхідна потужність:</span>
+                <span className="font-black text-amber-500">{recommendedKw} кВт</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="opacity-70">Кількість панелей ({selectedPanelWattage}W):</span>
-                <span className="font-extrabold">{recommendedPanelCount} шт.</span>
+              <div className="flex justify-between items-center py-1">
+                <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Кількість панелей ({selectedPanelWattage}W):</span>
+                <span className={`font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>{recommendedPanelCount} шт.</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="opacity-70">{mountType === 'ground' ? 'Площа ділянки:' : 'Площа даху:'}</span>
-                <span className="font-extrabold">{Math.round(recommendedPanelCount * 2.3)} м²</span>
+              <div className="flex justify-between items-center py-1">
+                <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{mountType === 'ground' ? 'Площа ділянки:' : 'Площа даху:'}</span>
+                <span className={`font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>{Math.round(recommendedPanelCount * 2.3)} м²</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="opacity-70">Річна генерація:</span>
-                <span className="font-extrabold text-emerald-400">~{annualGen.toLocaleString()} кВт·год</span>
+              <div className="flex justify-between items-center py-1">
+                <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Річна генерація:</span>
+                <span className="font-black text-emerald-600 dark:text-emerald-400">~{annualGen.toLocaleString()} кВт·год</span>
               </div>
-              <div className="flex justify-between items-center pt-2 border-t border-slate-700/10">
-                <span className="opacity-70">Орієнтовна вартість:</span>
-                <span className="font-extrabold text-amber-400">~${calculateCost(recommendedKw, recommendedPanelCount).toLocaleString()}</span>
+              <div className="flex justify-between items-center pt-2.5 border-t border-slate-700/20">
+                <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Орієнтовна вартість:</span>
+                <span className="font-black text-sm sm:text-base text-amber-500">~${calculateCost(recommendedKw, recommendedPanelCount).toLocaleString()}</span>
               </div>
             </div>
 
             {/* Right: Calculated by Area */}
-            <div className="space-y-2">
-              <h4 className="font-extrabold text-amber-500 uppercase text-[10px] tracking-wider mb-2">
+            <div className="space-y-2.5">
+              <h4 className="font-black text-amber-500 uppercase text-xs tracking-wider mb-2">
                 {mountType === 'ground' ? 'Розрахунок за площею ділянки:' : 'Розрахунок за площею даху:'}
               </h4>
-              <div className="flex justify-between items-center">
-                <span className="opacity-70">Потужність СЕС:</span>
-                <span className="font-extrabold text-amber-300">{totalKw} кВт</span>
+              <div className="flex justify-between items-center py-1">
+                <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Потужність СЕС:</span>
+                <span className="font-black text-amber-500">{totalKw} кВт</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="opacity-70">Кількість панелей ({selectedPanelWattage}W):</span>
-                <span className="font-extrabold">{activePanelCount} шт.</span>
+              <div className="flex justify-between items-center py-1">
+                <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Кількість панелей ({selectedPanelWattage}W):</span>
+                <span className={`font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>{activePanelCount} шт.</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="opacity-70">{mountType === 'ground' ? 'Площа ділянки:' : 'Площа даху:'}</span>
-                <span className="font-extrabold">{Math.round(activePanelCount * 2.3)} м²</span>
+              <div className="flex justify-between items-center py-1">
+                <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{mountType === 'ground' ? 'Площа ділянки:' : 'Площа даху:'}</span>
+                <span className={`font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>{Math.round(activePanelCount * 2.3)} м²</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="opacity-70">Річна генерація:</span>
-                <span className="font-extrabold text-emerald-400">~{annualGenKwh.toLocaleString()} кВт·год</span>
+              <div className="flex justify-between items-center py-1">
+                <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Річна генерація:</span>
+                <span className="font-black text-emerald-600 dark:text-emerald-400">~{annualGenKwh.toLocaleString()} кВт·год</span>
               </div>
-              <div className="flex justify-between items-center pt-2 border-t border-slate-700/10">
-                <span className="opacity-70">Орієнтовна вартість:</span>
-                <span className="font-extrabold text-amber-400">~${totalEstimateUsd.toLocaleString()}</span>
+              <div className="flex justify-between items-center pt-2.5 border-t border-slate-700/20">
+                <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Орієнтовна вартість:</span>
+                <span className="font-black text-sm sm:text-base text-amber-500">~${totalEstimateUsd.toLocaleString()}</span>
               </div>
             </div>
           </div>
 
           {/* Bottom Row: Selected Equipment */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs leading-relaxed border-t border-slate-700/10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs sm:text-sm leading-relaxed border-t border-slate-700/10">
             <div>
-              <span className="opacity-70 block">Інвертор Deye:</span>
-              <span className="font-extrabold text-sm text-sky-400">
+              <span className={`font-bold block ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Інвертор Deye:</span>
+              <span className="font-black text-sm sm:text-base text-sky-500 dark:text-sky-400">
                 {inverterPowerKw} кВт (3-фази)
               </span>
             </div>
             <div>
-              <span className="opacity-70 block">АКБ накопичувач:</span>
-              <span className="font-extrabold text-sm text-purple-400">
+              <span className={`font-bold block ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>АКБ накопичувач:</span>
+              <span className="font-black text-sm sm:text-base text-purple-600 dark:text-purple-400">
                 {hasBattery ? `${batteryCapacityKwh} кВт·год` : 'Без АКБ'}
               </span>
             </div>
@@ -641,7 +641,7 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
   return (
     <SolarPanelCard theme={theme} glow className="p-6 sm:p-8 shadow-2xl" contentClassName="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-2">
-        <h3 className="font-extrabold text-lg sm:text-xl text-amber-500">
+        <h3 className="font-black text-lg sm:text-xl text-amber-500">
           Інтерактивний Калькулятор Потужності СЕС
         </h3>
         <LiveBadge theme={theme} label="Онлайн розрахунок" tone="amber" />
@@ -662,7 +662,7 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
           />
 
           <div className="pt-2 space-y-2">
-            <label className="block text-xs font-bold uppercase tracking-wider text-amber-500">
+            <label className="block text-xs sm:text-xs font-bold uppercase tracking-wider text-amber-500">
               Оберіть модель фотомодулів:
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -671,14 +671,14 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
                   key={idx}
                   type="button"
                   onClick={() => setSelectedPanel(p)}
-                  className={`py-2 px-2.5 rounded-xl border text-center transition-all ${
+                  className={`py-2.5 px-3 rounded-xl border text-center transition-all cursor-pointer ${
                     selectedPanel.brand === p.brand && selectedPanel.watt === p.watt
                       ? 'border-amber-500 bg-amber-500/20 text-amber-500 font-extrabold shadow-sm'
                       : isDark ? 'border-slate-800 bg-slate-900 text-slate-300' : 'border-slate-300 bg-slate-100 text-slate-700'
                   }`}
                 >
-                  <p className="text-[11px] font-bold truncate">{p.brand}</p>
-                  <p className="text-xs font-black text-amber-500 mt-0.5">{p.watt} W</p>
+                  <p className="text-xs font-bold truncate">{p.brand}</p>
+                  <p className="text-xs sm:text-sm font-black text-amber-500 mt-0.5">{p.watt} W</p>
                 </button>
               ))}
             </div>
@@ -689,20 +689,20 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
           isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-slate-50 border-slate-200'
         }`}>
           <div className="space-y-1">
-            <span className="text-[11px] opacity-70 block font-medium">Необхідна потужність СЕС</span>
+            <span className={`text-xs block font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Необхідна потужність СЕС</span>
             <span className="text-xl sm:text-2xl font-black text-amber-500">{recommendedKw} кВт</span>
           </div>
           <div className="space-y-1">
-            <span className="text-[11px] opacity-70 block font-medium">Кількість панелей</span>
+            <span className={`text-xs block font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Кількість панелей</span>
             <span className="text-xl sm:text-2xl font-black text-amber-400">{panelCount} шт.</span>
           </div>
           <div className="space-y-1">
-            <span className="text-[11px] opacity-70 block font-medium">Річна генерація</span>
-            <span className="text-lg sm:text-xl font-bold text-emerald-400">~{annualGen.toLocaleString()} кВт·год</span>
+            <span className={`text-xs block font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Річна генерація</span>
+            <span className="text-lg sm:text-xl font-black text-emerald-600 dark:text-emerald-400">~{annualGen.toLocaleString()} кВт·год</span>
           </div>
           <div className="space-y-1">
-            <span className="text-[11px] opacity-70 block font-medium">Площа даху</span>
-            <span className="text-lg sm:text-xl font-bold">{roofArea} м²</span>
+            <span className={`text-xs block font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Площа даху</span>
+            <span className={`text-lg sm:text-xl font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>{roofArea} м²</span>
           </div>
         </div>
       </div>
@@ -769,23 +769,41 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
         <BusbarDivider />
 
         {/* Hero Section Banner */}
-        <div className={`pv-shell pv-texture pv-frame relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch p-6 sm:p-8 lg:p-10 rounded-3xl border transition-all duration-300 ${
+        <div className={`pv-shell pv-texture pv-frame relative grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-10 items-stretch overflow-hidden lg:p-10 rounded-3xl border transition-all duration-300 ${
           isDark
             ? 'bg-slate-800/90 border-slate-700/80 shadow-2xl'
             : 'bg-white/95 border-slate-300/80 shadow-xl'
         }`}>
           <RegistrationMarks />
-          
-          <div className="pv-content lg:col-span-7 flex flex-col justify-between space-y-6">
+
+          {/* Top/Right Column: Image Header (Order 1 on mobile, Order 2 on Desktop) */}
+          <div className="pv-content lg:col-span-5 relative h-56 sm:h-72 lg:h-auto lg:min-h-full w-full overflow-hidden rounded-t-3xl lg:rounded-2xl border-b lg:border border-slate-700/30 group order-1 lg:order-2">
+            <img 
+              src={service.image} 
+              alt={service.title}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+
+            {/* Badge & Icon Floating Overlay: Icon Left, Badge Right (Identical to ServicesPage) */}
+            <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2 z-10">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-950/85 backdrop-blur-md flex items-center justify-center text-amber-400 border border-amber-400/40 shadow-lg flex-shrink-0">
+                <IconComponent className="w-5 h-5" />
+              </div>
+              <span className="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-amber-500 text-slate-950 shadow-md">
+                {service.badge}
+              </span>
+            </div>
+          </div>
+
+          {/* Left Column: Content (Order 2 on mobile, Order 1 on Desktop) */}
+          <div className="pv-content lg:col-span-7 flex flex-col justify-between space-y-6 p-6 sm:p-8 lg:p-0 order-2 lg:order-1">
             <div className="space-y-4">
               <div className="flex items-center gap-3 flex-wrap">
-                <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-amber-500 text-slate-950 shadow-md">
-                  {service.badge}
-                </span>
-                <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full border ${
-                  isDark ? 'border-slate-800 bg-slate-900 text-slate-300' : 'border-slate-300 bg-slate-100 text-slate-700'
+                <span className={`inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold px-3.5 py-1.5 rounded-full border ${
+                  isDark ? 'border-slate-800 bg-slate-900 text-slate-300' : 'border-slate-300 bg-slate-100 text-slate-800 shadow-xs'
                 }`}>
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                  <ShieldCheck className="w-4 h-4 text-emerald-500" />
                   <span>Закарпаття & Франківщина</span>
                 </span>
               </div>
@@ -794,7 +812,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
                 {service.title}
               </h1>
 
-              <p className={`text-sm sm:text-base leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+              <p className={`text-sm sm:text-base leading-relaxed font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                 {service.fullDescription}
               </p>
             </div>
@@ -803,10 +821,10 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
             <div className="space-y-4">
               <div className="flex flex-wrap gap-2.5 sm:gap-3">
                 {service.advantages.map((adv, idx) => (
-                  <div key={idx} className={`flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-xl border transition-colors ${
+                  <div key={idx} className={`flex items-center gap-2 text-xs sm:text-sm font-bold px-3.5 py-2 rounded-xl border transition-colors ${
                     isDark ? 'border-slate-800 bg-slate-900/90 text-amber-300' : 'border-slate-300 bg-slate-100 text-slate-800 shadow-xs'
                   }`}>
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                     <span>{adv}</span>
                   </div>
                 ))}
@@ -816,49 +834,13 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
               <div className="pt-2 flex flex-wrap items-center gap-4">
                 <button
                   onClick={() => onOpenConsultation(service.title)}
-                  className="btn-orange-bright font-bold py-3.5 px-8 rounded-xl shadow-lg text-sm transition-all hover:scale-105 active:scale-95 glow-amber cursor-pointer flex items-center gap-2"
+                  className="w-full sm:w-auto btn-orange-bright font-black py-4 px-8 rounded-xl shadow-lg text-sm sm:text-base transition-all hover:scale-105 active:scale-95 glow-amber cursor-pointer flex items-center justify-center gap-2"
                 >
-                  <Calculator className="w-4 h-4" />
+                  <Calculator className="w-4.5 h-4.5" />
                   <span>Замовити Безкоштовний Розрахунок</span>
                 </button>
-                <span className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                <span className={`text-xs sm:text-sm font-medium ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                   • Виїзд інженера та замір безкоштовно
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Full-Height Immersive Photo Showcase */}
-          <div className="pv-content lg:col-span-5 relative min-h-[340px] sm:min-h-[400px] lg:min-h-full rounded-2xl overflow-hidden shadow-2xl border border-slate-700/40 group flex flex-col justify-between">
-            <img 
-              src={service.image} 
-              alt={service.title}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/25 to-slate-950/40 pointer-events-none" />
-
-            {/* Top Badges overlay */}
-            <div className="relative z-10 p-3.5 sm:p-4 flex items-center justify-between gap-2">
-              <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-slate-900/80 backdrop-blur-md text-amber-300 border border-amber-500/30 shadow-lg">
-                Tier-1 Стандарт
-              </span>
-              <LiveBadge theme="dark" label="Інженерний Монтаж" tone="amber" />
-            </div>
-
-            {/* Bottom Brand Card */}
-            <div className="relative z-10 p-3.5 sm:p-4">
-              <div className="p-3 sm:p-3.5 rounded-xl bg-slate-950/90 backdrop-blur-md border border-white/15 flex items-center justify-between gap-3 shadow-2xl">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-xl bg-amber-500 text-slate-950 font-bold shadow-md flex-shrink-0">
-                    <IconComponent className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-xs sm:text-sm font-bold text-white tracking-wide">NOVA ENERGY_UA</p>
-                    <p className="text-[11px] text-amber-400 font-semibold">Гарантія якості та сервісу</p>
-                  </div>
-                </div>
-                <span className="hidden sm:inline-flex px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/30">
-                  Гарантія
                 </span>
               </div>
             </div>
@@ -874,7 +856,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
             </div>
             <div>
               <h2 className="text-xl sm:text-2xl font-bold">Етапи Виконання Робіт Під Ключ</h2>
-              <p className={`text-xs sm:text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Покроковий інженерний алгоритм від першого виїзду до пусконалагодження</p>
+              <p className={`text-sm sm:text-lg font-medium ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>Покроковий інженерний алгоритм від першого виїзду до пусконалагодження</p>
             </div>
           </div>
 
@@ -883,7 +865,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
               <div key={step.step} className="relative">
                 {/* Step Card */}
                 <div
-                  className={`p-5.5 rounded-2xl border transition-all duration-300 relative flex flex-col justify-between h-full ${
+                  className={`p-5.5 sm:p-6 rounded-2xl border transition-all duration-300 relative flex flex-col justify-between h-full ${
                     isDark ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' : 'bg-[var(--bg-card-shell,#f1f5f9)] border-[var(--border-card-shell,#cbd5e1)] shadow-md text-slate-900'
                   }`}
                 >
@@ -893,9 +875,9 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
                       <div className="w-9 h-9 rounded-full bg-amber-500 text-slate-950 font-extrabold flex items-center justify-center text-sm shadow-sm flex-shrink-0">
                         {step.step < 10 ? `0${step.step}` : step.step}
                       </div>
-                      <h3 className="font-bold text-base leading-tight">{step.title}</h3>
+                      <h3 className="font-bold text-base sm:text-lg leading-tight">{step.title}</h3>
                     </div>
-                    <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700 font-medium'}`}>
+                    <p className={`text-sm leading-relaxed font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       {step.description}
                     </p>
                   </div>
@@ -961,7 +943,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
               </div>
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold">{service.powerCalculations.title}</h2>
-                <p className={`text-xs sm:text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{service.powerCalculations.intro}</p>
+                <p className={`text-sm sm:text-lg font-medium ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>{service.powerCalculations.intro}</p>
               </div>
             </div>
 
@@ -990,15 +972,15 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
               {service.powerCalculations.points.map((pt, idx) => (
                 <div
                   key={idx}
-                  className={`p-4.5 rounded-2xl border space-y-1.5 transition-all duration-300 ${
+                  className={`p-4.5 sm:p-5 rounded-2xl border space-y-1.5 transition-all duration-300 ${
                     isDark ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' : 'bg-white border-slate-200 shadow-md'
                   }`}
                 >
-                  <h3 className="font-bold text-sm text-amber-500 flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" />
+                  <h3 className="font-bold text-sm sm:text-base text-amber-500 flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-amber-500 flex-shrink-0" />
                     <span>{pt.name}</span>
                   </h3>
-                  <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                  <p className={`text-sm leading-relaxed font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                     {pt.desc}
                   </p>
                 </div>
@@ -1016,26 +998,24 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
               </div>
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold">{service.batterySetupDetails.title}</h2>
-                <p className={`text-xs sm:text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{service.batterySetupDetails.intro}</p>
+                <p className={`text-sm sm:text-lg font-medium ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>{service.batterySetupDetails.intro}</p>
               </div>
             </div>
-
-
 
             {/* Technical points below slider */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
               {service.batterySetupDetails.points.map((pt, idx) => (
                 <div
                   key={idx}
-                  className={`p-4.5 rounded-2xl border space-y-1.5 transition-all duration-300 ${
+                  className={`p-4.5 sm:p-5 rounded-2xl border space-y-1.5 transition-all duration-300 ${
                     isDark ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' : 'bg-white border-slate-200 shadow-md'
                   }`}
                 >
-                  <h3 className="font-bold text-sm text-emerald-500 flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
+                  <h3 className="font-bold text-sm sm:text-base text-emerald-500 flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                     <span>{pt.name}</span>
                   </h3>
-                  <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                  <p className={`text-sm leading-relaxed font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                     {pt.desc}
                   </p>
                 </div>
@@ -1052,7 +1032,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
             </div>
             <div>
               <h2 className="text-xl sm:text-2xl font-bold">Підбір Сертифікованого Обладнання</h2>
-              <p className={`text-xs sm:text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Сертифіковані елементи з офіційною гарантією від виробника</p>
+              <p className={`text-sm sm:text-lg font-medium ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>Сертифіковані елементи з офіційною гарантією від виробника</p>
             </div>
           </div>
 
@@ -1064,11 +1044,11 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
                   isDark ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' : 'bg-white border-slate-200 shadow-md'
                 }`}
               >
-                <span className="px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30 inline-block">
+                <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30 inline-block">
                   {item.highlight}
                 </span>
-                <h3 className="font-bold text-base">{item.name}</h3>
-                <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                <h3 className="font-bold text-base sm:text-lg">{item.name}</h3>
+                <p className={`text-sm leading-relaxed font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                   {item.desc}
                 </p>
               </div>
@@ -1076,7 +1056,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
           </div>
         </div>
 
-        {/* SECTION 3: Documentation & Permits (Робота з документами) */}
+        {/* SECTION 5: Documentation & Permits (Робота з документами) */}
         <div className="space-y-6 pt-6 border-t border-slate-700/40">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-blue-500/15 border border-blue-500/30 text-blue-500">
@@ -1084,7 +1064,7 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
             </div>
             <div>
               <h2 className="text-xl sm:text-2xl font-bold">Робота з Документами та Дозволами</h2>
-              <p className={`text-xs sm:text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Повний юридичний супровід та взаємодія з РЕМ / Обленерго</p>
+              <p className={`text-sm sm:text-lg font-medium ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>Повний юридичний супровід та взаємодія з РЕМ / Обленерго</p>
             </div>
           </div>
 
@@ -1096,11 +1076,11 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
                   isDark ? 'bg-slate-800/80 border-slate-700/80 hover:border-amber-400/60' : 'bg-white border-slate-200 shadow-md'
                 }`}
               >
-                <h3 className="font-bold text-base flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                <h3 className="font-bold text-base sm:text-lg flex items-center gap-2">
+                  <CheckCircle2 className="w-4.5 h-4.5 text-amber-500 flex-shrink-0" />
                   <span>{doc.title}</span>
                 </h3>
-                <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                <p className={`text-sm leading-relaxed font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                   {doc.desc}
                 </p>
               </div>
@@ -1108,18 +1088,18 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
           </div>
         </div>
 
-        {/* SECTION 4: Order CTA Banner */}
+        {/* SECTION 6: Order CTA Banner */}
         <div className={`p-8 sm:p-10 rounded-3xl border text-center space-y-4 shadow-xl ${
-          isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-slate-300 bg-white'
+          isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#f1f5f9)] text-slate-900 shadow-md'
         }`}>
           <h3 className="text-xl sm:text-2xl font-extrabold">Цікавить послуга "{service.title}"?</h3>
-          <p className={`text-xs sm:text-sm max-w-xl mx-auto ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+          <p className={`text-sm sm:text-base font-medium max-w-xl mx-auto ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
             Отримайте безкоштовний розрахунок та виїзд інженера на об'єкт.
           </p>
           <div className="pt-2">
             <button
               onClick={() => onOpenConsultation && onOpenConsultation(service.title)}
-              className="btn-orange-bright px-8 py-3.5 rounded-2xl font-extrabold text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-lg"
+              className="btn-orange-bright px-8 py-4 rounded-2xl font-extrabold text-sm sm:text-base inline-flex items-center gap-2 cursor-pointer shadow-lg"
             >
               <span>Замовити Консультацію</span>
             </button>

@@ -28,7 +28,7 @@ function Scene({ label, children }) {
    these sizes are chosen to land near 8px on screen rather than in the viewBox. */
 function Tick({ x, y, text, isDark, anchor = 'middle' }) {
   return (
-    <text x={x} y={y} textAnchor={anchor} fontSize="12" fontFamily={MONO} fill={ink(isDark).label} letterSpacing="0.5">
+    <text x={x} y={y} textAnchor={anchor} fontSize="14" fontWeight="bold" fontFamily={MONO} fill={ink(isDark).label} letterSpacing="0.5">
       {text}
     </text>
   );

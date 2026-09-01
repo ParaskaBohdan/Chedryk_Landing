@@ -184,19 +184,19 @@ export default function CoverageMap({ theme, className = '' }) {
           </span>
         </div>
 
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-2">
           {CITIES.map((c) => (
             <button
               key={c.id}
               type="button"
               onMouseEnter={() => setActive(c.id)}
               onClick={() => setActive(c.id)}
-              className={`px-2.5 py-1 rounded-lg border text-[11px] font-semibold transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                 c.id === active
-                  ? 'border-amber-500 bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold'
+                  ? 'border-amber-500 bg-amber-500/20 text-amber-600 dark:text-amber-400'
                   : isDark
                     ? 'border-slate-700 bg-slate-900/50 text-slate-300 hover:border-amber-400/50'
-                    : 'border-slate-300 bg-white text-slate-700 hover:border-amber-500 hover:bg-slate-50'
+                    : 'border-slate-300 bg-white text-slate-800 hover:border-amber-500 hover:bg-slate-50'
               }`}
             >
               {c.name}

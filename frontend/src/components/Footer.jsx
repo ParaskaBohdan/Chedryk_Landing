@@ -86,19 +86,19 @@ export default function Footer({ onOpenConsultation, theme }) {
               </div>
             </div>
 
-            <p className="text-xs max-w-sm leading-relaxed opacity-80">
+            <p className="text-xs sm:text-sm max-w-sm leading-relaxed font-medium opacity-80">
               Автономність, резервне живлення EcoFlow, будівництво сонячних станцій 5 кВт – 1 МВт та налагодження електромереж у Закарпатській та Івано-Франківській областях.
             </p>
           </div>
 
           {/* Navigation Links */}
           <div className="space-y-3">
-            <h4 className={`text-xs font-bold uppercase tracking-wider ${
+            <h4 className={`text-xs sm:text-sm font-bold uppercase tracking-wider ${
               isDark ? 'text-white' : 'text-slate-900'
             }`}>
               Навігація
             </h4>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2.5 text-xs sm:text-sm font-medium">
               <li>
                 <Link to="/services" className="hover:text-amber-500 transition-colors">
                   Послуги
@@ -129,24 +129,24 @@ export default function Footer({ onOpenConsultation, theme }) {
 
           {/* Quick Contact & TikTok */}
           <div className="space-y-3">
-            <h4 className={`text-xs font-bold uppercase tracking-wider ${
+            <h4 className={`text-xs sm:text-sm font-bold uppercase tracking-wider ${
               isDark ? 'text-white' : 'text-slate-900'
             }`}>
               Контакти & Соцмережі
             </h4>
-            <div className="space-y-2 text-xs">
-              <a href="tel:+380675300103" className="flex items-center gap-2 hover:text-amber-500 transition-colors">
-                <Phone className="w-3.5 h-3.5 text-amber-500" />
+            <div className="space-y-2.5 text-xs sm:text-sm font-medium">
+              <a href="tel:+380675300103" className="flex items-center gap-2 hover:text-amber-500 transition-colors font-bold">
+                <Phone className="w-4 h-4 text-amber-500" />
                 <span>+380 (67) 530-01-03</span>
               </a>
 
               <div className="flex items-center gap-2 opacity-80">
-                <MapPin className="w-3.5 h-3.5 text-emerald-500" />
+                <MapPin className="w-4 h-4 text-emerald-500" />
                 <span>Закарпатська & Франківська обл.</span>
               </div>
               <button
                 onClick={onOpenConsultation}
-                className="mt-2 text-xs font-bold text-amber-500 hover:underline block"
+                className="mt-2 text-xs sm:text-sm font-bold text-amber-500 hover:underline block"
               >
                 → Замовити виїзд майстра
               </button>
@@ -166,10 +166,10 @@ export default function Footer({ onOpenConsultation, theme }) {
             { k: 'Регіон', v: '2 області' }
           ].map((spec) => (
             <div key={spec.k}>
-              <p className={`text-[9px] font-bold telemetry-label ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
+              <p className={`text-[10px] sm:text-[9px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                 {spec.k}
               </p>
-              <p className={`text-xs font-black tabular-nums ${isDark ? 'text-amber-300' : 'text-amber-700'}`}>
+              <p className={`text-xs sm:text-sm font-black tabular-nums ${isDark ? 'text-amber-300' : 'text-amber-700'}`}>
                 {spec.v}
               </p>
             </div>

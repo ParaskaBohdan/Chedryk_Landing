@@ -94,7 +94,7 @@ export default function Hero({ theme }) {
             {stats.map((item, index) => (
               <div
                 key={index}
-                className={`py-2.5 px-3 rounded-xl border text-left backdrop-blur-md transition-all ${
+                className={`py-3 px-3.5 rounded-xl border text-left backdrop-blur-md transition-all ${
                   isDark
                     ? 'pv-shell pv-texture border-white/10 bg-slate-950/60 text-white shadow-lg'
                     : 'border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#f1f5f9)] text-slate-900 shadow-md'
@@ -102,16 +102,16 @@ export default function Hero({ theme }) {
               >
                 {isDark && <span className="pv-sheen" aria-hidden="true" />}
                 <div className="pv-content">
-                  <p className={`text-[8px] font-bold uppercase tracking-wider ${
-                    isDark ? 'text-white/70' : 'text-slate-800 font-extrabold'
+                  <p className={`text-[10px] font-black uppercase tracking-wider ${
+                    isDark ? 'text-amber-400/90' : 'text-slate-800 font-extrabold'
                   }`}>
                     {item.label}
                   </p>
-                  <p className="text-base font-black mt-0 text-amber-500">
+                  <p className="text-lg font-black mt-0.5 text-amber-500">
                     {item.value}
                   </p>
-                  <p className={`text-[9px] mt-0 leading-tight ${
-                    isDark ? 'text-white/90' : 'text-slate-800 font-medium'
+                  <p className={`text-[11px] mt-0.5 leading-snug ${
+                    isDark ? 'text-slate-200' : 'text-slate-700 font-medium'
                   }`}>
                     {item.desc}
                   </p>

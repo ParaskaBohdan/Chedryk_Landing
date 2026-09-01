@@ -78,7 +78,7 @@ export default function StatsSection({ theme }) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-3 sm:space-y-4">
           <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full border ${
             isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-slate-200/90 border-slate-300 text-slate-800 shadow-xs'
           }`}>
@@ -86,10 +86,10 @@ export default function StatsSection({ theme }) {
             <span>Аналітика & Офіційні Дані</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold">
+          <h2 className="text-2xl sm:text-4xl font-black">
             Чому Сонячні Станції 5 кВт – 1 МВт — Вигідне Рішення?
           </h2>
-          <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+          <p className={`text-sm sm:text-lg font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
             Офіційні фізичні та економічні показники ефективності сонячної енергетики для Закарпаття та Франківщини.
           </p>
         </div>
@@ -114,28 +114,28 @@ export default function StatsSection({ theme }) {
                     {/* Data-visualisation scene for the figure this card claims */}
                     <div className="relative rounded-2xl overflow-hidden mb-4">
                       <fact.Illustration theme={theme} />
-                      <div className="absolute top-2 left-2">
+                      <div className="hidden sm:block absolute top-2 left-2">
                         <LiveBadge theme={theme} label={fact.badge} tone={fact.badgeTone} />
                       </div>
                     </div>
 
-                    <div className="flex items-start justify-between mb-4">
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center border-2 ${
+                    <div className="flex items-start justify-between mb-3 sm:mb-4">
+                      <div className={`w-11 h-11 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center border-2 ${
                         isDark ? 'bg-slate-950 border-[#fbbf24] text-[#fbbf24]' : 'bg-white border-orange-500 text-orange-500 shadow-sm'
                       }`}>
                         <Icon className="w-5 h-5" />
                       </div>
-                      <span className={`text-[9px] font-bold telemetry-label mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+                      <span className={`text-[10px] sm:text-[9px] font-bold telemetry-label mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                         {fact.tag}
                       </span>
                     </div>
-                    <h3 className={`text-xs font-bold uppercase tracking-wider mb-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                    <h3 className={`text-xs font-black uppercase tracking-wider mb-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       {fact.title}
                     </h3>
-                    <p className="text-xl sm:text-2xl font-black mb-2 text-amber-500">
+                    <p className="text-2xl sm:text-2xl font-black mb-2 text-amber-500">
                       {fact.stat}
                     </p>
-                    <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                    <p className={`text-sm sm:text-xs leading-relaxed font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       {fact.desc}
                     </p>
                   </div>
@@ -148,8 +148,8 @@ export default function StatsSection({ theme }) {
                       tone={fact.meter.tone}
                       live={fact.meter.live}
                     />
-                    <p className={`text-[9px] telemetry-label flex items-center gap-1.5 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
-                      <FileBarChart className="w-3 h-3 flex-shrink-0" />
+                    <p className={`text-[11px] sm:text-[9px] font-medium telemetry-label flex items-center gap-1.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                      <FileBarChart className="w-3.5 h-3.5 flex-shrink-0" />
                       <span className="truncate">{fact.source}</span>
                     </p>
                   </div>
@@ -164,7 +164,7 @@ export default function StatsSection({ theme }) {
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
             {/* Annual generation profile */}
             <div className="flex-1 min-w-0">
-              <div className="flex flex-wrap items-center gap-2.5 mb-4">
+              <div className="flex flex-wrap items-center gap-2 mb-4">
                 <LiveBadge theme={theme} label="Dataset 2026" tone="sky" />
                 <LiveBadge theme={theme} label="23.8% Efficiency" tone="amber" />
                 <LiveBadge theme={theme} label="Uptime 99.94%" />
@@ -186,10 +186,10 @@ export default function StatsSection({ theme }) {
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className={`font-bold text-sm ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  <h4 className={`font-bold text-sm sm:text-base ${isDark ? 'text-white' : 'text-slate-900'}`}>
                     Повна відповідність ДБН та стандартам ПУЕ
                   </h4>
-                  <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                  <p className={`text-xs sm:text-sm mt-1 leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700 font-medium'}`}>
                     Усі роботи Nova Energy виконуються за державними стандартами безпеки електроустановок.
                   </p>
                 </div>

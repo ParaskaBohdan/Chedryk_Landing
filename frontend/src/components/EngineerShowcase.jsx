@@ -106,11 +106,11 @@ export default function EngineerShowcase({ theme, onOpenConsultation }) {
                   {/* Illustration with glass overlay badges */}
                   <div className="relative rounded-2xl overflow-hidden mb-4">
                     <Illustration theme={theme} />
-                    <div className="absolute top-2.5 left-2.5">
+                    <div className="hidden sm:block absolute top-2.5 left-2.5">
                       <LiveBadge theme={theme} label={block.badge} tone={block.tone} />
                     </div>
                     <div
-                      className={`absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
+                      className={`hidden sm:block absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
                         isDark ? 'text-slate-300' : 'text-slate-600'
                       }`}
                     >
@@ -118,10 +118,10 @@ export default function EngineerShowcase({ theme, onOpenConsultation }) {
                     </div>
                   </div>
 
-                  <h3 className={`text-base sm:text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  <h3 className={`text-lg sm:text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                     {block.title}
                   </h3>
-                  <p className={`text-xs leading-relaxed mb-4 flex-grow ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                  <p className={`text-sm sm:text-xs leading-relaxed mb-4 flex-grow font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                     {block.desc}
                   </p>
 
@@ -173,15 +173,15 @@ export default function EngineerShowcase({ theme, onOpenConsultation }) {
               {/* Irradiance chart */}
               <div className={`lg:w-[320px] lg:border-l lg:pl-8 ${isDark ? 'lg:border-slate-700/70' : 'lg:border-slate-200'}`}>
                 <IrradianceChart theme={theme} />
-                <p className={`mt-3 text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                <p className={`mt-3 text-sm sm:text-xs leading-relaxed font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                   Профіль сонячної радіації для Закарпатської області у липні. Пікова генерація припадає на 12:00–14:00.
                 </p>
                 <button
                   onClick={onOpenConsultation}
-                  className="btn-orange-bright mt-4 w-full font-bold text-xs px-4 py-3 rounded-xl shadow-lg glow-amber flex items-center justify-center gap-2"
+                  className="btn-orange-bright mt-4 w-full font-extrabold text-sm px-4 py-3.5 rounded-xl shadow-lg glow-amber flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Замовити виїзд інженера</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </div>

@@ -466,7 +466,7 @@ export default function Services({ onSelectService, theme }) {
             <div className="md:hidden flex flex-col items-center">
               {/* Slide Wrapper Container */}
               <div 
-                className="w-full max-w-md overflow-hidden relative min-h-[425px] h-[425px] mt-2 touch-pan-y"
+                className="w-full max-w-md overflow-hidden relative min-h-[460px] h-[460px] mt-2 touch-pan-y"
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
@@ -488,7 +488,7 @@ export default function Services({ onSelectService, theme }) {
                     >
                       <SolarPanelCard
                         theme={theme}
-                        className="p-5 relative flex flex-col group shadow-lg min-h-[425px] h-[425px]"
+                        className="p-5 relative flex flex-col group shadow-lg min-h-[460px] h-[460px]"
                         contentClassName="flex flex-col h-full justify-between"
                       >
                         <div className="flex flex-col h-full justify-between">
@@ -497,22 +497,22 @@ export default function Services({ onSelectService, theme }) {
                             <div className="relative rounded-2xl overflow-hidden w-full aspect-video flex items-center justify-center bg-slate-950/20 mb-4">
                               <service.Illustration theme={theme} />
                               
-                              {/* Status telemetry overlay */}
-                              <div className="absolute top-2.5 left-2.5">
+                              {/* Status telemetry overlay (desktop only) */}
+                              <div className="hidden sm:block absolute top-2.5 left-2.5">
                                 <LiveBadge theme={theme} label={service.status} tone={index % 2 === 0 ? 'amber' : 'sky'} />
                               </div>
                             </div>
 
                             {/* 2. Title */}
-                            <h3 className={`text-base font-bold transition-colors mb-2 ${
+                            <h3 className={`text-lg font-bold transition-colors mb-2.5 ${
                               isDark ? 'text-white' : 'text-slate-900'
                             }`}>
                               {service.title}
                             </h3>
 
                             {/* 3. Short description */}
-                            <p className={`text-xs leading-relaxed ${
-                              isDark ? 'text-slate-300' : 'text-slate-600'
+                            <p className={`text-sm leading-relaxed font-medium ${
+                              isDark ? 'text-slate-300' : 'text-slate-700'
                             }`}>
                               {service.shortDesc}
                             </p>
@@ -522,14 +522,14 @@ export default function Services({ onSelectService, theme }) {
                           <div className="pt-4">
                             <Link
                               to={service.targetUrl}
-                              className={`w-full py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider text-center transition-all active:scale-98 cursor-pointer flex items-center justify-center gap-2 shadow-md ${
+                              className={`w-full py-3.5 px-4 rounded-xl text-xs sm:text-sm font-extrabold uppercase tracking-wider text-center transition-all active:scale-98 cursor-pointer flex items-center justify-center gap-2 shadow-md ${
                                 isDark
                                   ? 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-amber-500/15'
                                   : 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-orange-500/20'
                               }`}
                             >
                               <span>{service.id === 'calculator_slide' ? 'Отримати розрахунок' : 'Детальніше'}</span>
-                              <ArrowRight className="w-3.5 h-3.5" />
+                              <ArrowRight className="w-4 h-4" />
                             </Link>
                           </div>
                         </div>

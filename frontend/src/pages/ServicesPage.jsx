@@ -99,27 +99,27 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
                     }`}>
                       {service.title}
                     </h3>
-                    <p className={`text-xs sm:text-sm leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                    <p className={`text-sm leading-relaxed font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       {service.shortDescription}
                     </p>
                   </div>
 
                   {/* Key Advantages Checklist */}
-                  <div className="pt-3 space-y-2 border-t border-slate-700/30">
+                  <div className="pt-3 space-y-2.5 border-t border-slate-700/30">
                     {service.advantages.map((adv, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs font-medium opacity-90">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
-                        <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>{adv}</span>
+                      <div key={idx} className="flex items-center gap-2.5 text-sm font-semibold">
+                        <CheckCircle2 className="w-4.5 h-4.5 text-emerald-500 flex-shrink-0" />
+                        <span className={isDark ? 'text-slate-200' : 'text-slate-800'}>{adv}</span>
                       </div>
                     ))}
                   </div>
 
                   {/* Price Hint */}
                   <div className="pt-2.5 border-t border-slate-700/30 text-center">
-                    <p className={`text-[11px] font-bold flex items-center justify-center gap-1.5 ${
-                      isDark ? 'text-amber-400/85' : 'text-amber-700'
+                    <p className={`text-xs font-bold flex items-center justify-center gap-1.5 ${
+                      isDark ? 'text-amber-400' : 'text-amber-700'
                     }`}>
-                      <Calculator className="w-3.5 h-3.5 flex-shrink-0" />
+                      <Calculator className="w-4 h-4 flex-shrink-0" />
                       <span>Для детального розрахунку ціни тисніть «Детальніше»</span>
                     </p>
                   </div>
@@ -128,7 +128,7 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
                   <div className="pt-2.5 grid grid-cols-2 gap-3">
                     <Link
                       to={`/services/${service.id}`}
-                      className={`font-bold py-3 px-4 text-xs sm:text-sm rounded-xl border text-center transition-colors flex items-center justify-center gap-2 ${
+                      className={`font-bold py-3.5 px-4 text-sm rounded-xl border text-center transition-colors flex items-center justify-center gap-2 ${
                         isDark 
                           ? 'border-slate-700 bg-slate-900 text-slate-200 hover:bg-slate-800 hover:border-amber-500' 
                           : 'border-slate-300 bg-slate-100 text-slate-800 hover:bg-slate-200 hover:border-amber-700'
@@ -140,7 +140,7 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
 
                     <button
                       onClick={() => onOpenConsultation(service.title)}
-                      className="btn-orange-bright font-bold py-3 px-4 text-xs sm:text-sm rounded-xl text-center shadow-xs transition-all duration-200 active:scale-95 cursor-pointer"
+                      className="btn-orange-bright font-bold py-3.5 px-4 text-sm rounded-xl text-center shadow-xs transition-all duration-200 active:scale-95 cursor-pointer"
                     >
                       Замовити
                     </button>
@@ -157,13 +157,13 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
           isDark ? 'border-slate-700 bg-slate-800/80 text-white' : 'border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#f1f5f9)] text-slate-900 shadow-md'
         }`}>
           <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">Бажаєте замовити інженерні послуги?</h3>
-          <p className="text-xs sm:text-sm font-medium max-w-xl mx-auto text-slate-700 dark:text-slate-300">
+          <p className="text-sm sm:text-base font-medium max-w-xl mx-auto text-slate-700 dark:text-slate-300">
             Отримайте кваліфіковану відповідь інженера щодо монтажу СЕС, підключення Deye або Зеленого Тарифу.
           </p>
           <div className="pt-2">
             <button
               onClick={() => onOpenConsultation && onOpenConsultation('Замовлення послуг')}
-              className="btn-orange-bright px-8 py-3.5 rounded-2xl font-extrabold text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-md"
+              className="btn-orange-bright px-8 py-4 rounded-2xl font-extrabold text-sm sm:text-base inline-flex items-center gap-2 cursor-pointer shadow-md"
             >
               <span>Замовити Консультацію</span>
             </button>

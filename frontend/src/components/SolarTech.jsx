@@ -25,7 +25,7 @@ export function LiveBadge({ label = 'Live Grid Active', theme, tone = 'emerald',
 
   return (
     <span
-      className={`inline-flex items-center gap-2 px-2.5 py-1 rounded-full border text-[10px] font-bold telemetry-label ${tones[tone]} ${className}`}
+      className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 rounded-full border text-xs sm:text-[10px] font-bold telemetry-label ${tones[tone]} ${className}`}
     >
       <span className="live-dot relative w-1.5 h-1.5 rounded-full bg-current flex-shrink-0" />
       <span>{label}</span>
@@ -59,7 +59,7 @@ export function EfficiencyMeter({
   return (
     <div className="space-y-1.5">
       <div className="flex items-baseline justify-between gap-3">
-        <span className={`text-[10px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+        <span className={`text-xs sm:text-[10px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
           {label}
         </span>
         <span className={`text-xs font-black tabular-nums ${isDark ? 'text-amber-300' : 'text-amber-700'}`}>
@@ -218,7 +218,7 @@ export function IrradianceChart({ theme, peak = '1 042 Вт/м²', className = '
         <circle cx={points[7].x} cy={points[7].y} r="3.5" fill="#fde047" stroke="#f59e0b" strokeWidth="1.5" />
       </svg>
 
-      <div className={`flex justify-between text-[9px] telemetry-label ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+      <div className={`flex justify-between text-xs sm:text-[9px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
         <span>05:00</span>
         <span>12:00</span>
         <span>19:00</span>
@@ -246,10 +246,10 @@ export function MonthlyYieldChart({ theme, className = '' }) {
   return (
     <div className={className}>
       <div className="flex items-baseline justify-between mb-2">
-        <span className={`text-[10px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+        <span className={`text-xs sm:text-[10px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
           Monthly Specific Yield · кВт·год/кВт
         </span>
-        <span className={`text-[10px] font-black tabular-nums ${isDark ? 'text-amber-300' : 'text-amber-700'}`}>
+        <span className={`text-xs sm:text-[10px] font-black tabular-nums ${isDark ? 'text-amber-300' : 'text-amber-700'}`}>
           Σ {total} / рік
         </span>
       </div>
@@ -314,9 +314,9 @@ export function MonthlyYieldChart({ theme, className = '' }) {
         />
       </svg>
 
-      <div className={`grid grid-cols-12 mt-1 text-[9px] telemetry-label ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+      <div className={`grid grid-cols-12 mt-1 text-[10px] sm:text-[9px] font-bold telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
         {MONTHS.map((m, i) => (
-          <span key={m} className={`text-center ${i === peak ? (isDark ? 'text-amber-300' : 'text-amber-700') : ''}`}>
+          <span key={m} className={`text-center ${i === peak ? (isDark ? 'text-amber-300 font-black' : 'text-amber-700 font-black') : ''}`}>
             {m}
           </span>
         ))}
@@ -337,21 +337,21 @@ export function TelemetryChip({ icon: Icon, label, value, theme, live = false })
       }`}
     >
       {Icon && (
-        <span className={`w-7 h-7 rounded-lg flex items-center justify-center border flex-shrink-0 ${
+        <span className={`w-8 h-8 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center border flex-shrink-0 ${
           isDark 
             ? 'border-amber-400/40 bg-amber-500/15 text-amber-500' 
             : 'border-amber-300/80 bg-amber-100/80 text-amber-700'
         }`}>
-          <Icon className="w-3.5 h-3.5" />
+          <Icon className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
         </span>
       )}
       <div className="min-w-0">
-        <p className={`text-[9px] font-bold telemetry-label truncate ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>
+        <p className={`text-[10px] sm:text-[9px] font-extrabold telemetry-label truncate ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>
           {label}
         </p>
-        <p className={`text-xs font-black tabular-nums flex items-center gap-1.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+        <p className={`text-xs sm:text-xs font-black tabular-nums flex items-center gap-1.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>
           {value}
-          {live && <span className="w-1 h-1 rounded-full bg-emerald-400 live-dot relative text-emerald-400" />}
+          {live && <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 live-dot relative text-emerald-400" />}
         </p>
       </div>
     </div>
