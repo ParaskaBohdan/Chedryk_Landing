@@ -19,12 +19,12 @@ export default function StatsSection({ theme }) {
       icon: Sun,
       title: 'Інсоляція регіону',
       stat: '1150–1250 кВт·год/м²',
-      desc: 'Закарпатська та Івано-Франківська області є одними з найсприятливіших регіонів Заходу України за сонячною радіацією.',
+      desc: 'Закарпатська, Івано-Франківська та Львівська області є одними з найсприятливіших регіонів Заходу України за сонячною радіацією.',
       Illustration: InsolationScene,
-      badge: 'Irradiance Mapped',
+      badge: 'Підтверджена інсоляція',
       badgeTone: 'amber',
-      meter: { label: 'Irradiance Index', value: 84.2, tone: 'amber', live: true },
-      tag: 'kWh/m² · year',
+      meter: { label: 'Індекс інсоляції', value: 84.2, tone: 'amber', live: true },
+      tag: 'кВт·год/м² на рік',
       source: 'PVGIS · SARAH-3'
     },
     {
@@ -33,35 +33,35 @@ export default function StatsSection({ theme }) {
       stat: '3.5 – 4.5 Років',
       desc: 'При поточних та прогнозованих тарифах мережеві та гібридні станції від 5 кВт до 1 МВт повністю окупають інвестиції.',
       Illustration: PaybackScene,
-      badge: 'Break-Even Modelled',
+      badge: 'Розрахована окупність',
       badgeTone: 'emerald',
-      meter: { label: 'ROI Progress', value: 76.5, tone: 'emerald', live: false },
-      tag: 'payback · years',
+      meter: { label: 'Прогрес окупності', value: 76.5, tone: 'emerald', live: false },
+      tag: 'окупність у роках',
       source: 'НКРЕКП · тариф 2026'
     },
     {
       icon: Battery,
       title: 'Деградація фотомодулів',
       stat: '< 0.55% на рік',
-      desc: 'Сучасні N-type Tier-1 сонячні панелі зберігають понад 85% номінальної потужності навіть після 25 років експлуатації.',
+      desc: 'Сучасні монокристалічні сонячні панелі зберігають понад 85% номінальної потужності навіть після 25 років експлуатації.',
       Illustration: DegradationScene,
-      badge: '25-Year Warranty',
+      badge: '25 років гарантії',
       badgeTone: 'sky',
-      meter: { label: 'Capacity @ 25y', value: 85.4, tone: 'sky', live: false },
-      tag: 'n-type · tier-1',
+      meter: { label: 'Залишкова ємність через 25р', value: 85.4, tone: 'sky', live: false },
+      tag: 'найвища надійність',
       source: 'IEC 61215 · IEC 61730'
     },
     {
       icon: Cpu,
       title: 'ККД Сучасних Інверторів',
-      stat: '98.5% Efficiency',
-      desc: 'Використання високочастотних інверторів Deye мінімізує втрати під час конвертації струму та зарядки батарей.',
+      stat: '98.5% ККД',
+      desc: 'Використання високочастотних інверторів мінімізує втрати під час конвертації струму та зарядки батарей.',
       Illustration: InverterEfficiencyScene,
-      badge: 'Lab Verified',
+      badge: 'Лабораторно перевірено',
       badgeTone: 'emerald',
-      meter: { label: 'Conversion Efficiency', value: 98.5, tone: 'emerald', live: true },
-      tag: 'deye · hf inverter',
-      source: 'EN 50530 · Deye datasheet'
+      meter: { label: 'ККД перетворення', value: 98.5, tone: 'emerald', live: true },
+      tag: 'інвертор високої частоти',
+      source: 'EN 50530 · Паспорт обладнання'
     }
   ];
 
@@ -165,9 +165,9 @@ export default function StatsSection({ theme }) {
             {/* Annual generation profile */}
             <div className="flex-1 min-w-0">
               <div className="flex flex-wrap items-center gap-2 mb-4">
-                <LiveBadge theme={theme} label="Dataset 2026" tone="sky" />
-                <LiveBadge theme={theme} label="23.8% Efficiency" tone="amber" />
-                <LiveBadge theme={theme} label="Uptime 99.94%" />
+                <LiveBadge theme={theme} label="Дані 2026 року" tone="sky" />
+                <LiveBadge theme={theme} label="23.8% ККД панелей" tone="amber" />
+                <LiveBadge theme={theme} label="Безвідмовність 99.94%" />
               </div>
               <MonthlyYieldChart theme={theme} />
             </div>
@@ -175,10 +175,10 @@ export default function StatsSection({ theme }) {
             {/* Aggregate readouts + compliance */}
             <div className={`lg:w-[330px] lg:border-l lg:pl-8 ${isDark ? 'lg:border-slate-700/70' : 'lg:border-slate-200'}`}>
               <div className="grid grid-cols-2 gap-2.5 mb-5">
-                <TelemetryChip theme={theme} icon={Sun} label="Peak Sun Hours" value="3.24 год/добу" />
-                <TelemetryChip theme={theme} icon={TrendingUp} label="Perf. Ratio" value="82.5%" live />
-                <TelemetryChip theme={theme} icon={Gauge} label="CO₂ Avoided" value="0.71 т/кВт·рік" />
-                <TelemetryChip theme={theme} icon={Cpu} label="MPPT Trackers" value="2–4 шт" />
+                <TelemetryChip theme={theme} icon={Sun} label="Сонячні години" value="3.24 год/добу" />
+                <TelemetryChip theme={theme} icon={TrendingUp} label="ККД генерації" value="82.5%" live />
+                <TelemetryChip theme={theme} icon={Gauge} label="Зниження CO₂" value="0.71 т/кВт·рік" />
+                <TelemetryChip theme={theme} icon={Cpu} label="Трекери MPPT" value="2–4 шт" />
               </div>
 
               <div className="flex items-start gap-3">

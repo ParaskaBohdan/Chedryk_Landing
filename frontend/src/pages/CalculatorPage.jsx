@@ -47,7 +47,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
   const [roofMaterial, setRoofMaterial] = useState('metal_tile'); // 'metal_tile' | 'tile' | 'corrugated' | 'seam' | 'flat_concrete'
   const [roofAreaSqM, setRoofAreaSqM] = useState(80); // m2
   const [targetSystemPowerKw, setTargetSystemPowerKw] = useState(15); // kW
-  const [panelBrand, setPanelBrand] = useState('jinko'); // 'risen' | 'jinko' | 'longi' | 'jasolar'
+  const [panelBrand, setPanelBrand] = useState('longi615'); // 'longi615' | 'trina455' | 'astra465' | 'longi630'
   const [hasBattery, setHasBattery] = useState(true);
   const [batteryCapacityKwh, setBatteryCapacityKwh] = useState(10); // 5 | 10 | 15 | 20
   const [loadWatts, setLoadWatts] = useState(625);
@@ -56,7 +56,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
   // Configurator 2 State - "Прогноз доходу та окупності"
   const [incomePowerKw, setIncomePowerKw] = useState(15);
   const [monthlyConsumptionKwh, setMonthlyConsumptionKwh] = useState(250);
-  const [gridPriceUah, setGridPriceUah] = useState(4.32); // грн за кВт·год
+  const [gridPriceUah, setGridPriceUah] = useState(6.3); // сталий тариф 6.30 грн за кВт·год
 
   useEffect(() => {
     if (!isEmbed) {
@@ -72,8 +72,8 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
   }, [isGroundOnly]);
 
   // Cost Calculator Constants & Calculations
-  const panelWattages = { risen: 550, jinko: 585, longi: 600, jasolar: 670 };
-  const panelPrices = { risen: 135, jinko: 155, longi: 165, jasolar: 185 };
+  const panelWattages = { longi615: 615, trina455: 455, astra465: 465, longi630: 630 };
+  const panelPrices = { longi615: 155, trina455: 115, astra465: 120, longi630: 165 };
 
   const maxPossiblePanels = Math.floor(roofAreaSqM / 2.2);
   const selectedPanelWattage = panelWattages[panelBrand];
@@ -338,14 +338,14 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                   {/* 5. Panel Brand Selection */}
                   <div className={`pt-4 border-t ${isDark ? 'border-slate-700/60' : 'border-slate-200'}`}>
                     <label className={`block text-xs sm:text-xs font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Бренд сонячних фотомодулів (Tier-1):
+                      Бренд сонячних фотомодулів:
                     </label>
                     <div className="grid grid-cols-2 gap-3">
                       {[
-                        { id: 'jinko', name: 'Jinko Solar', watt: '585W', desc: 'N-Type ККД 22.6%' },
-                        { id: 'risen', name: 'Risen Energy', watt: '550W', desc: 'Titanium Перформанс' },
-                        { id: 'longi', name: 'Longi Solar', watt: '600W', desc: 'Hi-MO X6 Топ ККД' },
-                        { id: 'jasolar', name: 'JA Solar', watt: '670W', desc: 'DeepBlue Гігант' }
+                        { id: 'longi615', name: 'LONGi Solar', watt: '615W', desc: 'Hi-MO X6 Флагман' },
+                        { id: 'trina455', name: 'Trina Solar', watt: '455W', desc: 'Vertex S для дахів' },
+                        { id: 'astra465', name: 'Astra Energy', watt: '465W', desc: 'Half-Cut Оптимум' },
+                        { id: 'longi630', name: 'LONGi Solar', watt: '630W', desc: 'Hi-MO 7 Двосторонній' }
                       ].map((b) => (
                         <button
                           key={b.id}

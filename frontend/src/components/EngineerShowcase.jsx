@@ -26,28 +26,28 @@ export default function EngineerShowcase({ theme, onOpenConsultation }) {
 
   const blocks = [
     {
-      badge: 'Field Engineer Verified',
+      badge: 'Перевірено інженером',
       tone: 'emerald',
       Illustration: EngineerHoldingPanel,
       title: 'Приймання та вхідний контроль модулів',
       desc: 'Кожен фотомодуль проходить візуальний огляд, перевірку напруги холостого ходу та тест на мікротріщини ще до підйому на дах.',
-      readout: <EfficiencyMeter theme={theme} label="Panel Efficiency" value={23.8} live />
+      readout: <EfficiencyMeter theme={theme} label="ККД панелей" value={23.8} live />
     },
     {
-      badge: 'Panel Mounting in Progress',
+      badge: 'Монтаж конструкцій',
       tone: 'amber',
       Illustration: EngineerMountingPanel,
       title: 'Монтаж на алюмінієві рейки',
       desc: 'Кріплення з нержавіючої сталі, розрахунок вітрового навантаження та оптимальний кут нахилу під інсоляцію Закарпаття.',
-      readout: <TiltGauge theme={theme} angle={35} label="Tilt Angle" />
+      readout: <TiltGauge theme={theme} angle={35} label="Кут нахилу" />
     },
     {
-      badge: 'Inverter Commissioning',
+      badge: 'Запуск інвертора',
       tone: 'sky',
       Illustration: EngineerTestingInverter,
       title: 'Пусконалагодження та тестування',
       desc: 'Випробування під навантаженням, перевірка АВР, налаштування мобільного моніторингу та передача станції власнику.',
-      readout: <EfficiencyMeter theme={theme} label="Inverter Load" value={92.4} tone="emerald" live />
+      readout: <EfficiencyMeter theme={theme} label="Навантаження інвертора" value={92.4} tone="emerald" live />
     }
   ];
 
@@ -147,24 +147,24 @@ export default function EngineerShowcase({ theme, onOpenConsultation }) {
               {/* Telemetry chips */}
               <div className="flex-1 space-y-4">
                 <div className="flex flex-wrap items-center gap-3">
-                  <LiveBadge theme={theme} label="Live Grid Active" />
+                  <LiveBadge theme={theme} label="Мережа активна" />
                   <span className={`text-[10px] telemetry-label ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                     Телеметрія об'єктів · оновлення кожні 3 с
                   </span>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                  <TelemetryChip theme={theme} icon={Gauge} label="Efficiency" value="23.8%" live />
-                  <TelemetryChip theme={theme} icon={Compass} label="Tilt / Azimuth" value="35° / 182°" />
-                  <TelemetryChip theme={theme} icon={Thermometer} label="Cell Temp" value="41.2 °C" live />
-                  <TelemetryChip theme={theme} icon={Activity} label="String Voltage" value="612 В" live />
-                  <TelemetryChip theme={theme} icon={Wind} label="Wind Load" value="4.2 м/с" />
-                  <TelemetryChip theme={theme} icon={Gauge} label="Uptime" value="99.94%" />
+                  <TelemetryChip theme={theme} icon={Gauge} label="ККД" value="23.8%" live />
+                  <TelemetryChip theme={theme} icon={Compass} label="Кут / Азимут" value="35° / 182°" />
+                  <TelemetryChip theme={theme} icon={Thermometer} label="Темп. панелей" value="41.2 °C" live />
+                  <TelemetryChip theme={theme} icon={Activity} label="Напруга стрінга" value="612 В" live />
+                  <TelemetryChip theme={theme} icon={Wind} label="Вітер" value="4.2 м/с" />
+                  <TelemetryChip theme={theme} icon={Gauge} label="Безвідмовність" value="99.94%" />
                 </div>
 
                 <div>
                   <p className={`text-[10px] font-bold telemetry-label mb-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                    DC String → Inverter → Grid
+                    Ланцюг DC → Інвертор → Мережа
                   </p>
                   <EnergyFlowStrip theme={theme} />
                 </div>

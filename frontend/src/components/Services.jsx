@@ -177,20 +177,20 @@ export default function Services({ onSelectService, theme }) {
       icon: Sun,
       color: 'from-amber-400 to-orange-500',
       Illustration: SolarFarmScene,
-      status: 'Turnkey EPC · 5 kW–1 MW',
+      status: 'Під ключ · 5 кВт–1 МВт',
       targetUrl: '/services/ses-building',
       specs: [
-        { label: 'Peak Output', value: '1 МВт' },
-        { label: 'Specific Yield', value: '1 180 кВт·год/кВт' },
-        { label: 'Payback', value: '3.5–4.5 років' }
+        { label: 'Пікова потужність', value: '1 МВт' },
+        { label: 'Питома генерація', value: '1 180 кВт·год/кВт' },
+        { label: 'Окупність', value: '3.5–4.5 років' }
       ],
-      meter: { label: 'System Efficiency', value: 23.8, tone: 'amber', live: true },
+      meter: { label: 'ККД системи', value: 23.8, tone: 'amber', live: true },
       shortDesc: 'Проєктування, поставка інверторів, панелей, дозволи Обленерго та Зелений тариф для приватних будинків і підприємств.',
       features: [
         'Розрахунок інсоляції та проєктування СЕС від 5 кВт до 1 МВт',
         'Супровід документації та отримання дозволів Обленерго',
         'Підключення Зеленого тарифу для продажу надлишків',
-        'Пусконалагодження по Закарпатській та Франківській областях'
+        'Пусконалагодження по Закарпатській, Франківській та Львівській областях'
       ],
       details: 'Повний цикл будівництва сонячних станцій від компактних домашніх (5–15 кВт) до промислових сонячних станцій (до 1 МВт). Підходить для приватних будинків, агрокомплексів, виробництв та об’єктів бізнесу. Беремо на себе розробку ТУ, виїзди та Зелений тариф.'
     },
@@ -201,14 +201,14 @@ export default function Services({ onSelectService, theme }) {
       icon: BatteryCharging,
       color: 'from-orange-400 to-amber-500',
       Illustration: HybridSystemScene,
-      status: 'Hybrid Inverter Ready',
+      status: 'Гібридний резерв',
       targetUrl: '/services/hybrid-systems',
       specs: [
-        { label: 'Switchover', value: '4 мс' },
-        { label: 'Battery Bus', value: 'LiFePO4 · 48 В' },
-        { label: 'Power Range', value: '5–50 кВт' }
+        { label: 'Перемикання', value: '4 мс' },
+        { label: 'Шина АКБ', value: 'LiFePO4 · 48 В' },
+        { label: 'Діапазон', value: '5–50 кВт' }
       ],
-      meter: { label: 'Round-Trip Efficiency', value: 96.2, tone: 'emerald', live: true },
+      meter: { label: 'ККД циклу заряду', value: 96.2, tone: 'emerald', live: true },
       shortDesc: 'Монтаж під ключ інверторів Deye (1-фазних та 3-фазних 5–50 кВт), портативних станцій EcoFlow та стаціонарних акумуляторів LiFePO4.',
       features: [
         'Професійний монтаж гібридних інверторів Deye під ключ',
@@ -225,14 +225,14 @@ export default function Services({ onSelectService, theme }) {
       icon: Home,
       color: 'from-amber-400 to-yellow-500',
       Illustration: RoofMountScene,
-      status: 'Roof Load Certified',
+      status: 'Сертифікований монтаж',
       targetUrl: '/services/roof-installation',
       specs: [
-        { label: 'Tilt Range', value: '15–40°' },
-        { label: 'Wind Load', value: 'до 24 м/с' },
-        { label: 'Clamps', value: 'Inox A2 · EPDM' }
+        { label: 'Кут нахилу', value: '15–40°' },
+        { label: 'Вітростійкість', value: 'до 24 м/с' },
+        { label: 'Кріплення', value: 'Inox A2 · EPDM' }
       ],
-      meter: { label: 'Roof Coverage', value: 82.5, tone: 'sky', live: false },
+      meter: { label: 'Корисна площа даху', value: 82.5, tone: 'sky', live: false },
       shortDesc: 'Професійне закріплення панелей на різні типи даху (черепиця, металочерепиця, профнастил, фальцева покрівля) без ризику протікання.',
       features: [
         'Надійні герметичні кріплення (нержавійка/алюміній)',
@@ -249,14 +249,14 @@ export default function Services({ onSelectService, theme }) {
       icon: FileText,
       color: 'from-orange-500 to-amber-400',
       Illustration: PermitsScene,
-      status: 'Permits Handled',
+      status: 'Документи під ключ',
       targetUrl: '/tariffs',
       specs: [
-        { label: 'Docs Handled', value: '100% на нас' },
-        { label: 'ТУ Обленерго', value: '14–30 днів' },
-        { label: 'Metering', value: 'Bi-directional' }
+        { label: 'Документація', value: '100% на нас' },
+        { label: 'Цикл ТУ', value: '28–50 днів' },
+        { label: 'Облік', value: 'Двонаправлений' }
       ],
-      meter: { label: 'Approval Rate', value: 99.2, tone: 'emerald', live: false },
+      meter: { label: 'Успішне підключення', value: 99.2, tone: 'emerald', live: false },
       shortDesc: 'Оформлення дозволів в Обленерго, ТУ, збільшення вхідної потужності та офіційне підключення Зеленого Тарифу без черг.',
       features: [
         'Подача заяви та отримання ТУ від Обленерго',
@@ -273,14 +273,14 @@ export default function Services({ onSelectService, theme }) {
       icon: Zap,
       color: 'from-amber-500 to-orange-400',
       Illustration: SwitchboardScene,
-      status: 'ПУЕ / ДБН Compliant',
+      status: 'Відповідність ПУЕ / ДБН',
       targetUrl: '/services/battery-systems',
       specs: [
-        { label: 'Ground Resist.', value: '< 4 Ом' },
-        { label: 'Supply', value: '1Ф / 3Ф · 400 В' },
-        { label: 'Protection', value: 'ПЗВ 30 мА' }
+        { label: 'Опір заземлення', value: '< 4 Ом' },
+        { label: 'Живлення', value: '1Ф / 3Ф · 400 В' },
+        { label: 'Захист', value: 'ПЗВ 30 мА' }
       ],
-      meter: { label: 'Phase Balance', value: 97.6, tone: 'emerald', live: true },
+      meter: { label: 'Баланс фаз', value: 97.6, tone: 'emerald', live: true },
       shortDesc: 'Проєктування, розведення проводки, збірка розподільчих щитів, заземлення та автоматика для приватних будинків і комерційних приміщень.',
       features: [
         'Розрахунок навантаження на кожну фазу',
@@ -327,7 +327,7 @@ export default function Services({ onSelectService, theme }) {
             Спеціалізовані Рішення з <span className="text-amber-500">Енергозабезпечення</span>
           </h2>
           <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-            Повний спектр робіт від монтажу дахових батарей (5 кВт – 1 МВт) та систем Deye до Зеленого тарифу в Закарпатській та Івано-Франківській областях.
+            Повний спектр робіт від монтажу дахових батарей (5 кВт – 1 МВт) та систем Deye до Зеленого тарифу в Закарпатській, Івано-Франківській та Львівській областях.
           </p>
         </div>
 

@@ -40,16 +40,17 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
   const [roofType, setRoofType] = useState('pitched'); // 'pitched' | 'flat'
   const [roofMaterial, setRoofMaterial] = useState(serviceId === 'ses-building' ? 'screw' : 'metal_tile'); // 'metal_tile' | 'tile' | 'corrugated' | 'seam' | 'flat_concrete'
   const [roofAreaSqM, setRoofAreaSqM] = useState(110);
-  const [panelBrand, setPanelBrand] = useState('jinko'); // 'jinko' | 'risen' | 'longi'
+  const [panelBrand, setPanelBrand] = useState('longi615'); // 'longi615' | 'trina455' | 'astra465' | 'longi630'
   const [rowsCount, setRowsCount] = useState(2); // 1 | 2 | 3
   const [hasBattery, setHasBattery] = useState(true);
   const [batteryCapacityKwh, setBatteryCapacityKwh] = useState(10); // 5 | 10 | 15 | 20
   const [step, setStep] = useState(1);
 
   const panelsData = {
-    jinko: { name: 'Jinko Solar', watt: 585, costPerPanel: 125 },
-    risen: { name: 'Risen Energy', watt: 550, costPerPanel: 110 },
-    longi: { name: 'Longi Solar', watt: 600, costPerPanel: 140 }
+    longi615: { name: 'LONGi Hi-MO X6', watt: 615, costPerPanel: 145 },
+    trina455: { name: 'Trina Vertex S', watt: 455, costPerPanel: 105 },
+    astra465: { name: 'Astra Energy', watt: 465, costPerPanel: 95 },
+    longi630: { name: 'LONGi Hi-MO 7', watt: 630, costPerPanel: 155 }
   };
 
   const selectedWizardPanel = panelsData[panelBrand] || panelsData.jinko;
@@ -307,13 +308,14 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
                 {/* Panel Brand */}
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
-                    Бренд сонячних фотомодулів (Tier-1):
+                    Бренд сонячних фотомодулів:
                   </label>
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {[
-                      { id: 'jinko', name: 'Jinko Solar', watt: '585W', desc: 'N-Type ККД 22.6%' },
-                      { id: 'risen', name: 'Risen Energy', watt: '550W', desc: 'Titanium Перформанс' },
-                      { id: 'longi', name: 'Longi Solar', watt: '600W', desc: 'Hi-MO X6 Топ ККД' }
+                      { id: 'longi615', name: 'LONGi Solar', watt: '615W', desc: 'Hi-MO X6 HPBC' },
+                      { id: 'trina455', name: 'Trina Solar', watt: '455W', desc: 'Vertex S Напівосередок' },
+                      { id: 'astra465', name: 'Astra Energy', watt: '465W', desc: 'Astra 465W Моно' },
+                      { id: 'longi630', name: 'LONGi Bifacial', watt: '630W', desc: 'Hi-MO 7 Двосторонній' }
                     ].map((b) => (
                       <button
                         key={b.id}

@@ -136,7 +136,7 @@ export default function Hero({ theme }) {
                 isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-slate-200/90 border-slate-300 text-slate-800 shadow-xs'
               }`}>
                 <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500" />
-                <span>Закарпатська & Івано-Франківська області</span>
+                <span>Закарпатська, Івано-Франківська & Львівська області</span>
               </div>
 
               <h1 className={`text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight ${
@@ -219,24 +219,24 @@ export default function Hero({ theme }) {
                       <p className="text-xs text-slate-400">Від 5 кВт до 1 МВт під ключ</p>
                     </div>
                   </div>
-                  <LiveBadge theme={theme} label="Live Grid Active" />
+                  <LiveBadge theme={theme} label="Мережа активна" />
                 </div>
 
                 <div className="py-5 space-y-4">
                   <div className={`p-3.5 sm:p-4 rounded-xl border space-y-3.5 ${
                     isDark ? 'border-slate-700 bg-slate-900/70' : 'border-slate-200 bg-slate-50/80'
                   }`}>
-                    <EfficiencyMeter theme={theme} label="Inverter Efficiency" value={98.4} tone="emerald" live />
-                    <EfficiencyMeter theme={theme} label="Panel Efficiency" value={23.8} live />
+                    <EfficiencyMeter theme={theme} label="ККД інвертора" value={98.4} tone="emerald" live />
+                    <EfficiencyMeter theme={theme} label="ККД панелей" value={23.8} live />
                   </div>
 
                   <div className={`p-3.5 sm:p-4 rounded-xl border flex items-center justify-between gap-3 ${
                     isDark ? 'border-slate-700 bg-slate-900/70' : 'border-slate-200 bg-slate-50/80'
                   }`}>
-                    <TiltGauge theme={theme} angle={35} label="Tilt Angle" />
+                    <TiltGauge theme={theme} angle={35} label="Кут нахилу" />
                     <div className="space-y-2 min-w-0">
-                      <TelemetryChip theme={theme} icon={Compass} label="Azimuth" value="182°" />
-                      <TelemetryChip theme={theme} icon={Thermometer} label="Cell Temp" value="41.2 °C" live />
+                      <TelemetryChip theme={theme} icon={Compass} label="Азимут" value="182°" />
+                      <TelemetryChip theme={theme} icon={Thermometer} label="Темп. панелей" value="41.2 °C" live />
                     </div>
                   </div>
 
@@ -252,7 +252,7 @@ export default function Hero({ theme }) {
                 }`}>
                   <Zap className="w-5 h-5 text-amber-500 flex-shrink-0" />
                   <p className="text-xs leading-snug font-medium">
-                    Офіційний монтаж у Закарпатській та Івано-Франківській областях.
+                    Офіційний монтаж у Закарпатській, Івано-Франківській та Львівській областях.
                   </p>
                 </div>
               </SolarPanelCard>

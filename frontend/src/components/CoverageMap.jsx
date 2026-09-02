@@ -12,7 +12,7 @@ const MONO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
 // Positions are laid out to read like the region's shape — Закарпаття running
 // south-west along the Carpathian arc, Прикарпаття to the north-east.
 const CITIES = [
-  { id: 'uzh', name: 'Ужгород', x: 92, y: 214, hub: true, note: 'Головний офіс' },
+  { id: 'uzh', name: 'Ужгород', x: 92, y: 214, hub: true, note: 'Головний офіс (Закарпаття)' },
   { id: 'muk', name: 'Мукачево', x: 148, y: 196, note: '40 км · 45 хв' },
   { id: 'ber', name: 'Берегове', x: 158, y: 240, note: '72 км · 1 год' },
   { id: 'vyn', name: 'Виноградів', x: 214, y: 232, note: '92 км · 1.5 год' },
@@ -20,9 +20,12 @@ const CITIES = [
   { id: 'sva', name: 'Свалява', x: 190, y: 154, note: '58 км · 1 год' },
   { id: 'mzh', name: 'Міжгір’я', x: 268, y: 150, note: '140 км · 2 год' },
   { id: 'rah', name: 'Рахів', x: 330, y: 168, note: '196 км · 3 год' },
-  { id: 'if', name: 'Івано-Франківськ', x: 404, y: 96, hub: true, note: 'Друга область' },
-  { id: 'kal', name: 'Калуш', x: 366, y: 66, note: 'Прикарпаття' },
-  { id: 'kol', name: 'Коломия', x: 448, y: 132, note: 'Прикарпаття' }
+  { id: 'lviv', name: 'Львів', x: 320, y: 46, hub: true, note: 'Обласний хаб (Львівщина)' },
+  { id: 'stryi', name: 'Стрий', x: 290, y: 88, note: 'Львівщина' },
+  { id: 'drog', name: 'Дрогобич', x: 250, y: 84, note: 'Львівщина' },
+  { id: 'if', name: 'Івано-Франківськ', x: 414, y: 126, hub: true, note: 'Обласний хаб (Прикарпаття)' },
+  { id: 'kal', name: 'Калуш', x: 372, y: 104, note: 'Прикарпаття' },
+  { id: 'kol', name: 'Коломия', x: 454, y: 162, note: 'Прикарпаття' }
 ];
 
 export default function CoverageMap({ theme, className = '' }) {
@@ -34,6 +37,7 @@ export default function CoverageMap({ theme, className = '' }) {
 
   const land = isDark ? '#132a47' : '#dbe4ef';
   const landAlt = isDark ? '#0f2340' : '#cfdae9';
+  const landNorth = isDark ? '#112844' : '#e1eaf4';
   const edge = isDark ? 'rgba(148,163,184,0.4)' : 'rgba(100,116,139,0.38)';
   const ridge = isDark ? 'rgba(148,163,184,0.28)' : 'rgba(100,116,139,0.26)';
 
@@ -43,7 +47,7 @@ export default function CoverageMap({ theme, className = '' }) {
         viewBox="0 0 520 300"
         className="w-full h-auto"
         role="img"
-        aria-label="Карта покриття: Закарпатська та Івано-Франківська області"
+        aria-label="Карта покриття: Закарпатська, Івано-Франківська та Львівська області"
       >
         <defs>
           <linearGradient id={`cm-sky-${uid}`} x1="0" y1="0" x2="1" y2="1">
@@ -68,9 +72,16 @@ export default function CoverageMap({ theme, className = '' }) {
           ))}
         </g>
 
+        {/* Львівська область (north) */}
+        <path
+          d="M220 96 C240 40 280 16 350 16 C410 16 430 46 390 92 C350 114 280 120 220 96 Z"
+          fill={landNorth}
+          stroke={edge}
+          strokeWidth="1.8"
+        />
         {/* Івано-Франківська область (north-east) */}
         <path
-          d="M300 130 C318 92 348 44 396 34 C444 24 486 52 496 96 C504 132 480 168 444 182 C408 196 356 186 328 166 Z"
+          d="M300 140 C324 106 360 70 410 64 C454 58 488 84 498 126 C504 156 480 188 444 200 C404 212 356 196 324 176 Z"
           fill={landAlt}
           stroke={edge}
           strokeWidth="1.8"
@@ -92,10 +103,10 @@ export default function CoverageMap({ theme, className = '' }) {
           <path d="M338 132 L354 116 L370 132" />
         </g>
 
-        {/* Service radius rings around the two hubs */}
+        {/* Service radius rings around the hubs */}
         {CITIES.filter((c) => c.hub).map((hub) => (
           <g key={`ring-${hub.id}`}>
-            {[38, 62, 86].map((r) => (
+            {[34, 56, 78].map((r) => (
               <circle
                 key={r}
                 cx={hub.x}
@@ -105,13 +116,13 @@ export default function CoverageMap({ theme, className = '' }) {
                 stroke="#fbbf24"
                 strokeWidth="1"
                 strokeDasharray="3 6"
-                opacity={0.34 - (r - 38) / 400}
+                opacity={0.34 - (r - 34) / 400}
               />
             ))}
           </g>
         ))}
 
-        {/* Link from the primary hub out to each town */}
+        {/* Link from primary hub out to each town */}
         {CITIES.filter((c) => !c.hub).map((c) => (
           <line
             key={`link-${c.id}`}
@@ -123,11 +134,23 @@ export default function CoverageMap({ theme, className = '' }) {
             strokeWidth="1"
           />
         ))}
+        {/* Main hub energy corridors */}
         <line
           x1={92}
           y1={214}
-          x2={404}
-          y2={96}
+          x2={320}
+          y2={46}
+          stroke="#fbbf24"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          className="energy-flow"
+          opacity="0.8"
+        />
+        <line
+          x1={320}
+          y1={46}
+          x2={414}
+          y2={126}
           stroke="#fbbf24"
           strokeWidth="1.8"
           strokeLinecap="round"
@@ -165,10 +188,13 @@ export default function CoverageMap({ theme, className = '' }) {
         })}
 
         {/* Region captions */}
-        <text x={176} y={288} textAnchor="middle" fontSize="12" fontFamily={MONO} letterSpacing="1.5" fill={isDark ? '#64748b' : '#94a3b8'}>
+        <text x={176} y={288} textAnchor="middle" fontSize="11" fontFamily={MONO} letterSpacing="1.5" fill={isDark ? '#64748b' : '#94a3b8'}>
           ЗАКАРПАТСЬКА
         </text>
-        <text x={420} y={218} textAnchor="middle" fontSize="12" fontFamily={MONO} letterSpacing="1.5" fill={isDark ? '#64748b' : '#94a3b8'}>
+        <text x={320} y={28} textAnchor="middle" fontSize="11" fontFamily={MONO} letterSpacing="1.5" fill={isDark ? '#64748b' : '#94a3b8'}>
+          ЛЬВІВСЬКА
+        </text>
+        <text x={440} y={228} textAnchor="middle" fontSize="11" fontFamily={MONO} letterSpacing="1.5" fill={isDark ? '#64748b' : '#94a3b8'}>
           ІВАНО-ФРАНКІВСЬКА
         </text>
       </svg>

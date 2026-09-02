@@ -21,6 +21,10 @@ export default function ContactsPage({ theme }) {
     'Івано-Франківськ', 'Коломия', 'Калуш', 'Яремче', 'Надвірна', 'Долина'
   ];
 
+  const lvivCities = [
+    'Львів', 'Стрий', 'Дрогобич', 'Трускавець', 'Самбір', 'Червоноград'
+  ];
+
   return (
     <div className={`py-12 sm:py-20 min-h-screen relative overflow-hidden transition-colors duration-300 ${
       isDark ? 'bg-slate-900 text-white' : 'bg-amber-50/40 text-slate-900'
@@ -41,13 +45,13 @@ export default function ContactsPage({ theme }) {
             Контакти Компанії <span className="text-amber-500">Nova Energy</span>
           </h1>
           <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-            Працюємо по Закарпатській та Івано-Франківській областях. Дивіться наші об'єкти в TikTok та пишіть у зручний месенджер.
+            Працюємо по Закарпатській, Івано-Франківській та Львівській областях. Дивіться наші об'єкти в TikTok та пишіть у зручний месенджер.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-2.5 pt-2">
             <LiveBadge theme={theme} label="На зв'язку 09:00–18:00" />
             <LiveBadge theme={theme} label="Виїзд до 200 км" tone="amber" />
-            <LiveBadge theme={theme} label="2 області" tone="sky" />
+            <LiveBadge theme={theme} label="3 області" tone="sky" />
           </div>
         </div>
 
@@ -148,7 +152,7 @@ export default function ContactsPage({ theme }) {
                     <p className="text-xs font-medium opacity-70">
                       Області виїзду
                     </p>
-                    <p className="text-sm font-semibold">Закарпатська та Івано-Франківська області</p>
+                    <p className="text-sm font-semibold">Закарпатська, Івано-Франківська та Львівська області</p>
                   </div>
                 </div>
 
@@ -185,6 +189,24 @@ export default function ContactsPage({ theme }) {
                   <p className="text-xs font-bold text-amber-500 mb-1.5">Закарпаття:</p>
                   <div className="flex flex-wrap gap-1.5">
                     {zakarpattyaCities.map((city, idx) => (
+                      <span key={idx} className={`px-2.5 py-0.5 border text-xs rounded-lg ${
+                        isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-amber-200 bg-amber-50 text-slate-700'
+                      }`}>
+                        {city}
+                      </span>
+                    ))}
+                    <span className={`px-2.5 py-0.5 border text-xs font-bold rounded-lg ${
+                      isDark ? 'border-amber-400/60 bg-amber-500/10 text-amber-400' : 'border-orange-400/60 bg-amber-50/60 text-slate-800'
+                    }`}>
+                      + Усі села та ОТГ
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-xs font-bold text-amber-500 mb-1.5">Львівщина:</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {lvivCities.map((city, idx) => (
                       <span key={idx} className={`px-2.5 py-0.5 border text-xs rounded-lg ${
                         isDark ? 'border-slate-700 bg-slate-900 text-slate-300' : 'border-amber-200 bg-amber-50 text-slate-700'
                       }`}>

@@ -70,10 +70,10 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
   // Обленерго permit route. activeStage below marks where a typical project sits.
   const pipeline = [
     { stage: 'Заява та пакет документів', duration: '1–3 дні', status: 'Готово' },
-    { stage: 'Технічні умови (ТУ)', duration: '14–30 днів', status: 'Готово' },
-    { stage: 'Проєкт та монтаж СЕС', duration: '5–14 днів', status: 'В роботі' },
-    { stage: 'Двонаправлений лічильник', duration: '3–7 днів', status: 'Очікує' },
-    { stage: 'Договір на продаж', duration: '5–10 днів', status: 'Очікує' }
+    { stage: 'Технічні умови (ТУ)', duration: '14–25 днів', status: 'Готово' },
+    { stage: 'Проєкт та монтаж СЕС', duration: '5–12 днів', status: 'В роботі' },
+    { stage: 'Двонаправлений лічильник', duration: '3–5 днів', status: 'Очікує' },
+    { stage: 'Договір на продаж', duration: '5–8 днів', status: 'Очікує' }
   ];
 
   const statusTone = { Готово: 'emerald', 'В роботі': 'amber', Очікує: 'sky' };
@@ -96,20 +96,29 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
             isDark ? 'bg-amber-500/15 border-[#fbbf24] text-[#fde68a]' : 'bg-amber-50 border-orange-400 text-slate-800'
           }`}>
             <Zap className="w-4 h-4 text-amber-500" />
-            <span>Зелений Тариф & Документи</span>
+            <span>Зелений Тариф · Тільки Закарпатська область</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            Оформлення <span className="text-solar-gradient">Зеленого Тарифу</span> Під Ключ
+            Оформлення <span className="text-solar-gradient">Зеленого Тарифу</span> на Закарпатті
           </h1>
           <p className={`text-sm sm:text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-            Повний супровід документації в Обленерго Закарпатської та Івано-Франківської областей. Збільшення дозволеної потужності, технічні умови та виплати за згенеровану електроенергію.
+            Повний супровід документації в «Закарпаттяобленерго» під ключ. Збільшення дозволеної потужності, ТУ та прямі виплати в євро за згенеровану сонячну енергію.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-2.5 pt-2">
-            <LiveBadge theme={theme} label="Permits Handled 100%" />
-            <LiveBadge theme={theme} label="ТУ 14–30 днів" tone="amber" />
+            <LiveBadge theme={theme} label="Найшвидший цикл: 28–50 днів" tone="amber" />
+            <LiveBadge theme={theme} label="Виключно Закарпаття" tone="emerald" />
             <LiveBadge theme={theme} label="Bi-Directional Metering" tone="sky" />
+          </div>
+
+          {/* Regional note callout */}
+          <div className={`mt-4 p-4 rounded-2xl border text-xs sm:text-sm text-left ${
+            isDark ? 'bg-amber-500/10 border-amber-500/30 text-amber-200' : 'bg-amber-50 border-amber-300 text-amber-900'
+          }`}>
+            <p className="font-semibold">
+              ℹ️ <strong>Зверніть увагу:</strong> Підключення та виплати за Зеленим Тарифом здійснюються виключно для об'єктів у Закарпатській області. Для клієнтів у Львівській та Івано-Франківській областях ми встановлюємо гібридні станції під власне споживання та Net Billing для максимальної економії за тарифом 6.30 грн/кВт·год та повної автономії.
+            </p>
           </div>
         </div>
 
@@ -248,7 +257,7 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
             }`}>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 flex-1 w-full">
                 <TelemetryChip theme={theme} icon={FileCheck} label="Approval Rate" value="99.2%" live />
-                <TelemetryChip theme={theme} icon={Clock} label="Повний цикл" value="28–64 дні" />
+                <TelemetryChip theme={theme} icon={Clock} label="Найшвидший цикл" value="28–50 днів" />
                 <TelemetryChip theme={theme} icon={Gauge} label="Лічильник" value="Двонаправлений" />
                 <TelemetryChip theme={theme} icon={Landmark} label="Договір" value="Купівлі-продажу" />
               </div>
@@ -274,13 +283,13 @@ export default function TariffsPage({ theme, onOpenConsultation }) {
         <SolarPanelCard theme={theme} glow className="p-8 sm:p-10 shadow-xl" contentClassName="text-center space-y-4">
           <div className="flex flex-wrap items-center justify-center gap-2.5">
             <LiveBadge theme={theme} label="Legal Support Included" />
-            <LiveBadge theme={theme} label="Закарпаття · Прикарпаття" tone="sky" />
+            <LiveBadge theme={theme} label="Тільки Закарпаття" tone="amber" />
           </div>
           <h3 className="text-xl sm:text-2xl font-black" style={{ color: isDark ? '#ffffff' : '#000000' }}>
-            Потрібна допомога з Зеленим Тарифом чи ТУ?
+            Потрібна допомога з Зеленим Тарифом у Закарпатській області?
           </h3>
           <p className="text-xs sm:text-sm font-bold max-w-xl mx-auto" style={{ color: isDark ? '#cbd5e1' : '#000000' }}>
-            Юридичний супровід та подача документів в Обленерго Закарпаття та Франківщини.
+            Юридичний супровід та подача документів в «Закарпаттяобленерго» під ключ (найшвидший цикл 28–50 днів).
           </p>
           <div className="pt-2">
             <button

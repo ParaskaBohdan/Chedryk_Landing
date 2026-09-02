@@ -11,7 +11,7 @@ export default function MiniRoiCalculator({ theme }) {
   // Configurator States (matching screenshot default values)
   const [powerKw, setPowerKw] = useState(14);
   const [consumptionKwh, setConsumptionKwh] = useState(325);
-  const [gridPriceUah, setGridPriceUah] = useState(6.3); // грн за кВт·год
+  const gridPriceUah = 6.3; // Сталий тариф за електроенергію 6.30 грн/кВт·год
 
   // Calculations
   const usdToUah = 41.5;
@@ -101,21 +101,12 @@ export default function MiniRoiCalculator({ theme }) {
                   hint={`Річне власне споживання об'єкта: ~${annualConsumptionKwh.toLocaleString()} кВт·год.`}
                 />
               </div>
- 
-              {/* 3. Grid Electricity Price Slider */}
-              <div className={`pt-4 border-t ${isDark ? 'border-slate-700/60' : 'border-slate-200'}`}>
-                <SolarSlider
-                  id="home-grid-price-uah"
-                  theme={theme}
-                  label="Тариф за електроенергію з мережі"
-                  display={`${gridPriceUah.toString().replace('.', ',')} грн`}
-                  min={2.0}
-                  max={15.0}
-                  step={0.1}
-                  value={gridPriceUah}
-                  onChange={setGridPriceUah}
-                  hint="Вартість 1 кВт·год споживання для розрахунку окупності."
-                />
+              {/* Fixed Grid Tariff Info Note */}
+              <div className={`pt-4 border-t flex items-center justify-between text-xs ${isDark ? 'border-slate-700/60 text-slate-400' : 'border-slate-200 text-slate-600'}`}>
+                <span className="font-semibold">Тариф за електроенергію з мережі:</span>
+                <span className="font-bold text-amber-500 bg-amber-500/10 px-2.5 py-1 rounded-md border border-amber-500/20 font-mono">
+                  6,30 грн / кВт·год (сталий)
+                </span>
               </div>
             </SolarPanelCard>
           </div>

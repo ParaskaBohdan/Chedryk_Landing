@@ -87,7 +87,7 @@ export default function Footer({ onOpenConsultation, theme }) {
             </div>
 
             <p className="text-xs sm:text-sm max-w-sm leading-relaxed font-medium opacity-80">
-              Автономність, резервне живлення EcoFlow, будівництво сонячних станцій 5 кВт – 1 МВт та налагодження електромереж у Закарпатській та Івано-Франківській областях.
+              Автономність, резервне живлення, будівництво сонячних станцій 5 кВт – 1 МВт та налагодження електромереж у Закарпатській, Івано-Франківській та Львівській областях.
             </p>
           </div>
 
@@ -142,7 +142,7 @@ export default function Footer({ onOpenConsultation, theme }) {
 
               <div className="flex items-center gap-2 opacity-80">
                 <MapPin className="w-4 h-4 text-emerald-500" />
-                <span>Закарпатська & Франківська обл.</span>
+                <span>Закарпатська, Франківська & Львівська обл.</span>
               </div>
               <button
                 onClick={onOpenConsultation}

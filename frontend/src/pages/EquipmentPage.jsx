@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sun, BatteryCharging, Cpu, Layers, ShieldCheck, CheckCircle2, Zap, Wrench, ArrowRight, MessageSquare } from 'lucide-react';
+import { Sun, BatteryCharging, Cpu, Layers, ShieldCheck, CheckCircle2, Zap, Wrench, ArrowRight, MessageSquare, ExternalLink } from 'lucide-react';
 import SolarPanelCard from '../components/SolarPanelCard';
 import { LiveBadge, EfficiencyMeter, TelemetryChip } from '../components/SolarTech';
 import { BusbarDivider, RegistrationMarks } from '../components/SolarDetails';
@@ -24,261 +24,293 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
   // Solar Panels Data
   const solarPanelsData = [
     {
-      id: 'jinko-585',
-      brand: 'Jinko Solar',
-      model: 'Tiger Neo N-Type 585W',
-      tech: 'N-Type TOPCon / Bifacial',
-      power: '585 Вт',
-      efficiency: '22.6%',
-      dimensions: '2278 × 1134 × 30 мм',
-      weight: '28.0 кг',
-      warranty: '25 років продукт / 30 років генерація',
-      degradation: '< 0.4% на рік',
-      features: ['Низький температурний коефіцієнт (-0.29%/°C)', 'Двостороннє знімання енергії (+15-20%)', 'Скло-Скло захист від граду та снігу'],
-      recommendedFor: 'Скатні та плоскі дахи приватних будинків',
-      badge: 'ТОП Вибір 2026',
-      visual: { cols: 6, rows: 3, bifacial: true },
-      status: 'N-Type TOPCon',
-      effValue: 22.6,
-      metrics: [
-        { label: 'Temp. Coef.', value: '−0.29 %/°C' },
-        { label: 'Cells', value: '108 (54×2)' }
-      ]
-    },
-    {
-      id: 'risen-550',
-      brand: 'Risen Energy',
-      model: 'Titanium PERC 550W',
-      tech: 'Monocrystalline Half-Cell',
-      power: '550 Вт',
-      efficiency: '21.3%',
-      dimensions: '2279 × 1134 × 35 мм',
-      weight: '27.8 кг',
-      warranty: '12 років продукт / 25 років генерація',
-      degradation: '< 0.55% на рік',
-      features: ['Оптимальне співвідношення ціна/якість', 'Високий опір PID та PID-Free', 'Підсилена алюмінієва рама 35 мм'],
-      recommendedFor: 'Бюджетні та середні домашні СЕС 10-30 кВт',
-      badge: 'Бестселер',
-      visual: { cols: 5, rows: 3 },
-      status: 'PERC Half-Cell',
-      effValue: 21.3,
-      metrics: [
-        { label: 'Frame', value: '35 мм' },
-        { label: 'PID', value: 'PID-Free' }
-      ]
-    },
-    {
-      id: 'longi-600',
+      id: 'longi-615',
       brand: 'LONGi Solar',
-      model: 'Hi-MO X6 Max 600W',
-      tech: 'HPBC Cell Technology',
-      power: '600 Вт',
+      model: 'Hi-MO X6 615W',
+      tech: 'Технологія HPBC / Монокристал',
+      power: '615 Вт',
       efficiency: '22.8%',
-      dimensions: '2384 × 1134 × 30 мм',
+      dimensions: '2382 × 1134 × 30 мм',
       weight: '28.5 кг',
-      warranty: '25 років продукт / 30 років генерація',
+      warranty: '25 років на виріб / 30 років на генерацію',
       degradation: '< 0.35% на рік',
-      features: ['Максимальний ККД на ринку 22.8%', 'Преміальний чорний дизайн (Full Black)', 'Стійкість до затінення окремих осередків'],
-      recommendedFor: "Преміум об'єкти та обмежена площа даху",
-      badge: 'Преміум ККД',
-      visual: { cols: 7, rows: 3, fullBlack: true },
-      status: 'HPBC Full Black',
+      features: ['Передова HPBC технологія осередків', 'Високий коефіцієнт генерації при розсіяному світлі', 'Посилена рама з анодованого алюмінію'],
+      recommendedFor: 'Приватні та комерційні станції найвищої продуктивності',
+      badge: 'Флагман 615W',
+      image: '/images/equipment/panel-longi-615.png',
+      status: 'Високоефективний HPBC',
       effValue: 22.8,
       metrics: [
-        { label: 'Shading', value: 'Cell-level' },
-        { label: 'Finish', value: 'Full Black' }
+        { label: 'Темп. коеф.', value: '−0.29 %/°C' },
+        { label: 'Тип осередків', value: 'HPBC Моно' }
       ]
     },
     {
-      id: 'ja-670',
-      brand: 'JA Solar',
-      model: 'DeepBlue 4.0 Pro 670W',
-      tech: 'N-Type Bifacial Large Format',
-      power: '670 Вт',
-      efficiency: '22.1%',
-      dimensions: '2384 × 1303 × 35 мм',
-      weight: '33.5 кг',
-      warranty: '12 років продукт / 30 років генерація',
-      degradation: '< 0.4% на рік',
-      features: ['Максимальна потужність 670 Вт з 1 модуля', 'Економія на кріпильних металоконструкціях', 'Розраховані на промислові навантаження'],
-      recommendedFor: 'Комерційні СЕС 50 кВт – 1 МВт та наземні ферми',
-      badge: 'Промисловий Гігант',
-      visual: { cols: 8, rows: 4, bifacial: true },
-      status: 'N-Type Large Format',
-      effValue: 22.1,
+      id: 'trina-455',
+      brand: 'Trina Solar',
+      model: 'Vertex S 455W',
+      tech: 'Напівосередкова монокристалічна панель Half-Cell',
+      power: '455 Вт',
+      efficiency: '21.5%',
+      dimensions: '1762 × 1134 × 30 мм',
+      weight: '21.8 кг',
+      warranty: '15 років на виріб / 25 років на генерацію',
+      degradation: '< 0.55% на рік',
+      features: ['Компактний розмір: ідеально під складні дахи', 'Висока механічна стійкість (до 6000 Па сніг)', 'Multi-Busbar для мінімізації мікротріщин'],
+      recommendedFor: 'Приватні будинки зі скатними дахами складної форми',
+      badge: 'Бестселер для дахів',
+      image: '/images/equipment/panel-trina-455.png',
+      status: 'Напівосередок Vertex S',
+      effValue: 21.5,
       metrics: [
-        { label: 'Format', value: '2384×1303' },
-        { label: 'Load', value: '5400 Па' }
+        { label: 'Розміри', value: '1762×1134 мм' },
+        { label: 'Навантаження', value: '6000 Па' }
+      ]
+    },
+    {
+      id: 'astra-465',
+      brand: 'Astra Energy',
+      model: 'Astra 465W Monocrystalline',
+      tech: 'Технологія Half-Cut / Монокристал',
+      power: '465 Вт',
+      efficiency: '21.3%',
+      dimensions: '1909 × 1134 × 30 мм',
+      weight: '23.5 кг',
+      warranty: '12 років на виріб / 25 років на генерацію',
+      degradation: '< 0.50% на рік',
+      features: ['Надійні осередки Half-Cut зі стійкістю до затінення', 'Оптимальна вартість за 1 ват встановленої потужності', 'Повний захист від PID та сольового туману'],
+      recommendedFor: 'Оптимальні бюджетні та середні СЕС',
+      badge: 'Оптимальний вибір',
+      image: '/images/equipment/panel-astra-465.png',
+      status: 'Монокристал HC',
+      effValue: 21.3,
+      metrics: [
+        { label: 'Захист PID', value: '100%' },
+        { label: 'Гарантія', value: '25 років' }
+      ]
+    },
+    {
+      id: 'longi-630',
+      brand: 'LONGi Solar',
+      model: 'Hi-MO 7 630W Bifacial',
+      tech: 'N-Type HPDC / Двостороннє скло Glass-Glass',
+      power: '630 Вт',
+      efficiency: '23.3%',
+      dimensions: '2382 × 1134 × 30 мм',
+      weight: '33.5 кг',
+      warranty: '25 років на виріб / 30 років на генерацію',
+      degradation: '< 0.40% на рік',
+      features: ['Двостороннє знімання енергії Glass-Glass (+10–25% бонус)', 'Максимальна потужність 630 Вт', 'Низька деградація N-Type HPDC структури'],
+      recommendedFor: 'Наземні конструкції, плоскі дахи та комерційні СЕС до 1 МВт',
+      badge: 'Максимальна потужність',
+      image: '/images/equipment/panel-longi-630.png',
+      status: 'Двосторонній Hi-MO 7',
+      effValue: 23.3,
+      metrics: [
+        { label: 'Приріст генерації', value: '+15–25%' },
+        { label: 'Технологія', value: 'N-Type HPDC' }
       ]
     }
   ];
 
   // Battery Energy Storage Systems Data
+  // Battery Energy Storage Systems Data
   const batteriesData = [
     {
-      id: 'deye-bos',
-      brand: 'Deye',
-      series: 'LiFePO4 BOS-G / SE-G5.1',
+      id: 'felicity',
+      brand: 'Felicity Solar',
+      series: 'Серія LPBA48100-OL / Система живлення LiFePO4',
       chemistry: 'Літій-залізо-фосфат (LiFePO4)',
-      capacities: ['5.12 кВт·год', '10.24 кВт·год', '15.36 кВт·год', '20.48 – 61 кВт·год'],
-      voltageType: 'Низьковольтні (48V) & Високовольтні (HV 160-600V)',
+      capacities: ['5.12 кВт·год', '10.24 кВт·год', '15.36 кВт·год', 'до 40 кВт·год'],
+      voltageType: 'Низьковольтні (48V / 51.2V)',
       cycles: '6000+ циклів (DOD 80%)',
-      lifespan: '15+ років активної експлуатації',
-      bms: 'Інтелектуальна CAN/RS485 BMS з балансуванням осередків',
+      lifespan: '15+ років',
+      bms: 'Вбудована інтелектуальна BMS з LED/LCD дисплеєм',
       features: [
-        'Повна безшовна сумісність з інверторами Deye',
-        'Модульна шафа 19" з можливістю гарячого розширення',
-        'Вбудований АВР (введення резерву за 4 мілісекунди)',
-        'Безпечна хімія: не вибухає та не горить при пробої'
+        'Вбудований цифровий екран контролю заряду та напруги',
+        'Автоматичний вимикач DC breaker на корпусі',
+        'Ідеальна ціна/якість для домашніх систем резервування'
       ],
-      badge: 'Флагман Автономії',
-      visual: { style: 'rack', modules: 4 },
-      status: 'Rack 19 · Hot-Swap',
-      dod: 80,
+      badge: 'Популярний вибір',
+      image: '/images/equipment/battery-felicity.png',
+      status: 'Настінний монтаж 48В',
+      dod: 85,
       metrics: [
-        { label: 'Cycles', value: '6000+' },
-        { label: 'ATS', value: '4 мс' }
+        { label: 'Ресурс циклів', value: '6000+' },
+        { label: 'Робоча напруга', value: '51.2 В' }
       ]
     },
     {
-      id: 'ecoflow-powerkits',
-      brand: 'EcoFlow',
-      series: 'Power Kits & DELTA Pro Ultra',
-      chemistry: 'LiFePO4 Premium Grade',
-      capacities: ['3.6 кВт·год', '7.2 кВт·год', '15 кВт·год', 'до 45 кВт·год'],
-      voltageType: 'Plug & Play 48V / 102V Smart System',
-      cycles: '3500 – 6500+ циклів',
-      lifespan: '10-15 років',
-      bms: 'EcoFlow Multi-Protection BMS з додатком для смартфона',
+      id: 'deye-bat',
+      brand: 'Deye',
+      series: 'Серія LiFePO4 SE-G5.1 / Високовольтна BOS-G',
+      chemistry: 'Літій-залізо-фосфат (LiFePO4)',
+      capacities: ['5.12 кВт·год', '10.24 кВт·год', '15.36 кВт·год', 'до 61 кВт·год'],
+      voltageType: 'Низьковольтні 48В та високовольтні (до 800В)',
+      cycles: '6000+ циклів (DOD 90%)',
+      lifespan: '15+ років активної експлуатації',
+      bms: 'Фірмова CAN/RS485 BMS Deye з балансуванням осередків',
       features: [
-        'Компактні рішення Plug-and-Play без зайвої комутації',
-        'Швидка зарядка від мережі, сонця та генератора одночасно',
-        'Керування та віддалений моніторинг через мобільний додаток',
-        'Ідеально для швидкого монтажу в будинках та офісах'
+        'Повна 100% безшовна інтеграція з інверторами Deye',
+        'Модульне нарощування ємності без складних налаштувань',
+        'Підтримка високих струмів заряду/розряду 1C'
       ],
-      badge: 'Мобільність & Смарт',
-      visual: { style: 'portable' },
-      status: 'Plug & Play · App',
+      badge: 'Нативна сумісність',
+      image: '/images/equipment/battery-deye.png',
+      status: 'Фірмова BMS Deye',
       dod: 90,
       metrics: [
-        { label: 'Cycles', value: '3500–6500' },
-        { label: 'Bus', value: '48 / 102 В' }
+        { label: 'Ресурс циклів', value: '6000+' },
+        { label: 'Сумісність', value: 'Deye 100%' }
       ]
     },
     {
-      id: 'pylontech-us',
-      brand: 'Pylontech',
-      series: 'US5000 / Force L2',
-      chemistry: 'LiFePO4 (LFP)',
-      capacities: ['4.8 кВт·год', '9.6 кВт·год', '14.4 кВт·год', 'до 28.8 кВт·год'],
-      voltageType: 'Низьковольтні (48V)',
-      cycles: '6000+ циклів (DOD 95%)',
-      lifespan: '15 років',
-      bms: 'Повна автоматична захисна система BMS',
-      features: [
-        'Світовий стандарт надійності для гібридних СЕС',
-        'Глибина розряду DOD до 95% без втрати ресурсу',
-        "Сумісність з 99% інверторів на ринку"
-      ],
-      badge: 'Перевірена Класика',
-      visual: { style: 'rack', modules: 3 },
-      status: 'Low Voltage 48 В',
-      dod: 95,
-      metrics: [
-        { label: 'Cycles', value: '6000+' },
-        { label: 'Compat.', value: '99% інверторів' }
-      ]
-    },
-    {
-      id: 'dyness-tower',
-      brand: 'Dyness',
-      series: 'Tower & Powerbox Pro',
-      chemistry: 'LiFePO4 High Safety',
-      capacities: ['5.12 кВт·год', '10.24 кВт·год', '15.36 кВт·год', '20.48 кВт·год'],
-      voltageType: 'High Voltage / Low Voltage Stackable',
+      id: 'livoltek-bat',
+      brand: 'Livoltek',
+      series: 'Акумуляторна система зберігання енергії Livoltek',
+      chemistry: 'Осередки LiFePO4 вищого ґатунку Grade-A',
+      capacities: ['5.12 кВт·год', '10.24 кВт·год', '15.36 кВт·год', 'до 25.6 кВт·год'],
+      voltageType: 'Низьковольтні 51.2В / Високовольтна колона',
       cycles: '6000+ циклів',
       lifespan: '15 років',
-      bms: 'Smart BMS з IP65 вологозахистом',
+      bms: 'Розумна хмарна BMS з моніторингом через додаток',
       features: [
-        "Стековий вертикальний дизайн без кабельних з'єднань",
-        'Клас захисту IP65 (можна ставити у гаражі або на терасі)',
-        'Високий струм розряду для старту потужних насосів/компресорів'
+        'Елегантний стековий модульний корпус без зовнішніх кабелів',
+        'Ступінь захисту IP65 для розміщення у будь-яких приміщеннях',
+        'Робота в тандемі з інверторами Livoltek та Deye'
       ],
-      badge: 'Захист IP65',
-      visual: { style: 'tower', modules: 4 },
-      status: 'Stackable Tower',
+      badge: 'Преміум Дизайн',
+      image: '/images/equipment/battery-livoltek.jpg',
+      status: 'Стековий захист IP65',
       dod: 90,
       metrics: [
-        { label: 'Ingress', value: 'IP65' },
-        { label: 'Discharge', value: 'High current' }
+        { label: 'Клас захисту', value: 'IP65' },
+        { label: 'Конструкція', value: 'Стекова' }
+      ]
+    },
+    {
+      id: 'huawei-bat',
+      brand: 'Huawei',
+      series: 'Розумна система зберігання LUNA2000',
+      chemistry: 'LiFePO4 з оптимізатором на рівні кожного модуля',
+      capacities: ['5 кВт·год', '10 кВт·год', '15 кВт·год', 'до 30 кВт·год'],
+      voltageType: 'Високовольтна розумна лінійка (360-600В)',
+      cycles: '6500+ циклів',
+      lifespan: '15+ років',
+      bms: 'Багаторівневий інтелектуальний захист Huawei AI BMS',
+      features: [
+        '100% корисна ємність завдяки модульній оптимізації',
+        'Автономне відключення дефектного блоку без зупинки системи',
+        'Ультратонкий корпус преміального сегменту'
+      ],
+      badge: 'Технологічний ТОП',
+      image: '/images/equipment/battery-huawei.png',
+      status: 'Високовольтна система',
+      dod: 100,
+      metrics: [
+        { label: 'Ресурс циклів', value: '6500+' },
+        { label: 'Корисна ємність', value: '100% глибина' }
       ]
     }
   ];
 
-  // Deye Inverters Data
+  // Inverters Data (Deye, Solis, Livoltek, Huawei)
   const invertersData = [
     {
-      power: '5 – 8 кВт (1-фазні)',
-      model: 'Deye SUN-5/8K-SG04LP1-EU',
-      phases: '1 Фаза (220V)',
-      mppt: '2 MPPT трекери (до 10.4 кВт панелей)',
-      backupSpeed: '4 мс (АВР)',
-      features: ['Підключення бензо/дизель генератора з автозапуском', 'Асиметричний вихід на фази', 'Спеціальний порт Smart Load'],
-      idealFor: 'Приватні будинки 100-200 м²',
-      visual: { phases: 1, mppt: 2 },
-      status: 'Single Phase Hybrid',
+      id: 'deye-inv',
+      brand: 'Deye',
+      type: 'Гібридний інвертор',
+      model: 'Deye SUN-5/6/8/10/12/15K-SG Hybrid',
+      power: '5 – 15 кВт (1Ф та 3Ф)',
+      phases: '1Ф (230V) / 3Ф (400V)',
+      mppt: '2–3 MPPT трекери',
+      backupSpeed: '4 мс (миттєвий АВР)',
+      features: [
+        'Підтримка бензо/дизель генератора з автоматичним запуском',
+        '100% незбалансований вихід по фазах для 3-фазних моделей',
+        'Зручний кольоровий сенсорний LCD екран для налаштування'
+      ],
+      idealFor: 'Приватні котеджі та комерційні об’єкти з резервним живленням',
+      badge: 'Гібридний хіт',
+      image: '/images/equipment/inverter-deye.png',
+      status: 'Гібрид Deye',
       effValue: 97.6,
       metrics: [
-        { label: 'PV Input', value: 'до 10.4 кВт' },
-        { label: 'Smart Load', value: 'Yes' }
+        { label: 'Час перемикання', value: '4 мс' },
+        { label: 'Генератор', value: 'Автозапуск' }
       ]
     },
     {
-      power: '8 – 12 кВт (3-фазні)',
-      model: 'Deye SUN-8/10/12K-SG04LP3-EU',
-      phases: '3 Фази (380V)',
-      mppt: '2 MPPT трекери (до 15.6 кВт панелей)',
-      backupSpeed: '4 мс (АВР)',
-      features: ["100% незбалансований вихід по фазах (до 50% номіналу на 1 фазу)", 'Підмішування сонця без скидання у мережу', "Паралельне з'єднання до 16 інверторів"],
-      idealFor: 'Великі котеджі, малі готелі та СТО',
-      visual: { phases: 3, mppt: 2 },
-      status: 'Three Phase Hybrid',
-      effValue: 97.6,
+      id: 'solis-inv',
+      brand: 'Solis',
+      type: 'Мережевий інвертор',
+      model: 'Solis 3P 10–33K-5G Grid-Tied',
+      power: '10 – 33 кВт (3-фазні)',
+      phases: '3 Фази (380/400V)',
+      mppt: '2–4 незалежні MPPT',
+      backupSpeed: 'Мережева синхронізація',
+      features: [
+        'Лідер надійності серед мережевих станцій під Зелений Тариф та Net Billing',
+        'Широкий робочий діапазон напруги MPPT від 160V до 1000V',
+        'Вбудований AFCI захист від електричної дуги'
+      ],
+      idealFor: 'Мережеві СЕС під Зелений Тариф (Закарпаття) та підприємства',
+      badge: 'Мережевий лідер',
+      image: '/images/equipment/inverter-solis.png',
+      status: 'Мережевий Solis',
+      effValue: 98.7,
       metrics: [
-        { label: 'PV Input', value: 'до 15.6 кВт' },
-        { label: 'Parallel', value: 'до 16 шт' }
+        { label: 'Макс. ККД', value: '98.7%' },
+        { label: 'Захист від дуги', value: 'Вбудовано' }
       ]
     },
     {
-      power: '15 – 30 кВт (3-фазні)',
-      model: 'Deye SUN-15/20/30K-SG01HP3-EU',
-      phases: '3 Фази (Високовольтні HV)',
-      mppt: '3-4 MPPT трекери (до 40 кВт панелей)',
-      backupSpeed: '4 мс (АВР)',
-      features: ['Підтримка високовольтних батарей LiFePO4 (160-800V)', 'Максимальний ККД перетворення 97.6%', 'Промисловий пило-вологозахист IP65'],
-      idealFor: 'Комерційні підприємства, склади, цехи',
-      visual: { phases: 3, mppt: 4 },
-      status: 'High Voltage · IP65',
-      effValue: 97.6,
+      id: 'livoltek-inv',
+      brand: 'Livoltek',
+      type: 'Гібридний мережевий інвертор',
+      model: 'Livoltek Hyper-S Hybrid Grid',
+      power: '5 – 10 кВт (1Ф / 3Ф)',
+      phases: 'Гібридний мережевий режим',
+      mppt: '2 MPPT трекери',
+      backupSpeed: '10 мс АВР',
+      externalUrl: 'https://livoltekua.com.ua/',
+      features: [
+        'Повна інтеграція сонячної генерації, мережі та батарейного резерву',
+        'Сучасний смарт-додаток Livoltek для віддаленого моніторингу',
+        'Офіційна українська підтримка та дистрибуція'
+      ],
+      idealFor: 'Сучасні автономні та мережеві станції з можливістю генерації в мережу',
+      badge: 'Гібридний мережевий',
+      image: '/images/equipment/inverter-livoltek.png',
+      status: 'Livoltek Україна',
+      effValue: 98.2,
       metrics: [
-        { label: 'PV Input', value: 'до 40 кВт' },
-        { label: 'Battery', value: '160–800 В' }
+        { label: 'Мобільний додаток', value: 'iOS / Android' },
+        { label: 'Офіційний сайт', value: 'livoltekua.com.ua' }
       ]
     },
     {
-      power: '50 – 100 кВт (Комерційні СЕС)',
-      model: 'Deye SUN-50/100K-SG01HP3-EU-BM4',
-      phases: '3 Фази (Промислова мережа)',
-      mppt: '4-8 MPPT трекерів (до 150 кВт панелей)',
-      backupSpeed: '10 мс',
-      features: ['Гібридний режим під Зелений Тариф та власне споживання', 'Моніторинг кожної стринги в реальному часі', 'Вбудовані ПЗІП тип II по DC та AC'],
-      idealFor: 'Заводи, виробництва, агрокомплекси',
-      visual: { phases: 3, mppt: 6, commercial: true },
-      status: 'Commercial Grade',
-      effValue: 98.8,
+      id: 'huawei-inv',
+      brand: 'Huawei',
+      type: 'Мережевий інвертор',
+      model: 'Huawei SUN2000-10/15/20/30/50KTL',
+      power: '10 – 50 кВт (3-фазні)',
+      phases: '3 Фази (Промислова та побутова)',
+      mppt: 'До 4 MPPT з інтелектуальним моніторингом ланцюгів',
+      backupSpeed: 'Мережевий',
+      features: [
+        'Штучний інтелект AI AFCI для безпечного відключення дуги за 0.5 с',
+        'Природне охолодження без шумних вентиляторів',
+        'Найвища ефективність перетворення на ринку 98.6%'
+      ],
+      idealFor: 'Мережеві СЕС для приватних домогосподарств і великих виробництв',
+      badge: 'Еталон надійності',
+      image: '/images/equipment/inverter-huawei.png',
+      status: 'Мережевий Huawei',
+      effValue: 98.6,
       metrics: [
-        { label: 'PV Input', value: 'до 150 кВт' },
-        { label: 'SPD', value: 'Type II DC/AC' }
+        { label: 'Макс. ККД', value: '98.6%' },
+        { label: 'Охолодження', value: 'Безшумне' }
       ]
     }
   ];
@@ -286,52 +318,52 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
   // Mounting hardware & protection gear
   const mountingData = [
     {
-      id: 'rails',
-      icon: Layers,
-      iconClass: 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-400/40',
-      Illustration: MountingHardwareScene,
-      status: 'Wind Load 24 m/s',
-      tone: 'amber',
-      title: 'Алюмінієві Профілі & Кронштейни',
-      desc: 'Первинний алюмінієвий сплав АД31 Т5. Нержавіючі шпильки М10 з ЕПДМ-ущільнювачами AISI 304 для металочерепиці, черепиці, профнастилу та фальцу.',
-      specs: [
-        { label: 'Alloy', value: 'АД31 Т5' },
-        { label: 'Fasteners', value: 'AISI 304 · M10' },
-        { label: 'Roof Types', value: '4 типи покрівлі' }
-      ],
-      meter: { label: 'Corrosion Resistance', value: 96, tone: 'amber', unit: '%' }
-    },
-    {
-      id: 'cable',
+      id: 'german-cable',
       icon: Zap,
-      iconClass: 'bg-sky-500/20 text-sky-600 dark:text-sky-400 border-sky-400/40',
-      Illustration: SolarCableScene,
-      status: 'H1Z2Z2-K · IP68',
-      tone: 'sky',
-      title: 'Сонячний Кабель Solar 6 мм²',
-      desc: 'Спеціалізований кабель H1Z2Z2-K з лудженою міддю та подвійною ізоляцією. Стійкий до озону, УФ-випромінювання та перепадів температур від -40°C до +90°C.',
+      iconClass: 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-400/40',
+      status: 'Німецька якість · H1Z2Z2-K',
+      tone: 'amber',
+      image: '/images/equipment/cable-german.png',
+      title: 'Solar Кабель Німецької Якості (6 мм²)',
+      desc: 'Преміальний сонячний кабель стандарту Німеччини (KBE / Lapp Helukabel H1Z2Z2-K) з лудженою міддю та посиленою подвійною безгалогенною ізоляцією. 100% стійкість до УФ-випромінювання, озону, вологи та морозів від -40°C до +120°C.',
       specs: [
-        { label: 'Section', value: '6 мм² · 1.5 кВ' },
-        { label: 'Conductor', value: 'Луджена Cu' },
-        { label: 'Temp. Range', value: '−40…+90 °C' }
+        { label: 'Якість', value: 'Німецький стандарт' },
+        { label: 'Переріз', value: '6,0 мм²' },
+        { label: 'Провідник', value: 'Лужена мідь' }
       ],
-      meter: { label: 'UV / Ozone Rating', value: 98, tone: 'sky', unit: '%' }
+      meter: { label: 'Стійкість до УФ та погодних умов', value: 99.5, tone: 'amber', unit: '%' }
     },
     {
-      id: 'protection',
+      id: 'mounting-rails',
+      icon: Layers,
+      iconClass: 'bg-sky-500/20 text-sky-600 dark:text-sky-400 border-sky-400/40',
+      status: 'Анодований алюміній та сталь',
+      tone: 'sky',
+      image: '/images/equipment/mounting-system.jpg',
+      title: 'Системи Кріплень на Дах та Ґрунт',
+      desc: 'Надійні монтажні системи з анодованого алюмінію АД31 Т5 та гарячеоцинкованої сталі. Посилені покрівельні кронштейни з EPDM ущільнювачами для металочерепиці, бітумної черепиці, профнастилу, фальцю та наземних столів.',
+      specs: [
+        { label: 'Матеріал', value: 'Анодований Al / Inox' },
+        { label: 'Вітрове навант.', value: 'до 38 м/с' },
+        { label: 'Типи даху', value: 'Скатні, плоскі, ґрунт' }
+      ],
+      meter: { label: 'Механічна стійкість конструкції', value: 98, tone: 'sky', unit: '%' }
+    },
+    {
+      id: 'protection-boxes',
       icon: ShieldCheck,
       iconClass: 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-400/40',
-      Illustration: ProtectionBoxScene,
-      status: 'SPD Type II · IP65',
+      status: 'ПЗІП Клас II · IP65',
       tone: 'emerald',
+      image: '/images/equipment/protection-box.png',
       title: 'Щити Захисту DC / AC (ПЗІП)',
-      desc: 'Окремі герметичні щити IP65 з обмежувачами перенапруги (ПЗІП клас II), постійнострумовими запобіжниками 1000V DC та автоматами Schneider/ETI.',
+      desc: 'Герметичні щити IP65 з обмежувачами імпульсних перенапруг (ПЗІП клас II), постійнострумовими запобіжниками 1000V DC та автоматами Schneider/ETI для повної безпеки будинку.',
       specs: [
-        { label: 'Ingress', value: 'IP65' },
-        { label: 'DC Fuses', value: '1000 В DC' },
-        { label: 'Breakers', value: 'Schneider / ETI' }
+        { label: 'Захист', value: 'IP65 герметичний' },
+        { label: 'ПЗІП', value: 'Клас II (DC/AC)' },
+        { label: 'Автоматика', value: 'Schneider / ETI' }
       ],
-      meter: { label: 'Surge Clamping', value: 99, tone: 'emerald', unit: '%' }
+      meter: { label: 'Захист від перенапруг', value: 99, tone: 'emerald', unit: '%' }
     }
   ];
 
@@ -360,7 +392,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
             Каталог Комплектуючих <span className="text-amber-500">Nova Energy</span>
           </h1>
           <p className="text-sm sm:text-lg font-bold" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
-            Сертифіковані сонячні панелі, акумулятори, інвертори та монтажні системи від провідних світових брендів Tier-1 з гарантією до 25 років.
+            Сертифіковані сонячні панелі, акумулятори, інвертори та монтажні системи від провідних світових брендів з гарантією до 25 років.
           </p>
         </div>
 
@@ -382,7 +414,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
             }`}
           >
             <Sun className="w-4 h-4 text-amber-500 flex-shrink-0" />
-            <span>Сонячні Панелі Tier-1</span>
+            <span>Сонячні Панелі</span>
           </button>
 
           <button
@@ -416,7 +448,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
             }`}
           >
             <Cpu className="w-4 h-4 text-sky-600 dark:text-sky-400 flex-shrink-0" />
-            <span>Інвертори Deye</span>
+            <span>Інвертори (Deye, Solis, Livoltek, Huawei)</span>
           </button>
 
           <button
@@ -433,21 +465,21 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
             }`}
           >
             <Wrench className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0" />
-            <span>Кріплення & Захист</span>
+            <span>Кріплення & Німецький Solar Кабель</span>
           </button>
         </div>
 
-        {/* TAB 1: SOLAR PANELS (JINKO, RISEN, LONGI, JA SOLAR) */}
+        {/* TAB 1: SOLAR PANELS (LONGI, TRINA, ASTRA ENERGY) */}
         {activeTab === 'panels' && (
           <div className="space-y-8 animate-fadeIn">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <h2 className="text-2xl font-black flex items-center gap-2" style={{ color: isDark ? '#ffffff' : '#000000' }}>
                   <Sun className="w-6 h-6 text-amber-500" />
-                  Монокристалічні Сонячні Фотомодулі Tier-1
+                  Монокристалічні Сонячні Фотомодулі (Longi, Trina, Astra Energy)
                 </h2>
                 <p className="text-xs sm:text-sm mt-1 font-bold" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
-                  Офіційні прямі поставки з заводів. Технології N-Type TOPCon, Half-Cell та Glass-Glass.
+                  Офіційні прямі поставки з заводів: Longi 615W, Trina 455W, Astra Energy 465W та Longi 630W.
                 </p>
               </div>
             </div>
@@ -460,15 +492,19 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                   className="h-full p-6 sm:p-7"
                   contentClassName="space-y-5"
                 >
-                  {/* Module illustration — cell layout, finish and bifacial gain
-                      are driven by the product's own spec */}
-                  <div className="relative rounded-2xl overflow-hidden">
-                    <PanelModuleScene theme={theme} {...panel.visual} />
+                  {/* Real high-resolution product photograph */}
+                  <div className="relative rounded-2xl overflow-hidden h-64 sm:h-72 bg-gradient-to-b from-slate-900/40 to-slate-950/90 flex items-center justify-center p-4 group shadow-inner border border-slate-700/40">
+                    <img 
+                      src={panel.image} 
+                      alt={`${panel.brand} ${panel.model}`}
+                      className="max-h-full max-w-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
                     <div className="hidden sm:block absolute top-2.5 left-2.5">
                       <LiveBadge theme={theme} label={panel.status} tone="amber" />
                     </div>
-                    <div className={`hidden sm:block absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
-                      isDark ? 'text-slate-300' : 'text-slate-600'
+                    <div className={`hidden sm:block absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2.5 py-1 text-[10px] font-bold telemetry-label ${
+                      isDark ? 'text-slate-200' : 'text-slate-800'
                     }`}>
                       {panel.power}
                     </div>
@@ -544,7 +580,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
 
                   {/* Live readouts */}
                   <div className="pt-2 border-t border-slate-700/60 space-y-3">
-                    <EfficiencyMeter theme={theme} label="Module Efficiency" value={panel.effValue} live />
+                    <EfficiencyMeter theme={theme} label="ККД модуля" value={panel.effValue} live />
                     <div className="grid grid-cols-2 gap-2.5">
                       {panel.metrics.map((m) => (
                         <TelemetryChip key={m.label} theme={theme} label={m.label} value={m.value} />
@@ -577,14 +613,14 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
           </div>
         )}
 
-        {/* TAB 2: BATTERY STORAGE SYSTEMS (DEYE, ECOFLOW, PYLONTECH, DYNESS) */}
+        {/* TAB 2: BATTERY STORAGE SYSTEMS (FELICITY, DEYE, LIVOLTEK, HUAWEI) */}
         {activeTab === 'batteries' && (
           <div className="space-y-8 animate-fadeIn">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <h2 className="text-2xl font-black flex items-center gap-2" style={{ color: isDark ? '#ffffff' : '#000000' }}>
                   <BatteryCharging className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
-                  Системи Накопичення Енергії LiFePO4 (Літій-Залізо-Фосфат)
+                  Системи Накопичення Енергії LiFePO4 (Felicity, Deye, Livoltek, Huawei)
                 </h2>
                 <p className="text-xs sm:text-sm mt-1 font-bold" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
                   Безпечні акумулятори без ризику займання. Термін служби 6000+ циклів (15+ років).
@@ -600,16 +636,21 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                   className="h-full p-6 sm:p-7"
                   contentClassName="space-y-5"
                 >
-                  {/* Storage illustration — rack, tower or portable kit */}
-                  <div className="relative rounded-2xl overflow-hidden">
-                    <BatteryStackScene theme={theme} {...bat.visual} />
+                  {/* Real high-resolution product photograph */}
+                  <div className="relative rounded-2xl overflow-hidden h-64 sm:h-72 bg-gradient-to-b from-slate-900/40 to-slate-950/90 flex items-center justify-center p-4 group shadow-inner border border-slate-700/40">
+                    <img 
+                      src={bat.image} 
+                      alt={`${bat.brand} ${bat.series}`}
+                      className="max-h-full max-w-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
                     <div className="hidden sm:block absolute top-2.5 left-2.5">
-                      <LiveBadge theme={theme} label={bat.status} />
+                      <LiveBadge theme={theme} label={bat.status} tone="emerald" />
                     </div>
-                    <div className={`hidden sm:block absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
-                      isDark ? 'text-slate-300' : 'text-slate-600'
+                    <div className={`hidden sm:block absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2.5 py-1 text-[10px] font-bold telemetry-label ${
+                      isDark ? 'text-slate-200' : 'text-slate-800'
                     }`}>
-                      {bat.capacities[bat.capacities.length - 1]}
+                      {bat.capacities[0]}
                     </div>
                   </div>
 
@@ -684,7 +725,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
 
                   {/* Live readouts */}
                   <div className="pt-2 border-t border-slate-700/60 space-y-3">
-                    <EfficiencyMeter theme={theme} label="Usable DOD" value={bat.dod} tone="emerald" decimals={0} />
+                    <EfficiencyMeter theme={theme} label="Корисна ємність" value={bat.dod} tone="emerald" decimals={0} />
                     <div className="grid grid-cols-2 gap-2.5">
                       {bat.metrics.map((m) => (
                         <TelemetryChip key={m.label} theme={theme} label={m.label} value={m.value} />
@@ -717,50 +758,54 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
           </div>
         )}
 
-        {/* TAB 3: DEYE HYBRID INVERTERS */}
+        {/* TAB 3: HYBRID & GRID INVERTERS (DEYE, SOLIS, LIVOLTEK, HUAWEI) */}
         {activeTab === 'inverters' && (
           <div className="space-y-8 animate-fadeIn">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <h2 className="text-2xl font-black flex items-center gap-2" style={{ color: isDark ? '#ffffff' : '#000000' }}>
                   <Cpu className="w-6 h-6 text-sky-600 dark:text-sky-400" />
-                  Гібридні Інвертори Deye (Сертифіковано під Обленерго)
+                  Гібридні & Мережеві Інвертори (Deye, Solis, Livoltek, Huawei)
                 </h2>
                 <p className="text-xs sm:text-sm mt-1 font-bold" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
-                  Найкращі гібридні інвертори з підтримкою генератора, асиметричним виходом та АВР 4 мс.
+                  Надійне перетворення сонячної енергії: гібридні рішення Deye та Livoltek для автономії, мережеві станції Solis та Huawei для Зеленого тарифу й бізнесу.
                 </p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {invertersData.map((inv, idx) => (
+              {invertersData.map((inv) => (
                 <SolarPanelCard
-                  key={idx}
+                  key={inv.id}
                   theme={theme}
                   className="h-full p-6 sm:p-7"
                   contentClassName="space-y-5"
                 >
-                  {/* Inverter illustration — MPPT inputs and output phases
-                      are drawn from this model's own configuration */}
-                  <div className="relative rounded-2xl overflow-hidden">
-                    <InverterUnitScene theme={theme} {...inv.visual} />
+                  {/* Real high-resolution product photograph */}
+                  <div className="relative rounded-2xl overflow-hidden h-64 sm:h-72 bg-gradient-to-b from-slate-900/40 to-slate-950/90 flex items-center justify-center p-4 group shadow-inner border border-slate-700/40">
+                    <img 
+                      src={inv.image} 
+                      alt={`${inv.brand} ${inv.model}`}
+                      className="max-h-full max-w-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
                     <div className="hidden sm:block absolute top-2.5 left-2.5">
                       <LiveBadge theme={theme} label={inv.status} tone="sky" />
                     </div>
-                    <div className={`hidden sm:block absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2 py-1 text-[9px] font-bold telemetry-label ${
-                      isDark ? 'text-slate-300' : 'text-slate-600'
+                    <div className={`hidden sm:block absolute bottom-2.5 right-2.5 glass-deep rounded-lg px-2.5 py-1 text-[10px] font-bold telemetry-label ${
+                      isDark ? 'text-slate-200' : 'text-slate-800'
                     }`}>
-                      {inv.backupSpeed}
+                      {inv.type}
                     </div>
                   </div>
 
                   <div className="flex items-start justify-between gap-3 border-b border-slate-700/60 pb-4">
                     <div>
                       <span className="text-xs font-black uppercase tracking-wider text-sky-700 dark:text-sky-400">
-                        {inv.power}
+                        {inv.brand} · {inv.type}
                       </span>
                       <h3 className="text-lg font-black mt-0.5" style={{ color: isDark ? '#ffffff' : '#000000' }}>{inv.model}</h3>
-                      <p className="text-xs font-extrabold text-amber-600 dark:text-amber-400 mt-1">{inv.phases}</p>
+                      <p className="text-xs font-extrabold text-amber-600 dark:text-amber-400 mt-1">{inv.power} · {inv.phases}</p>
                     </div>
 
                     <span className={`px-3.5 py-1.5 rounded-full text-xs font-black border whitespace-nowrap ${
@@ -768,7 +813,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                         ? 'border-sky-400/50 bg-sky-500/20 text-sky-300' 
                         : 'border-sky-400 bg-sky-100 text-black'
                     }`}>
-                      {inv.backupSpeed}
+                      {inv.badge}
                     </span>
                   </div>
 
@@ -790,7 +835,7 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
 
                   <div className="space-y-2 pt-2 border-t border-slate-700/60">
                     <span className="text-xs font-black uppercase tracking-wider block mb-1" style={{ color: isDark ? '#94a3b8' : '#475569' }}>
-                      Функціональні можливості Deye:
+                      Особливості та переваги:
                     </span>
                     {inv.features.map((feat, fIdx) => (
                       <div key={fIdx} className="flex items-start gap-2 text-xs">
@@ -800,9 +845,24 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                     ))}
                   </div>
 
+                  {/* External site link for Livoltek */}
+                  {inv.externalUrl && (
+                    <div className="pt-2 border-t border-slate-700/60">
+                      <a
+                        href={inv.externalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-500 hover:text-sky-400 underline underline-offset-4"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>Офіційний сайт Livoltek Україна: {inv.externalUrl.replace('https://', '').replace('/', '')}</span>
+                      </a>
+                    </div>
+                  )}
+
                   {/* Live readouts */}
                   <div className="pt-2 border-t border-slate-700/60 space-y-3">
-                    <EfficiencyMeter theme={theme} label="Max Efficiency" value={inv.effValue} tone="sky" live />
+                    <EfficiencyMeter theme={theme} label="Максимальний ККД" value={inv.effValue} tone="sky" live />
                     <div className="grid grid-cols-2 gap-2.5">
                       {inv.metrics.map((m) => (
                         <TelemetryChip key={m.label} theme={theme} label={m.label} value={m.value} />
@@ -813,11 +873,11 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                   <div className="pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs">
                     <span className="font-black flex items-center gap-1" style={{ color: isDark ? '#e2e8f0' : '#475569' }}>
                       <ShieldCheck className="w-4 h-4 text-sky-600 dark:text-sky-400" />
-                      Офіційна гарантія 5 років
+                      Офіційна гарантія 5–10 років
                     </span>
                     <button
                       type="button"
-                      onClick={() => onOpenConsultation && onOpenConsultation(`Інвертор Deye ${inv.power}`)}
+                      onClick={() => onOpenConsultation && onOpenConsultation(`Інвертор ${inv.brand} ${inv.model}`)}
                       className="btn-orange-bright px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer"
                     >
                       <span>Обрати інвертор</span>
@@ -838,10 +898,10 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
               <div>
                 <h2 className="text-2xl font-black flex items-center gap-2" style={{ color: isDark ? '#ffffff' : '#000000' }}>
                   <Wrench className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                  Кріпильні Системи & Захисна Автоматика DC/AC
+                  Німецький Solar Кабель, Кріплення & Захисна Автоматика DC/AC
                 </h2>
                 <p className="text-xs sm:text-sm mt-1 font-bold" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
-                  Німецькі та українські сертифіковані металоконструкції, сонячні кабелі з подвійною ізоляцією та ПЗІП захист.
+                  Спеціалізований сонячний кабель німецької якості (KBE / Lapp Helukabel), алюмінієві системи під будь-який дах та ґрунт і щити захисту.
                 </p>
               </div>
             </div>
@@ -849,7 +909,6 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {mountingData.map((item) => {
                 const ItemIcon = item.icon;
-                const ItemScene = item.Illustration;
                 return (
                   <SolarPanelCard
                     key={item.id}
@@ -857,12 +916,26 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
                     className="h-full p-6"
                     contentClassName="flex flex-col space-y-4"
                   >
-                    <div className="relative rounded-2xl overflow-hidden">
-                      <ItemScene theme={theme} />
-                      <div className="absolute top-2.5 left-2.5">
-                        <LiveBadge theme={theme} label={item.status} tone={item.tone} />
+                    {item.image ? (
+                      <div className="relative rounded-2xl overflow-hidden h-64 bg-gradient-to-b from-slate-900/40 to-slate-950/90 flex items-center justify-center p-4 group shadow-inner border border-slate-700/40">
+                        <img 
+                          src={item.image} 
+                          alt={item.title}
+                          className="max-h-full max-w-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                        <div className="absolute top-2.5 left-2.5">
+                          <LiveBadge theme={theme} label={item.status} tone={item.tone} />
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="relative rounded-2xl overflow-hidden h-64 bg-slate-950 flex items-center justify-center">
+                        <ProtectionBoxScene theme={theme} />
+                        <div className="absolute top-2.5 left-2.5">
+                          <LiveBadge theme={theme} label={item.status} tone={item.tone} />
+                        </div>
+                      </div>
+                    )}
 
                     <div className={`w-10 h-10 rounded-2xl ${item.iconClass} flex items-center justify-center border`}>
                       <ItemIcon className="w-5 h-5" />
@@ -911,9 +984,9 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
         <SolarPanelCard theme={theme} glow className="p-8 sm:p-10 shadow-xl" contentClassName="text-center space-y-4">
           <RegistrationMarks />
           <div className="flex flex-wrap items-center justify-center gap-2.5">
-            <LiveBadge theme={theme} label="Tier-1 Supply Chain" />
-            <LiveBadge theme={theme} label="Warranty up to 30y" tone="amber" />
-            <LiveBadge theme={theme} label="In Stock · Закарпаття" tone="sky" />
+            <LiveBadge theme={theme} label="Офіційні прямі поставки" />
+            <LiveBadge theme={theme} label="Гарантія до 30 років" tone="amber" />
+            <LiveBadge theme={theme} label="В наявності на складі" tone="sky" />
           </div>
           <h3 className="text-xl sm:text-2xl font-black" style={{ color: isDark ? '#ffffff' : '#000000' }}>Потрібна допомога з підбором комплектуючих?</h3>
           <p className="text-xs sm:text-sm font-bold max-w-xl mx-auto" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>
