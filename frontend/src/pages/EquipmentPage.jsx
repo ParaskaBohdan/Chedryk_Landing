@@ -3,6 +3,7 @@ import { Sun, BatteryCharging, Cpu, Layers, ShieldCheck, CheckCircle2, Zap, Wren
 import SolarPanelCard from '../components/SolarPanelCard';
 import { LiveBadge, EfficiencyMeter, TelemetryChip } from '../components/SolarTech';
 import { BusbarDivider, RegistrationMarks } from '../components/SolarDetails';
+import useSeo from '../hooks/useSeo';
 import {
   PanelModuleScene,
   BatteryStackScene,
@@ -16,9 +17,15 @@ export default function EquipmentPage({ theme, onOpenConsultation }) {
   const isDark = theme === 'dark';
   const [activeTab, setActiveTab] = useState('panels'); // 'panels' | 'batteries' | 'inverters' | 'mounting'
 
+  useSeo({
+    title: 'Каталог Обладнання для СЕС — Панелі, Інвертори, АКБ | Nova Energy',
+    description: 'Сонячні панелі LONGi, Trina Solar, Astra Energy, інвертори Deye, Solis, Huawei та акумулятори LiFePO4 для мережевих і гібридних станцій. Пряма поставка сертифікованого обладнання по Закарпаттю та Прикарпаттю.',
+    path: '/equipment',
+    breadcrumb: [{ name: 'Головна', path: '/' }, { name: 'Обладнання', path: '/equipment' }]
+  });
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    document.title = 'Каталог Комплектуючих — Nova Energy';
   }, []);
 
   // Solar Panels Data

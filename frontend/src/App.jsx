@@ -9,6 +9,7 @@ import EngineerShowcase from './components/EngineerShowcase';
 import DeyeAndLegal from './components/DeyeAndLegal';
 import StepProcess from './components/StepProcess';
 import Testimonials from './components/Testimonials';
+import FaqSection from './components/FaqSection';
 import ConsultationForm from './components/ConsultationForm';
 import ConfigurationForm from './components/ConfigurationForm';
 import ContactsPage from './pages/ContactsPage';
@@ -22,7 +23,17 @@ import NotFoundPage from './pages/NotFoundPage';
 import Footer from './components/Footer';
 import ScrollToTopButton from './components/ScrollToTopButton';
 import CallWidget from './components/CallWidget';
+import useSeo from './hooks/useSeo';
 import { X } from 'lucide-react';
+
+function HomeSeo() {
+  useSeo({
+    title: 'Nova Energy — Сонячні Станції & Електромонтаж Закарпаття та Прикарпаття',
+    description: 'Побудова сонячних електростанцій 5 кВт – 1 МВт, гібридні системи Deye, Зелений тариф, дозволи Обленерго та електромонтаж по Закарпатській та Івано-Франківській областях. Nova Energy.',
+    path: '/'
+  });
+  return null;
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -125,7 +136,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={
             <>
-              <Hero 
+              <HomeSeo />
+              <Hero
                 theme={theme} 
               />
               <MiniRoiCalculator 
@@ -145,11 +157,13 @@ export default function App() {
                 theme={theme} 
               />
               <Testimonials theme={theme} />
-              <StepProcess 
-                onOpenConsultation={() => handleOpenConsultation()} 
-                theme={theme} 
+              <StepProcess
+                onOpenConsultation={() => handleOpenConsultation()}
+                theme={theme}
               />
-              
+
+              <FaqSection theme={theme} />
+
               {/* Consultation Section on Home Page */}
               <section id="consultation" className={`py-16 sm:py-20 border-t scroll-mt-20 ${
                 isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-amber-100'

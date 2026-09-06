@@ -4,13 +4,20 @@ import { CheckCircle2, Phone, Video, Home, Calculator, ShieldCheck, Activity } f
 import SolarPanelCard from '../components/SolarPanelCard';
 import { TelemetryChip } from '../components/SolarTech';
 import { RegistrationMarks } from '../components/SolarDetails';
+import useSeo from '../hooks/useSeo';
 
 export default function ThankYouPage({ theme }) {
   const isDark = theme === 'dark';
 
+  useSeo({
+    title: 'Дякуємо за заявку — Nova Energy',
+    description: 'Вашу заявку прийнято. Інженер Nova Energy зв\'яжеться з вами найближчим часом для консультації щодо сонячної станції.',
+    path: '/thank-you',
+    noindex: true
+  });
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    document.title = 'Дякуємо за заявку — Nova Energy';
 
     // Trigger Meta Pixel Lead Conversion Event safely
     if (window.fbq) {

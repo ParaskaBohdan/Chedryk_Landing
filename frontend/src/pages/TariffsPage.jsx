@@ -12,9 +12,17 @@ import {
   SettlementScene,
   PermitPipelineScene
 } from '../components/TariffIllustrations';
+import useSeo from '../hooks/useSeo';
 
 export default function TariffsPage({ theme, onOpenConsultation }) {
   const isDark = theme === 'dark';
+
+  useSeo({
+    title: 'Зелений Тариф в Україні 2026 — Оформлення та Виплати | Nova Energy',
+    description: 'Як отримати Зелений тариф на сонячну станцію: технічні умови, двонаправлений лічильник, договір з Обленерго та строки виплат. Повний супровід оформлення документів у Закарпатській та Івано-Франківській областях.',
+    path: '/tariffs',
+    breadcrumb: [{ name: 'Головна', path: '/' }, { name: 'Зелений тариф', path: '/tariffs' }]
+  });
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });

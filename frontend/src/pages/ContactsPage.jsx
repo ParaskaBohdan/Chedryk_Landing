@@ -4,9 +4,16 @@ import ConsultationForm from '../components/ConsultationForm';
 import SolarPanelCard from '../components/SolarPanelCard';
 import { LiveBadge, TelemetryChip } from '../components/SolarTech';
 import { SectionAmbience, BusbarDivider, RegistrationMarks } from '../components/SolarDetails';
+import useSeo from '../hooks/useSeo';
 
 export default function ContactsPage({ theme }) {
   const isDark = theme === 'dark';
+
+  useSeo({
+    title: 'Контакти Nova Energy — Замовити СЕС у Закарпатській та Івано-Франківській Областях',
+    description: 'Телефон, TikTok та месенджери Nova Energy. Виїзд інженера по Закарпатській, Івано-Франківській та Львівській областях у радіусі до 200 км: Ужгород, Мукачево, Хуст, Берегове, Івано-Франківськ.',
+    path: '/contacts'
+  });
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });

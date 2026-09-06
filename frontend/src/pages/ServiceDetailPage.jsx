@@ -14,6 +14,7 @@ import { LiveBadge } from '../components/SolarTech';
 import { CountUp, SolarSlider, StepRail } from '../components/SolarControls';
 import { SectionAmbience, BusbarDivider, RegistrationMarks } from '../components/SolarDetails';
 import CalculatorPage from './CalculatorPage';
+import useSeo from '../hooks/useSeo';
 
 const iconMap = {
   Sun: Sun,
@@ -721,12 +722,21 @@ export default function ServiceDetailPage({ theme, onOpenConsultation, onOpenCon
 
   const service = getServiceById(serviceId);
 
+  useSeo({
+    title: service ? `${service.title} — Nova Energy` : 'Послугу не знайдено — Nova Energy',
+    description: service ? service.shortDescription : 'Запитану послугу не знайдено на сайті Nova Energy.',
+    path: `/services/${serviceId}`,
+    noindex: !service,
+    breadcrumb: service ? [
+      { name: 'Головна', path: '/' },
+      { name: 'Послуги', path: '/services' },
+      { name: service.title, path: `/services/${serviceId}` }
+    ] : undefined
+  });
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    if (service) {
-      document.title = `${service.title} — Nova Energy`;
-    }
-  }, [serviceId, service]);
+  }, [serviceId]);
 
   if (!service) {
     return (

@@ -24,6 +24,7 @@ import SystemFlowDiagram from '../components/SystemFlowDiagram';
 import { LiveBadge, TelemetryChip } from '../components/SolarTech';
 import { CountUp, SolarSlider } from '../components/SolarControls';
 import { SectionAmbience, RegistrationMarks } from '../components/SolarDetails';
+import useSeo from '../hooks/useSeo';
 
 export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfiguration, isEmbed = false, isGroundOnly = false, isRoofOnly = false }) {
   const isDark = theme === 'dark';
@@ -58,10 +59,16 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
   const [monthlyConsumptionKwh, setMonthlyConsumptionKwh] = useState(250);
   const [gridPriceUah, setGridPriceUah] = useState(6.3); // сталий тариф 6.30 грн за кВт·год
 
+  useSeo({
+    title: 'Калькулятор Вартості Сонячної Станції — Nova Energy',
+    description: 'Розрахуйте орієнтовну вартість СЕС, необхідну кількість панелей та термін окупності за Зеленим тарифом онлайн. Гібридні та мережеві станції для Закарпаття та Прикарпаття.',
+    path: '/calculator',
+    skip: isEmbed
+  });
+
   useEffect(() => {
     if (!isEmbed) {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      document.title = 'Калькулятор СЕС — Nova Energy';
     }
   }, [isEmbed]);
 

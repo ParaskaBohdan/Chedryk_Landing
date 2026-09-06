@@ -4,6 +4,7 @@ import { Home, Calculator, Cpu, Zap, Phone, ArrowRight } from 'lucide-react';
 import SolarPanelCard from '../components/SolarPanelCard';
 import { LiveBadge, TelemetryChip } from '../components/SolarTech';
 import { SectionAmbience, RegistrationMarks, BusbarDivider } from '../components/SolarDetails';
+import useSeo from '../hooks/useSeo';
 
 /* A broken conductor: the string runs from the array and stops dead before the
    inverter, with the break marked. Reuses the site's flow-diagram language so
@@ -87,6 +88,13 @@ function BrokenLineScene({ theme }) {
 export default function NotFoundPage({ theme }) {
   const isDark = theme === 'dark';
   const { pathname } = useLocation();
+
+  useSeo({
+    title: 'Сторінку не знайдено — Nova Energy',
+    description: 'Запитана сторінка не існує. Перейдіть на головну Nova Energy або скористайтесь калькулятором сонячної станції.',
+    path: pathname,
+    noindex: true
+  });
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });

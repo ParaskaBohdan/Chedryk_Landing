@@ -5,6 +5,7 @@ import { Sun, BatteryCharging, FileCheck, Home, Zap, ArrowRight, CheckCircle2, W
 import SolarPanelCard from '../components/SolarPanelCard';
 import { TelemetryChip } from '../components/SolarTech';
 import { SectionAmbience, BusbarDivider, RegistrationMarks } from '../components/SolarDetails';
+import useSeo from '../hooks/useSeo';
 
 const iconMap = {
   Sun: Sun,
@@ -16,6 +17,13 @@ const iconMap = {
 
 export default function ServicesPage({ theme, onOpenConsultation }) {
   const isDark = theme === 'dark';
+
+  useSeo({
+    title: 'Послуги — Будівництво СЕС, Акумуляторні Системи, Монтаж на Дах | Nova Energy',
+    description: 'Повний спектр послуг Nova Energy: будівництво сонячних електростанцій 5 кВт – 1 МВт, гібридні системи, акумуляторні резерви LiFePO4 та монтаж панелей на будь-який тип даху в Закарпатській та Івано-Франківській областях.',
+    path: '/services',
+    breadcrumb: [{ name: 'Головна', path: '/' }, { name: 'Послуги', path: '/services' }]
+  });
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
