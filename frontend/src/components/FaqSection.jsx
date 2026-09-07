@@ -104,7 +104,7 @@ export default function FaqSection({ theme }) {
     <section
       id="faq"
       className={`py-16 sm:py-20 relative overflow-hidden transition-colors duration-300 border-t scroll-mt-20 ${
-        isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-white text-slate-900 border-slate-200'
+        isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-slate-100/60 text-slate-900 border-slate-300/70'
       }`}
     >
       <FaqJsonLd />

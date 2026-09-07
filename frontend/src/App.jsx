@@ -56,13 +56,7 @@ export default function App() {
 
   const [theme, setTheme] = useState(getSystemTheme);
 
-  const [lightVariant, setLightVariant] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('nova_light_variant') || '2';
-      return saved.charAt(0) || '2';
-    }
-    return '2';
-  });
+  const [lightVariant, setLightVariant] = useState('2');
 
   const handleSetLightVariant = (variant) => {
     const cleanVariant = variant.charAt(0);
@@ -165,8 +159,8 @@ export default function App() {
               <FaqSection theme={theme} />
 
               {/* Consultation Section on Home Page */}
-              <section id="consultation" className={`py-16 sm:py-20 border-t scroll-mt-20 ${
-                isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-amber-100'
+              <section id="consultation" className={`py-16 sm:py-20 relative transition-colors duration-300 border-t scroll-mt-20 ${
+                isDark ? 'bg-slate-900 text-white border-slate-800' : 'bg-slate-100/60 text-slate-900 border-slate-300/70'
               }`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                   <ConsultationForm selectedServicePrefill={prefilledService} theme={theme} />

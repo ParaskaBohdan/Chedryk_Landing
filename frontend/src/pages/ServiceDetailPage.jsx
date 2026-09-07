@@ -28,13 +28,13 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
   // States for Simple Calculator (serviceId !== 'roof-installation')
   const [monthlyConsumption, setMonthlyConsumption] = useState(450); // kWh/month
   const [coveragePercent, setCoveragePercent] = useState(100); // %
-  const [selectedPanel, setSelectedPanel] = useState({ brand: 'Jinko Solar', watt: 585 });
+  const [selectedPanel, setSelectedPanel] = useState({ brand: 'LONGi Solar', watt: 615, desc: 'Hi-MO X6 Флагман' });
 
   const panelOptions = [
-    { brand: 'Jinko Solar', watt: 585 },
-    { brand: 'JA Solar', watt: 590 },
-    { brand: 'Longi Solar', watt: 600 },
-    { brand: 'Trina Solar', watt: 615 }
+    { brand: 'LONGi Solar', watt: 615, desc: 'Hi-MO X6 Флагман' },
+    { brand: 'Trina Solar', watt: 455, desc: 'Vertex S для дахів' },
+    { brand: 'Astra Energy', watt: 465, desc: 'Half-Cut Оптимум' },
+    { brand: 'LONGi Solar', watt: 630, desc: 'Hi-MO 7 Двосторонній' }
   ];
 
   // States for Wizard Calculator (serviceId === 'roof-installation')
@@ -48,10 +48,10 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
   const [step, setStep] = useState(1);
 
   const panelsData = {
-    longi615: { name: 'LONGi Hi-MO X6', watt: 615, costPerPanel: 145 },
-    trina455: { name: 'Trina Vertex S', watt: 455, costPerPanel: 105 },
-    astra465: { name: 'Astra Energy', watt: 465, costPerPanel: 95 },
-    longi630: { name: 'LONGi Hi-MO 7', watt: 630, costPerPanel: 155 }
+    longi615: { name: 'LONGi Solar', watt: 615, desc: 'Hi-MO X6 Флагман', costPerPanel: 145 },
+    trina455: { name: 'Trina Solar', watt: 455, desc: 'Vertex S для дахів', costPerPanel: 105 },
+    astra465: { name: 'Astra Energy', watt: 465, desc: 'Half-Cut Оптимум', costPerPanel: 95 },
+    longi630: { name: 'LONGi Solar', watt: 630, desc: 'Hi-MO 7 Двосторонній', costPerPanel: 155 }
   };
 
   const selectedWizardPanel = panelsData[panelBrand] || panelsData.jinko;
@@ -313,10 +313,10 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {[
-                      { id: 'longi615', name: 'LONGi Solar', watt: '615W', desc: 'Hi-MO X6 HPBC' },
-                      { id: 'trina455', name: 'Trina Solar', watt: '455W', desc: 'Vertex S Напівосередок' },
-                      { id: 'astra465', name: 'Astra Energy', watt: '465W', desc: 'Astra 465W Моно' },
-                      { id: 'longi630', name: 'LONGi Bifacial', watt: '630W', desc: 'Hi-MO 7 Двосторонній' }
+                      { id: 'longi615', name: 'LONGi Solar', watt: '615W', desc: 'Hi-MO X6 Флагман' },
+                      { id: 'trina455', name: 'Trina Solar', watt: '455W', desc: 'Vertex S для дахів' },
+                      { id: 'astra465', name: 'Astra Energy', watt: '465W', desc: 'Half-Cut Оптимум' },
+                      { id: 'longi630', name: 'LONGi Solar', watt: '630W', desc: 'Hi-MO 7 Двосторонній' }
                     ].map((b) => (
                       <button
                         key={b.id}
@@ -674,10 +674,10 @@ function SolarSliderCalculator({ isDark, onOpenConsultation, onOpenConfiguration
                   key={idx}
                   type="button"
                   onClick={() => setSelectedPanel(p)}
-                  className={`py-2.5 px-3 rounded-xl border text-center transition-all cursor-pointer ${
+                  className={`py-2.5 px-2.5 rounded-xl border text-center transition-all cursor-pointer ${
                     selectedPanel.brand === p.brand && selectedPanel.watt === p.watt
                       ? 'border-amber-500 bg-amber-500/20 text-amber-500 font-extrabold shadow-sm'
-                      : isDark ? 'border-slate-800 bg-slate-900 text-slate-300' : 'border-slate-300 bg-slate-100 text-slate-700'
+                      : isDark ? 'border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-700' : 'border-slate-300 bg-slate-100 text-slate-700 hover:border-slate-400'
                   }`}
                 >
                   <p className="text-xs font-bold truncate">{p.brand}</p>

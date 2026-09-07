@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { Phone, Menu, X, ShieldCheck, Video, Wrench, BarChart2, Zap, Calculator, Palette, Check, ChevronDown } from 'lucide-react';
+import { Phone, Menu, X, ShieldCheck, Video, Wrench, BarChart2, Zap, Calculator } from 'lucide-react';
 
 function TikTokIcon(props) {
   return (
@@ -12,22 +12,9 @@ function TikTokIcon(props) {
 
 export default function Header({ onOpenConsultation, theme, lightVariant = '2', onSetLightVariant }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [variantMenuOpen, setVariantMenuOpen] = useState(false);
-  const variantDropdownRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
   const isHomePage = location.pathname === '/';
-
-  // Close dropdown on outside click
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (variantDropdownRef.current && !variantDropdownRef.current.contains(event.target)) {
-        setVariantMenuOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   const scrollToSection = (sectionId) => {
     const elem = document.getElementById(sectionId);
@@ -194,59 +181,6 @@ export default function Header({ onOpenConsultation, theme, lightVariant = '2', 
 
         {/* Right Action Bar */}
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-          
-          {/* Temporary Light Theme Variant Selector Dropdown */}
-          {!isDark && (
-            <div className="relative" ref={variantDropdownRef}>
-              <button
-                type="button"
-                onClick={() => setVariantMenuOpen(!variantMenuOpen)}
-                className="flex items-center gap-1.5 px-2.5 sm:px-3 h-[38px] rounded-xl text-xs font-black border border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#ffffff)] text-slate-900 hover:bg-[var(--bg-card-hover,#f1f5f9)] shadow-xs cursor-pointer transition-all duration-200"
-                title="Виберіть колірний варіант світлої теми (від світлішого до сірішого)"
-              >
-                <Palette className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" />
-                <span className="whitespace-nowrap">Версія {lightVariant}</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${variantMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              {variantMenuOpen && (
-                <div className="absolute right-0 top-full mt-2 w-52 rounded-2xl border border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#ffffff)] shadow-2xl p-1.5 z-50 animate-fadeIn">
-                  <div className="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-200/60">
-                    Ступінь сірості:
-                  </div>
-                  {[
-                    { id: '1', label: 'Версія 1', desc: 'Світла (Slate-50)' },
-                    { id: '2', label: 'Версія 2', desc: 'Титаново-сіра (Slate-200)' },
-                    { id: '3', label: 'Версія 3', desc: 'Сіріша (Slate-300)' },
-                    { id: '4', label: 'Версія 4', desc: 'Макс. сіра (Slate-400)' },
-                  ].map((v) => (
-                    <button
-                      key={v.id}
-                      type="button"
-                      onClick={() => {
-                        if (onSetLightVariant) onSetLightVariant(v.id);
-                        setVariantMenuOpen(false);
-                      }}
-                      className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between transition-all cursor-pointer ${
-                        lightVariant === v.id
-                          ? 'bg-amber-500/15 text-amber-950 font-extrabold border border-amber-400 shadow-xs'
-                          : 'text-slate-800 hover:bg-slate-200/50 font-semibold'
-                      }`}
-                    >
-                      <div>
-                        <p className="font-extrabold leading-tight">{v.label}</p>
-                        <p className="text-[10px] text-slate-500">{v.desc}</p>
-                      </div>
-                      {lightVariant === v.id && (
-                        <Check className="w-4 h-4 text-amber-600 flex-shrink-0" />
-                      )}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-
           <a
             href="tel:+380675300103"
             title="Зателефонувати в Nova Energy"
@@ -283,38 +217,6 @@ export default function Header({ onOpenConsultation, theme, lightVariant = '2', 
         <div className={`lg:hidden border-t px-4 py-5 space-y-3 transition-colors ${
           isDark ? 'bg-slate-950/98 border-slate-800 text-slate-100' : 'bg-[var(--bg-app,#e2e8f0)] border-[var(--border-card-shell,#cbd5e1)] text-slate-900 shadow-2xl'
         }`}>
-          {!isDark && (
-            <div className="p-3 rounded-2xl border border-[var(--border-card-shell,#cbd5e1)] bg-[var(--bg-card-shell,#ffffff)]/95 space-y-2 shadow-xs">
-              <div className="flex items-center justify-between text-xs font-bold text-slate-700">
-                <span className="flex items-center gap-1.5">
-                  <Palette className="w-3.5 h-3.5 text-amber-500" />
-                  <span>Колірна версія теми:</span>
-                </span>
-                <span className="text-amber-600 font-extrabold">Версія {lightVariant}</span>
-              </div>
-              <div className="grid grid-cols-2 gap-1.5">
-                {[
-                  { id: '1', label: 'Версія 1 (Світла)' },
-                  { id: '2', label: 'Версія 2 (Стандарт)' },
-                  { id: '3', label: 'Версія 3 (Сіріша)' },
-                  { id: '4', label: 'Версія 4 (Макс. сіра)' },
-                ].map((v) => (
-                  <button
-                    key={v.id}
-                    type="button"
-                    onClick={() => onSetLightVariant && onSetLightVariant(v.id)}
-                    className={`py-2 px-2 rounded-xl text-[11px] font-bold border text-center transition-colors cursor-pointer ${
-                      lightVariant === v.id
-                        ? 'bg-amber-500/15 border-amber-400 text-amber-950 font-extrabold shadow-xs'
-                        : 'bg-[var(--bg-subcard,#e2e8f0)] border-[var(--border-subcard,#cbd5e1)] text-slate-800 font-semibold'
-                    }`}
-                  >
-                    {v.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
           <NavLink
             to="/services"
             onClick={() => setMobileMenuOpen(false)}

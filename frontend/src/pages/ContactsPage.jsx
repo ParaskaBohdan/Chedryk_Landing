@@ -136,13 +136,32 @@ export default function ContactsPage({ theme }) {
                     <p className="text-xs font-medium opacity-70">
                       Месенджери (Telegram / WhatsApp / Viber)
                     </p>
-                    <div className="flex gap-3 mt-1">
-                      <a href="https://t.me/" target="_blank" rel="noreferrer" className="text-sm font-bold text-sky-500 hover:underline">
+                    <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mt-1">
+                      <a 
+                        href="https://t.me/+380675300103" 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="text-sm font-bold text-sky-500 hover:underline"
+                      >
                         Telegram
                       </a>
                       <span className="opacity-40">•</span>
-                      <a href="https://wa.me/" target="_blank" rel="noreferrer" className="text-sm font-bold text-emerald-500 hover:underline">
+                      <a 
+                        href="https://wa.me/380675300103" 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="text-sm font-bold text-emerald-500 hover:underline"
+                      >
                         WhatsApp
+                      </a>
+                      <span className="opacity-40">•</span>
+                      <a 
+                        href="viber://chat?number=%2B380675300103" 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="text-sm font-bold text-purple-500 hover:underline"
+                      >
+                        Viber
                       </a>
                     </div>
                   </div>

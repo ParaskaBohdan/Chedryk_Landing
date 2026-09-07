@@ -57,7 +57,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
   // Configurator 2 State - "Прогноз доходу та окупності"
   const [incomePowerKw, setIncomePowerKw] = useState(15);
   const [monthlyConsumptionKwh, setMonthlyConsumptionKwh] = useState(250);
-  const [gridPriceUah, setGridPriceUah] = useState(6.3); // сталий тариф 6.30 грн за кВт·год
+  const gridPriceUah = 6.3; // сталий тариф 6.30 грн за кВт·год
 
   useSeo({
     title: 'Калькулятор Вартості Сонячної Станції — Nova Energy',
@@ -715,46 +715,25 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                   />
                 </div>
 
-                {/* 3. Grid Electricity Price UAH/kWh */}
-                <div className={`pt-4 border-t ${isDark ? 'border-slate-700/60' : 'border-slate-200'}`}>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
-                    Яка у вас ціна за кВт зараз, грн?
-                  </label>
-                  <SolarSlider
-                    id="grid-price-uah"
-                    theme={theme}
-                    label="Тариф за електроенергію з мережі"
-                    display={`${gridPriceUah.toString().replace('.', ',')} грн`}
-                    min={2.0}
-                    max={15.0}
-                    step={0.1}
-                    value={gridPriceUah}
-                    onChange={setGridPriceUah}
-                    hint="Вартість 1 кВт·год споживання для розрахунку окупності."
-                  />
-                </div>
-
-
-
                 {/* Info Card: Tariffs Used */}
                 <div className={`p-4 rounded-2xl border text-xs space-y-2.5 ${
                   isDark ? 'bg-slate-800/60 border-slate-700 text-slate-300' : 'bg-transparent border-[var(--border-card-shell,#cbd5e1)] text-slate-800'
                 }`}>
                   <div className={`flex items-center justify-between font-bold border-b pb-2 ${isDark ? 'border-slate-700/40' : 'border-[var(--border-subcard,#cbd5e1)]'}`}>
-                    <span className="flex items-center gap-1.5 text-amber-500">
+                    <span className="flex items-center gap-1.5 text-amber-500 font-bold">
                       <Sparkles className="w-4 h-4" /> Діючі тарифні ставки (2025–2026)
                     </span>
                     <LiveBadge theme={theme} label="UA Rates" tone="amber" />
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <div>
-                      <p className="opacity-75">Зелений тариф (чистий):</p>
+                      <p className="opacity-75 font-medium">Зелений тариф (чистий):</p>
                       <p className="font-extrabold text-amber-500">0.163 €/кВт·год (~$0.18)</p>
                       <p className="text-[10px] opacity-65">з урахуванням податків 19.5%</p>
                     </div>
                     <div>
-                      <p className="opacity-75">Ваш поточний тариф:</p>
-                      <p className="font-extrabold text-emerald-500">{gridPriceUah.toString().replace('.', ',')} грн/кВт·год (~${gridTariffRateUsd.toFixed(3)})</p>
+                      <p className="opacity-75 font-medium">Тариф з мережі (сталий):</p>
+                      <p className="font-extrabold text-emerald-500">6,30 грн/кВт·год (~${gridTariffRateUsd.toFixed(3)})</p>
                       <p className="text-[10px] opacity-65">використовується для економії</p>
                     </div>
                   </div>
