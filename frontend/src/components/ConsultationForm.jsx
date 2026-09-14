@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Send, CheckCircle2, AlertCircle, Loader2, Phone, User, MessageSquare, Wrench, Calendar, Clock } from 'lucide-react';
 import CustomSelect from './CustomSelect';
+import { trackLead } from '../utils/analytics';
 
 export default function ConsultationForm({ selectedServicePrefill, onCloseModal, theme }) {
   const isDark = theme === 'dark';
@@ -194,9 +195,11 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
       const result = await response.json();
 
       if (response.ok && result.success) {
-        if (window.fbq) {
-          window.fbq('track', 'Lead');
-        }
+        trackLead({
+          service: formData.service || 'Консультація',
+          name: formData.name,
+          phone: formData.phone
+        });
         if (onCloseModal) {
           onCloseModal();
         }

@@ -5,6 +5,7 @@ import SolarPanelCard from '../components/SolarPanelCard';
 import { TelemetryChip } from '../components/SolarTech';
 import { RegistrationMarks } from '../components/SolarDetails';
 import useSeo from '../hooks/useSeo';
+import { trackLead } from '../utils/analytics';
 
 export default function ThankYouPage({ theme }) {
   const isDark = theme === 'dark';
@@ -19,10 +20,8 @@ export default function ThankYouPage({ theme }) {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
-    // Trigger Meta Pixel Lead Conversion Event safely
-    if (window.fbq) {
-      window.fbq('track', 'Lead');
-    }
+    // Trigger Lead Conversion Event for Meta & TikTok Pixels
+    trackLead({ source: 'ThankYouPage' });
   }, []);
 
   // Bring the readouts online one at a time, like a station being commissioned

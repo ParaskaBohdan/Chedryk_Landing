@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Send, CheckCircle2, AlertCircle, Loader2, Phone, User, MessageSquare, Cpu, Calendar, Clock } from 'lucide-react';
 import CustomSelect from './CustomSelect';
+import { trackLead } from '../utils/analytics';
 
 export default function ConfigurationForm({ configurationSummary, onCloseModal, theme }) {
   const isDark = theme === 'dark';
@@ -193,9 +194,11 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
       const result = await response.json();
 
       if (response.ok && result.success) {
-        if (window.fbq) {
-          window.fbq('track', 'Lead');
-        }
+        trackLead({
+          service: 'Розрахунок конфігурації СЕС',
+          name: formData.name,
+          phone: formData.phone
+        });
         if (onCloseModal) {
           onCloseModal();
         }

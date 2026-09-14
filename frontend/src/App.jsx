@@ -24,6 +24,7 @@ import Footer from './components/Footer';
 import ScrollToTopButton from './components/ScrollToTopButton';
 import CallWidget from './components/CallWidget';
 import useSeo from './hooks/useSeo';
+import { trackPageView, trackCalculatorView } from './utils/analytics';
 import { X } from 'lucide-react';
 
 function HomeSeo() {
@@ -35,11 +36,19 @@ function HomeSeo() {
   return null;
 }
 
-function ScrollToTop() {
+function RouteTracker() {
   const { pathname } = useLocation();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+    // Track PageView on route changes
+    trackPageView(pathname);
+
+    // Track Calculator view when visiting /calculator
+    if (pathname === '/calculator') {
+      trackCalculatorView();
+    }
   }, [pathname]);
 
   return null;
@@ -114,7 +123,7 @@ export default function App() {
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 selection:bg-amber-400 selection:text-slate-950 ${
       isDark ? 'bg-slate-900 text-slate-100 dark' : 'bg-[var(--bg-app,#e2e8f0)] text-slate-900 light'
     }`}>
-      <ScrollToTop />
+      <RouteTracker />
       
       {/* Navigation Header */}
       <Header 
