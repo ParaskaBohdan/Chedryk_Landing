@@ -1,12 +1,13 @@
 // Unified Tracking Utility for Meta Pixel & TikTok Pixel
 
 export const META_PIXEL_ID = "2705295083168577";
+export const TIKTOK_PIXEL_ID = "DALRVP3C77U1JKBFSIH0";
 
 /**
  * Initializes or updates TikTok Pixel dynamically when ID is provided
  * @param {string} pixelId 
  */
-export function initTikTokPixel(pixelId) {
+export function initTikTokPixel(pixelId = TIKTOK_PIXEL_ID) {
   if (typeof window === "undefined" || !pixelId) return;
   window.TIKTOK_PIXEL_ID = pixelId;
   if (window.ttq && typeof window.ttq.load === "function") {
@@ -48,7 +49,7 @@ export function trackPageView(path = window.location.pathname) {
 
 /**
  * Tracks Calculator view event (Custom event "Calculator view" + standard "ViewContent")
- * Requested by targetologist: Event "Calculator view" on /calculator
+ * Identical event names for Meta & TikTok
  */
 export function trackCalculatorView() {
   if (typeof window === "undefined") return;
@@ -72,9 +73,13 @@ export function trackCalculatorView() {
     }
   }
 
-  // TikTok Pixel ViewContent
+  // TikTok Pixel: both "Calculator view" as requested and standard "ViewContent"
   if (window.ttq && typeof window.ttq.track === "function") {
     try {
+      window.ttq.track("Calculator view", {
+        content_name: "Solar Calculator",
+        content_type: "product"
+      });
       window.ttq.track("ViewContent", {
         content_name: "Solar Calculator",
         content_type: "product"
@@ -87,7 +92,7 @@ export function trackCalculatorView() {
 
 /**
  * Tracks Lead conversion event upon form submission / visiting /thank-you
- * Requested by targetologist: Event "Lead" on /thank-you
+ * Identical event names for Meta & TikTok
  * @param {Object} [params] Optional metadata (service, form name, value, currency)
  */
 export function trackLead(params = {}) {
@@ -109,12 +114,13 @@ export function trackLead(params = {}) {
     }
   }
 
-  // TikTok Pixel SubmitForm / CompleteRegistration Event
+  // TikTok Pixel Lead Event (both "Lead" as requested and standard "SubmitForm")
   if (window.ttq && typeof window.ttq.track === "function") {
     try {
+      window.ttq.track("Lead", eventData);
       window.ttq.track("SubmitForm", eventData);
     } catch (e) {
-      console.warn("[Analytics] TikTok SubmitForm event error:", e);
+      console.warn("[Analytics] TikTok Lead / SubmitForm event error:", e);
     }
   }
 }
