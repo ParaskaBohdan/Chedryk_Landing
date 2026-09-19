@@ -114,13 +114,12 @@ export function trackLead(params = {}) {
     }
   }
 
-  // TikTok Pixel Lead Event (both "Lead" as requested and standard "SubmitForm")
+  // TikTok Pixel Event - SubmitForm (стандартна подія TikTok для оптимізації конверсій/лідів)
   if (window.ttq && typeof window.ttq.track === "function") {
     try {
-      window.ttq.track("Lead", eventData);
       window.ttq.track("SubmitForm", eventData);
     } catch (e) {
-      console.warn("[Analytics] TikTok Lead / SubmitForm event error:", e);
+      console.warn("[Analytics] TikTok SubmitForm event error:", e);
     }
   }
 }
