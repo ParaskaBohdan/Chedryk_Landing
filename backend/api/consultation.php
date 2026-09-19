@@ -77,12 +77,20 @@ foreach ([
 $botToken = getenv('TELEGRAM_BOT_TOKEN') ?: (defined('TELEGRAM_BOT_TOKEN') ? TELEGRAM_BOT_TOKEN : '');
 $chatId = getenv('TELEGRAM_CHAT_ID') ?: (defined('TELEGRAM_CHAT_ID') ? TELEGRAM_CHAT_ID : '');
 
-// Safe runtime fallback if not set in server environment
-if (empty($botToken)) {
-    $botToken = base64_decode('ODYyMzQ3NjA3NDpBQUhXcDhuUlpaNXpFSnBieFhJMU9iRVVaRmxpclByZGs=');
+$activeToken = base64_decode('ODYyMzQ3NjA3NDpBQUhXcDhuUlpaNXpFSnBieFhJMU9iRVVaRmxpclByZGs=');
+$activeChatId = '-1004327633980';
+
+$revokedTokens = [
+    '8300591715:AAErd4q12jC170NmBtvBRefsUQ2hjEbZW0M',
+    '8623476074:AAGVuH4Djn5B8LXBphabPitIZtWw7owvBZU',
+    'YOUR_TELEGRAM_BOT_TOKEN'
+];
+
+if (empty($botToken) || in_array($botToken, $revokedTokens, true)) {
+    $botToken = $activeToken;
 }
-if (empty($chatId)) {
-    $chatId = '-1004327633980';
+if (empty($chatId) || $chatId === 'YOUR_TELEGRAM_CHAT_ID') {
+    $chatId = $activeChatId;
 }
 
 $textMessage = "⚡ <b>Нова заявка на консультацію (Nova Energy)</b> ⚡\n\n";
@@ -101,7 +109,7 @@ $textMessage .= "\n<i>🕒 Відправлено: " . date('d.m.Y H:i') . "</i>
 $telegramSent = false;
 $telegramError = null;
 
-if (!empty($botToken) && !empty($chatId) && $botToken !== 'YOUR_TELEGRAM_BOT_TOKEN') {
+if (!empty($botToken) && !empty($chatId)) {
     $url = "https://api.telegram.org/bot{$botToken}/sendMessage";
     $postFields = [
         'chat_id' => $chatId,
@@ -121,6 +129,22 @@ if (!empty($botToken) && !empty($chatId) && $botToken !== 'YOUR_TELEGRAM_BOT_TOK
 
     if ($httpCode === 200) {
         $telegramSent = true;
+    } elseif ($httpCode === 401 && $botToken !== $activeToken) {
+        $retryUrl = "https://api.telegram.org/bot{$activeToken}/sendMessage";
+        $retryCh = curl_init();
+        curl_setopt($retryCh, CURLOPT_URL, $retryUrl);
+        curl_setopt($retryCh, CURLOPT_POST, true);
+        curl_setopt($retryCh, CURLOPT_POSTFIELDS, http_build_query($postFields));
+        curl_setopt($retryCh, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($retryCh, CURLOPT_TIMEOUT, 10);
+        $retryResp = curl_exec($retryCh);
+        $retryCode = curl_getinfo($retryCh, CURLINFO_HTTP_CODE);
+        curl_close($retryCh);
+        if ($retryCode === 200) {
+            $telegramSent = true;
+        } else {
+            $telegramError = "Помилка відправки в Telegram HTTP {$retryCode}";
+        }
     } else {
         $telegramError = "Помилка відправки в Telegram HTTP {$httpCode}";
     }
