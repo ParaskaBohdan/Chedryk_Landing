@@ -191,7 +191,17 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
         body: JSON.stringify(submitPayload)
       });
 
-      const result = await response.json();
+      let result;
+      try {
+        result = await response.json();
+      } catch (jsonErr) {
+        console.error('Non-JSON server response:', response.status, jsonErr);
+        setStatus({
+          type: 'error',
+          message: 'Сервер тимчасово недоступний. Будь ласка, зателефонуйте майстру: +380 (67) 530-01-03'
+        });
+        return;
+      }
 
       if (response.ok && result.success) {
         trackCtaClick('CTA_Calculator_Quote');
@@ -214,7 +224,7 @@ export default function ConfigurationForm({ configurationSummary, onCloseModal, 
     } catch {
       setStatus({
         type: 'error',
-        message: 'Помилка мережі. Перевірте з\'єднання та спробуйте ще раз.'
+        message: 'Помилка мережі. Будь ласка, перевірте з\'єднання або зателефонуйте майстру: +380 (67) 530-01-03'
       });
     } finally {
       setLoading(false);

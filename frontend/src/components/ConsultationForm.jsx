@@ -192,7 +192,17 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
         body: JSON.stringify(formData)
       });
 
-      const result = await response.json();
+      let result;
+      try {
+        result = await response.json();
+      } catch (jsonErr) {
+        console.error('Non-JSON server response:', response.status, jsonErr);
+        setStatus({
+          type: 'error',
+          message: 'Сервер тимчасово недоступний. Будь ласка, зателефонуйте майстру: +380 (67) 530-01-03'
+        });
+        return;
+      }
 
       if (response.ok && result.success) {
         trackLead({
@@ -215,7 +225,7 @@ export default function ConsultationForm({ selectedServicePrefill, onCloseModal,
       console.error('Submission error:', err);
       setStatus({
         type: 'error',
-        message: 'Не вдалося з\'єднатися із сервером. Зателефонуйте майстру напряму.'
+        message: 'Не вдалося з\'єднатися із сервером. Зателефонуйте майстру напряму: +380 (67) 530-01-03'
       });
     } finally {
       setLoading(false);
