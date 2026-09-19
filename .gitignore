@@ -1,4 +1,9 @@
 .env
+.env*
+*.local.php
+config.local.php
+backend/config.local.php
+backend/api/config.local.php
 node_modules/
 frontend/dist/
 frontend/node_modules/

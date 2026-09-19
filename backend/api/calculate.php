@@ -66,8 +66,10 @@ if (empty($name) || empty($phone)) {
     exit();
 }
 
-$botToken = getenv('TELEGRAM_BOT_TOKEN') ?: '8623476074:AAGVuH4Djn5B8LXBphabPitIZtWw7owvBZU';
-$chatId = getenv('TELEGRAM_CHAT_ID') ?: '-1004327633980';
+require_once dirname(__DIR__) . '/load_env.php';
+
+$botToken = getenv('TELEGRAM_BOT_TOKEN') ?: (defined('TELEGRAM_BOT_TOKEN') ? TELEGRAM_BOT_TOKEN : '');
+$chatId = getenv('TELEGRAM_CHAT_ID') ?: (defined('TELEGRAM_CHAT_ID') ? TELEGRAM_CHAT_ID : '');
 
 $textMessage = "📊 <b>Запит на розрахунок доходу СЕС (Nova Energy)</b> 📊\n\n";
 $textMessage .= "👤 <b>Ім'я:</b> " . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . "\n";
