@@ -78,11 +78,15 @@ export function trackCalculatorView() {
     try {
       window.ttq.track("Calculator view", {
         content_name: "Solar Calculator",
-        content_type: "product"
+        content_type: "product",
+        value: 0,
+        currency: "UAH"
       });
       window.ttq.track("ViewContent", {
         content_name: "Solar Calculator",
-        content_type: "product"
+        content_type: "product",
+        value: 0,
+        currency: "UAH"
       });
     } catch (e) {
       console.warn("[Analytics] TikTok Calculator view error:", e);
@@ -92,16 +96,20 @@ export function trackCalculatorView() {
 
 /**
  * Tracks Lead conversion event upon form submission / visiting /thank-you
- * Identical event names for Meta & TikTok
+ * Includes standard 'value' and 'currency' parameters for TikTok ROAS & Meta optimization
  * @param {Object} [params] Optional metadata (service, form name, value, currency)
  */
 export function trackLead(params = {}) {
   if (typeof window === "undefined") return;
 
+  const leadValue = params.value !== undefined ? Number(params.value) : 1;
+  const currency = params.currency || "UAH";
+
   const eventData = {
     content_name: params.service || "Solar Consultation Lead",
     status: "submitted",
-    currency: "UAH",
+    value: leadValue,
+    currency: currency,
     ...params
   };
 
@@ -125,16 +133,22 @@ export function trackLead(params = {}) {
 }
 
 /**
- * Generic custom event tracker for both pixels
+ * Generic custom event tracker for both pixels with required value & currency
  * @param {string} eventName 
  * @param {Object} [data] 
  */
 export function trackCustomEvent(eventName, data = {}) {
   if (typeof window === "undefined" || !eventName) return;
 
+  const eventPayload = {
+    value: data.value !== undefined ? Number(data.value) : 0,
+    currency: data.currency || "UAH",
+    ...data
+  };
+
   if (typeof window.fbq === "function") {
     try {
-      window.fbq("trackCustom", eventName, data);
+      window.fbq("trackCustom", eventName, eventPayload);
     } catch (e) {
       console.warn("[Analytics] Meta custom event error:", e);
     }
@@ -142,7 +156,7 @@ export function trackCustomEvent(eventName, data = {}) {
 
   if (window.ttq && typeof window.ttq.track === "function") {
     try {
-      window.ttq.track(eventName, data);
+      window.ttq.track(eventName, eventPayload);
     } catch (e) {
       console.warn("[Analytics] TikTok custom event error:", e);
     }
