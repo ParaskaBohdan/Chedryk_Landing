@@ -66,8 +66,8 @@ if (empty($name) || empty($phone)) {
     exit();
 }
 
-$botToken = getenv('TELEGRAM_BOT_TOKEN') ?: 'YOUR_TELEGRAM_BOT_TOKEN';
-$chatId = getenv('TELEGRAM_CHAT_ID') ?: 'YOUR_TELEGRAM_CHAT_ID';
+$botToken = getenv('TELEGRAM_BOT_TOKEN') ?: '8623476074:AAGVuH4Djn5B8LXBphabPitIZtWw7owvBZU';
+$chatId = getenv('TELEGRAM_CHAT_ID') ?: '-1004327633980';
 
 $textMessage = "📊 <b>Запит на розрахунок доходу СЕС (Nova Energy)</b> 📊\n\n";
 $textMessage .= "👤 <b>Ім'я:</b> " . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . "\n";
@@ -79,7 +79,7 @@ $textMessage .= "\n<i>🕒 Відправлено: " . date('d.m.Y H:i') . "</i>
 $telegramSent = false;
 $telegramError = null;
 
-if ($botToken !== 'YOUR_TELEGRAM_BOT_TOKEN' && $chatId !== 'YOUR_TELEGRAM_CHAT_ID') {
+if (!empty($botToken) && !empty($chatId) && $botToken !== 'YOUR_TELEGRAM_BOT_TOKEN') {
     $url = "https://api.telegram.org/bot{$botToken}/sendMessage";
     $postFields = [
         'chat_id' => $chatId,
