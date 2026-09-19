@@ -24,6 +24,7 @@ import SystemFlowDiagram from '../components/SystemFlowDiagram';
 import { LiveBadge, TelemetryChip } from '../components/SolarTech';
 import { CountUp, SolarSlider } from '../components/SolarControls';
 import { SectionAmbience, RegistrationMarks } from '../components/SolarDetails';
+import { trackCtaClick } from '../utils/analytics';
 import useSeo from '../hooks/useSeo';
 
 export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfiguration, isEmbed = false, isGroundOnly = false, isRoofOnly = false }) {
@@ -447,6 +448,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                     <button
                       type="button"
                       onClick={() => {
+                        trackCtaClick('CTA_Calculator_Quote');
                         if (onOpenConfiguration) {
                           onOpenConfiguration(getConfigSummaryText());
                         } else if (onOpenConsultation) {
@@ -744,6 +746,7 @@ export default function CalculatorPage({ theme, onOpenConsultation, onOpenConfig
                   <button
                     type="button"
                     onClick={() => {
+                      trackCtaClick('CTA_Calculator_Quote');
                       if (onOpenConfiguration) {
                         onOpenConfiguration(getConfigSummaryText());
                       } else if (onOpenConsultation) {

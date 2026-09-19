@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { Phone, Menu, X, ShieldCheck, Video, Wrench, BarChart2, Zap, Calculator } from 'lucide-react';
+import { trackCtaClick, trackPhoneClick } from '../utils/analytics';
 
 function TikTokIcon(props) {
   return (
@@ -183,6 +184,7 @@ export default function Header({ onOpenConsultation, theme, lightVariant = '2', 
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <a
             href="tel:+380675300103"
+            onClick={() => trackPhoneClick({ location: 'Header' })}
             title="Зателефонувати в Nova Energy"
             className="flex items-center justify-center h-[38px] w-[38px] sm:w-auto sm:px-4 rounded-xl bg-green-600 hover:bg-green-700 text-white transition-colors flex-shrink-0 shadow-md gap-2"
           >
@@ -192,7 +194,10 @@ export default function Header({ onOpenConsultation, theme, lightVariant = '2', 
 
           {/* Light Radiant Orange Button -> Leads to Calculator */}
           <button
-            onClick={() => onOpenConsultation && onOpenConsultation('Замовити безкоштовну консультацію')}
+            onClick={() => {
+              trackCtaClick('CTA_Header_Consultation');
+              onOpenConsultation && onOpenConsultation('Замовити безкоштовну консультацію');
+            }}
             className={`hidden sm:inline-flex font-extrabold text-xs uppercase tracking-wider px-4 sm:px-5 py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap flex-shrink-0 cursor-pointer header-cta-btn ${
               !isScrolled ? 'header-cta-transparent' : ''
             }`}

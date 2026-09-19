@@ -4,6 +4,7 @@ import ConsultationForm from '../components/ConsultationForm';
 import SolarPanelCard from '../components/SolarPanelCard';
 import { LiveBadge, TelemetryChip } from '../components/SolarTech';
 import { SectionAmbience, BusbarDivider, RegistrationMarks } from '../components/SolarDetails';
+import { trackPhoneClick, trackTikTokClick } from '../utils/analytics';
 import useSeo from '../hooks/useSeo';
 
 export default function ContactsPage({ theme }) {
@@ -95,9 +96,13 @@ export default function ContactsPage({ theme }) {
                   </div>
                   <div>
                     <p className="text-xs font-medium opacity-70">
-                      Телефон для консультацій
+                       Телефон для консультацій
                     </p>
-                    <a href="tel:+380675300103" className="text-lg font-bold hover:text-amber-500 transition-colors">
+                    <a 
+                      href="tel:+380675300103" 
+                      onClick={() => trackPhoneClick({ location: 'ContactsPage' })}
+                      className="text-lg font-bold hover:text-amber-500 transition-colors"
+                    >
                       +380 (67) 530-01-03
                     </a>
                   </div>
@@ -118,6 +123,7 @@ export default function ContactsPage({ theme }) {
                       href="https://www.tiktok.com/@novaenergy.ua" 
                       target="_blank" 
                       rel="noreferrer" 
+                      onClick={() => trackTikTokClick({ location: 'ContactsPage' })}
                       className="text-sm font-bold text-amber-500 hover:underline flex items-center gap-1"
                     >
                       <span>@novaenergy.ua (Дивитися TikTok)</span>

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { HardHat, Gauge, Thermometer, Wind, Activity, ArrowRight, Compass } from 'lucide-react';
 import SolarPanelCard from './SolarPanelCard';
 import { SectionAmbience } from './SolarDetails';
+import { trackCtaClick } from '../utils/analytics';
 import {
   EngineerMountingPanel,
   EngineerHoldingPanel,
@@ -177,7 +178,10 @@ export default function EngineerShowcase({ theme, onOpenConsultation }) {
                   Профіль сонячної радіації для Закарпатської області у липні. Пікова генерація припадає на 12:00–14:00.
                 </p>
                 <button
-                  onClick={onOpenConsultation}
+                  onClick={() => {
+                    trackCtaClick('CTA_Engineer_Showcase');
+                    onOpenConsultation && onOpenConsultation();
+                  }}
                   className="btn-orange-bright mt-4 w-full font-extrabold text-sm px-4 py-3.5 rounded-xl shadow-lg glow-amber flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Замовити виїзд інженера</span>

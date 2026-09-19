@@ -5,7 +5,7 @@ import SolarPanelCard from '../components/SolarPanelCard';
 import { TelemetryChip } from '../components/SolarTech';
 import { RegistrationMarks } from '../components/SolarDetails';
 import useSeo from '../hooks/useSeo';
-import { trackLead } from '../utils/analytics';
+import { trackLead, trackPhoneClick, trackTikTokClick } from '../utils/analytics';
 
 export default function ThankYouPage({ theme }) {
   const isDark = theme === 'dark';
@@ -129,6 +129,7 @@ export default function ThankYouPage({ theme }) {
               href="https://www.tiktok.com/@novaenergy.ua"
               target="_blank"
               rel="noreferrer"
+              onClick={() => trackTikTokClick({ location: 'ThankYouPage' })}
               className={`p-4 rounded-2xl border transition-all flex items-center gap-3 text-left group ${
                 isDark
                   ? 'border-slate-700 bg-slate-900/60 hover:bg-slate-900 text-white'
@@ -148,6 +149,7 @@ export default function ThankYouPage({ theme }) {
 
             <a
               href="tel:+380675300103"
+              onClick={() => trackPhoneClick({ location: 'ThankYouPage' })}
               className={`p-4 rounded-2xl border transition-all flex items-center gap-3 text-left group ${
                 isDark
                   ? 'border-slate-700 bg-slate-900/60 hover:bg-slate-900 text-white'

@@ -4,6 +4,7 @@ import { ShieldCheck, FileCheck, Leaf, Cpu, CheckCircle2, ArrowRight } from 'luc
 import SolarPanelCard from './SolarPanelCard';
 import { SectionAmbience } from './SolarDetails';
 import { LiveBadge, EnergyFlowStrip } from './SolarTech';
+import { trackCtaClick } from '../utils/analytics';
 
 export default function DeyeAndLegal({ onOpenConsultation, theme }) {
   const isDark = theme === 'dark';
@@ -154,7 +155,10 @@ export default function DeyeAndLegal({ onOpenConsultation, theme }) {
             </div>
 
             <button
-              onClick={onOpenConsultation}
+              onClick={() => {
+                trackCtaClick('CTA_Deye_Section');
+                onOpenConsultation && onOpenConsultation();
+              }}
               className="btn-orange-bright font-extrabold text-sm px-6 py-3.5 rounded-xl shadow-lg hover:scale-105 transition-all flex-shrink-0 glow-amber cursor-pointer"
             >
               Замовити Розрахунок Deye

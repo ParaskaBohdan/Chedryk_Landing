@@ -1,5 +1,6 @@
 import React from 'react';
 import { Phone } from 'lucide-react';
+import { trackFloatingCallClick, trackPhoneClick } from '../utils/analytics';
 
 /**
  * Floating green call widget positioned directly above the return-to-top button.
@@ -7,9 +8,15 @@ import { Phone } from 'lucide-react';
  * Hardcoded dimensions and flex-shrink-0 ensure a perfect circle on all mobile browsers.
  */
 export default function CallWidget() {
+  const handleClick = () => {
+    trackFloatingCallClick();
+    trackPhoneClick({ location: 'FloatingCallWidget' });
+  };
+
   return (
     <a
       href="tel:+380675300103"
+      onClick={handleClick}
       aria-label="Зателефонувати в Nova Energy"
       style={{ width: '48px', height: '48px', minWidth: '48px', minHeight: '48px' }}
       className="fixed bottom-5 right-5 z-40 rounded-full bg-green-500 hover:bg-green-600 text-white flex items-center justify-center shadow-[0_4px_20px_rgba(34,197,94,0.4)] transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer group flex-shrink-0"

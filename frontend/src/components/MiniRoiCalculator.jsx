@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { TrendingUp, Clock, DollarSign, PiggyBank, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { TrendingUp, Clock, DollarSign, PiggyBank, Sparkles, ArrowRight } from 'lucide-react';
 import { SolarSlider } from './SolarControls';
 import SolarPanelCard from './SolarPanelCard';
 import { LiveBadge } from './SolarTech';
 import { SectionAmbience, RegistrationMarks } from './SolarDetails';
+import { trackCtaClick } from '../utils/analytics';
 
 export default function MiniRoiCalculator({ theme }) {
   const isDark = theme === 'dark';
@@ -196,6 +198,18 @@ export default function MiniRoiCalculator({ theme }) {
                   Власне покриття: <span className={isDark ? 'font-bold text-slate-300' : 'font-extrabold text-slate-900'}>{annualSelfCoverageKwh.toLocaleString()} кВт·год</span>
                 </div>
               </div>
+            </div>
+
+            {/* CTA Button to Full Calculator */}
+            <div className="pt-2">
+              <Link
+                to="/calculator"
+                onClick={() => trackCtaClick('CTA_Mini_Calculator', { power_kw: powerKw })}
+                className="w-full btn-orange-bright font-extrabold text-xs sm:text-sm py-3.5 px-6 rounded-xl shadow-lg flex items-center justify-center gap-2 hover:scale-[1.01] transition-transform"
+              >
+                <span>Отримати точний розрахунок СЕС</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
 
           </div>

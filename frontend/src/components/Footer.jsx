@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Sun, Phone, MapPin, ArrowUp, Video } from 'lucide-react';
 import { LiveBadge } from './SolarTech';
 import { SectionAmbience } from './SolarDetails';
+import { trackCtaClick, trackPhoneClick, trackTikTokClick } from '../utils/analytics';
 
 export default function Footer({ onOpenConsultation, theme }) {
   const isDark = theme === 'dark';
@@ -135,9 +136,24 @@ export default function Footer({ onOpenConsultation, theme }) {
               Контакти & Соцмережі
             </h4>
             <div className="space-y-2.5 text-xs sm:text-sm font-medium">
-              <a href="tel:+380675300103" className="flex items-center gap-2 hover:text-amber-500 transition-colors font-bold">
+              <a
+                href="tel:+380675300103"
+                onClick={() => trackPhoneClick({ location: 'Footer' })}
+                className="flex items-center gap-2 hover:text-amber-500 transition-colors font-bold"
+              >
                 <Phone className="w-4 h-4 text-amber-500" />
                 <span>+380 (67) 530-01-03</span>
+              </a>
+
+              <a
+                href="https://www.tiktok.com/@novaenergy.ua"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackTikTokClick({ location: 'Footer' })}
+                className="flex items-center gap-2 hover:text-amber-500 transition-colors"
+              >
+                <Video className="w-4 h-4 text-amber-500" />
+                <span>TikTok @novaenergy.ua</span>
               </a>
 
               <div className="flex items-center gap-2 opacity-80">
@@ -145,8 +161,11 @@ export default function Footer({ onOpenConsultation, theme }) {
                 <span>Закарпатська, Франківська & Львівська обл.</span>
               </div>
               <button
-                onClick={onOpenConsultation}
-                className="mt-2 text-xs sm:text-sm font-bold text-amber-500 hover:underline block"
+                onClick={() => {
+                  trackCtaClick('CTA_Footer_Consultation');
+                  onOpenConsultation && onOpenConsultation();
+                }}
+                className="mt-2 text-xs sm:text-sm font-bold text-amber-500 hover:underline block cursor-pointer"
               >
                 → Замовити виїзд майстра
               </button>

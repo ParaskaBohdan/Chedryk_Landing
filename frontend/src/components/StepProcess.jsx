@@ -4,6 +4,7 @@ import { PhoneCall, FileText, Truck, Wrench, Headphones, ArrowDown } from 'lucid
 import SolarPanelCard from './SolarPanelCard';
 import { SectionAmbience } from './SolarDetails';
 import { LiveBadge } from './SolarTech';
+import { trackCtaClick } from '../utils/analytics';
 
 export default function StepProcess({ onOpenConsultation, theme }) {
   const isDark = theme === 'dark';
@@ -141,8 +142,11 @@ export default function StepProcess({ onOpenConsultation, theme }) {
         {/* Process Bottom CTA */}
         <div className="mt-12 sm:mt-16 text-center">
           <button
-            onClick={onOpenConsultation}
-            className="inline-flex items-center gap-2.5 btn-orange-bright font-bold text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-xl hover:scale-105 transition-all glow-amber"
+            onClick={() => {
+              trackCtaClick('CTA_Step_Process');
+              onOpenConsultation && onOpenConsultation();
+            }}
+            className="inline-flex items-center gap-2.5 btn-orange-bright font-bold text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-xl hover:scale-105 transition-all glow-amber cursor-pointer"
           >
             <span>Почати з Кроку 1 — Консультація</span>
             <ArrowDown className="w-4 h-4 sm:w-5 sm:h-5" />

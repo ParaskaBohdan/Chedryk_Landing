@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Sun, Home, BatteryCharging, Zap, ArrowRight, CheckCircle2, ChevronRight, ChevronLeft, X, FileText, Calculator } from 'lucide-react';
 import SolarPanelCard from './SolarPanelCard';
 import { SectionAmbience } from './SolarDetails';
+import { trackOfferClick, trackCtaClick } from '../utils/analytics';
 import { LiveBadge, EfficiencyMeter } from './SolarTech';
 import {
   SolarFarmScene,
@@ -522,6 +523,13 @@ export default function Services({ onSelectService, theme }) {
                           <div className="pt-4">
                             <Link
                               to={service.targetUrl}
+                              onClick={() => {
+                                if (service.id === 'calculator_slide') {
+                                  trackCtaClick('CTA_Mini_Calculator');
+                                } else {
+                                  trackOfferClick(service.id, service.title);
+                                }
+                              }}
                               className={`w-full py-3.5 px-4 rounded-xl text-xs sm:text-sm font-extrabold uppercase tracking-wider text-center transition-all active:scale-98 cursor-pointer flex items-center justify-center gap-2 shadow-md ${
                                 isDark
                                   ? 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-amber-500/15'

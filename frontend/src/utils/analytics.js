@@ -150,3 +150,131 @@ export function trackCustomEvent(eventName, data = {}) {
   }
 }
 
+/**
+ * 5 Service Offer Events Mapping
+ */
+export const OFFER_EVENTS = {
+  'ses-building': {
+    event: 'Offer_SES_Building',
+    name: 'Побудова сонячних станцій (5 кВт – 1 МВт)'
+  },
+  'solar_plants': {
+    event: 'Offer_SES_Building',
+    name: 'Побудова сонячних станцій (5 кВт – 1 МВт)'
+  },
+  'hybrid-systems': {
+    event: 'Offer_Deye_Hybrid',
+    name: 'Гібридні системи Deye та акумулятори'
+  },
+  'deye_batteries': {
+    event: 'Offer_Deye_Hybrid',
+    name: 'Гібридні системи Deye та акумулятори'
+  },
+  'roof-installation': {
+    event: 'Offer_Roof_Panels',
+    name: 'Установка сонячних панелей на дах'
+  },
+  'roof_panels': {
+    event: 'Offer_Roof_Panels',
+    name: 'Установка сонячних панелей на дах'
+  },
+  'roof-mounting': {
+    event: 'Offer_Roof_Panels',
+    name: 'Установка сонячних панелей на дах'
+  },
+  'green-tariff-legal': {
+    event: 'Offer_Green_Tariff',
+    name: 'Супровід документації & Зелений Тариф'
+  },
+  'legal_tariff': {
+    event: 'Offer_Green_Tariff',
+    name: 'Супровід документації & Зелений Тариф'
+  },
+  'tariffs': {
+    event: 'Offer_Green_Tariff',
+    name: 'Супровід документації & Зелений Тариф'
+  },
+  'battery-systems': {
+    event: 'Offer_Grid_Setup',
+    name: 'Налагодження електромереж в будівлях'
+  },
+  'electrical_grids': {
+    event: 'Offer_Grid_Setup',
+    name: 'Налагодження електромереж в будівлях'
+  },
+  'grid-setup': {
+    event: 'Offer_Grid_Setup',
+    name: 'Налагодження електромереж в будівлях'
+  }
+};
+
+/**
+ * Tracks click on an individual service offer card / button
+ * @param {string} serviceKey 
+ * @param {string} [title] 
+ */
+export function trackOfferClick(serviceKey, title = '') {
+  const match = OFFER_EVENTS[serviceKey] || Object.values(OFFER_EVENTS).find(item => 
+    (title && item.name.toLowerCase().includes(title.toLowerCase())) ||
+    (serviceKey && item.name.toLowerCase().includes(serviceKey.toLowerCase()))
+  );
+
+  const eventName = match ? match.event : 'Offer_Click';
+  const offerName = match ? match.name : (title || serviceKey || 'Послуга СЕС');
+
+  trackCustomEvent(eventName, {
+    offer_id: serviceKey,
+    offer_name: offerName,
+    category: 'ServiceOffer'
+  });
+}
+
+/**
+ * Tracks primary CTA button clicks across the site
+ * @param {'CTA_Hero_Consultation'|'CTA_Header_Consultation'|'CTA_Mini_Calculator'|'CTA_Calculator_Quote'|'CTA_Engineer_Showcase'|'CTA_Deye_Section'|'CTA_Step_Process'|'CTA_Footer_Consultation'} ctaName 
+ * @param {Object} [details] 
+ */
+export function trackCtaClick(ctaName, details = {}) {
+  trackCustomEvent(ctaName, {
+    category: 'CTA_Button',
+    page_path: typeof window !== 'undefined' ? window.location.pathname : '',
+    ...details
+  });
+}
+
+/**
+ * Tracks clicks on phone call links
+ * @param {Object} [details] 
+ */
+export function trackPhoneClick(details = {}) {
+  trackCustomEvent('Click_Phone_Number', {
+    phone: '+380675300103',
+    page_path: typeof window !== 'undefined' ? window.location.pathname : '',
+    ...details
+  });
+}
+
+/**
+ * Tracks clicks on floating call widget
+ */
+export function trackFloatingCallClick() {
+  trackCustomEvent('Click_Floating_Call', {
+    category: 'Floating_Call_Widget',
+    phone: '+380675300103'
+  });
+}
+
+/**
+ * Tracks clicks on TikTok social link
+ * @param {Object} [details] 
+ */
+export function trackTikTokClick(details = {}) {
+  trackCustomEvent('Click_TikTok_Social', {
+    channel: 'TikTok',
+    account: '@novaenergy.ua',
+    url: 'https://www.tiktok.com/@novaenergy.ua',
+    ...details
+  });
+}
+
+

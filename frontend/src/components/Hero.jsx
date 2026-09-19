@@ -5,6 +5,7 @@ import { Sun, ShieldCheck, Zap, TrendingUp, Award, MapPin, Calculator, Compass, 
 import { Link } from 'react-router-dom';
 import { SectionAmbience } from './SolarDetails';
 import SolarPanelCard from './SolarPanelCard';
+import { trackCtaClick } from '../utils/analytics';
 import { LiveBadge, EfficiencyMeter, TiltGauge, IrradianceChart, TelemetryChip } from './SolarTech';
 
 export default function Hero({ theme }) {
@@ -158,6 +159,7 @@ export default function Hero({ theme }) {
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2">
                 <Link
                   to="/calculator"
+                  onClick={() => trackCtaClick('CTA_Hero_Consultation')}
                   className="btn-orange-bright font-bold text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2.5 glow-amber"
                 >
                   <Calculator className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />

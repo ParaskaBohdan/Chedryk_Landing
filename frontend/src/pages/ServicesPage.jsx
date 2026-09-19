@@ -6,6 +6,7 @@ import SolarPanelCard from '../components/SolarPanelCard';
 import { TelemetryChip } from '../components/SolarTech';
 import { SectionAmbience, BusbarDivider, RegistrationMarks } from '../components/SolarDetails';
 import useSeo from '../hooks/useSeo';
+import { trackOfferClick } from '../utils/analytics';
 
 const iconMap = {
   Sun: Sun,
@@ -136,6 +137,7 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
                   <div className="pt-2.5 grid grid-cols-2 gap-3">
                     <Link
                       to={`/services/${service.id}`}
+                      onClick={() => trackOfferClick(service.id, service.title)}
                       className={`font-bold py-3.5 px-4 text-sm rounded-xl border text-center transition-colors flex items-center justify-center gap-2 ${
                         isDark 
                           ? 'border-slate-700 bg-slate-900 text-slate-200 hover:bg-slate-800 hover:border-amber-500' 
@@ -147,7 +149,10 @@ export default function ServicesPage({ theme, onOpenConsultation }) {
                     </Link>
 
                     <button
-                      onClick={() => onOpenConsultation(service.title)}
+                      onClick={() => {
+                        trackOfferClick(service.id, service.title);
+                        onOpenConsultation(service.title);
+                      }}
                       className="btn-orange-bright font-bold py-3.5 px-4 text-sm rounded-xl text-center shadow-xs transition-all duration-200 active:scale-95 cursor-pointer"
                     >
                       Замовити
