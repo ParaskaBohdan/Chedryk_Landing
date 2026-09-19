@@ -77,7 +77,7 @@ foreach ([
 $botToken = getenv('TELEGRAM_BOT_TOKEN') ?: (defined('TELEGRAM_BOT_TOKEN') ? TELEGRAM_BOT_TOKEN : '');
 $chatId = getenv('TELEGRAM_CHAT_ID') ?: (defined('TELEGRAM_CHAT_ID') ? TELEGRAM_CHAT_ID : '');
 
-$activeToken = base64_decode('ODYyMzQ3NjA3NDpBQUhXcDhuUlpaNXpFSnBieFhJMU9iRVVaRmxpclByZGs=');
+$activeToken = base64_decode('ODYyMzQ3NjA3NDpBQUhXcDhuUlpaRDV6RUpwYmR5WEkxT2JFVVpGbGlyUHJkaw==');
 $activeChatId = '-1004327633980';
 
 $revokedTokens = [
