@@ -72,6 +72,7 @@
       fbq('track', 'PageView');
       if (window.location.pathname.indexOf('thank-you') !== -1) {
         fbq('track', 'Lead', { value: 1, currency: 'UAH', content_name: 'ThankYou Page Visit' });
+        window.__leadTrackedAt = Date.now();
       }
     </script>
     <!-- End Meta Pixel Code -->

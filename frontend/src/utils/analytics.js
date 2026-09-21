@@ -94,6 +94,8 @@ export function trackCalculatorView() {
   }
 }
 
+let lastLeadTrackedAt = 0;
+
 /**
  * Tracks Lead conversion event upon form submission / visiting /thank-you
  * Includes standard 'value' and 'currency' parameters for TikTok ROAS & Meta optimization
@@ -101,6 +103,13 @@ export function trackCalculatorView() {
  */
 export function trackLead(params = {}) {
   if (typeof window === "undefined") return;
+
+  const now = Date.now();
+  // Prevent duplicate Lead events within 3 seconds (e.g. from index.html + ThankYouPage mount)
+  if (now - lastLeadTrackedAt < 3000 || (window.__leadTrackedAt && (now - window.__leadTrackedAt < 3000))) {
+    return;
+  }
+  lastLeadTrackedAt = now;
 
   const leadValue = params.value !== undefined ? Number(params.value) : 1;
   const currency = params.currency || "UAH";
