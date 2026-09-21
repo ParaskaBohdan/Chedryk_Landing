@@ -70,6 +70,10 @@
       'https://connect.facebook.net/en_US/fbevents.js');
       fbq('init', '2705295083168577');
       fbq('track', 'PageView');
+      if (window.location.pathname.indexOf('thank-you') !== -1) {
+        fbq('track', 'Lead', { value: 1, currency: 'UAH', content_name: 'ThankYou Page Visit' });
+        fbq('trackCustom', 'Lead', { value: 1, currency: 'UAH', content_name: 'ThankYou Page Visit' });
+      }
     </script>
     <!-- End Meta Pixel Code -->
 
@@ -80,6 +84,9 @@
 
         ttq.load('DALRVP3C77U1JKBFSIH0');
         ttq.page();
+        if (window.location.pathname.indexOf('thank-you') !== -1) {
+          ttq.track('SubmitForm', { value: 1, currency: 'UAH', content_name: 'ThankYou Page Visit' });
+        }
       }(window, document, 'ttq');
     </script>
     <!-- TikTok Pixel Code End -->

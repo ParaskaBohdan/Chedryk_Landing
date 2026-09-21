@@ -113,10 +113,11 @@ export function trackLead(params = {}) {
     ...params
   };
 
-  // Meta Pixel Lead Event
+  // Meta Pixel Lead Event (Standard 'Lead' + Custom 'Lead' for Meta Ads Manager)
   if (typeof window.fbq === "function") {
     try {
       window.fbq("track", "Lead", eventData);
+      window.fbq("trackCustom", "Lead", eventData);
     } catch (e) {
       console.warn("[Analytics] Meta Lead event error:", e);
     }

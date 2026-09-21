@@ -24,7 +24,7 @@ import Footer from './components/Footer';
 import ScrollToTopButton from './components/ScrollToTopButton';
 import CallWidget from './components/CallWidget';
 import useSeo from './hooks/useSeo';
-import { trackPageView, trackCalculatorView } from './utils/analytics';
+import { trackPageView, trackCalculatorView, trackLead } from './utils/analytics';
 import { X } from 'lucide-react';
 
 function HomeSeo() {
@@ -48,6 +48,11 @@ function RouteTracker() {
     // Track Calculator view when visiting /calculator
     if (pathname === '/calculator') {
       trackCalculatorView();
+    }
+
+    // Track Lead when visiting /thank-you
+    if (pathname === '/thank-you') {
+      trackLead({ source: 'ThankYouPage_Route' });
     }
   }, [pathname]);
 
