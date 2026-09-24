@@ -4,6 +4,24 @@ export const META_PIXEL_ID = "2705295083168577";
 export const TIKTOK_PIXEL_ID = "DALRVP3C77U1JKBFSIH0";
 
 /**
+ * Helper to retrieve Meta test_event_code from URL search params or sessionStorage
+ */
+export function getMetaTestEventCode() {
+  if (typeof window === "undefined") return null;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("test_event_code");
+    if (code) {
+      sessionStorage.setItem("fb_test_event_code", code);
+      return code;
+    }
+    return sessionStorage.getItem("fb_test_event_code") || null;
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
  * Initializes or updates TikTok Pixel dynamically when ID is provided
  * @param {string} pixelId 
  */
@@ -28,10 +46,21 @@ export function initTikTokPixel(pixelId = TIKTOK_PIXEL_ID) {
 export function trackPageView(path = window.location.pathname) {
   if (typeof window === "undefined") return;
 
+  const testCode = getMetaTestEventCode();
+  const testOptions = testCode ? { test_event_code: testCode } : undefined;
+
   // Meta Pixel PageView
   if (typeof window.fbq === "function") {
     try {
-      window.fbq("track", "PageView");
+      if (testOptions) {
+        window.fbq("track", "PageView", {}, testOptions);
+      } else {
+        window.fbq("track", "PageView");
+      }
+      console.log(
+        "%c[Meta Pixel] ✅ PageView tracked: " + path,
+        "background: #1877F2; color: white; padding: 2px 6px; border-radius: 3px;"
+      );
     } catch (e) {
       console.warn("[Analytics] Meta Pixel PageView error:", e);
     }
@@ -41,55 +70,12 @@ export function trackPageView(path = window.location.pathname) {
   if (window.ttq && typeof window.ttq.page === "function") {
     try {
       window.ttq.page();
+      console.log(
+        "%c[TikTok Pixel] ✅ PageView tracked: " + path,
+        "background: #000000; color: #00f2fe; padding: 2px 6px; border-radius: 3px;"
+      );
     } catch (e) {
       console.warn("[Analytics] TikTok Pixel PageView error:", e);
-    }
-  }
-}
-
-/**
- * Tracks Calculator view event (Custom event "Calculator view" + standard "ViewContent")
- * Identical event names for Meta & TikTok
- */
-export function trackCalculatorView() {
-  if (typeof window === "undefined") return;
-
-  // Meta Pixel Custom & Standard Event
-  if (typeof window.fbq === "function") {
-    try {
-      // 1. Exact custom event name requested by targetologist
-      window.fbq("trackCustom", "Calculator view", {
-        content_name: "Solar Calculator",
-        content_category: "Calculator"
-      });
-
-      // 2. Standard ViewContent for Meta Ads algorithmic optimization
-      window.fbq("track", "ViewContent", {
-        content_name: "Solar Calculator",
-        content_category: "Calculator"
-      });
-    } catch (e) {
-      console.warn("[Analytics] Meta Calculator view error:", e);
-    }
-  }
-
-  // TikTok Pixel: both "Calculator view" as requested and standard "ViewContent"
-  if (window.ttq && typeof window.ttq.track === "function") {
-    try {
-      window.ttq.track("Calculator view", {
-        content_name: "Solar Calculator",
-        content_type: "product",
-        value: 0,
-        currency: "UAH"
-      });
-      window.ttq.track("ViewContent", {
-        content_name: "Solar Calculator",
-        content_type: "product",
-        value: 0,
-        currency: "UAH"
-      });
-    } catch (e) {
-      console.warn("[Analytics] TikTok Calculator view error:", e);
     }
   }
 }
@@ -97,44 +83,69 @@ export function trackCalculatorView() {
 let lastLeadTrackedAt = 0;
 
 /**
- * Tracks Lead conversion event upon form submission / visiting /thank-you
- * Includes standard 'value' and 'currency' parameters for TikTok ROAS & Meta optimization
- * @param {Object} [params] Optional metadata (service, form name, value, currency)
+ * Tracks Lead conversion event upon visiting /thank-you
+ * Strictly standard parameters: value, currency, content_name
+ * @param {Object} [params]
  */
 export function trackLead(params = {}) {
   if (typeof window === "undefined") return;
 
   const now = Date.now();
   // Prevent duplicate Lead events within 3 seconds (e.g. from index.html + ThankYouPage mount)
-  if (now - lastLeadTrackedAt < 3000 || (window.__leadTrackedAt && (now - window.__leadTrackedAt < 3000))) {
+  if (
+    !params.is_manual_test &&
+    (now - lastLeadTrackedAt < 3000 || (window.__leadTrackedAt && (now - window.__leadTrackedAt < 3000)))
+  ) {
     return;
   }
   lastLeadTrackedAt = now;
 
   const leadValue = params.value !== undefined ? Number(params.value) : 1;
   const currency = params.currency || "UAH";
+  const contentName = params.service || "Solar Consultation";
 
-  const eventData = {
-    content_name: params.service || "Solar Consultation Lead",
-    status: "submitted",
+  // Meta Pixel Lead Event (standard parameters ONLY)
+  const metaEventData = {
     value: leadValue,
     currency: currency,
-    ...params
+    content_name: contentName
   };
 
-  // Meta Pixel Lead Event (тільки стандартна подія Lead)
+  const testCode = getMetaTestEventCode();
+  const testOptions = testCode ? { test_event_code: testCode } : undefined;
+
   if (typeof window.fbq === "function") {
     try {
-      window.fbq("track", "Lead", eventData);
+      if (testOptions) {
+        window.fbq("track", "Lead", metaEventData, testOptions);
+      } else {
+        window.fbq("track", "Lead", metaEventData);
+      }
+      console.log(
+        "%c[Meta Pixel] 🎯 Lead event fired successfully!",
+        "background: #1877F2; color: #ffffff; font-weight: bold; font-size: 12px; padding: 4px 8px; border-radius: 4px;",
+        metaEventData
+      );
     } catch (e) {
       console.warn("[Analytics] Meta Lead event error:", e);
     }
   }
 
-  // TikTok Pixel Event - SubmitForm (стандартна подія TikTok для оптимізації конверсій/лідів)
+  // TikTok Pixel Event - SubmitForm (standard event for conversion)
+  const tiktokEventData = {
+    value: leadValue,
+    currency: currency,
+    content_name: contentName
+  };
+
   if (window.ttq && typeof window.ttq.track === "function") {
     try {
-      window.ttq.track("SubmitForm", eventData);
+      window.ttq.track("SubmitForm", tiktokEventData);
+      console.log(
+        "%c[TikTok Pixel] 🎯 SubmitForm event fired successfully!",
+        "background: #000000; color: #00f2fe; font-weight: bold; font-size: 12px; padding: 4px 8px; border-radius: 4px;",
+        tiktokEventData
+      );
     } catch (e) {
       console.warn("[Analytics] TikTok SubmitForm event error:", e);
     }
@@ -142,12 +153,20 @@ export function trackLead(params = {}) {
 }
 
 /**
- * Generic custom event tracker for both pixels with required value & currency
+ * Generic custom event tracker for both pixels
+ * STRICT REQUIREMENT FROM TARGETOLOGIST:
+ * Custom events are ONLY allowed for offer interactions (starting with Offer_)!
+ * All other custom events are silenced to keep Meta Ads clean and focused on standard PageView and Lead.
  * @param {string} eventName 
  * @param {Object} [data] 
  */
 export function trackCustomEvent(eventName, data = {}) {
   if (typeof window === "undefined" || !eventName) return;
+
+  // Only allow Offer_* custom events as instructed by targetologist
+  if (!eventName.startsWith("Offer_")) {
+    return;
+  }
 
   const eventPayload = {
     value: data.value !== undefined ? Number(data.value) : 0,
@@ -155,9 +174,21 @@ export function trackCustomEvent(eventName, data = {}) {
     ...data
   };
 
+  const testCode = getMetaTestEventCode();
+  const testOptions = testCode ? { test_event_code: testCode } : undefined;
+
   if (typeof window.fbq === "function") {
     try {
-      window.fbq("trackCustom", eventName, eventPayload);
+      if (testOptions) {
+        window.fbq("trackCustom", eventName, eventPayload, testOptions);
+      } else {
+        window.fbq("trackCustom", eventName, eventPayload);
+      }
+      console.log(
+        `%c[Meta Pixel] 📦 Offer custom event: ${eventName}`,
+        "background: #2563eb; color: white; padding: 2px 6px; border-radius: 3px;",
+        eventPayload
+      );
     } catch (e) {
       console.warn("[Analytics] Meta custom event error:", e);
     }
@@ -166,6 +197,11 @@ export function trackCustomEvent(eventName, data = {}) {
   if (window.ttq && typeof window.ttq.track === "function") {
     try {
       window.ttq.track(eventName, eventPayload);
+      console.log(
+        `%c[TikTok Pixel] 📦 Offer custom event: ${eventName}`,
+        "background: #000000; color: #ff0050; padding: 2px 6px; border-radius: 3px;",
+        eventPayload
+      );
     } catch (e) {
       console.warn("[Analytics] TikTok custom event error:", e);
     }
@@ -253,50 +289,54 @@ export function trackOfferClick(serviceKey, title = '') {
 
 /**
  * Tracks primary CTA button clicks across the site
- * @param {'CTA_Hero_Consultation'|'CTA_Header_Consultation'|'CTA_Mini_Calculator'|'CTA_Calculator_Quote'|'CTA_Engineer_Showcase'|'CTA_Deye_Section'|'CTA_Step_Process'|'CTA_Footer_Consultation'} ctaName 
- * @param {Object} [details] 
+ * Disabled per targetologist request: only Offer_* custom events are active
  */
 export function trackCtaClick(ctaName, details = {}) {
-  trackCustomEvent(ctaName, {
-    category: 'CTA_Button',
-    page_path: typeof window !== 'undefined' ? window.location.pathname : '',
-    ...details
-  });
+  // Silenced per targetologist instructions
 }
 
 /**
  * Tracks clicks on phone call links
- * @param {Object} [details] 
+ * Silenced per targetologist instructions
  */
 export function trackPhoneClick(details = {}) {
-  trackCustomEvent('Click_Phone_Number', {
-    phone: '+380675300103',
-    page_path: typeof window !== 'undefined' ? window.location.pathname : '',
-    ...details
-  });
+  // Silenced per targetologist instructions
 }
 
 /**
  * Tracks clicks on floating call widget
+ * Silenced per targetologist instructions
  */
 export function trackFloatingCallClick() {
-  trackCustomEvent('Click_Floating_Call', {
-    category: 'Floating_Call_Widget',
-    phone: '+380675300103'
-  });
+  // Silenced per targetologist instructions
 }
 
 /**
  * Tracks clicks on TikTok social link
- * @param {Object} [details] 
+ * Silenced per targetologist instructions
  */
 export function trackTikTokClick(details = {}) {
-  trackCustomEvent('Click_TikTok_Social', {
-    channel: 'TikTok',
-    account: '@novaenergy.ua',
-    url: 'https://www.tiktok.com/@novaenergy.ua',
-    ...details
-  });
+  // Silenced per targetologist instructions
 }
 
+/**
+ * Tracks Calculator view event
+ * Silenced per targetologist instructions (only standard PageView on pages)
+ */
+export function trackCalculatorView() {
+  // Silenced per targetologist instructions
+}
 
+// Attach manual testing utilities to window for easy verification in DevTools Console
+if (typeof window !== "undefined") {
+  window.testLead = (serviceName = "Тестова заявка") => {
+    console.log("%c[Test Utility] 🚀 Manually triggering Lead event...", "color: #f59e0b; font-weight: bold;");
+    lastLeadTrackedAt = 0;
+    if (window.__leadTrackedAt) window.__leadTrackedAt = 0;
+    trackLead({ service: serviceName, is_manual_test: true });
+  };
+  window.testPageView = () => {
+    console.log("%c[Test Utility] 🚀 Manually triggering PageView event...", "color: #f59e0b; font-weight: bold;");
+    trackPageView(window.location.pathname);
+  };
+}

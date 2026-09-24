@@ -68,10 +68,34 @@
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
+
+      // Support for Meta Events Manager Realtime Test Events Code (?test_event_code=...)
+      try {
+        var _searchParams = new URLSearchParams(window.location.search);
+        var _testCode = _searchParams.get('test_event_code');
+        if (_testCode) {
+          sessionStorage.setItem('fb_test_event_code', _testCode);
+        }
+      } catch (e) {}
+
+      var _storedTestCode = null;
+      try { _storedTestCode = sessionStorage.getItem('fb_test_event_code'); } catch(e) {}
+      var _metaOptions = _storedTestCode ? { test_event_code: _storedTestCode } : undefined;
+
       fbq('init', '2705295083168577');
-      fbq('track', 'PageView');
+      if (_metaOptions) {
+        fbq('track', 'PageView', {}, _metaOptions);
+      } else {
+        fbq('track', 'PageView');
+      }
+
       if (window.location.pathname.indexOf('thank-you') !== -1) {
-        fbq('track', 'Lead', { value: 1, currency: 'UAH', content_name: 'ThankYou Page Visit' });
+        var _leadData = { value: 1, currency: 'UAH', content_name: 'Solar Consultation' };
+        if (_metaOptions) {
+          fbq('track', 'Lead', _leadData, _metaOptions);
+        } else {
+          fbq('track', 'Lead', _leadData);
+        }
         window.__leadTrackedAt = Date.now();
       }
     </script>
@@ -85,7 +109,7 @@
         ttq.load('DALRVP3C77U1JKBFSIH0');
         ttq.page();
         if (window.location.pathname.indexOf('thank-you') !== -1) {
-          ttq.track('SubmitForm', { value: 1, currency: 'UAH', content_name: 'ThankYou Page Visit' });
+          ttq.track('SubmitForm', { value: 1, currency: 'UAH', content_name: 'Solar Consultation' });
         }
       }(window, document, 'ttq');
     </script>

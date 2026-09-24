@@ -21,7 +21,7 @@ export default function ThankYouPage({ theme }) {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
     // Trigger Lead Conversion Event for Meta & TikTok Pixels
-    trackLead({ source: 'ThankYouPage' });
+    trackLead({ service: 'Solar Consultation' });
   }, []);
 
   // Bring the readouts online one at a time, like a station being commissioned

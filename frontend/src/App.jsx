@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -24,7 +24,7 @@ import Footer from './components/Footer';
 import ScrollToTopButton from './components/ScrollToTopButton';
 import CallWidget from './components/CallWidget';
 import useSeo from './hooks/useSeo';
-import { trackPageView, trackCalculatorView, trackLead } from './utils/analytics';
+import { trackPageView } from './utils/analytics';
 import { X } from 'lucide-react';
 
 function HomeSeo() {
@@ -38,22 +38,19 @@ function HomeSeo() {
 
 function RouteTracker() {
   const { pathname } = useLocation();
+  const isFirstLoad = useRef(true);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
-    // Track PageView on route changes
+    // Skip tracking on initial render because index.html already fires PageView on initial HTML load
+    if (isFirstLoad.current) {
+      isFirstLoad.current = false;
+      return;
+    }
+
+    // Track PageView on SPA route changes
     trackPageView(pathname);
-
-    // Track Calculator view when visiting /calculator
-    if (pathname === '/calculator') {
-      trackCalculatorView();
-    }
-
-    // Track Lead when visiting /thank-you
-    if (pathname === '/thank-you') {
-      trackLead({ source: 'ThankYouPage_Route' });
-    }
   }, [pathname]);
 
   return null;
