@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="minSunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#0284C7" />
+    </linearGradient>
+  </defs>
+  <!-- Outer Minimalist Solar Rays -->
+  <path d="M50 10V20 M50 80V90 M10 50H20 M80 50H90 M21.7 21.7L28.8 28.8 M71.2 71.2L78.3 78.3 M21.7 78.3L28.8 71.2 M71.2 28.8L78.3 21.7" stroke="url(#minSunGrad)" stroke-width="4.5" stroke-linecap="round" />
+  <!-- Inner Clean Ring -->
+  <circle cx="50" cy="50" r="22" stroke="url(#minSunGrad)" stroke-width="4.5" fill="none" />
+  <!-- Center Core -->
+  <circle cx="50" cy="50" r="9" fill="url(#minSunGrad)" />
+</svg>
