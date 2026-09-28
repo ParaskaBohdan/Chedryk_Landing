@@ -69,33 +69,11 @@
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
 
-      // Support for Meta Events Manager Realtime Test Events Code (?test_event_code=...)
-      try {
-        var _searchParams = new URLSearchParams(window.location.search);
-        var _testCode = _searchParams.get('test_event_code');
-        if (_testCode) {
-          sessionStorage.setItem('fb_test_event_code', _testCode);
-        }
-      } catch (e) {}
-
-      var _storedTestCode = null;
-      try { _storedTestCode = sessionStorage.getItem('fb_test_event_code'); } catch(e) {}
-      var _metaOptions = _storedTestCode ? { test_event_code: _storedTestCode } : undefined;
-
       fbq('init', '2705295083168577');
-      if (_metaOptions) {
-        fbq('track', 'PageView', {}, _metaOptions);
-      } else {
-        fbq('track', 'PageView');
-      }
+      fbq('track', 'PageView');
 
       if (window.location.pathname.indexOf('thank-you') !== -1) {
-        var _leadData = { value: 1, currency: 'UAH', content_name: 'Solar Consultation' };
-        if (_metaOptions) {
-          fbq('track', 'Lead', _leadData, _metaOptions);
-        } else {
-          fbq('track', 'Lead', _leadData);
-        }
+        fbq('track', 'Lead', { value: 1, currency: 'UAH', content_name: 'Solar Consultation' });
         window.__leadTrackedAt = Date.now();
       }
     </script>

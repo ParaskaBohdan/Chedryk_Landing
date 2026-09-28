@@ -46,17 +46,10 @@ export function initTikTokPixel(pixelId = TIKTOK_PIXEL_ID) {
 export function trackPageView(path = window.location.pathname) {
   if (typeof window === "undefined") return;
 
-  const testCode = getMetaTestEventCode();
-  const testOptions = testCode ? { test_event_code: testCode } : undefined;
-
   // Meta Pixel PageView
   if (typeof window.fbq === "function") {
     try {
-      if (testOptions) {
-        window.fbq("track", "PageView", {}, testOptions);
-      } else {
-        window.fbq("track", "PageView");
-      }
+      window.fbq("track", "PageView");
       console.log(
         "%c[Meta Pixel] ✅ PageView tracked: " + path,
         "background: #1877F2; color: white; padding: 2px 6px; border-radius: 3px;"
@@ -111,18 +104,11 @@ export function trackLead(params = {}) {
     content_name: contentName
   };
 
-  const testCode = getMetaTestEventCode();
-  const testOptions = testCode ? { test_event_code: testCode } : undefined;
-
   if (typeof window.fbq === "function") {
     try {
-      if (testOptions) {
-        window.fbq("track", "Lead", metaEventData, testOptions);
-      } else {
-        window.fbq("track", "Lead", metaEventData);
-      }
+      window.fbq("track", "Lead", metaEventData);
       console.log(
-        "%c[Meta Pixel] 🎯 Lead event fired successfully!",
+        "%c[Meta Pixel] 🎯 Lead event fired successfully via fbq('track', 'Lead')!",
         "background: #1877F2; color: #ffffff; font-weight: bold; font-size: 12px; padding: 4px 8px; border-radius: 4px;",
         metaEventData
       );
